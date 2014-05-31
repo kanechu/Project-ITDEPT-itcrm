@@ -19,6 +19,7 @@
 #import "SVProgressHUD.h"
 #import "Cell_login.h"
 #import "DB_RespLogin.h"
+#import "DB_Login.h"
 @interface LoginViewController ()
 
 @end
@@ -182,6 +183,8 @@ enum TEXTFIELD_TAG {
 - (IBAction)fn_login_app:(id)sender {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
     [self fn_get_data:is_user :is_pass :is_systemCode];
 }
 

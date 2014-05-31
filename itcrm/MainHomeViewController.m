@@ -20,6 +20,7 @@
 #import "NSDictionary.h"
 #import "Cell_login.h"
 #import "DB_RespLogin.h"
+#import "DB_Login.h"
 @interface MainHomeViewController ()
 
 @end
@@ -111,10 +112,12 @@
     
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
-    auth.user_code=@"sa";
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    auth=[dbLogin fn_request_auth];
+    /*auth.user_code=@"sa";
     auth.password=@"sa1";
     auth.system =@"ITNEW";
-    auth.version=@"1.2";
+    auth.version=@"1.2";*/
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"app_code";
