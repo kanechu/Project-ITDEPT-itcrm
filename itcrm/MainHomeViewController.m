@@ -95,7 +95,7 @@
 - (UIEdgeInsets)collectionView:
 (UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     //UIEdgeInsets insets = {top, left, bottom, right};
-    return UIEdgeInsetsMake(15, 15, 0, 15);
+    return UIEdgeInsetsMake(15, 10, 0, 10);
     
 }
 
@@ -114,10 +114,6 @@
     AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     auth=[dbLogin fn_request_auth];
-    /*auth.user_code=@"sa";
-    auth.password=@"sa1";
-    auth.system =@"ITNEW";
-    auth.version=@"1.2";*/
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"app_code";
