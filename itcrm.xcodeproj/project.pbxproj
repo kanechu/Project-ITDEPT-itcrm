@@ -52,6 +52,12 @@
 		B2B0933719346F4C002FE190 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B0933619346F4C002FE190 /* libsqlite3.0.dylib */; };
 		B2B0933919346F57002FE190 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B0933819346F57002FE190 /* libsqlite3.dylib */; };
 		B2B0933E193475E7002FE190 /* Web_base.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B0933D193475E7002FE190 /* Web_base.m */; };
+		B2B22FB21939B44E0083E0C4 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */; };
+		B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB41939B4E90083E0C4 /* AccountViewController.m */; };
+		B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */; };
+		B2B22FBB1939B6140083E0C4 /* OpportunityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FBA1939B6140083E0C4 /* OpportunityViewController.m */; };
+		B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */; };
+		B2B22FC11939B7690083E0C4 /* AttachmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -171,6 +177,18 @@
 		B2B0933819346F57002FE190 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B2B0933C193475E7002FE190 /* Web_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web_base.h; sourceTree = "<group>"; };
 		B2B0933D193475E7002FE190 /* Web_base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Web_base.m; sourceTree = "<group>"; };
+		B2B22FB01939B44E0083E0C4 /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListViewController.h; sourceTree = "<group>"; };
+		B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
+		B2B22FB31939B4E90083E0C4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		B2B22FB41939B4E90083E0C4 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		B2B22FB61939B5E20083E0C4 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
+		B2B22FB91939B6140083E0C4 /* OpportunityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpportunityViewController.h; sourceTree = "<group>"; };
+		B2B22FBA1939B6140083E0C4 /* OpportunityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpportunityViewController.m; sourceTree = "<group>"; };
+		B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotationViewController.h; sourceTree = "<group>"; };
+		B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotationViewController.m; sourceTree = "<group>"; };
+		B2B22FBF1939B7690083E0C4 /* AttachmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentViewController.h; sourceTree = "<group>"; };
+		B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +435,18 @@
 				B2B092D119345E74002FE190 /* LoginViewController.m */,
 				B2B0933319346C9C002FE190 /* MainHomeViewController.h */,
 				B2B0933419346C9C002FE190 /* MainHomeViewController.m */,
+				B2B22FB31939B4E90083E0C4 /* AccountViewController.h */,
+				B2B22FB41939B4E90083E0C4 /* AccountViewController.m */,
+				B2B22FB61939B5E20083E0C4 /* ActivityViewController.h */,
+				B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */,
+				B2B22FB01939B44E0083E0C4 /* ContactListViewController.h */,
+				B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */,
+				B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */,
+				B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */,
+				B2B22FBF1939B7690083E0C4 /* AttachmentViewController.h */,
+				B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */,
+				B2B22FB91939B6140083E0C4 /* OpportunityViewController.h */,
+				B2B22FBA1939B6140083E0C4 /* OpportunityViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -581,14 +611,20 @@
 				B22903FC1936C9CB004D1862 /* FMDatabaseAdditions.m in Sources */,
 				B2B092CC19345E74002FE190 /* AppDelegate.m in Sources */,
 				B2B092C819345E74002FE190 /* main.m in Sources */,
+				B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */,
 				B2B0931F19346A52002FE190 /* RequestContract.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
 				B26CBCA419347E5A00C5287B /* NSDictionary.m in Sources */,
+				B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */,
 				B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
 				B26CBC9B193476B500C5287B /* AppConstants.m in Sources */,
+				B2B22FB21939B44E0083E0C4 /* ContactListViewController.m in Sources */,
+				B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */,
+				B2B22FC11939B7690083E0C4 /* AttachmentViewController.m in Sources */,
+				B2B22FBB1939B6140083E0C4 /* OpportunityViewController.m in Sources */,
 				B26CBCA519347E5A00C5287B /* NSArray.m in Sources */,
 				B22903FF1936C9CB004D1862 /* FMResultSet.m in Sources */,
 				B22903FD1936C9CB004D1862 /* FMDatabasePool.m in Sources */,

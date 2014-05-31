@@ -57,13 +57,12 @@
 - (void) fn_refresh_menu;
 {
     ilist_menu = [[NSMutableArray alloc] init];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"client" image:@"ic_menu1" segue:@"segue_1"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Schedule" image:@"ic_menu2" segue:@"segue_2"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Guide" image:@"ic_menu3" segue:@"segue_3"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Guide" image:@"ic_menu3" segue:@"segue_3"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Guide" image:@"ic_menu3" segue:@"segue_3"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Guide" image:@"ic_menu3" segue:@"segue_3"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Guide" image:@"ic_menu3" segue:@"segue_3"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_menu1" segue:@"segue_account"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_menu2" segue:@"segue_activity"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_menu3" segue:@"segue_contactList"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_menu3" segue:@"segue_Quotation"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Attachment" image:@"ic_menu3" segue:@"segue_Attachment"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Opportunity" image:@"ic_menu3" segue:@"segue_opportunity"]];
     self.iui_collectionview.delegate = self;
     
     self.iui_collectionview.dataSource = self;
@@ -92,17 +91,12 @@
 }
 #pragma mark – UICollectionViewDelegateFlowLayout
 
-
-// 3
 - (UIEdgeInsets)collectionView:
 (UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    
-    return UIEdgeInsetsMake(0, 5, 0, 13);
+    //UIEdgeInsets insets = {top, left, bottom, right};
+    return UIEdgeInsetsMake(15, 15, 0, 15);
     
 }
-
-
-
 
 - (IBAction)fn_menu_btn_clicked:(id)sender {
     UIButton *btn=(UIButton*)sender;
