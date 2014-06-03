@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SKSTableView.h"
+@interface AccountViewController : UIViewController<SKSTableViewDelegate>
+@property(nonatomic,strong)NSArray *groudarr;
 
-@interface AccountViewController : UIViewController
+@property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 
 @end
