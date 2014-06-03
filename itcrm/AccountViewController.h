@@ -10,7 +10,10 @@
 #import "SKSTableView.h"
 @interface AccountViewController : UIViewController<SKSTableViewDelegate>
 @property(nonatomic,strong)NSArray *groudarr;
-
+@property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
+@property(nonatomic,strong)NSMutableArray *alist_filtered_data;
+//存储搜索标准的组名和该组的行数
+@property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 
 @end

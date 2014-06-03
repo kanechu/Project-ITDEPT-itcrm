@@ -14,4 +14,5 @@
 -(BOOL)fn_save_data:(NSMutableArray*)ilist_result;
 -(NSMutableArray*)fn_get_all_data;
 -(BOOL)fn_delete_all_data;
+-(NSMutableArray*)fn_get_groupNameAndNum;
 @end

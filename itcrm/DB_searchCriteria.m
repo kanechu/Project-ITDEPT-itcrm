@@ -43,7 +43,6 @@
         }
         [[idb fn_get_db] close];
     }
-    NSLog(@"%d",[arr count]);
     return arr;
 }
 -(BOOL)fn_delete_all_data{
@@ -58,5 +57,16 @@
         
     }
     return NO;
+}
+-(NSMutableArray*)fn_get_groupNameAndNum{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+         FMResultSet *lfmdb_result= [[idb fn_get_db] executeQuery:@"SELECT group_name,COUNT(group_name) FROM searchCriteria group by group_name"];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
 }
 @end
