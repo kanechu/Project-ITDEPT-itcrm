@@ -15,12 +15,14 @@
 #import "RequestContract.h"
 #import "SearchFormContract.h"
 #import "RespPermit.h"
+#import "RespSearchCriteria.h"
 #import "Web_base.h"
 #import "NSArray.h"
 #import "NSDictionary.h"
 #import "Cell_login.h"
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
+#import "DB_searchCriteria.h"
 @interface MainHomeViewController ()
 
 @end
@@ -46,6 +48,7 @@
     NSMutableArray *arr=[db fn_get_all_data];
     NSLog(@"%@",arr);
     [self fn_get_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
+    [self fn_get_search_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
 	// Do any additional setup after loading the view.
 }
 
@@ -136,5 +139,37 @@
     NSLog(@"成功获取数据");
     NSLog(@"%@",alist_result);
 }
+#pragma mark 请求searchCriteria的数据
+- (void) fn_get_search_data:(NSString*)base_url
+{
+    
+    RequestContract *req_form = [[RequestContract alloc] init];
+    AuthContract *auth=[[AuthContract alloc]init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    SearchFormContract *search = [[SearchFormContract alloc]init];
+    search.os_column = @"form";
+    search.os_value = @"crmacct";
+    req_form.SearchForm = [NSSet setWithObjects:search, nil];
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_SEARCHCRITERIA_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[RespSearchCriteria class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSearchCriteria class]];
+    web_base.iobj_target = self;
+    web_base.isel_action = @selector(fn_save_searchCriteria_list:);
+    [web_base fn_get_data:req_form];
+    
+}
+- (void) fn_save_searchCriteria_list: (NSMutableArray *) alist_result {
+    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+    [db fn_save_data:alist_result];
+    NSLog(@"成功获取数据");
+    NSLog(@"%@",alist_result);
+    NSLog(@"%d",[alist_result count]);
+}
+
+
 
 @end

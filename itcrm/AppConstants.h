@@ -18,6 +18,8 @@ _Pragma("clang diagnostic pop") \
 @interface AppConstants : NSObject
 
 extern NSString* const STR_BASE_URL;
+extern NSString* const STR_SERVER_URL;
 extern NSString* const STR_LOGIN_URL;
 extern NSString* const STR_PERMIT_URL;
+extern NSString* const STR_SEARCHCRITERIA_URL;
 @end
