@@ -17,6 +17,9 @@
 		B229040E1937239D004D1862 /* Cell_login.m in Sources */ = {isa = PBXBuildFile; fileRef = B229040D1937239D004D1862 /* Cell_login.m */; };
 		B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F27A1935E0B600EC88F5 /* Menu_home.m */; };
 		B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F2821935E16500EC88F5 /* Cell_menu_item.m */; };
+		B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25D75F7193D64A2005913D7 /* SKSTableView.m */; };
+		B25D75FB193D64A2005913D7 /* SKSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B25D75F9193D64A2005913D7 /* SKSTableViewCell.m */; };
+		B25D7607193D6ACF005913D7 /* Cell_search.m in Sources */ = {isa = PBXBuildFile; fileRef = B25D7606193D6ACF005913D7 /* Cell_search.m */; };
 		B26CBC9B193476B500C5287B /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBC9A193476B500C5287B /* AppConstants.m */; };
 		B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBC9D19347CBA00C5287B /* RespLogin.m */; };
 		B26CBCA419347E5A00C5287B /* NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBCA119347E5A00C5287B /* NSDictionary.m */; };
@@ -59,6 +62,8 @@
 		B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */; };
 		B2B22FC11939B7690083E0C4 /* AttachmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */; };
 		B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC31939C0D50083E0C4 /* DB_Login.m */; };
+		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
+		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +131,12 @@
 		B257F27A1935E0B600EC88F5 /* Menu_home.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu_home.m; sourceTree = "<group>"; };
 		B257F2811935E16500EC88F5 /* Cell_menu_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_menu_item.h; sourceTree = "<group>"; };
 		B257F2821935E16500EC88F5 /* Cell_menu_item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_menu_item.m; sourceTree = "<group>"; };
+		B25D75F6193D64A2005913D7 /* SKSTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSTableView.h; sourceTree = "<group>"; };
+		B25D75F7193D64A2005913D7 /* SKSTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSTableView.m; sourceTree = "<group>"; };
+		B25D75F8193D64A2005913D7 /* SKSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKSTableViewCell.h; sourceTree = "<group>"; };
+		B25D75F9193D64A2005913D7 /* SKSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKSTableViewCell.m; sourceTree = "<group>"; };
+		B25D7605193D6ACF005913D7 /* Cell_search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_search.h; sourceTree = "<group>"; };
+		B25D7606193D6ACF005913D7 /* Cell_search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_search.m; sourceTree = "<group>"; };
 		B26CBC99193476B500C5287B /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		B26CBC9A193476B500C5287B /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		B26CBC9C19347CBA00C5287B /* RespLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespLogin.h; sourceTree = "<group>"; };
@@ -192,6 +203,10 @@
 		B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentViewController.m; sourceTree = "<group>"; };
 		B2B22FC21939C0D50083E0C4 /* DB_Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_Login.h; sourceTree = "<group>"; };
 		B2B22FC31939C0D50083E0C4 /* DB_Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_Login.m; sourceTree = "<group>"; };
+		B2CB6E7D193DB0E20061F484 /* DB_searchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_searchCriteria.h; sourceTree = "<group>"; };
+		B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_searchCriteria.m; sourceTree = "<group>"; };
+		B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespSearchCriteria.h; sourceTree = "<group>"; };
+		B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSearchCriteria.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +278,8 @@
 				B298627E193874140097B553 /* DB_RespLogin.m */,
 				B2B22FC21939C0D50083E0C4 /* DB_Login.h */,
 				B2B22FC31939C0D50083E0C4 /* DB_Login.m */,
+				B2CB6E7D193DB0E20061F484 /* DB_searchCriteria.h */,
+				B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */,
 			);
 			name = DataAccess;
 			sourceTree = "<group>";
@@ -282,8 +299,21 @@
 				B257F2821935E16500EC88F5 /* Cell_menu_item.m */,
 				B229040C1937239D004D1862 /* Cell_login.h */,
 				B229040D1937239D004D1862 /* Cell_login.m */,
+				B25D7605193D6ACF005913D7 /* Cell_search.h */,
+				B25D7606193D6ACF005913D7 /* Cell_search.m */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		B25D75F5193D64A2005913D7 /* Expandable Table */ = {
+			isa = PBXGroup;
+			children = (
+				B25D75F6193D64A2005913D7 /* SKSTableView.h */,
+				B25D75F7193D64A2005913D7 /* SKSTableView.m */,
+				B25D75F8193D64A2005913D7 /* SKSTableViewCell.h */,
+				B25D75F9193D64A2005913D7 /* SKSTableViewCell.m */,
+			);
+			path = "Expandable Table";
 			sourceTree = "<group>";
 		};
 		B26CBC981934769400C5287B /* GlobalConst */ = {
@@ -408,6 +438,7 @@
 		B2B0931219346973002FE190 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				B25D75F5193D64A2005913D7 /* Expandable Table */,
 				B22903F01936C9CB004D1862 /* FMDB */,
 				B22903DA1936C4A6004D1862 /* SVProgressHUD */,
 			);
@@ -427,6 +458,8 @@
 				B26CBC9D19347CBA00C5287B /* RespLogin.m */,
 				B298626E19385CCB0097B553 /* RespPermit.h */,
 				B298626F19385CCB0097B553 /* RespPermit.m */,
+				B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */,
+				B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */,
 				B257F2791935E0B600EC88F5 /* Menu_home.h */,
 				B257F27A1935E0B600EC88F5 /* Menu_home.m */,
 			);
@@ -611,9 +644,11 @@
 			files = (
 				B2B092D219345E74002FE190 /* LoginViewController.m in Sources */,
 				B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */,
+				B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */,
 				B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */,
 				B2B0933E193475E7002FE190 /* Web_base.m in Sources */,
 				B22903FC1936C9CB004D1862 /* FMDatabaseAdditions.m in Sources */,
+				B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */,
 				B2B092CC19345E74002FE190 /* AppDelegate.m in Sources */,
 				B2B092C819345E74002FE190 /* main.m in Sources */,
 				B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */,
@@ -623,6 +658,8 @@
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
 				B26CBCA419347E5A00C5287B /* NSDictionary.m in Sources */,
 				B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */,
+				B25D75FB193D64A2005913D7 /* SKSTableViewCell.m in Sources */,
+				B25D7607193D6ACF005913D7 /* Cell_search.m in Sources */,
 				B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */,
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
@@ -638,6 +675,7 @@
 				B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
+				B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */,
 				B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */,
 				B298627019385CCB0097B553 /* RespPermit.m in Sources */,
 			);
