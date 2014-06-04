@@ -7,7 +7,9 @@
 //
 
 #import "ActivityViewController.h"
-
+#import "DB_formatlist.h"
+#import "DB_crmacct_browse.h"
+#import "Web_resquestData.h"
 @interface ActivityViewController ()
 
 @end
@@ -26,6 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    DB_formatlist *db=[[DB_formatlist alloc]init];
+    
+    NSLog(@"%@",[db fn_get_list_data:@"crmacct"]);
+    
+    DB_crmacct_browse *bd=[[DB_crmacct_browse alloc]init];
+    Web_resquestData *s=[[Web_resquestData alloc]init];
+   
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

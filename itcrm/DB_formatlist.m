@@ -25,7 +25,7 @@
             BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from formatlist where list_id = :list_id and list_size = :list_size and uid = :uid and t_title = :t_title and v_title =:v_title and t_desc1=:t_desc1 and t_desc2=:t_desc2 and t_desc3=:t_desc3 and t_desc4=:t_desc4 and t_desc5=:t_desc5 and v_desc1=:v_desc1 and v_desc2=:v_desc2 and v_desc3=:v_desc3 and v_desc4=:v_desc4 and v_desc5=:v_desc5 and icon=:icon" withParameterDictionary:ldict_row];
             if (! ib_delete)
                 return NO;
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into searchCriteria (list_id,list_size, uid, t_title, v_title, t_desc1, t_desc2, t_desc3, t_desc4, t_desc5, v_desc1, v_desc2, v_desc3, v_desc4, v_desc5,icon) values (:list_id,:list_size, :uid, :t_title, :v_title, :t_desc1, :t_desc2, :t_desc3, :t_desc4, :t_desc5, :v_desc1, :v_desc2, :v_desc3, :v_desc4, :v_desc5, :icon)" withParameterDictionary:ldict_row];
+            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into formatlist (list_id,list_size, uid, t_title, v_title, t_desc1, t_desc2, t_desc3, t_desc4, t_desc5, v_desc1, v_desc2, v_desc3, v_desc4, v_desc5,icon) values (:list_id,:list_size, :uid, :t_title, :v_title, :t_desc1, :t_desc2, :t_desc3, :t_desc4, :t_desc5, :v_desc1, :v_desc2, :v_desc3, :v_desc4, :v_desc5, :icon)" withParameterDictionary:ldict_row];
             if (! ib_updated)
                 return NO;
         }
@@ -37,7 +37,7 @@
 -(NSMutableArray*)fn_get_list_data:(NSString*)list_id{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM formatlist where srch_type like ?",list_id];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM formatlist where list_id like ?",list_id];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }

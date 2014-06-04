@@ -13,11 +13,15 @@
 #import "SearchFormContract.h"
 #import "RespPermit.h"
 #import "RespSearchCriteria.h"
+#import "RespFormatlist.h"
+#import "RespCrmacct_browse.h"
 #import "Web_base.h"
 #import "NSArray.h"
 #import "NSDictionary.h"
 #import "DB_searchCriteria.h"
 #import "DB_Login.h"
+#import "DB_formatlist.h"
+#import "DB_crmacct_browse.h"
 @implementation Web_resquestData
 
 #pragma mark 请求permit的数据
@@ -73,9 +77,53 @@
     [web_base fn_get_data:req_form];
     
 }
+
 - (void) fn_save_searchCriteria_list: (NSMutableArray *) alist_result {
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     [db fn_save_searchCriteria_data:alist_result];
 }
-
+#pragma mark 请求formatlist的数据
+- (void) fn_get_formatlist_data:(NSString*)base_url{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    AuthContract *auth=[[AuthContract alloc]init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    SearchFormContract *search = [[SearchFormContract alloc]init];
+    search.os_column = @"list_id";
+    search.os_value = @"crm";
+    req_form.SearchForm = [NSSet setWithObjects:search, nil];
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_FORMATLIST_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[RespFormatlist class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespFormatlist class]];
+    web_base.iobj_target = self;
+    web_base.isel_action = @selector(fn_save_formatlist_list:);
+    [web_base fn_get_data:req_form];
+}
+- (void) fn_save_formatlist_list: (NSMutableArray *) alist_result {
+    DB_formatlist *db=[[DB_formatlist alloc]init];
+    [db fn_save_formatlist_data:alist_result];
+}
+#pragma mark 请求crmacct_browse的数据
+- (void) fn_get_crmacct_browse_data:(NSString*)base_url{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    AuthContract *auth=[[AuthContract alloc]init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_CRMACCT_BROWSE_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[RespCrmacct_browse class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]];
+    web_base.iobj_target = self;
+    web_base.isel_action = @selector(fn_save_crmacct_browse_list:);
+    [web_base fn_get_data:req_form];
+}
+- (void) fn_save_crmacct_browse_list: (NSMutableArray *) alist_result {
+    DB_formatlist *db=[[DB_formatlist alloc]init];
+    [db fn_save_formatlist_data:alist_result];
+}
 @end
