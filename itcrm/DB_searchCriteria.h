@@ -12,7 +12,7 @@
 
 @property(nonatomic,strong)DBManager *idb;
 -(BOOL)fn_save_data:(NSMutableArray*)ilist_result;
--(NSMutableArray*)fn_get_all_data;
+-(NSMutableArray*)fn_get_account_data:(NSString*)srch_type;
 -(BOOL)fn_delete_all_data;
--(NSMutableArray*)fn_get_groupNameAndNum;
+-(NSMutableArray*)fn_get_groupNameAndNum:(NSString*)srch_type;
 @end
