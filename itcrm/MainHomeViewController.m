@@ -46,7 +46,6 @@
     [self fn_refresh_menu];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
-    NSLog(@"%@",arr);
     [self fn_get_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
     [self fn_get_search_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
 	// Do any additional setup after loading the view.
@@ -150,7 +149,7 @@
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"form";
-    search.os_value = @"crmacct";
+    search.os_value = @"crm";
     req_form.SearchForm = [NSSet setWithObjects:search, nil];
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_SEARCHCRITERIA_URL;
@@ -165,9 +164,6 @@
 - (void) fn_save_searchCriteria_list: (NSMutableArray *) alist_result {
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     [db fn_save_data:alist_result];
-    NSLog(@"成功获取数据");
-    NSLog(@"%@",alist_result);
-    NSLog(@"%d",[alist_result count]);
 }
 
 

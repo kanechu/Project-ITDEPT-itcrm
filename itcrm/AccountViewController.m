@@ -50,9 +50,9 @@
 #pragma mark -初始化数组
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum];
-    alist_searchCriteria=[db fn_get_all_data];
-    alist_filtered_data=[[NSMutableArray alloc]init];
+    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
+    alist_searchCriteria=[db fn_get_account_data:@"crmacct"];
+    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
 #pragma mark - UITableViewDataSource

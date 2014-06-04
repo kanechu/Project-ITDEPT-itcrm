@@ -9,6 +9,8 @@
 #import "RespSearchCriteria.h"
 
 @implementation RespSearchCriteria
+
+@synthesize srch_type;
 @synthesize seq;
 @synthesize col_code;
 @synthesize col_label;
@@ -18,4 +20,5 @@
 @synthesize group_name;
 @synthesize is_mandatory;
 @synthesize icon_name;
+
 @end
