@@ -16,10 +16,11 @@
 @end
 
 @implementation AccountViewController
-@synthesize groudarr;
+
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
 @synthesize alist_filtered_data;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,14 +33,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    groudarr=@[@"account",@"address"];
+    [self fn_init_arr];
+    //设置表的代理
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
-    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum];
-    alist_searchCriteria=[db fn_get_all_data];
-    alist_filtered_data=[[NSMutableArray alloc]init];
     
 // Do any additional setup after loading the view.
 }
@@ -49,6 +47,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark -初始化数组
+-(void)fn_init_arr{
+    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+    alist_groupNameAndNum=[db fn_get_groupNameAndNum];
+    alist_searchCriteria=[db fn_get_all_data];
+    alist_filtered_data=[[NSMutableArray alloc]init];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -76,6 +82,7 @@
     cell.textLabel.text=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
+    
     NSString *str=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     NSArray *arr=[self fn_filtered_criteriaData:str];
     if (arr!=nil) {
@@ -85,7 +92,6 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",alist_filtered_data);
     static NSString *cellIdentifier=@"Cell_search1";
     Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell==nil) {
@@ -110,5 +116,7 @@
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{
     NSArray *filtered=[alist_searchCriteria filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
+}
+- (IBAction)fn_search_account:(id)sender {
 }
 @end

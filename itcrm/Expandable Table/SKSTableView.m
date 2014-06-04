@@ -412,7 +412,7 @@ CGFloat const kDefaultCellHeight = 60.0f;
 }
 - (void)fn_expandall
 {
-    for (NSInteger j = 0; j < [self numberOfSections]; ++j)
+    for (NSInteger j = 0; j < 1; ++j)
     {
         for (NSInteger i = 0; i < [self numberOfRowsInSection:j]; ++i)
         {
