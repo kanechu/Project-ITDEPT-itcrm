@@ -17,7 +17,7 @@
     idb=[DBManager getSharedInstance];
     return self;
 }
--(BOOL)fn_save_data:(NSMutableArray*)ilist_result{
+-(BOOL)fn_save_searchCriteria_data:(NSMutableArray*)ilist_result{
     if ([[idb fn_get_db] open]) {
         for (RespSearchCriteria *lmap_data in ilist_result) {
             NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
@@ -34,7 +34,7 @@
     return NO;
 }
 
--(NSMutableArray*)fn_get_account_data:(NSString*)srch_type{
+-(NSMutableArray*)fn_get_srchType_data:(NSString*)srch_type{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
         FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM searchCriteria where srch_type like ?",srch_type];

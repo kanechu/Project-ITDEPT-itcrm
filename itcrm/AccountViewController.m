@@ -51,7 +51,7 @@
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
-    alist_searchCriteria=[db fn_get_account_data:@"crmacct"];
+    alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
