@@ -29,6 +29,7 @@
 		B2759998193EF955005CF480 /* DB_formatlist.m in Sources */ = {isa = PBXBuildFile; fileRef = B2759997193EF955005CF480 /* DB_formatlist.m */; };
 		B275999B193F0E19005CF480 /* RespCrmacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B275999A193F0E19005CF480 /* RespCrmacct_browse.m */; };
 		B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B275999D193F2205005CF480 /* DB_crmacct_browse.m */; };
+		B27EDFC219401092007F89A6 /* Cell_search1.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFC119401092007F89A6 /* Cell_search1.m */; };
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
@@ -160,6 +161,8 @@
 		B275999A193F0E19005CF480 /* RespCrmacct_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespCrmacct_browse.m; sourceTree = "<group>"; };
 		B275999C193F2205005CF480 /* DB_crmacct_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_crmacct_browse.h; sourceTree = "<group>"; };
 		B275999D193F2205005CF480 /* DB_crmacct_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmacct_browse.m; sourceTree = "<group>"; };
+		B27EDFC019401092007F89A6 /* Cell_search1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_search1.h; sourceTree = "<group>"; };
+		B27EDFC119401092007F89A6 /* Cell_search1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_search1.m; sourceTree = "<group>"; };
 		B298626E19385CCB0097B553 /* RespPermit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespPermit.h; sourceTree = "<group>"; };
 		B298626F19385CCB0097B553 /* RespPermit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespPermit.m; sourceTree = "<group>"; };
 		B298627719386FF30097B553 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 				B229040D1937239D004D1862 /* Cell_login.m */,
 				B25D7605193D6ACF005913D7 /* Cell_search.h */,
 				B25D7606193D6ACF005913D7 /* Cell_search.m */,
+				B27EDFC019401092007F89A6 /* Cell_search1.h */,
+				B27EDFC119401092007F89A6 /* Cell_search1.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -676,6 +681,7 @@
 				B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */,
 				B2B092CC19345E74002FE190 /* AppDelegate.m in Sources */,
 				B2759998193EF955005CF480 /* DB_formatlist.m in Sources */,
+				B27EDFC219401092007F89A6 /* Cell_search1.m in Sources */,
 				B2B092C819345E74002FE190 /* main.m in Sources */,
 				B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */,
 				B275998F193EF22A005CF480 /* Web_resquestData.m in Sources */,

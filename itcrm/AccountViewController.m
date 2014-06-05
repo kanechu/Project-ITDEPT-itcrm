@@ -10,6 +10,7 @@
 #import "SKSTableView.h"
 #import "SKSTableViewCell.h"
 #import "Cell_search.h"
+#import "Cell_search1.h"
 #import "DB_searchCriteria.h"
 @interface AccountViewController ()
 
@@ -52,6 +53,7 @@
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
+    NSLog(@"%@",alist_searchCriteria);
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
@@ -92,20 +94,33 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier=@"Cell_search1";
-    Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell==nil) {
-        cell=[[Cell_search alloc]init];
-    }
     //提取每行的数据
     NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
-    cell.il_prompt_label.text=col_label;
-    
-   
+    //col_stye 类型名
+    NSString *col_stye=[dic valueForKey:@"col_type"];
+    if ([col_stye isEqualToString:@"string"]) {
+        static NSString *cellIdentifier=@"Cell_search1";
+        Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (cell==nil) {
+            cell=[[Cell_search alloc]init];
+        }
+         cell.il_prompt_label.text=col_label;
+        return cell;
+    }
+    if ([col_stye isEqualToString:@"lookup"]) {
+        static NSString *cellIdentifier=@"Cell_search11";
+        Cell_search1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (cell==nil) {
+            cell=[[Cell_search1 alloc]init];
+        }
+        cell.il_prompt_label.text=col_label;
+        return cell;
+    }
+
     // Configure the cell...
-    return cell;
+    return nil;
 }
 
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
