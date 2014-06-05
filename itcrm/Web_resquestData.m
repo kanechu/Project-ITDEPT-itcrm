@@ -123,7 +123,9 @@
     [web_base fn_get_data:req_form];
 }
 - (void) fn_save_crmacct_browse_list: (NSMutableArray *) alist_result {
-    DB_formatlist *db=[[DB_formatlist alloc]init];
-    [db fn_save_formatlist_data:alist_result];
+ 
+    NSLog(@"%d",[alist_result count]);
+    DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
+    [db fn_save_crmacct_browse:alist_result];
 }
 @end

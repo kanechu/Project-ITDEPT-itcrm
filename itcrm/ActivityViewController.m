@@ -33,7 +33,8 @@
     NSLog(@"%@",[db fn_get_list_data:@"crmacct"]);
     
     DB_crmacct_browse *bd=[[DB_crmacct_browse alloc]init];
-    Web_resquestData *s=[[Web_resquestData alloc]init];
+    
+    NSLog(@"%@",[bd fn_get_data:nil]);
    
 
     // Uncomment the following line to preserve selection between presentations.
