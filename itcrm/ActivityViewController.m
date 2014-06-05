@@ -9,6 +9,7 @@
 #import "ActivityViewController.h"
 #import "DB_formatlist.h"
 #import "DB_crmacct_browse.h"
+#import "DB_Region.h"
 #import "Web_resquestData.h"
 @interface ActivityViewController ()
 
@@ -35,6 +36,9 @@
     DB_crmacct_browse *bd=[[DB_crmacct_browse alloc]init];
     
     NSLog(@"%@",[bd fn_get_data:nil]);
+    
+    DB_Region *ddb=[[DB_Region alloc]init];
+    NSLog(@"%@",[ddb fn_get_region_data]);
    
 
     // Uncomment the following line to preserve selection between presentations.

@@ -44,6 +44,7 @@
     [data fn_get_search_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
     [data fn_get_formatlist_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
     [data fn_get_crmacct_browse_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
+    [data fn_get_region_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
 }
 
 - (void)didReceiveMemoryWarning
