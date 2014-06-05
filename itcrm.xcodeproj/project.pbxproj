@@ -34,6 +34,17 @@
 		B27EDFCB1940185A007F89A6 /* DB_Region.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFCA1940185A007F89A6 /* DB_Region.m */; };
 		B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0BD19402495007F89A6 /* Cell_region.m */; };
 		B27EE0C1194025DE007F89A6 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0C0194025DE007F89A6 /* RegionViewController.m */; };
+		B27EE0D719404919007F89A6 /* MZAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0C619404919007F89A6 /* MZAppearance.m */; };
+		B27EE0D819404919007F89A6 /* MZFormSheetBackgroundWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0C819404919007F89A6 /* MZFormSheetBackgroundWindow.m */; };
+		B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0CA19404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m */; };
+		B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0CC19404919007F89A6 /* MZFormSheetController.m */; };
+		B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0CE19404919007F89A6 /* MZFormSheetSegue.m */; };
+		B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0D019404919007F89A6 /* MZTransition.m */; };
+		B27EE0DD19404919007F89A6 /* NSInvocation+Copy.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0D219404919007F89A6 /* NSInvocation+Copy.m */; };
+		B27EE0DE19404919007F89A6 /* UIImage+Additional.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0D419404919007F89A6 /* UIImage+Additional.m */; };
+		B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0D619404919007F89A6 /* UIViewController+TargetViewController.m */; };
+		B27EE0E219404DCA007F89A6 /* Cell_armacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0E119404DCA007F89A6 /* Cell_armacct_browse.m */; };
+		B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */; };
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
@@ -175,6 +186,28 @@
 		B27EE0BD19402495007F89A6 /* Cell_region.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_region.m; sourceTree = "<group>"; };
 		B27EE0BF194025DE007F89A6 /* RegionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionViewController.h; sourceTree = "<group>"; };
 		B27EE0C0194025DE007F89A6 /* RegionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionViewController.m; sourceTree = "<group>"; };
+		B27EE0C519404919007F89A6 /* MZAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZAppearance.h; sourceTree = "<group>"; };
+		B27EE0C619404919007F89A6 /* MZAppearance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZAppearance.m; sourceTree = "<group>"; };
+		B27EE0C719404919007F89A6 /* MZFormSheetBackgroundWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetBackgroundWindow.h; sourceTree = "<group>"; };
+		B27EE0C819404919007F89A6 /* MZFormSheetBackgroundWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetBackgroundWindow.m; sourceTree = "<group>"; };
+		B27EE0C919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetBackgroundWindowViewController.h; sourceTree = "<group>"; };
+		B27EE0CA19404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetBackgroundWindowViewController.m; sourceTree = "<group>"; };
+		B27EE0CB19404919007F89A6 /* MZFormSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetController.h; sourceTree = "<group>"; };
+		B27EE0CC19404919007F89A6 /* MZFormSheetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetController.m; sourceTree = "<group>"; };
+		B27EE0CD19404919007F89A6 /* MZFormSheetSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZFormSheetSegue.h; sourceTree = "<group>"; };
+		B27EE0CE19404919007F89A6 /* MZFormSheetSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZFormSheetSegue.m; sourceTree = "<group>"; };
+		B27EE0CF19404919007F89A6 /* MZTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTransition.h; sourceTree = "<group>"; };
+		B27EE0D019404919007F89A6 /* MZTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZTransition.m; sourceTree = "<group>"; };
+		B27EE0D119404919007F89A6 /* NSInvocation+Copy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Copy.h"; sourceTree = "<group>"; };
+		B27EE0D219404919007F89A6 /* NSInvocation+Copy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Copy.m"; sourceTree = "<group>"; };
+		B27EE0D319404919007F89A6 /* UIImage+Additional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additional.h"; sourceTree = "<group>"; };
+		B27EE0D419404919007F89A6 /* UIImage+Additional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additional.m"; sourceTree = "<group>"; };
+		B27EE0D519404919007F89A6 /* UIViewController+TargetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TargetViewController.h"; sourceTree = "<group>"; };
+		B27EE0D619404919007F89A6 /* UIViewController+TargetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TargetViewController.m"; sourceTree = "<group>"; };
+		B27EE0E019404DCA007F89A6 /* Cell_armacct_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_armacct_browse.h; sourceTree = "<group>"; };
+		B27EE0E119404DCA007F89A6 /* Cell_armacct_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_armacct_browse.m; sourceTree = "<group>"; };
+		B27EE0E319404F0C007F89A6 /* Crmacct_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crmacct_browseViewController.h; sourceTree = "<group>"; };
+		B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crmacct_browseViewController.m; sourceTree = "<group>"; };
 		B298626E19385CCB0097B553 /* RespPermit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespPermit.h; sourceTree = "<group>"; };
 		B298626F19385CCB0097B553 /* RespPermit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespPermit.m; sourceTree = "<group>"; };
 		B298627719386FF30097B553 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -341,6 +374,8 @@
 				B27EDFC119401092007F89A6 /* Cell_search1.m */,
 				B27EE0BC19402495007F89A6 /* Cell_region.h */,
 				B27EE0BD19402495007F89A6 /* Cell_region.m */,
+				B27EE0E019404DCA007F89A6 /* Cell_armacct_browse.h */,
+				B27EE0E119404DCA007F89A6 /* Cell_armacct_browse.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -374,6 +409,31 @@
 				B26CBCA319347E5A00C5287B /* NSArray.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		B27EE0C419404919007F89A6 /* MZFormSheet */ = {
+			isa = PBXGroup;
+			children = (
+				B27EE0C519404919007F89A6 /* MZAppearance.h */,
+				B27EE0C619404919007F89A6 /* MZAppearance.m */,
+				B27EE0C719404919007F89A6 /* MZFormSheetBackgroundWindow.h */,
+				B27EE0C819404919007F89A6 /* MZFormSheetBackgroundWindow.m */,
+				B27EE0C919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.h */,
+				B27EE0CA19404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m */,
+				B27EE0CB19404919007F89A6 /* MZFormSheetController.h */,
+				B27EE0CC19404919007F89A6 /* MZFormSheetController.m */,
+				B27EE0CD19404919007F89A6 /* MZFormSheetSegue.h */,
+				B27EE0CE19404919007F89A6 /* MZFormSheetSegue.m */,
+				B27EE0CF19404919007F89A6 /* MZTransition.h */,
+				B27EE0D019404919007F89A6 /* MZTransition.m */,
+				B27EE0D119404919007F89A6 /* NSInvocation+Copy.h */,
+				B27EE0D219404919007F89A6 /* NSInvocation+Copy.m */,
+				B27EE0D319404919007F89A6 /* UIImage+Additional.h */,
+				B27EE0D419404919007F89A6 /* UIImage+Additional.m */,
+				B27EE0D519404919007F89A6 /* UIViewController+TargetViewController.h */,
+				B27EE0D619404919007F89A6 /* UIViewController+TargetViewController.m */,
+			);
+			path = MZFormSheet;
 			sourceTree = "<group>";
 		};
 		B2B092AF19345E74002FE190 = {
@@ -478,6 +538,7 @@
 		B2B0931219346973002FE190 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				B27EE0C419404919007F89A6 /* MZFormSheet */,
 				B25D75F5193D64A2005913D7 /* Expandable Table */,
 				B22903F01936C9CB004D1862 /* FMDB */,
 				B22903DA1936C4A6004D1862 /* SVProgressHUD */,
@@ -533,6 +594,8 @@
 				B2B22FBA1939B6140083E0C4 /* OpportunityViewController.m */,
 				B27EE0BF194025DE007F89A6 /* RegionViewController.h */,
 				B27EE0C0194025DE007F89A6 /* RegionViewController.m */,
+				B27EE0E319404F0C007F89A6 /* Crmacct_browseViewController.h */,
+				B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -707,11 +770,15 @@
 				B2B092C819345E74002FE190 /* main.m in Sources */,
 				B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */,
 				B275998F193EF22A005CF480 /* Web_resquestData.m in Sources */,
+				B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */,
+				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
 				B2B0931F19346A52002FE190 /* RequestContract.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
+				B27EE0DD19404919007F89A6 /* NSInvocation+Copy.m in Sources */,
+				B27EE0D819404919007F89A6 /* MZFormSheetBackgroundWindow.m in Sources */,
 				B26CBCA419347E5A00C5287B /* NSDictionary.m in Sources */,
 				B2759995193EF750005CF480 /* RespFormatlist.m in Sources */,
 				B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */,
@@ -719,19 +786,26 @@
 				B25D7607193D6ACF005913D7 /* Cell_search.m in Sources */,
 				B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */,
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
+				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
+				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
 				B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */,
+				B27EE0E219404DCA007F89A6 /* Cell_armacct_browse.m in Sources */,
 				B26CBC9B193476B500C5287B /* AppConstants.m in Sources */,
 				B2B22FB21939B44E0083E0C4 /* ContactListViewController.m in Sources */,
 				B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */,
+				B27EE0DE19404919007F89A6 /* UIImage+Additional.m in Sources */,
 				B2B22FC11939B7690083E0C4 /* AttachmentViewController.m in Sources */,
 				B2B22FBB1939B6140083E0C4 /* OpportunityViewController.m in Sources */,
+				B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */,
 				B26CBCA519347E5A00C5287B /* NSArray.m in Sources */,
 				B22903FF1936C9CB004D1862 /* FMResultSet.m in Sources */,
 				B22903FD1936C9CB004D1862 /* FMDatabasePool.m in Sources */,
 				B298627919386FF30097B553 /* DBManager.m in Sources */,
+				B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */,
 				B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,
+				B27EE0D719404919007F89A6 /* MZAppearance.m in Sources */,
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
 				B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */,
 				B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */,
