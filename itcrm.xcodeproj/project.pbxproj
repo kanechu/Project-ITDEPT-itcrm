@@ -17,6 +17,8 @@
 		B229040E1937239D004D1862 /* Cell_login.m in Sources */ = {isa = PBXBuildFile; fileRef = B229040D1937239D004D1862 /* Cell_login.m */; };
 		B2452E7219416D9700D02A45 /* PopViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7119416D9700D02A45 /* PopViewManager.m */; };
 		B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7419417B9500D02A45 /* RegionViewController.m */; };
+		B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E78194195CA00D02A45 /* RespSystemIcon.m */; };
+		B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7B1941979200D02A45 /* DB_systemIcon.m */; };
 		B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F27A1935E0B600EC88F5 /* Menu_home.m */; };
 		B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F2821935E16500EC88F5 /* Cell_menu_item.m */; };
 		B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25D75F7193D64A2005913D7 /* SKSTableView.m */; };
@@ -153,6 +155,10 @@
 		B2452E7119416D9700D02A45 /* PopViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopViewManager.m; sourceTree = "<group>"; };
 		B2452E7319417B9500D02A45 /* RegionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegionViewController.h; sourceTree = "<group>"; };
 		B2452E7419417B9500D02A45 /* RegionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegionViewController.m; sourceTree = "<group>"; };
+		B2452E77194195CA00D02A45 /* RespSystemIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespSystemIcon.h; sourceTree = "<group>"; };
+		B2452E78194195CA00D02A45 /* RespSystemIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSystemIcon.m; sourceTree = "<group>"; };
+		B2452E7A1941979200D02A45 /* DB_systemIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_systemIcon.h; sourceTree = "<group>"; };
+		B2452E7B1941979200D02A45 /* DB_systemIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_systemIcon.m; sourceTree = "<group>"; };
 		B257F2791935E0B600EC88F5 /* Menu_home.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu_home.h; sourceTree = "<group>"; };
 		B257F27A1935E0B600EC88F5 /* Menu_home.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu_home.m; sourceTree = "<group>"; };
 		B257F2811935E16500EC88F5 /* Cell_menu_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_menu_item.h; sourceTree = "<group>"; };
@@ -352,6 +358,8 @@
 				B275999D193F2205005CF480 /* DB_crmacct_browse.m */,
 				B27EDFC91940185A007F89A6 /* DB_Region.h */,
 				B27EDFCA1940185A007F89A6 /* DB_Region.m */,
+				B2452E7A1941979200D02A45 /* DB_systemIcon.h */,
+				B2452E7B1941979200D02A45 /* DB_systemIcon.m */,
 			);
 			name = DataAccess;
 			sourceTree = "<group>";
@@ -580,6 +588,8 @@
 				B275999A193F0E19005CF480 /* RespCrmacct_browse.m */,
 				B27EDFC61940173C007F89A6 /* RespRegion.h */,
 				B27EDFC71940173C007F89A6 /* RespRegion.m */,
+				B2452E77194195CA00D02A45 /* RespSystemIcon.h */,
+				B2452E78194195CA00D02A45 /* RespSystemIcon.m */,
 				B257F2791935E0B600EC88F5 /* Menu_home.h */,
 				B257F27A1935E0B600EC88F5 /* Menu_home.m */,
 			);
@@ -809,6 +819,7 @@
 				B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */,
 				B27EE0DE19404919007F89A6 /* UIImage+Additional.m in Sources */,
 				B2B22FC11939B7690083E0C4 /* AttachmentViewController.m in Sources */,
+				B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */,
 				B2B22FBB1939B6140083E0C4 /* OpportunityViewController.m in Sources */,
 				B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */,
 				B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */,
@@ -818,6 +829,7 @@
 				B298627919386FF30097B553 /* DBManager.m in Sources */,
 				B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */,
 				B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */,
+				B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,
 				B27EE0D719404919007F89A6 /* MZAppearance.m in Sources */,
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
