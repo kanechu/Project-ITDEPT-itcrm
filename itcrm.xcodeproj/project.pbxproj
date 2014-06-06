@@ -603,8 +603,12 @@
 				B2B092D119345E74002FE190 /* LoginViewController.m */,
 				B2B0933319346C9C002FE190 /* MainHomeViewController.h */,
 				B2B0933419346C9C002FE190 /* MainHomeViewController.m */,
+				B27EE0E319404F0C007F89A6 /* Crmacct_browseViewController.h */,
+				B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */,
 				B2B22FB31939B4E90083E0C4 /* AccountViewController.h */,
 				B2B22FB41939B4E90083E0C4 /* AccountViewController.m */,
+				B2452E7319417B9500D02A45 /* RegionViewController.h */,
+				B2452E7419417B9500D02A45 /* RegionViewController.m */,
 				B2B22FB61939B5E20083E0C4 /* ActivityViewController.h */,
 				B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */,
 				B2B22FB01939B44E0083E0C4 /* ContactListViewController.h */,
@@ -615,10 +619,6 @@
 				B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */,
 				B2B22FB91939B6140083E0C4 /* OpportunityViewController.h */,
 				B2B22FBA1939B6140083E0C4 /* OpportunityViewController.m */,
-				B2452E7319417B9500D02A45 /* RegionViewController.h */,
-				B2452E7419417B9500D02A45 /* RegionViewController.m */,
-				B27EE0E319404F0C007F89A6 /* Crmacct_browseViewController.h */,
-				B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

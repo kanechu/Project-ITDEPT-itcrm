@@ -12,6 +12,7 @@
 #import "Web_resquestData.h"
 #import "DB_RespLogin.h"
 #import "SVProgressHUD.h"
+#import "DB_systemIcon.h"
 @interface MainHomeViewController ()
 
 @end
@@ -49,12 +50,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//二进制文件编码转换为图片
+-(UIImage*)fn_get_icon:(NSString*)str{
+    NSData *data=[[NSData alloc]initWithBase64EncodedString:str options:0];
+    UIImage *image=[[UIImage alloc]initWithData:data];
+    return image;
+}
 //初始化Item
 - (void) fn_refresh_menu;
 {
     ilist_menu = [[NSMutableArray alloc] init];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_menu1" segue:@"segue_account"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_menu2" segue:@"segue_activity"]];
+    DB_systemIcon *db=[[DB_systemIcon alloc]init];
+    NSString *icon_crmacct=[[[db fn_get_systemIcon_data:@"crmacct"]objectAtIndex:0]valueForKey:@"ic_content"];
+    NSString *icon_maport=[[[db fn_get_systemIcon_data:@"maport"]objectAtIndex:0]valueForKey:@"ic_content"];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:icon_crmacct segue:@"segue_account"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:icon_maport segue:@"segue_activity"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_menu3" segue:@"segue_contactList"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_menu3" segue:@"segue_Quotation"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Attachment" image:@"ic_menu3" segue:@"segue_Attachment"]];
@@ -68,7 +78,6 @@
 }
 #pragma mark 请求全部的数据
 -(void)fn_resquestAndsave_data{
-    [SVProgressHUD showWithStatus:@"loading data!"];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
     NSString* base_url=nil;
@@ -96,7 +105,7 @@
     int  li_item=[indexPath item];
     menu_item=[ilist_menu objectAtIndex:li_item];
     cell.ilb_menuName.text=menu_item.is_label;
-    [cell.ibt_itemButton setImage:[UIImage imageNamed:menu_item.is_image] forState:UIControlStateNormal];
+    [cell.ibt_itemButton setImage:[self fn_get_icon:menu_item.is_image] forState:UIControlStateNormal];
     cell.ibt_itemButton.tag=indexPath.item;
     return cell;
 }

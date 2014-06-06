@@ -54,8 +54,7 @@
     
 }
 - (void) fn_save_login_list: (NSMutableArray *) alist_result {
-    NSLog(@"成功获取数据");
-    NSLog(@"%@",alist_result);
+   
 }
 #pragma mark 请求searchCriteria的数据
 - (void) fn_get_search_data:(NSString*)base_url
@@ -127,10 +126,8 @@
 }
 - (void) fn_save_crmacct_browse_list: (NSMutableArray *) alist_result {
  
-    NSLog(@"%d",[alist_result count]);
     DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
     [db fn_save_crmacct_browse:alist_result];
-    [SVProgressHUD dismiss];
 }
 
 

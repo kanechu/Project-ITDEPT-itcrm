@@ -34,10 +34,10 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_systemIcon_data{
+-(NSMutableArray*)fn_get_systemIcon_data:(NSString*)ic_name{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from systemIcon"];
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from systemIcon where ic_name like ?",ic_name];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
