@@ -60,11 +60,11 @@
 - (void) fn_refresh_menu;
 {
     ilist_menu = [[NSMutableArray alloc] init];
-    DB_systemIcon *db=[[DB_systemIcon alloc]init];
+    /*DB_systemIcon *db=[[DB_systemIcon alloc]init];
     NSString *icon_crmacct=[[[db fn_get_systemIcon_data:@"crmacct"]objectAtIndex:0]valueForKey:@"ic_content"];
-    NSString *icon_maport=[[[db fn_get_systemIcon_data:@"maport"]objectAtIndex:0]valueForKey:@"ic_content"];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:icon_crmacct segue:@"segue_account"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:icon_maport segue:@"segue_activity"]];
+    NSString *icon_maport=[[[db fn_get_systemIcon_data:@"maport"]objectAtIndex:0]valueForKey:@"ic_content"];*/
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_menu1"segue:@"segue_account"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_menu2" segue:@"segue_activity"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_menu3" segue:@"segue_contactList"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_menu3" segue:@"segue_Quotation"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Attachment" image:@"ic_menu3" segue:@"segue_Attachment"]];
@@ -105,7 +105,7 @@
     int  li_item=[indexPath item];
     menu_item=[ilist_menu objectAtIndex:li_item];
     cell.ilb_menuName.text=menu_item.is_label;
-    [cell.ibt_itemButton setImage:[self fn_get_icon:menu_item.is_image] forState:UIControlStateNormal];
+    [cell.ibt_itemButton setImage:[UIImage imageNamed:menu_item.is_image] forState:UIControlStateNormal];
     cell.ibt_itemButton.tag=indexPath.item;
     return cell;
 }

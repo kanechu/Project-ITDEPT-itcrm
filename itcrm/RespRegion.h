@@ -10,7 +10,7 @@
 
 @interface RespRegion : NSObject
 
-//@property(nonatomic,copy)NSString *type;
+@property(nonatomic,copy)NSString *type;
 @property(nonatomic,copy)NSString *display;
 @property(nonatomic,copy)NSString *data;
 @property(nonatomic,copy)NSString *desc;

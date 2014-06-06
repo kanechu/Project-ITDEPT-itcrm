@@ -21,10 +21,10 @@
     if ([[idb fn_get_db] open]) {
         for (RespRegion *lmap_data in ilist_result) {
             NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from region where display = :display and data = :data and desc = :desc and image =:image" withParameterDictionary:ldict_row];
+            BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from region where type =:type and display = :display and data = :data and desc = :desc and image =:image" withParameterDictionary:ldict_row];
             if (! ib_delete)
                 return NO;
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into region (display, data, desc, image) values (:display, :data, :desc, :image)" withParameterDictionary:ldict_row];
+            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into region (type,display, data, desc, image) values (:type,:display, :data, :desc, :image)" withParameterDictionary:ldict_row];
             if (! ib_updated)
                 return NO;
             

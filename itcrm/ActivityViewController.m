@@ -37,6 +37,9 @@
     
     NSLog(@"%@",[bd fn_get_data:nil]);
     
+    DB_Region *dbr=[[DB_Region alloc]init];
+    NSLog(@"%@",[dbr fn_get_region_data:@"macountry"]);
+    
    
 
     // Uncomment the following line to preserve selection between presentations.

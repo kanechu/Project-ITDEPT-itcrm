@@ -18,7 +18,8 @@ NSString* const STR_SEARCHCRITERIA_URL=@"api/search/searchcriteria";
 NSString* const STR_PERMIT_URL=@"api/users/permit";
 NSString* const STR_FORMATLIST_URL=@"api/Search/formatlist";
 NSString* const STR_CRMACCT_BROWSE_URL=@"api/Crm/crmacct_browse";
-NSString* const STR_REGION_URL=@"api/Master/crmregion";
+
+NSString* const STR_REGION_URL=@"api/Master/mslookup";
 NSString* const STR_SYSTEMICON_URL=@"api/system/icon";
 #else
 NSString* const STR_BASE_URL = @"http://223.255.167.158/";

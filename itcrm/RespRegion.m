@@ -10,7 +10,7 @@
 
 @implementation RespRegion
 
-//@synthesize type;
+@synthesize type;
 @synthesize display;
 @synthesize data;
 @synthesize desc;
