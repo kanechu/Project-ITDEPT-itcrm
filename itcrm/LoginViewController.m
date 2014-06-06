@@ -20,6 +20,10 @@
 #import "Cell_login.h"
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
+#import "DB_crmacct_browse.h"
+#import "DB_formatlist.h"
+#import "DB_searchCriteria.h"
+
 @interface LoginViewController ()
 
 @end
@@ -174,17 +178,31 @@ enum TEXTFIELD_TAG {
     
 }
 - (void) fn_save_login_list: (NSMutableArray *) alist_result {
-    [SVProgressHUD dismiss];
+   
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_save_data:alist_result];
+    [SVProgressHUD dismiss];
     [self performSegueWithIdentifier:@"segue_MainHomeVC" sender:self];
 }
+
+
 
 - (IBAction)fn_login_app:(id)sender {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
+    
+    DB_searchCriteria *db_search=[[DB_searchCriteria alloc]init];
+    [db_search fn_delete_all_data];
+    
+    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+    [db_crmacct fn_delete_all_data];
+    
+    DB_formatlist *db_formtlist=[[DB_formatlist alloc]init];
+    [db_formtlist fn_delete_all_data];
+    
     DB_Login *dbLogin=[[DB_Login alloc]init];
     [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
+    
     [self fn_get_data:is_user :is_pass :is_systemCode];
 }
 

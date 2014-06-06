@@ -24,6 +24,7 @@
 #import "DB_formatlist.h"
 #import "DB_crmacct_browse.h"
 #import "DB_Region.h"
+#import "SVProgressHUD.h"
 @implementation Web_resquestData
 
 #pragma mark 请求permit的数据
@@ -129,6 +130,7 @@
     NSLog(@"%d",[alist_result count]);
     DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
     [db fn_save_crmacct_browse:alist_result];
+    [SVProgressHUD dismiss];
 }
 
 
@@ -163,8 +165,8 @@
 }
 - (void) fn_save_region_list: (NSMutableArray *) alist_result {
     
-    NSLog(@"%d",[alist_result count]);
     DB_Region *db=[[DB_Region alloc]init];
     [db fn_save_region_data:alist_result];
+    
 }
 @end

@@ -9,8 +9,9 @@
 #import "MainHomeViewController.h"
 #import "Menu_home.h"
 #import "Cell_menu_item.h"
-#import "DB_RespLogin.h"
 #import "Web_resquestData.h"
+#import "DB_RespLogin.h"
+#import "SVProgressHUD.h"
 @interface MainHomeViewController ()
 
 @end
@@ -27,24 +28,20 @@
     }
     return self;
 }
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self=[super initWithCoder:aDecoder];
+    if (self) {
+        [self fn_resquestAndsave_data];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self fn_refresh_menu];
-    [self fn_resquestAndsave_data];
     
 	// Do any additional setup after loading the view.
-}
--(void)fn_resquestAndsave_data{
-    
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    NSMutableArray *arr=[db fn_get_all_data];
-    Web_resquestData *data=[[Web_resquestData alloc]init];
-    [data fn_get_search_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
-    [data fn_get_formatlist_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
-    [data fn_get_crmacct_browse_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
-    [data fn_get_region_data:[[arr objectAtIndex:0] valueForKey:@"web_addr"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +66,19 @@
     [self.iui_collectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell_menu"];
     [self.iui_collectionview reloadData];
 }
-
+#pragma mark 请求全部的数据
+-(void)fn_resquestAndsave_data{
+    [SVProgressHUD showWithStatus:@"loading data!"];
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    NSMutableArray *arr=[db fn_get_all_data];
+    NSString* base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
+    Web_resquestData *data=[[Web_resquestData alloc]init];
+    [data fn_get_search_data:base_url];
+    [data fn_get_formatlist_data:base_url];
+    [data fn_get_crmacct_browse_data:base_url];
+    [data fn_get_region_data:base_url];
+    
+}
 #pragma mark UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return [ilist_menu count];
