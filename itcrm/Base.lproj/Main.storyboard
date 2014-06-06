@@ -366,7 +366,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" patternImage="4A2D205E-5BA3-4C79-BC00-1B58352538C2" colorSpace="pattern"/>
+                                        <color key="backgroundColor" patternImage="A59E972B-C243-4E5A-A622-60E30BA92E30" colorSpace="pattern"/>
                                         <connections>
                                             <outlet property="t_desc1" destination="uOK-re-bFH" id="Aed-fc-Y15"/>
                                             <outlet property="t_desc2" destination="Se8-Be-nKE" id="VC0-GK-ce9"/>
@@ -390,6 +390,9 @@
                                 <state key="normal" title="advance">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="fn_advance_search:" destination="EQ7-pG-KJY" eventType="touchUpInside" id="Gvx-Pu-Fvt"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
@@ -467,6 +470,9 @@
                                                     <state key="normal" title="跳转">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="fn_skip_region:" destination="jD9-aI-6zc" eventType="touchUpInside" id="D8y-Ba-BtP"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -487,7 +493,16 @@
                                 </state>
                                 <connections>
                                     <action selector="fn_search_account:" destination="jD9-aI-6zc" eventType="touchUpInside" id="4E3-sM-x8f"/>
-                                    <segue destination="aOd-rJ-3xj" kind="push" id="vVJ-AJ-dao"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gtW-i6-eNB">
+                                <rect key="frame" x="20" y="20" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="back">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fn_go_back:" destination="jD9-aI-6zc" eventType="touchUpInside" id="Hn9-sB-DoI"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -505,7 +520,7 @@
         <!--Region View Controller-->
         <scene sceneID="PKj-v8-0w3">
             <objects>
-                <tableViewController id="aOd-rJ-3xj" customClass="RegionViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RegionViewController" id="aOd-rJ-3xj" customClass="RegionViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="Hts-TT-JAk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -557,7 +572,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="4A2D205E-5BA3-4C79-BC00-1B58352538C2" width="320" height="460">
+        <image name="A59E972B-C243-4E5A-A622-60E30BA92E30" width="320" height="460">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

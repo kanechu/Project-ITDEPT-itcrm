@@ -10,6 +10,8 @@
 #import "DB_formatlist.h"
 #import "DB_crmacct_browse.h"
 #import "Cell_armacct_browse.h"
+#import "PopViewManager.h"
+#import "AccountViewController.h"
 @interface Crmacct_browseViewController ()
 
 @end
@@ -32,6 +34,7 @@
     self.tableView_acct.delegate=self;
     self.tableView_acct.dataSource=self;
     _searchBar.delegate=self;
+    [_searchBar resignFirstResponder];
    
 	// Do any additional setup after loading the view.
 }
@@ -132,5 +135,15 @@
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_searchBar resignFirstResponder];
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    [self fn_init_account];
+    [self.tableView_acct reloadData];
+}
+
+- (IBAction)fn_advance_search:(id)sender {
+    AccountViewController *VC=(AccountViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AccountViewController"];
+    PopViewManager *popV=[[PopViewManager alloc]init];
+    [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
 @end

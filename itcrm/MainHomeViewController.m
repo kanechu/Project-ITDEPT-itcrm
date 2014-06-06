@@ -71,7 +71,10 @@
     [SVProgressHUD showWithStatus:@"loading data!"];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
-    NSString* base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
+    NSString* base_url=nil;
+    if (arr!=nil && [arr count]!=0) {
+        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
+    }
     Web_resquestData *data=[[Web_resquestData alloc]init];
     [data fn_get_search_data:base_url];
     [data fn_get_formatlist_data:base_url];

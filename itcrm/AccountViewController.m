@@ -12,6 +12,9 @@
 #import "Cell_search.h"
 #import "Cell_search1.h"
 #import "DB_searchCriteria.h"
+#import "MZFormSheetController.h"
+#import "PopViewManager.h"
+#import "RegionViewController.h"
 @interface AccountViewController ()
 
 @end
@@ -133,5 +136,15 @@
     return filtered;
 }
 - (IBAction)fn_search_account:(id)sender {
+}
+
+- (IBAction)fn_go_back:(id)sender {
+     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+}
+
+- (IBAction)fn_skip_region:(id)sender {
+    RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
+    PopViewManager *pop=[[PopViewManager alloc]init];
+    [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
 @end

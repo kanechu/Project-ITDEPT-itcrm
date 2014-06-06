@@ -17,5 +17,7 @@
 @property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 - (IBAction)fn_search_account:(id)sender;
+- (IBAction)fn_go_back:(id)sender;
+- (IBAction)fn_skip_region:(id)sender;
 
 @end

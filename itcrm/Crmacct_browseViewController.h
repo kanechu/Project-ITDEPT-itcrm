@@ -13,5 +13,6 @@
 @property (nonatomic,strong) NSMutableArray *ilist_account;
 @property (weak, nonatomic) IBOutlet UITableView *tableView_acct;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+- (IBAction)fn_advance_search:(id)sender;
 
 @end
