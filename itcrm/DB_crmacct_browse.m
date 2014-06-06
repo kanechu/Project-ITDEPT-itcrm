@@ -32,10 +32,10 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_data:(NSString*)list_id{
+-(NSMutableArray*)fn_get_data:(NSString*)acct_name{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmacct_browse"];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmacct_browse where acct_name like ?",[NSString stringWithFormat:@"%@%%",acct_name]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }

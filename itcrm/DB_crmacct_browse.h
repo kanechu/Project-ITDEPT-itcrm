@@ -13,7 +13,7 @@
 @property(nonatomic,strong)DBManager *idb;
 
 -(BOOL)fn_save_crmacct_browse:(NSMutableArray*)alist_result;
--(NSMutableArray*)fn_get_data:(NSString*)list_id;
+-(NSMutableArray*)fn_get_data:(NSString*)acct_name;
 -(BOOL)fn_delete_all_data;
 
 @end
