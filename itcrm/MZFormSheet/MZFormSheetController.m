@@ -52,7 +52,7 @@ CGFloat const MZFormSheetControllerDefaultHeight = 284.0;
 
 CGFloat const MZFormSheetControllerDefaultAnimationDuration = 0.3;
 
-CGFloat const MZFormSheetPresentedControllerDefaultCornerRadius = 6.0;
+CGFloat const MZFormSheetPresentedControllerDefaultCornerRadius = 1.0;
 CGFloat const MZFormSheetPresentedControllerDefaultShadowRadius = 6.0;
 CGFloat const MZFormSheetPresentedControllerDefaultShadowOpacity = 0.5;
 

@@ -76,6 +76,7 @@
     
     NSMutableArray *arr_account=[NSMutableArray array];
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+    NSLog(@"%@",_searchBar.text);
     arr_account=[db_crmacct fn_get_data:_searchBar.text];
     ilist_account=[[NSMutableArray alloc]init];
     NSLog(@"%@",arr_account);
