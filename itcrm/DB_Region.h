@@ -12,7 +12,7 @@
 
 @property(nonatomic,strong)DBManager *idb;
 -(BOOL)fn_save_region_data:(NSMutableArray*)ilist_result;
--(NSMutableArray*)fn_get_region_data;
+-(NSMutableArray*)fn_get_region_data:(NSString*)type;
 -(BOOL)fn_delete_region_data;
 
 @end

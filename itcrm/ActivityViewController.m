@@ -37,8 +37,6 @@
     
     NSLog(@"%@",[bd fn_get_data:nil]);
     
-    DB_Region *ddb=[[DB_Region alloc]init];
-    NSLog(@"%@",[ddb fn_get_region_data]);
    
 
     // Uncomment the following line to preserve selection between presentations.

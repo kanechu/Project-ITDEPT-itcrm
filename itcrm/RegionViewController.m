@@ -28,10 +28,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    DB_Region *db=[[DB_Region alloc]init];
-    ilist_region=[db fn_get_region_data];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
+    _is_searchBar.delegate=self;
     
 	// Do any additional setup after loading the view.
 }
@@ -69,6 +68,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
+#pragma mark UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+    
+}
+
 
 - (IBAction)fn_return_acctSearch:(id)sender{
      [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];

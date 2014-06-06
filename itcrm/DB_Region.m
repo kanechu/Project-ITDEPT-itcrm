@@ -34,10 +34,10 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_region_data{
+-(NSMutableArray*)fn_get_region_data:(NSString*)type{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from region"];
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from region where type like ?",type];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
