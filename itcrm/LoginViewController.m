@@ -183,40 +183,8 @@ enum TEXTFIELD_TAG {
    
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_save_data:alist_result];
-    NSMutableArray *arr=[db fn_get_all_data];
-    NSString* base_url=nil;
-    if (arr!=nil && [arr count]!=0) {
-        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
-    }
-    [self fn_get_systemIcon_data:base_url];
-   
-}
-#pragma mark 请求systemIcon的数据
-- (void) fn_get_systemIcon_data:(NSString*)base_url
-{
-    RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
-    DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
-    req_form.Auth =auth;
-    SearchFormContract *search = [[SearchFormContract alloc]init];
-    search.os_column = @"rec_upd_date";
-    search.os_value = @"1400231924493";
-    req_form.SearchForm = [NSSet setWithObjects:search,nil];
-    Web_base *web_base=[[Web_base alloc]init];
-    web_base.il_url=STR_SYSTEMICON_URL;
-    web_base.base_url=base_url;
-    web_base.iresp_class=[RespSystemIcon class];
-    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSystemIcon class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_systemIcon_list:);
-    [web_base fn_get_data:req_form];
-}
--(void)fn_save_systemIcon_list:(NSMutableArray*)ilist_result{
-    DB_systemIcon *db=[[DB_systemIcon alloc]init];
-    [db fn_save_systemIcon_data:ilist_result];
+    [self performSegueWithIdentifier:@"segue_MainHomeVC" sender:self];
     [SVProgressHUD dismiss];
-     [self performSegueWithIdentifier:@"segue_MainHomeVC" sender:self];
 }
 
 

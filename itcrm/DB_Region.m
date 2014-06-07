@@ -45,6 +45,19 @@
     }
     return arr;
 }
+-(NSMutableArray*)fn_get_lookup_data:(NSString*)display type:(NSString*)type{
+    
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from (select * from region where type like ?) where display like ?",type,[NSString stringWithFormat:@"%@%%",display]];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
+
 -(BOOL)fn_delete_region_data{
     if ([[idb fn_get_db]open]) {
         BOOL isSuccess=[[idb fn_get_db] executeUpdate:@"delete from region"];
