@@ -31,6 +31,7 @@ enum TEXTFIELDTAG {
 @synthesize idic_countryname;
 @synthesize idic_regionname;
 @synthesize idic_territoryname;
+@synthesize checkText;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,6 +50,9 @@ enum TEXTFIELDTAG {
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
+    //注册通知
+    [self fn_register_notifiction];
+    [self fn_custom_gesture];
     
 // Do any additional setup after loading the view.
 }
@@ -58,6 +62,30 @@ enum TEXTFIELDTAG {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)fn_register_notifiction{
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // 键盘高度变化通知，ios5.0新增的
+    
+#ifdef __IPHONE_5_0
+    
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    
+    if (version >= 5.0) {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
+        
+    }
+    
+#endif
+}
+#pragma mark UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    checkText = textField;//设置被点击的对象
+}
+
 #pragma mark -初始化数组
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
@@ -117,6 +145,7 @@ enum TEXTFIELDTAG {
             cell=[[Cell_search alloc]init];
         }
          cell.il_prompt_label.text=col_label;
+        cell.itf_searchData.delegate=self;
         return cell;
     }
     if ([col_stye isEqualToString:@"lookup"]) {
@@ -138,6 +167,7 @@ enum TEXTFIELDTAG {
             cell.ibtn_skip.tag=TAG2;
             cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
         }
+        cell.itf_input_searchData.delegate=self;
         return cell;
     }
 
@@ -169,11 +199,11 @@ enum TEXTFIELDTAG {
     }
     if (btn.tag==TAG1) {
         SEL isel_action=@selector(fn_show_Region_textfield:);
-        [self fn_pop_regionView:@"Please fill in Region" type:@"macountry" action:isel_action];
+        [self fn_pop_regionView:@"Please fill in Region" type:@"crmmain_region" action:isel_action];
     }
     if (btn.tag==TAG2) {
         SEL isel_action=@selector(fn_show_Territory_textfield:);
-        [self fn_pop_regionView:@"Please fill in Territory" type:@"macountry" action:isel_action];
+        [self fn_pop_regionView:@"Please fill in Territory" type:@"maport" action:isel_action];
     }
 }
 -(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type action:(SEL)isel_action{
@@ -196,6 +226,43 @@ enum TEXTFIELDTAG {
 -(void)fn_show_Territory_textfield:(NSMutableDictionary*)dic{
     idic_territoryname=dic;
     [_skstableView reloadData];
+}
+-(void)fn_custom_gesture{
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapgesture.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapgesture];
+}
+-(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    [checkText resignFirstResponder];
+}
+#pragma mark Responding to keyboard events
+- (void)keyboardWillShow:(NSNotification*)notification{
+    if (nil == checkText) {
+        
+        return;
+        
+    }
+    NSDictionary *userInfo = [notification userInfo];
+    // Get the origin of the keyboard when it's displayed.
+    
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+  
+    //设置表视图frame
+    [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height-20)];
+    //设置表视图可见cell
+  //  [_skstableView scrollToRowAtIndexPath:[NSIndexPath indexPathForSubRow:1 inRow:1 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+}
+
+//键盘被隐藏的时候调用的方法
+-(void)keyboardWillHide:(NSNotification*)notification {
+    if (checkText) {
+        //设置表视图frame,ios7的导航条加上状态栏是64
+        [_skstableView setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+    }
 }
 
 @end

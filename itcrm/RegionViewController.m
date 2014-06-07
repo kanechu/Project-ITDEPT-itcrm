@@ -41,7 +41,6 @@
     _is_searchBar.placeholder=is_placeholder;
     db=[[DB_Region alloc]init];
     ilist_region=[db fn_get_region_data:type];
-    
 	// Do any additional setup after loading the view.
 }
 
