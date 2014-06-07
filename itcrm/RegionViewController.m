@@ -10,12 +10,19 @@
 #import "DB_Region.h"
 #import "Cell_region.h"
 #import "MZFormSheetController.h"
+#import "AppConstants.h"
+
 @interface RegionViewController ()
 
 @end
 
 @implementation RegionViewController
 @synthesize ilist_region;
+@synthesize isel_action;
+@synthesize iobj_target;
+@synthesize is_placeholder;
+@synthesize type;
+@synthesize db;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,6 +38,9 @@
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
+    _is_searchBar.placeholder=is_placeholder;
+    db=[[DB_Region alloc]init];
+    ilist_region=[db fn_get_region_data:type];
     
 	// Do any additional setup after loading the view.
 }
@@ -66,16 +76,19 @@
 
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSMutableDictionary *dic=[ilist_region objectAtIndex:indexPath.row];
+    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action withObject:dic];);
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    ilist_region=[db fn_get_lookup_data:searchText type:type];
     
+    [_tableview reloadData];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
-    
+    [_is_searchBar resignFirstResponder];
 }
-
 
 - (IBAction)fn_return_acctSearch:(id)sender{
      [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];

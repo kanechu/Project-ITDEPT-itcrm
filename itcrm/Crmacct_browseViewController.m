@@ -121,13 +121,13 @@
     return cell;
     
 }
+
+
+#pragma mark UITableViewDelegate
 -(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
     return NO;
 }
 
-
-
-#pragma mark UITableViewDelegate
 
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{

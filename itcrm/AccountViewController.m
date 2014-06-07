@@ -18,12 +18,19 @@
 @interface AccountViewController ()
 
 @end
+enum TEXTFIELDTAG {
+    TAG = 1,
+    TAG1,TAG2
+    };
 
 @implementation AccountViewController
 
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
 @synthesize alist_filtered_data;
+@synthesize idic_countryname;
+@synthesize idic_regionname;
+@synthesize idic_territoryname;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -119,6 +126,18 @@
             cell=[[Cell_search1 alloc]init];
         }
         cell.il_prompt_label.text=col_label;
+        if ([col_label isEqualToString:@"Country"]) {
+            cell.ibtn_skip.tag=TAG;
+            cell.itf_input_searchData.text=[idic_countryname valueForKey:@"display"];
+        }
+        if ([col_label isEqualToString:@"Region"]) {
+            cell.ibtn_skip.tag=TAG1;
+            cell.itf_input_searchData.text=[idic_regionname valueForKey:@"display"];
+        }
+        if ([col_label isEqualToString:@"Territory"]) {
+            cell.ibtn_skip.tag=TAG2;
+            cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
+        }
         return cell;
     }
 
@@ -143,8 +162,40 @@
 }
 
 - (IBAction)fn_skip_region:(id)sender {
+    UIButton *btn=(UIButton*)sender;
+    if (btn.tag==TAG) {
+        SEL isel_action=@selector(fn_show_country_textfield:);
+        [self fn_pop_regionView:@"Please fill in Country" type:@"macountry" action:isel_action];
+    }
+    if (btn.tag==TAG1) {
+        SEL isel_action=@selector(fn_show_Region_textfield:);
+        [self fn_pop_regionView:@"Please fill in Region" type:@"macountry" action:isel_action];
+    }
+    if (btn.tag==TAG2) {
+        SEL isel_action=@selector(fn_show_Territory_textfield:);
+        [self fn_pop_regionView:@"Please fill in Territory" type:@"macountry" action:isel_action];
+    }
+}
+-(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type action:(SEL)isel_action{
     RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
+    VC.is_placeholder=placeholder;
+    VC.type=is_type;
+    VC.iobj_target=self;
+    VC.isel_action=isel_action;
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
+-(void)fn_show_country_textfield:(NSMutableDictionary*)dic{
+    idic_countryname=dic;
+    [_skstableView reloadData];
+}
+-(void)fn_show_Region_textfield:(NSMutableDictionary*)dic{
+    idic_regionname=dic;
+    [_skstableView reloadData];
+}
+-(void)fn_show_Territory_textfield:(NSMutableDictionary*)dic{
+    idic_territoryname=dic;
+    [_skstableView reloadData];
+}
+
 @end

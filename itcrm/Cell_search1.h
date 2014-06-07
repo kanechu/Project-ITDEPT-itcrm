@@ -11,5 +11,6 @@
 @interface Cell_search1 : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *il_prompt_label;
 @property (weak, nonatomic) IBOutlet UITextField *itf_input_searchData;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_skip;
 
 @end

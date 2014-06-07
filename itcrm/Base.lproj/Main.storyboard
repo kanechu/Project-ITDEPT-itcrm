@@ -366,7 +366,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" patternImage="F8F21F2D-AD0B-4B24-B41D-90F319154FB0" colorSpace="pattern"/>
+                                        <color key="backgroundColor" patternImage="5702262A-6D8C-4394-8FE3-7D41A7F9B1F2" colorSpace="pattern"/>
                                         <connections>
                                             <outlet property="t_desc1" destination="uOK-re-bFH" id="Aed-fc-Y15"/>
                                             <outlet property="t_desc2" destination="Se8-Be-nKE" id="VC0-GK-ce9"/>
@@ -477,6 +477,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="ibtn_skip" destination="7Ct-sG-IVt" id="qmp-Lg-wbD"/>
                                             <outlet property="il_prompt_label" destination="rbV-3D-wdx" id="FtF-v8-6zs"/>
                                             <outlet property="itf_input_searchData" destination="Zyq-eB-de7" id="lYE-77-N6V"/>
                                         </connections>
@@ -553,6 +554,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="agc-8t-g8d">
                                                     <rect key="frame" x="2" y="2" width="45" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" red="0.96175462369999998" green="0.60518228559999998" blue="0.58282753229999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1HR-eZ-Id9">
                                                     <rect key="frame" x="55" y="0.0" width="260" height="21"/>
@@ -596,7 +598,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="F8F21F2D-AD0B-4B24-B41D-90F319154FB0" width="320" height="460">
+        <image name="5702262A-6D8C-4394-8FE3-7D41A7F9B1F2" width="320" height="460">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
