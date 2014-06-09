@@ -21,6 +21,7 @@ NSString* const STR_CRMACCT_BROWSE_URL=@"api/Crm/crmacct_browse";
 
 NSString* const STR_REGION_URL=@"api/Master/mslookup";
 NSString* const STR_SYSTEMICON_URL=@"api/system/icon";
+NSString* const STR_CRMOOP_BROWSE_URL=@"api/Crm/crmopp_browse";
 #else
 NSString* const STR_BASE_URL = @"http://223.255.167.158/";
 #endif

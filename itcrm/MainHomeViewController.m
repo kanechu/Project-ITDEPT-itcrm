@@ -68,7 +68,7 @@
     [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_menu3" segue:@"segue_contactList"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_menu3" segue:@"segue_Quotation"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Attachment" image:@"ic_menu3" segue:@"segue_Attachment"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Opportunity" image:@"ic_menu3" segue:@"segue_opportunity"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Opportunity" image:@"ic_menu3" segue:@"segue_opportunities"]];
     self.iui_collectionview.delegate = self;
     
     self.iui_collectionview.dataSource = self;
@@ -89,6 +89,7 @@
     [data fn_get_formatlist_data:base_url];
     [data fn_get_crmacct_browse_data:base_url];
     [data fn_get_region_data:base_url];
+    [data fn_get_crmopp_browse_data:base_url];
     
 }
 #pragma mark UICollectionView Datasource

@@ -26,4 +26,5 @@ extern NSString* const STR_FORMATLIST_URL;
 extern NSString* const STR_CRMACCT_BROWSE_URL;
 extern NSString* const STR_REGION_URL;
 extern NSString* const STR_SYSTEMICON_URL;
+extern NSString* const STR_CRMOOP_BROWSE_URL;
 @end
