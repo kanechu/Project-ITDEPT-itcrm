@@ -17,4 +17,5 @@
 - (void) fn_get_region_data:(NSString*)base_url;
 - (void) fn_get_systemIcon_data:(NSString*)base_url;
 - (void) fn_get_crmopp_browse_data:(NSString*)base_url;
+- (void) fn_get_maintForm_data:(NSString*)base_url;
 @end

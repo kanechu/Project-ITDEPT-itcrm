@@ -91,7 +91,6 @@ enum TEXTFIELDTAG {
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
-    NSLog(@"%@",alist_searchCriteria);
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
