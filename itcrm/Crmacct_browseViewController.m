@@ -12,6 +12,7 @@
 #import "Cell_armacct_browse.h"
 #import "PopViewManager.h"
 #import "AccountViewController.h"
+#import "Format_conversion.h"
 @interface Crmacct_browseViewController ()
 
 @end
@@ -38,61 +39,18 @@
    
 	// Do any additional setup after loading the view.
 }
-//%s用参数里面的值来替换
--(NSString*)fn_replaceString:(NSString*)string withParameter:(NSArray*)parameter atString:(NSString*)key :(NSDictionary*)dic{
-    NSMutableString *resultString = [[NSMutableString alloc]initWithString:string];
-    NSRange range ;
-    range = [string rangeOfString:key];
-    int i = 0;
-    while (range.length>0&&i<[parameter count]) {
-        if ([dic valueForKey:[parameter objectAtIndex:i]]==nil) {
-            [resultString replaceCharactersInRange:range withString:@""];
-        }else{
-            [resultString replaceCharactersInRange:range withString:[dic valueForKey:[parameter objectAtIndex:i]]];
-        }
-        i++;
-        range = [resultString rangeOfString:key];
-    }
-    return resultString;
-}
 
 -(void)fn_init_account{
+    Format_conversion *convert=[[Format_conversion alloc]init];
     //获取acct 列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct"];
-   
-    NSString *v_title=[[arr_format objectAtIndex:0] valueForKey:@"v_title"];
-    NSString *t_title=[[arr_format objectAtIndex:0] valueForKey:@"t_title"];
-    NSString *v_desc1=[[arr_format objectAtIndex:0] valueForKey:@"v_desc1"];
-    NSString *t_desc1=[[arr_format objectAtIndex:0] valueForKey:@"t_desc1"];
-      NSString *t_desc2=[[arr_format objectAtIndex:0] valueForKey:@"t_desc2"];
-    NSString *v_desc2=[[arr_format objectAtIndex:0] valueForKey:@"v_desc2"];
-    NSArray *arr_t_title=[v_title componentsSeparatedByString:@","];
-    NSArray *arr_v_desc1=[v_desc1 componentsSeparatedByString:@","];
-    NSArray *arr_v_desc2=[v_desc2 componentsSeparatedByString:@","];
-    NSLog(@"%@",arr_v_desc1);
-    NSLog(@"%@",arr_v_desc2);
-    
+    //获取crmacct的参数数据
     NSMutableArray *arr_account=[NSMutableArray array];
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    NSLog(@"%@",_searchBar.text);
     arr_account=[db_crmacct fn_get_data:_searchBar.text];
-    ilist_account=[[NSMutableArray alloc]init];
-    NSLog(@"%@",arr_account);
-     NSMutableDictionary *dic1=[[NSMutableDictionary alloc]init];
-    for (NSDictionary *dic in arr_account) {
-        t_title=[self fn_replaceString:t_title withParameter:arr_t_title atString:@"%s" :dic];
-        [dic1 setObject:t_title forKey:@"t_title"];
-        t_desc1=[self fn_replaceString:t_desc1 withParameter:arr_v_desc1 atString:@"%s" :dic];
-        [dic1 setObject:t_desc1 forKey:@"t_desc1"];
-        
-        t_desc2=[self fn_replaceString:t_desc2 withParameter:arr_v_desc2 atString:@"%s" :dic];
-        [dic1 setObject:t_desc2 forKey:@"t_desc2"];
-        [ilist_account addObject:dic1];
-    
-    }
-
+   ilist_account=[convert fn_format_conersion:arr_format browse:arr_account];
 }
 
 - (void)didReceiveMemoryWarning

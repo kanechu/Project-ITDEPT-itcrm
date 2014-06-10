@@ -97,6 +97,7 @@
 		B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F0194693840012A531 /* RespCrmtask_browse.m */; };
 		B2B704F7194699CA0012A531 /* DB_crmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */; };
 		B2B704FA1946AF640012A531 /* Cell_armtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F91946AF640012A531 /* Cell_armtask_browse.m */; };
+		B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704FC1946E0250012A531 /* Format_conversion.m */; };
 		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
 		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
 /* End PBXBuildFile section */
@@ -308,6 +309,8 @@
 		B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmtask_browse.m; sourceTree = "<group>"; };
 		B2B704F81946AF640012A531 /* Cell_armtask_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_armtask_browse.h; sourceTree = "<group>"; };
 		B2B704F91946AF640012A531 /* Cell_armtask_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_armtask_browse.m; sourceTree = "<group>"; };
+		B2B704FB1946E0250012A531 /* Format_conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Format_conversion.h; sourceTree = "<group>"; };
+		B2B704FC1946E0250012A531 /* Format_conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Format_conversion.m; sourceTree = "<group>"; };
 		B2CB6E7D193DB0E20061F484 /* DB_searchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_searchCriteria.h; sourceTree = "<group>"; };
 		B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_searchCriteria.m; sourceTree = "<group>"; };
 		B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespSearchCriteria.h; sourceTree = "<group>"; };
@@ -408,6 +411,8 @@
 			children = (
 				B2452E7019416D9700D02A45 /* PopViewManager.h */,
 				B2452E7119416D9700D02A45 /* PopViewManager.m */,
+				B2B704FB1946E0250012A531 /* Format_conversion.h */,
+				B2B704FC1946E0250012A531 /* Format_conversion.m */,
 			);
 			name = GlobalClass;
 			sourceTree = "<group>";
@@ -869,6 +874,7 @@
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
 				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
+				B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */,
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
 				B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */,
 				B27EE0E219404DCA007F89A6 /* Cell_armacct_browse.m in Sources */,
