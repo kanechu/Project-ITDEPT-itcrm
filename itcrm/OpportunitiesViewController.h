@@ -10,6 +10,6 @@
 @interface OpportunitiesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property (nonatomic,strong)NSMutableArray *ilist_accopp_browse;
+@property (nonatomic,strong)NSMutableArray *alist_crmopp_browse;
 
 @end

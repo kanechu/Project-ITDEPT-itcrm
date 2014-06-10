@@ -10,9 +10,12 @@
 
 @interface Cell_opportunities : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *ii_account_image;
-@property (weak, nonatomic) IBOutlet UILabel *il__fcl_lable;
-@property (weak, nonatomic) IBOutlet UILabel *il_probility;
-@property (weak, nonatomic) IBOutlet UILabel *il_load_label;
-@property (weak, nonatomic) IBOutlet UILabel *il_dest_label;
+@property (weak, nonatomic) IBOutlet UILabel *il_title;
+@property (weak, nonatomic) IBOutlet UILabel *il_desc1;
+@property (weak, nonatomic) IBOutlet UILabel *il_desc2;
+@property (weak, nonatomic) IBOutlet UILabel *il_desc3;
+@property (weak, nonatomic) IBOutlet UILabel *il_desc4;
+@property (weak, nonatomic) IBOutlet UILabel *il_desc5;
+
 
 @end
