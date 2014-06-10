@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ActivityViewController : UITableViewController
+@property(nonatomic,strong)NSMutableArray *alist_crmtask;
 
 @end

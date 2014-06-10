@@ -96,7 +96,7 @@
     NSString *col_label=[dic valueForKey:@"col_label"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
-    if ([col_stye isEqualToString:@"string"]) {
+    if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"date"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {

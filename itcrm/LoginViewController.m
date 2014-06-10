@@ -40,7 +40,6 @@ enum TEXTFIELD_TAG {
 @synthesize is_pass;
 @synthesize is_systemCode;
 @synthesize is_user;
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -207,7 +206,6 @@ enum TEXTFIELD_TAG {
     DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
   
     [dbSystemIcon fn_delete_systemIcon_data];
-  
     [self fn_get_data:is_user :is_pass :is_systemCode];
 }
 
@@ -239,13 +237,19 @@ enum TEXTFIELD_TAG {
     cell.it_textfield.placeholder=[ilist_textfield objectAtIndex:indexPath.row];
     if (indexPath.row==0) {
         cell.it_textfield.tag=TAG1;
+        cell.it_textfield.text=@"sa";
+        is_user=cell.it_textfield.text;
     }
     if (indexPath.row==1) {
         cell.it_textfield.tag=TAG2;
         cell.it_textfield.secureTextEntry=YES;
+        cell.it_textfield.text=@"BUGFREE06";
+        is_pass=cell.it_textfield.text;
     }
     if (indexPath.row==2) {
         cell.it_textfield.tag=TAG3;
+        cell.it_textfield.text=@"ITCRM";
+        is_systemCode=cell.it_textfield.text;
     }
     return cell;
 }

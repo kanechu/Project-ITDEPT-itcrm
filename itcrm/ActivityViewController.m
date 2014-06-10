@@ -8,16 +8,14 @@
 
 #import "ActivityViewController.h"
 #import "DB_formatlist.h"
-#import "DB_crmacct_browse.h"
-#import "DB_Region.h"
-#import "Web_resquestData.h"
 #import "DB_crmtask_browse.h"
+#import "Cell_armtask_browse.h"
 @interface ActivityViewController ()
 
 @end
 
 @implementation ActivityViewController
-
+@synthesize alist_crmtask;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -30,27 +28,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    DB_formatlist *db=[[DB_formatlist alloc]init];
-    
-    NSLog(@"%@",[db fn_get_list_data:@"crmacct"]);
-    
-    DB_crmacct_browse *bd=[[DB_crmacct_browse alloc]init];
-    
-    NSLog(@"%@",[bd fn_get_data:nil]);
-    
-    DB_Region *dbr=[[DB_Region alloc]init];
-    NSLog(@"%@",[dbr fn_get_region_data:@"macountry"]);
-    
-    DB_crmtask_browse *db_task=[[DB_crmtask_browse alloc]init];
-    NSLog(@"%@",[db_task fn_get_crmtask_data]);
+    [self fn_init_crmtask_arr];
+  
     
    
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,32 +40,111 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)fn_init_crmtask_arr{
+    //获取crmtask列表显示信息的格式
+    NSMutableArray *arr_format=[NSMutableArray array];
+    DB_formatlist *db_format=[[DB_formatlist alloc]init];
+    arr_format=[db_format fn_get_list_data:@"crmtask"];
+    NSString *t_title=nil;
+    NSString *v_title=nil;
+    NSString *t_desc1=nil;
+    NSString *v_desc1=nil;
+    NSString *t_desc2=nil;
+    NSString *v_desc2=nil;
+    NSString *t_desc3=nil;
+    NSString *v_desc3=nil;
+    /*NSString *t_desc4=nil;
+    NSString *v_desc4=nil;
+    NSString *t_desc5=nil;
+    NSString *v_desc5=nil;*/
+    NSArray *arr_t_title=nil;
+    NSArray *arr_v_desc1=nil;
+    NSArray *arr_v_desc2=nil;
+    NSArray *arr_v_desc3=nil;
+    if (arr_format!=nil && [arr_format count]!=0) {
+        t_title=[[arr_format objectAtIndex:0] valueForKey:@"t_title"];
+        v_title=[[arr_format objectAtIndex:0] valueForKey:@"v_title"];
+        t_desc1=[[arr_format objectAtIndex:0] valueForKey:@"t_desc1"];
+        v_desc1=[[arr_format objectAtIndex:0] valueForKey:@"v_desc1"];
+        
+        t_desc2=[[arr_format objectAtIndex:0] valueForKey:@"t_desc2"];
+        v_desc2=[[arr_format objectAtIndex:0] valueForKey:@"v_desc2"];
+        t_desc3=[[arr_format objectAtIndex:0] valueForKey:@"t_desc3"];
+        v_desc3=[[arr_format objectAtIndex:0] valueForKey:@"v_desc3"];
+        arr_t_title=[v_title componentsSeparatedByString:@","];
+        arr_v_desc1=[v_desc1 componentsSeparatedByString:@","];
+        arr_v_desc2=[v_desc2 componentsSeparatedByString:@","];
+        arr_v_desc3=[v_desc3 componentsSeparatedByString:@","];
+    }
+    
+    NSMutableArray *arr_crmtask=[NSMutableArray array];
+    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+    arr_crmtask=[db_crmtask fn_get_crmtask_data];
+    alist_crmtask=[[NSMutableArray alloc]init];
+    NSMutableDictionary *dic1=[[NSMutableDictionary alloc]init];
+    for (NSDictionary *dic in arr_crmtask) {
+        t_title=[self fn_replaceString:t_title withParameter:arr_t_title atString:@"%s" :dic];
+        [dic1 setObject:t_title forKey:@"t_title"];
+        t_desc1=[self fn_replaceString:t_desc1 withParameter:arr_v_desc1 atString:@"%s" :dic];
+        [dic1 setObject:t_desc1 forKey:@"t_desc1"];
+        
+        t_desc2=[self fn_replaceString:t_desc2 withParameter:arr_v_desc2 atString:@"%s" :dic];
+        [dic1 setObject:t_desc2 forKey:@"t_desc2"];
+        
+        t_desc3=[self fn_replaceString:t_desc3 withParameter:arr_v_desc3 atString:@"%s" :dic];
+        [dic1 setObject:t_desc3 forKey:@"t_desc3"];
+        
+        [alist_crmtask addObject:dic1];
+        
+    }
+    
+}
+#pragma mark 格式转换 %s用参数里面的值来替换
+-(NSString*)fn_replaceString:(NSString*)string withParameter:(NSArray*)parameter atString:(NSString*)key :(NSDictionary*)dic{
+    NSMutableString *resultString = [[NSMutableString alloc]initWithString:string];
+    NSRange range ;
+    range = [string rangeOfString:key];
+    int i = 0;
+    while (range.length>0&&i<[parameter count]) {
+        if ([dic valueForKey:[parameter objectAtIndex:i]]==nil) {
+            [resultString replaceCharactersInRange:range withString:@""];
+        }else{
+            [resultString replaceCharactersInRange:range withString:[dic valueForKey:[parameter objectAtIndex:i]]];
+        }
+        i++;
+        range = [resultString rangeOfString:key];
+    }
+    return resultString;
+}
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [alist_crmtask count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    static NSString *CellIdentifier = @"Cell_armtask_browse";
+    Cell_armtask_browse *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_armtask_browse" owner:self options:nil];
+        cell=[nib objectAtIndex:0];
+    }
+    cell.il_title.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_title"];
+    cell.il_desc1.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_desc1"];
+    cell.il_desc2.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_desc2"];
+    cell.il_desc3.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_desc3"];
     // Configure the cell...
     
     return cell;
 }
+#pragma mark UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 96;
+}
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -17,7 +17,7 @@
 #import "RespCrmacct_browse.h"
 #import "RespRegion.h"
 #import "RespSystemIcon.h"
-#import "RespOpportunities.h"
+#import "RespCrmopp_browse.h"
 #import "RespMaintForm.h"
 #import "RespCrmtask_browse.h"
 #import "Web_base.h"
@@ -212,8 +212,8 @@
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMOOP_BROWSE_URL;
     web_base.base_url=base_url;
-    web_base.iresp_class=[RespOpportunities class];
-    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespOpportunities class]];
+    web_base.iresp_class=[RespCrmopp_browse class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmopp_browse class]];
     web_base.iobj_target = self;
     web_base.isel_action = @selector(fn_save_crmopp_browse_list:);
     [web_base fn_get_data:req_form];
