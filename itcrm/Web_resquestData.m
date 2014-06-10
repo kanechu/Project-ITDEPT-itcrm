@@ -19,6 +19,7 @@
 #import "RespSystemIcon.h"
 #import "RespOpportunities.h"
 #import "RespMaintForm.h"
+#import "RespCrmtask_browse.h"
 #import "Web_base.h"
 #import "NSArray.h"
 #import "NSDictionary.h"
@@ -29,6 +30,7 @@
 #import "DB_Region.h"
 #import "DB_systemIcon.h"
 #import "DB_crmopp_browse.h"
+#import "DB_crmtask_browse.h"
 #import "DB_MaintForm.h"
 #import "SVProgressHUD.h"
 @implementation Web_resquestData
@@ -249,7 +251,28 @@
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     [db fn_save_MaintForm_data:ilist_result];
 }
-
+#pragma mark 请求crmtask_browse的数据
+- (void) fn_get_crmtask_browse_data:(NSString*)base_url
+{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    AuthContract *auth=[[AuthContract alloc]init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_CRMTASK_BROWSE_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[Respcrmtask_browse class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[Respcrmtask_browse class]];
+    web_base.iobj_target = self;
+    web_base.isel_action = @selector(fn_save_crmtask_browse_list:);
+    [web_base fn_get_data:req_form];
+}
+-(void)fn_save_crmtask_browse_list:(NSMutableArray*)ilist_result{
+    DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+    [db fn_save_crmtask_browse:ilist_result];
+    
+}
 
 
 

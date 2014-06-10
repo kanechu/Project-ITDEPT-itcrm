@@ -11,6 +11,7 @@
 #import "DB_crmacct_browse.h"
 #import "DB_Region.h"
 #import "Web_resquestData.h"
+#import "DB_crmtask_browse.h"
 @interface ActivityViewController ()
 
 @end
@@ -39,6 +40,9 @@
     
     DB_Region *dbr=[[DB_Region alloc]init];
     NSLog(@"%@",[dbr fn_get_region_data:@"macountry"]);
+    
+    DB_crmtask_browse *db_task=[[DB_crmtask_browse alloc]init];
+    NSLog(@"%@",[db_task fn_get_crmtask_data]);
     
    
 

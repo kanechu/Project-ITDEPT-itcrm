@@ -91,6 +91,7 @@
     [data fn_get_region_data:base_url];
     [data fn_get_crmopp_browse_data:base_url];
     [data fn_get_maintForm_data:base_url];
+    [data fn_get_crmtask_browse_data:base_url];
     
 }
 #pragma mark UICollectionView Datasource

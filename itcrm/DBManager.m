@@ -75,6 +75,8 @@ static int DB_VERSION = 1;
         
          NSString *ls_sql_maintForm = @"CREATE TABLE IF NOT EXISTS maintForm( unique_id INTEGER PRIMARY KEY,form_id TEXT NOT NULL DEFAULT '',seq TEXT NOT NULL DEFAULT '',col_code TEXT NOT NULL DEFAULT '',col_label TEXT NOT NULL DEFAULT '',col_type TEXT NOT NULL DEFAULT '',col_option TEXT NOT NULL DEFAULT '',col_def TEXT NOT NULL DEFAULT '',group_name TEXT NOT NULL DEFAULT '',is_mandatory TEXT NOT NULL DEFAULT '',is_enable TEXT NOT NULL DEFAULT '',icon_name TEXT NOT NULL DEFAULT '')";
         
+         NSString *ls_sql_crmtask_browse = @"CREATE TABLE IF NOT EXISTS crmtask_browse( unique_id INTEGER PRIMARY KEY,uid TEXT NOT NULL DEFAULT '',task_id TEXT NOT NULL DEFAULT'',task_ref_id TEXT NOT NULL DEFAULT '',task_ref_type TEXT NOT NULL DEFAULT '',task_ref_code TEXT NOT NULL DEFAULT '',task_ref_name TEXT NOT NULL DEFAULT '',contact_id TEXT NOT NULL DEFAULT '',contact_code TEXT NOT NULL DEFAULT '',contact_name TEXT NOT NULL DEFAULT '',contact_email TEXT NOT NULL DEFAULT '',contact_mobile TEXT NOT NULL DEFAULT '', contact_tel TEXT NOT NULL DEFAULT '',task_ref_addr TEXT NOT NULL DEFAULT '',task_ref_addr_01 TEXT NOT NULL DEFAULT '',task_ref_addr_02 TEXT NOT NULL DEFAULT '',task_ref_addr_03 TEXT NOT NULL DEFAULT '',task_ref_addr_04 TEXT NOT NULL DEFAULT '',task_title TEXT NOT NULL DEFAULT '',task_desc TEXT NOT NULL DEFAULT '',task_start_date TEXT NOT NULL DEFAULT '',task_end_date TEXT NOT NULL DEFAULT '',task_report TEXT NOT NULL DEFAULT '',task_sm_report TEXT NOT NULL DEFAULT '',duration_ttl TEXT NOT NULL DEFAULT '',duration_hr TEXT NOT NULL DEFAULT '',duration_min TEXT NOT NULL DEFAULT '',duration_str TEXT NOT NULL DEFAULT '',assign_to TEXT NOT NULL DEFAULT '',assign_to_name TEXT NOT NULL DEFAULT '',voided TEXT NOT NULL DEFAULT '',rec_crt_user TEXT NOT NULL DEFAULT '',rec_upd_user TEXT NOT NULL DEFAULT '',rec_crt_date TEXT NOT NULL DEFAULT '',rec_upd_date TEXT NOT NULL DEFAULT '',rec_upd_type TEXT NOT NULL DEFAULT '',rec_savable TEXT NOT NULL DEFAULT '',rec_deletable TEXT NOT NULL DEFAULT '',task_type TEXT NOT NULL DEFAULT '',task_type_desc TEXT NOT NULL DEFAULT '',task_status TEXT NOT NULL DEFAULT '',task_status_desc TEXT NOT NULL DEFAULT '',quo_uid TEXT NOT NULL DEFAULT '',quo_no TEXT NOT NULL DEFAULT '',task_date_period TEXT NOT NULL DEFAULT '',report_mail TEXT NOT NULL DEFAULT '',report_submit TEXT NOT NULL DEFAULT '')";
+        
         [database executeUpdate:ls_sql_Resplogin];
         [database executeUpdate:ls_sql_loginInfo];
         [database executeUpdate:ls_sql_searchCriteria];
@@ -84,6 +86,7 @@ static int DB_VERSION = 1;
         [database executeUpdate:ls_sql_systemIcon];
         [database executeUpdate:ls_sql_crmopp_browse];
         [database executeUpdate:ls_sql_maintForm];
+        [database executeUpdate:ls_sql_crmtask_browse];
         [database close];
         return  lb_Success;
     }
