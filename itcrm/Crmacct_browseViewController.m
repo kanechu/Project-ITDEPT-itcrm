@@ -36,6 +36,7 @@
     self.tableView_acct.dataSource=self;
     _searchBar.delegate=self;
     [_searchBar resignFirstResponder];
+    [self fn_init_account];
    
 	// Do any additional setup after loading the view.
 }
