@@ -9,7 +9,7 @@
 #import "Crmacct_browseViewController.h"
 #import "DB_formatlist.h"
 #import "DB_crmacct_browse.h"
-#import "Cell_armacct_browse.h"
+#import "Cell_browse.h"
 #import "PopViewManager.h"
 #import "AccountViewController.h"
 #import "Format_conversion.h"
@@ -19,6 +19,7 @@
 
 @implementation Crmacct_browseViewController
 @synthesize ilist_account;
+@synthesize format;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,7 +43,7 @@
 }
 
 -(void)fn_init_account{
-    Format_conversion *convert=[[Format_conversion alloc]init];
+    format=[[Format_conversion alloc]init];
     //获取acct 列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
@@ -51,7 +52,7 @@
     NSMutableArray *arr_account=[NSMutableArray array];
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
     arr_account=[db_crmacct fn_get_data:_searchBar.text];
-   ilist_account=[convert fn_format_conersion:arr_format browse:arr_account];
+   ilist_account=[format fn_format_conersion:arr_format browse:arr_account];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,18 +66,20 @@
     return [ilist_account count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIndentifier=@"Cell_armacct_browse1";
-    Cell_armacct_browse *cell=[self.tableView_acct dequeueReusableCellWithIdentifier:cellIndentifier];
+    static NSString *cellIndentifier=@"Cell_browse";
+    Cell_browse *cell=[self.tableView_acct dequeueReusableCellWithIdentifier:cellIndentifier];
     if (cell==nil) {
-        cell=[[Cell_armacct_browse alloc]init];
+        cell=[[Cell_browse alloc]init];
     }
-    NSDictionary *dic=[ilist_account objectAtIndex:indexPath.row];
-    cell.t_desc1.text=[dic valueForKey:@"t_desc1"];
-    cell.t_desc2.text=[dic valueForKey:@"t_desc2"];
-    cell.t_desc3.text=@"t_desc3";
-    cell.t_desc4.text=@"t_desc4";
-    cell.t_desc5.text=@"t_desc5";
-    cell.t_title.text=[dic valueForKey:@"t_title"];
+    UILabel *il_title=[[UILabel alloc]initWithFrame:CGRectMake(58, 0, 260, 21)];
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    il_title.lineBreakMode=NSLineBreakByCharWrapping;
+    il_title.numberOfLines=0;
+    il_title.font=font;
+    il_title.text=[ilist_account objectAtIndex:indexPath.row];
+    CGFloat height=[format fn_heightWithString:il_title.text font:font constrainedToWidth:il_title.frame.size.width];
+    [il_title setFrame:CGRectMake(il_title.frame.origin.x, il_title.frame.origin.y+2, il_title.frame.size.width, height)];
+    [cell addSubview:il_title];
     return cell;
     
 }

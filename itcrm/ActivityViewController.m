@@ -9,7 +9,7 @@
 #import "ActivityViewController.h"
 #import "DB_formatlist.h"
 #import "DB_crmtask_browse.h"
-#import "Cell_armtask_browse.h"
+#import "Cell_browse.h"
 #import "Format_conversion.h"
 @interface ActivityViewController ()
 
@@ -17,6 +17,7 @@
 
 @implementation ActivityViewController
 @synthesize alist_crmtask;
+@synthesize format;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -38,7 +39,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_init_crmtask_arr{
-    Format_conversion *format=[[Format_conversion alloc]init];
+    format=[[Format_conversion alloc]init];
     //获取crmtask列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
@@ -60,23 +61,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell_armtask_browse";
-    Cell_armtask_browse *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"Cell_browse";
+    Cell_browse *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_armtask_browse" owner:self options:nil];
+        NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_browse" owner:self options:nil];
         cell=[nib objectAtIndex:0];
     }
-    cell.il_title.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_title"];
-    cell.il_desc1.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_desc1"];
-    cell.il_desc2.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_desc2"];
-    cell.il_desc3.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"t_desc3"];
+    UILabel *il_title=[[UILabel alloc]initWithFrame:CGRectMake(58, 0, 260, 21)];
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    il_title.lineBreakMode=NSLineBreakByCharWrapping;
+    il_title.numberOfLines=0;
+    il_title.font=font;
+    il_title.text=[alist_crmtask objectAtIndex:indexPath.row];
+    CGFloat height=[format fn_heightWithString:il_title.text font:font constrainedToWidth:il_title.frame.size.width];
+    [il_title setFrame:CGRectMake(il_title.frame.origin.x, il_title.frame.origin.y+2, il_title.frame.size.width, height)];
+    [cell addSubview:il_title];
     // Configure the cell...
     
     return cell;
 }
 #pragma mark UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 96;
+    NSString *cellText = [alist_crmtask objectAtIndex:indexPath.row];
+    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
+    CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
+    return height+10;
 }
+
 
 @end

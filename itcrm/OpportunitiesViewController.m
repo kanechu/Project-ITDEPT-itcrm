@@ -9,7 +9,7 @@
 #import "OpportunitiesViewController.h"
 #import "DB_crmopp_browse.h"
 #import "DB_formatlist.h"
-#import "Cell_opportunities.h"
+#import "Cell_browse.h"
 #import "Format_conversion.h"
 @interface OpportunitiesViewController ()
 
@@ -17,6 +17,7 @@
 
 @implementation OpportunitiesViewController
 @synthesize alist_crmopp_browse;
+@synthesize format;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,7 +43,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_init_crmopp_browse_arr{
-    Format_conversion *convert=[[Format_conversion alloc]init];
+   format=[[Format_conversion alloc]init];
     //获取crmopp列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
@@ -51,7 +52,7 @@
     NSMutableArray *arr_crmopp=[NSMutableArray array];
     DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
     arr_crmopp=[db_crmopp fn_get_data];
-    alist_crmopp_browse=[convert fn_format_conersion:arr_format browse:arr_crmopp];
+    alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
    
 }
 
@@ -60,21 +61,29 @@
     return [alist_crmopp_browse count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIndentifier=@"Cell_opportunities";
-    Cell_opportunities *cell=[self.tableview dequeueReusableCellWithIdentifier:cellIndentifier];
+    static NSString *cellIndentifier=@"Cell_browse";
+    Cell_browse *cell=[self.tableview dequeueReusableCellWithIdentifier:cellIndentifier];
     if (!cell) {
-        cell=[[Cell_opportunities alloc]init];
+        cell=[[Cell_browse alloc]init];
     }
-    cell.il_title.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"t_title"];
-    cell.il_desc1.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"t_desc1"];
-    cell.il_desc2.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"t_desc2"];
-    cell.il_desc3.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"t_desc3"];
+    UILabel *il_title=[[UILabel alloc]initWithFrame:CGRectMake(58, 0, 260, 21)];
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    il_title.lineBreakMode=NSLineBreakByCharWrapping;
+    il_title.numberOfLines=0;
+    il_title.font=font;
+    il_title.text=[alist_crmopp_browse objectAtIndex:indexPath.row];
+    CGFloat height=[format fn_heightWithString:il_title.text font:font constrainedToWidth:il_title.frame.size.width];
+    [il_title setFrame:CGRectMake(il_title.frame.origin.x, il_title.frame.origin.y+2, il_title.frame.size.width, height)];
+    [cell addSubview:il_title];
     
     return cell;
 }
 #pragma mark UITableViewDelegate
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 96;
+    NSString *cellText = [alist_crmopp_browse objectAtIndex:indexPath.row];
+    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
+    CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
+    return height+10;
 }
 
 @end

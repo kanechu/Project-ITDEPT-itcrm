@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Format_conversion;
 @interface ActivityViewController : UITableViewController
+@property(nonatomic,strong)Format_conversion *format;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
 
 @end

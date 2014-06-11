@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Format_conversion;
 @interface OpportunitiesViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
-
+@property(nonatomic,strong)Format_conversion *format;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,strong)NSMutableArray *alist_crmopp_browse;
 

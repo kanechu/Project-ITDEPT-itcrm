@@ -237,18 +237,18 @@ enum TEXTFIELD_TAG {
     cell.it_textfield.placeholder=[ilist_textfield objectAtIndex:indexPath.row];
     if (indexPath.row==0) {
         cell.it_textfield.tag=TAG1;
-        cell.it_textfield.text=@"sa";
+        cell.it_textfield.text=@"anonymous";
         is_user=cell.it_textfield.text;
     }
     if (indexPath.row==1) {
         cell.it_textfield.tag=TAG2;
         cell.it_textfield.secureTextEntry=YES;
-        cell.it_textfield.text=@"BUGFREE06";
+        cell.it_textfield.text=@"anonymous1";
         is_pass=cell.it_textfield.text;
     }
     if (indexPath.row==2) {
         cell.it_textfield.tag=TAG3;
-        cell.it_textfield.text=@"ITCRM";
+        cell.it_textfield.text=@"ITNEW";
         is_systemCode=cell.it_textfield.text;
     }
     return cell;

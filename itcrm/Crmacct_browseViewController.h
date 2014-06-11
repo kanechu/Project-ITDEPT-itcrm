@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Format_conversion;
 @interface Crmacct_browseViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
+@property(nonatomic,strong)Format_conversion *format;
 @property (nonatomic,strong) NSMutableArray *ilist_account;
 @property (weak, nonatomic) IBOutlet UITableView *tableView_acct;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
