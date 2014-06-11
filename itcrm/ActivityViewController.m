@@ -67,15 +67,12 @@
         NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_browse" owner:self options:nil];
         cell=[nib objectAtIndex:0];
     }
-    UILabel *il_title=[[UILabel alloc]initWithFrame:CGRectMake(58, 0, 260, 21)];
     UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
-    il_title.lineBreakMode=NSLineBreakByCharWrapping;
-    il_title.numberOfLines=0;
-    il_title.font=font;
-    il_title.text=[alist_crmtask objectAtIndex:indexPath.row];
-    CGFloat height=[format fn_heightWithString:il_title.text font:font constrainedToWidth:il_title.frame.size.width];
-    [il_title setFrame:CGRectMake(il_title.frame.origin.x, il_title.frame.origin.y+2, il_title.frame.size.width, height)];
-    [cell addSubview:il_title];
+    cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
+    cell.il_show_text.font=font;
+    cell.il_show_text.text=[alist_crmtask objectAtIndex:indexPath.row];
+     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
+    [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     // Configure the cell...
     
     return cell;
