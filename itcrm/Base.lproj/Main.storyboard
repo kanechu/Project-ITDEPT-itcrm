@@ -236,14 +236,14 @@
         <!--Activity View Controller - Activity-->
         <scene sceneID="dVV-ut-NjZ">
             <objects>
-                <tableViewController storyboardIdentifier="ActivityViewController" automaticallyAdjustsScrollViewInsets="NO" id="Sk7-or-eg2" customClass="ActivityViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ActivityViewController" id="Sk7-or-eg2" customClass="ActivityViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="wQc-ew-m9m">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell_browse" rowHeight="55" id="ewk-DF-RkZ" customClass="Cell_browse">
-                                <rect key="frame" x="0.0" y="22" width="320" height="55"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ewk-DF-RkZ" id="dPS-IB-2FJ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
@@ -278,7 +278,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rEx-da-NK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1256" y="-1104"/>
+            <point key="canvasLocation" x="-1336" y="-1114"/>
         </scene>
         <!--Opportunities View Controller - Opportunities-->
         <scene sceneID="4zu-Gf-2u3">
@@ -370,7 +370,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" patternImage="507721B8-A6E9-4433-A52C-785C55199C5D" colorSpace="pattern"/>
+                                        <color key="backgroundColor" patternImage="2A35EA72-8445-4A47-9E77-D1E82D3F875A" colorSpace="pattern"/>
                                         <connections>
                                             <outlet property="ii_image" destination="QcK-8X-tYa" id="Ifu-PI-0Wz"/>
                                             <outlet property="il_show_text" destination="mNM-yr-b7L" id="4He-as-syG"/>
@@ -684,7 +684,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="507721B8-A6E9-4433-A52C-785C55199C5D" width="320" height="460">
+        <image name="2A35EA72-8445-4A47-9E77-D1E82D3F875A" width="320" height="460">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

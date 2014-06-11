@@ -258,6 +258,7 @@
     AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     auth=[dbLogin fn_request_auth];
+    auth.system=@"ITCRM";
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMTASK_BROWSE_URL;

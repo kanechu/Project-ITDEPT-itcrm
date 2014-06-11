@@ -15,6 +15,7 @@
 #import "MZFormSheetController.h"
 #import "PopViewManager.h"
 #import "RegionViewController.h"
+#import "Custom_Color.h"
 @interface AccountViewController ()
 
 @end
@@ -53,7 +54,8 @@ enum TEXTFIELDTAG {
     //注册通知
     [self fn_register_notifiction];
     [self fn_custom_gesture];
-    
+    self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW1;
+    [self setExtraCellLineHidden:self.skstableView];
 // Do any additional setup after loading the view.
 }
 
@@ -93,7 +95,14 @@ enum TEXTFIELDTAG {
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
+#pragma mark 将额外的cell的线隐藏
 
+- (void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -118,6 +127,7 @@ enum TEXTFIELDTAG {
     SKSTableViewCell *cell = [self.skstableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell.backgroundColor=COLOR_LIGTH_GREEN;
     cell.textLabel.text=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -127,6 +137,7 @@ enum TEXTFIELDTAG {
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }
+    
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,7 +155,9 @@ enum TEXTFIELDTAG {
             cell=[[Cell_search alloc]init];
         }
          cell.il_prompt_label.text=col_label;
+        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
         return cell;
     }
     if ([col_stye isEqualToString:@"lookup"]) {
@@ -166,7 +179,9 @@ enum TEXTFIELDTAG {
             cell.ibtn_skip.tag=TAG2;
             cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
         }
+        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
         return cell;
     }
 

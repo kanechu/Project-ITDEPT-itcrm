@@ -11,6 +11,7 @@
 #import "DB_formatlist.h"
 #import "Cell_browse.h"
 #import "Format_conversion.h"
+#import "Custom_Color.h"
 @interface OpportunitiesViewController ()
 
 @end
@@ -33,6 +34,7 @@
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     [self fn_init_crmopp_browse_arr];
+    self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
   
 	// Do any additional setup after loading the view.
 }
@@ -66,6 +68,7 @@
     if (!cell) {
         cell=[[Cell_browse alloc]init];
     }
+    cell.backgroundColor=COLOR_LIGHT_YELLOW;
     UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.numberOfLines=0;

@@ -66,7 +66,7 @@
         
         t_desc5=[self fn_replaceString:t_desc5 withParameter:arr_v_desc5 atString:@"%s" :dic];
         if ([t_title length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_title];
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n\n",t_title];
         }
         if ([t_desc1 length]!=0) {
             joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_desc1];

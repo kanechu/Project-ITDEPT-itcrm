@@ -11,6 +11,7 @@
 #import "DB_crmtask_browse.h"
 #import "Cell_browse.h"
 #import "Format_conversion.h"
+#import "Custom_Color.h"
 @interface ActivityViewController ()
 
 @end
@@ -30,6 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     [self fn_init_crmtask_arr];
 }
 
@@ -67,7 +69,8 @@
         NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_browse" owner:self options:nil];
         cell=[nib objectAtIndex:0];
     }
-    UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    cell.backgroundColor=COLOR_LIGHT_YELLOW;
+    UIFont *font = [UIFont systemFontOfSize:15.0];
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.font=font;
     cell.il_show_text.text=[alist_crmtask objectAtIndex:indexPath.row];

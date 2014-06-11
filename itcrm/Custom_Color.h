@@ -24,6 +24,9 @@
 
 #define COLOR_LIGHT_YELLOW1 [UIColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:198.0/255.0 alpha:1]
 
+#define COLOR_LIGTH_GREEN [UIColor colorWithRed:92.0/255.0 green:131.0/255.0 blue:73.0/255.0 alpha:1]
+
+#define COLOR_LIGHT_YELLOW2 [UIColor colorWithRed:222.0/255.0 green:221.0/255.0 blue:200.0/255.0 alpha:1]
 @interface Custom_Color : NSObject
 
 @end
