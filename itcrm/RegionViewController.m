@@ -11,7 +11,7 @@
 #import "Cell_region.h"
 #import "MZFormSheetController.h"
 #import "AppConstants.h"
-
+#import "Custom_Color.h"
 @interface RegionViewController ()
 
 @end
@@ -41,6 +41,7 @@
     _is_searchBar.placeholder=is_placeholder;
     db=[[DB_Region alloc]init];
     ilist_region=[db fn_get_region_data:type];
+    self.tableview.backgroundColor=COLOR_LIGHT_YELLOW1;
 	// Do any additional setup after loading the view.
 }
 
@@ -69,7 +70,7 @@
     cell.il_data.text=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"data"];
     //  cell.image.image=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"image"];
     // Configure the cell...
-    
+    cell.backgroundColor=COLOR_LIGHT_YELLOW1;
     return cell;
 }
 
