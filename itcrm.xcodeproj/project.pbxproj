@@ -98,6 +98,7 @@
 		B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704FC1946E0250012A531 /* Format_conversion.m */; };
 		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
 		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
+		B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F6CCFB1948401500081059 /* Custom_Color.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -309,6 +310,8 @@
 		B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_searchCriteria.m; sourceTree = "<group>"; };
 		B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespSearchCriteria.h; sourceTree = "<group>"; };
 		B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSearchCriteria.m; sourceTree = "<group>"; };
+		B2F6CCFA1948401500081059 /* Custom_Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_Color.h; sourceTree = "<group>"; };
+		B2F6CCFB1948401500081059 /* Custom_Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_Color.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -458,6 +461,8 @@
 			children = (
 				B26CBC99193476B500C5287B /* AppConstants.h */,
 				B26CBC9A193476B500C5287B /* AppConstants.m */,
+				B2F6CCFA1948401500081059 /* Custom_Color.h */,
+				B2F6CCFB1948401500081059 /* Custom_Color.m */,
 			);
 			name = GlobalConst;
 			sourceTree = "<group>";
@@ -859,6 +864,7 @@
 				B2759995193EF750005CF480 /* RespFormatlist.m in Sources */,
 				B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */,
 				B25D75FB193D64A2005913D7 /* SKSTableViewCell.m in Sources */,
+				B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */,
 				B25D7607193D6ACF005913D7 /* Cell_search.m in Sources */,
 				B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */,
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,

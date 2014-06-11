@@ -25,6 +25,7 @@
 #import "DB_formatlist.h"
 #import "DB_searchCriteria.h"
 #import "DB_systemIcon.h"
+#import "Custom_Color.h"
 
 @interface LoginViewController ()
 
@@ -48,6 +49,7 @@ enum TEXTFIELD_TAG {
     [self fn_register_notification];
     ilist_imageName=@[@"user",@"pass",@"systemcode"];
     ilist_textfield=@[@"user ID",@"user password",@"systemcode"];
+    self.view.backgroundColor=COLOR_LIGHT_YELLOW1;
    	// Do any additional setup after loading the view, typically from a nib.
 }
 -(void)fn_custom_style{
