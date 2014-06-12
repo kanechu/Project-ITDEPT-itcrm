@@ -155,7 +155,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="0.89194036990000003" green="0.86235929050000004" blue="0.1128881128" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.87058823529411766" green="0.8666666666666667" blue="0.65485287408759119" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="3Jj-h2-AhD">
                         <barButtonItem key="backBarButtonItem" title="Back" id="JDO-0c-nqV"/>
@@ -370,7 +370,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" patternImage="5C6A7CBC-E207-402A-9AF2-6EB840D7F840" colorSpace="pattern"/>
+                                        <color key="backgroundColor" patternImage="643147E7-5C9D-48CB-BA17-53111EC2C6C0" colorSpace="pattern"/>
                                         <connections>
                                             <outlet property="ii_image" destination="QcK-8X-tYa" id="Ifu-PI-0Wz"/>
                                             <outlet property="il_show_text" destination="mNM-yr-b7L" id="4He-as-syG"/>
@@ -599,6 +599,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="inav_navBar" destination="Bg9-2T-Vu5" id="ZHJ-zb-X8n"/>
                         <outlet property="skstableView" destination="vJm-P4-yWg" id="Vgk-Qg-fIL"/>
                     </connections>
                 </viewController>
@@ -686,7 +687,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="5C6A7CBC-E207-402A-9AF2-6EB840D7F840" width="320" height="460">
+        <image name="643147E7-5C9D-48CB-BA17-53111EC2C6C0" width="320" height="460">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

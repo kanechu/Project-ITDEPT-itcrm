@@ -91,6 +91,7 @@ enum TEXTFIELDTAG {
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
+   
 }
 
 #pragma mark -初始化数组
@@ -294,8 +295,7 @@ enum TEXTFIELDTAG {
   
     //设置表视图frame
     [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height-20)];
-    //设置表视图可见cell
-  //  [_skstableView scrollToRowAtIndexPath:[NSIndexPath indexPathForSubRow:1 inRow:1 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+     _inav_navBar.frame=CGRectMake(0,0, _inav_navBar.frame.size.width, _inav_navBar.frame.size.height);
 }
 
 //键盘被隐藏的时候调用的方法
@@ -304,6 +304,7 @@ enum TEXTFIELDTAG {
         //设置表视图frame,ios7的导航条加上状态栏是64
         [_skstableView setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
     }
+     _inav_navBar.frame=CGRectMake(0,20, _inav_navBar.frame.size.width, _inav_navBar.frame.size.height);
 }
 
 @end

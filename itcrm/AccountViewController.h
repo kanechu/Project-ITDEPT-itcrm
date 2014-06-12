@@ -35,5 +35,6 @@
 - (IBAction)fn_search_account:(id)sender;
 - (IBAction)fn_go_back:(id)sender;
 - (IBAction)fn_skip_region:(id)sender;
+@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
 
 @end
