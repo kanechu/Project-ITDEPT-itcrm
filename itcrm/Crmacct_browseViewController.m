@@ -21,6 +21,8 @@
 @implementation Crmacct_browseViewController
 @synthesize ilist_account;
 @synthesize format;
+@synthesize db_acct;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,22 +40,17 @@
     self.tableView_acct.dataSource=self;
     _searchBar.delegate=self;
     [_searchBar resignFirstResponder];
-    [self fn_init_account];
     self.tableView_acct.backgroundColor=COLOR_LIGHT_YELLOW;
-   
+    db_acct=[[DB_crmacct_browse alloc]init];
 	// Do any additional setup after loading the view.
 }
 
--(void)fn_init_account{
+-(void)fn_init_account:(NSMutableArray*)arr_account{
     format=[[Format_conversion alloc]init];
     //获取acct 列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct"];
-    //获取crmacct的参数数据
-    NSMutableArray *arr_account=[NSMutableArray array];
-    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    arr_account=[db_crmacct fn_get_data:_searchBar.text];
    ilist_account=[format fn_format_conersion:arr_format browse:arr_account];
 }
 
@@ -96,20 +93,28 @@
 
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self fn_init_account];
+    [self fn_init_account:[db_acct fn_get_data:searchBar.text]];
     [self.tableView_acct reloadData];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_searchBar resignFirstResponder];
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    [self fn_init_account];
+    [self fn_init_account:[db_acct fn_get_data:searchText]];
     [self.tableView_acct reloadData];
 }
 
 - (IBAction)fn_advance_search:(id)sender {
     AccountViewController *VC=(AccountViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AccountViewController"];
+    VC.iobj_target=self;
+    VC.isel_action1=@selector(fn_save_arr::);
     PopViewManager *popV=[[PopViewManager alloc]init];
     [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+}
+-(void)fn_save_arr:(NSMutableArray*)arr_parameter :(NSMutableArray*)arr_value{
+    NSMutableArray *arr_account=[NSMutableArray array];
+    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+    arr_account=[db_crmacct fn_get_detail_crmacct_data:arr_parameter value:arr_value];
+    [self fn_init_account:arr_account];
 }
 @end

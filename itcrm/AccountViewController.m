@@ -16,6 +16,7 @@
 #import "PopViewManager.h"
 #import "RegionViewController.h"
 #import "Custom_Color.h"
+#import "AppConstants.h"
 @interface AccountViewController ()
 
 @end
@@ -33,6 +34,10 @@ enum TEXTFIELDTAG {
 @synthesize idic_regionname;
 @synthesize idic_territoryname;
 @synthesize checkText;
+@synthesize alist_detail_search;
+@synthesize alist_parameter;
+@synthesize iobj_target;
+@synthesize isel_action1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -94,6 +99,8 @@ enum TEXTFIELDTAG {
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_detail_search=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_parameter=[[NSMutableArray alloc]initWithCapacity:10];
 }
 #pragma mark 将额外的cell的线隐藏
 
@@ -148,16 +155,28 @@ enum TEXTFIELDTAG {
     NSString *col_label=[dic valueForKey:@"col_label"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //是否为空
+    NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
+    //相关联的参数
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    if ([is_mandatory isEqualToString:@"1"]) {
+        col_label=[col_label stringByAppendingString:@"*"];
+    }
+    
     if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_search1";
         Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
             cell=[[Cell_search alloc]init];
         }
-         cell.il_prompt_label.text=col_label;
+        cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        if ([cell.itf_searchData.text length]!=0 || cell.itf_searchData.text!=nil) {
+            [alist_parameter addObject:col_code];
+            [alist_detail_search addObject:cell.itf_searchData.text];
+        }
         return cell;
     }
     if ([col_stye isEqualToString:@"lookup"]) {
@@ -182,6 +201,11 @@ enum TEXTFIELDTAG {
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        if ([cell.itf_input_searchData.text length]!=0 || cell.itf_input_searchData.text!=nil) {
+            [alist_parameter addObject:col_code];
+            [alist_detail_search addObject:cell.itf_input_searchData.text];
+        }
+        
         return cell;
     }
 
@@ -199,6 +223,9 @@ enum TEXTFIELDTAG {
     return filtered;
 }
 - (IBAction)fn_search_account:(id)sender {
+    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_parameter withObject:alist_detail_search]);
+    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    
 }
 
 - (IBAction)fn_go_back:(id)sender {

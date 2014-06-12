@@ -15,6 +15,10 @@
 @property(nonatomic,strong)NSMutableArray *alist_filtered_data;
 //存储搜索标准的组名和该组的行数
 @property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
+//存储搜索条件的数据
+@property(nonatomic,strong)NSMutableArray *alist_detail_search;
+//存储搜索条件的参数
+@property(nonatomic,strong)NSMutableArray *alist_parameter;
 //用来记录选择的countryname
 @property (strong,nonatomic)NSMutableDictionary *idic_countryname;
 //用来记录选择的regionname
@@ -23,6 +27,9 @@
 @property (strong,nonatomic)NSMutableDictionary *idic_territoryname;
 //用来标识点击哪个uitextfield
 @property (nonatomic,weak)UITextField *checkText;
+
+@property (strong,nonatomic) id iobj_target;
+@property (nonatomic, assign) SEL isel_action1;
 
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 - (IBAction)fn_search_account:(id)sender;
