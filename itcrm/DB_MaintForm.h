@@ -12,8 +12,8 @@
 
 @property(nonatomic,strong)DBManager *idb;
 -(BOOL)fn_save_MaintForm_data:(NSMutableArray*)ilist_result;
--(NSMutableArray*)fn_get_MaintForm_data;
+-(NSMutableArray*)fn_get_MaintForm_data:(NSString*)form_id;
 -(BOOL)fn_delete_all_data;
--(NSMutableArray*)fn_get_groupNameAndNum;
+-(NSMutableArray*)fn_get_groupNameAndNum:(NSString*)form_id;
 
 @end

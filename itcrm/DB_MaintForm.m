@@ -33,10 +33,10 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_MaintForm_data{
+-(NSMutableArray*)fn_get_MaintForm_data:(NSString*)form_id{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM maintForm"];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM maintForm where form_id like ?",[NSString stringWithFormat:@"%@",form_id]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
@@ -57,10 +57,10 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_groupNameAndNum{
+-(NSMutableArray*)fn_get_groupNameAndNum:(NSString*)form_id{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result= [[idb fn_get_db] executeQuery:@"SELECT group_name,COUNT(group_name) FROM maintForm group by group_name"];
+        FMResultSet *lfmdb_result= [[idb fn_get_db] executeQuery:@"SELECT group_name,COUNT(group_name) FROM maintForm where form_id like ? group by group_name",form_id];
         while ([lfmdb_result next]) {
             
             [arr addObject:[lfmdb_result resultDictionary]];
