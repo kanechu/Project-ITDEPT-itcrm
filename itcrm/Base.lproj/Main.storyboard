@@ -370,7 +370,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" patternImage="643147E7-5C9D-48CB-BA17-53111EC2C6C0" colorSpace="pattern"/>
+                                        <color key="backgroundColor" patternImage="029C2458-E78D-4D8B-AF03-A6D020074D1C" colorSpace="pattern"/>
                                         <connections>
                                             <outlet property="ii_image" destination="QcK-8X-tYa" id="Ifu-PI-0Wz"/>
                                             <outlet property="il_show_text" destination="mNM-yr-b7L" id="4He-as-syG"/>
@@ -687,7 +687,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="643147E7-5C9D-48CB-BA17-53111EC2C6C0" width="320" height="460">
+        <image name="029C2458-E78D-4D8B-AF03-A6D020074D1C" width="320" height="460">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

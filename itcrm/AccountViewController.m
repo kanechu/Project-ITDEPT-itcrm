@@ -174,7 +174,7 @@ enum TEXTFIELDTAG {
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
-        if ([cell.itf_searchData.text length]!=0 || cell.itf_searchData.text!=nil) {
+        if ([cell.itf_searchData.text length]!=0 && cell.itf_searchData.text!=nil) {
             [alist_parameter addObject:col_code];
             [alist_detail_search addObject:cell.itf_searchData.text];
         }
@@ -202,7 +202,7 @@ enum TEXTFIELDTAG {
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
-        if ([cell.itf_input_searchData.text length]!=0 || cell.itf_input_searchData.text!=nil) {
+        if ([cell.itf_input_searchData.text length]!=0 && cell.itf_input_searchData.text!=nil) {
             [alist_parameter addObject:col_code];
             [alist_detail_search addObject:cell.itf_input_searchData.text];
         }
