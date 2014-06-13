@@ -20,7 +20,7 @@
     formSheet.shouldDismissOnBackgroundViewTap = NO;
     //中心垂直，默认为NO
     formSheet.shouldCenterVertically =YES;
-    formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsCenterVertically;
+    formSheet.movementWhenKeyboardAppears = MZFormSheetWhenKeyboardAppearsDoNothing;
     [VC1 mz_presentFormSheetController:formSheet animated:YES completionHandler:^(MZFormSheetController *formSheetController){}];
     
 }

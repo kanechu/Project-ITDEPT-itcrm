@@ -295,7 +295,6 @@ enum TEXTFIELDTAG {
   
     //设置表视图frame
     [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height-20)];
-     _inav_navBar.frame=CGRectMake(0,0, _inav_navBar.frame.size.width, _inav_navBar.frame.size.height);
 }
 
 //键盘被隐藏的时候调用的方法
@@ -304,7 +303,6 @@ enum TEXTFIELDTAG {
         //设置表视图frame,ios7的导航条加上状态栏是64
         [_skstableView setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
     }
-     _inav_navBar.frame=CGRectMake(0,20, _inav_navBar.frame.size.width, _inav_navBar.frame.size.height);
 }
 
 @end
