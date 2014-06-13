@@ -153,4 +153,8 @@
 - (IBAction)fn_search_task:(id)sender {
      [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
+
+- (IBAction)fn_go_back:(id)sender {
+     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+}
 @end

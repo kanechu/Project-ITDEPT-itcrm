@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 
 - (IBAction)fn_search_task:(id)sender;
+- (IBAction)fn_go_back:(id)sender;
 
 @end
