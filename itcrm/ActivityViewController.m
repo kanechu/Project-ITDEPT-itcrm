@@ -91,6 +91,9 @@
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
     return height+10;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self performSegueWithIdentifier:@"segue_maintTask" sender:self];
+}
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     [self fn_init_crmtask_arr:[db_crmtask fn_get_search_crmtask_data:searchBar.text]];

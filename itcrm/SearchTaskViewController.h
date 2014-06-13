@@ -18,4 +18,6 @@
 @property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 
+- (IBAction)fn_search_task:(id)sender;
+
 @end

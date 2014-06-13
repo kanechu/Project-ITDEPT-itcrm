@@ -12,6 +12,7 @@
 #import "SKSTableViewCell.h"
 #import "DB_searchCriteria.h"
 #import "PopViewManager.h"
+#import "MZFormSheetController.h"
 @interface SearchTaskViewController ()
 
 @end
@@ -37,6 +38,8 @@
     [self fn_init_arr];
     //loadview的时候，打开所有expandable
     [self.skstableview fn_expandall];
+    self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW2;
+    [self setExtraCellLineHidden:self.skstableview];
 	// Do any additional setup after loading the view.
 }
 
@@ -51,7 +54,23 @@
     alist_searchCriteria=[db fn_get_srchType_data:@"crmtask"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
-
+#pragma mark 将额外的cell的线隐藏
+- (void)setExtraCellLineHidden: (UITableView *)tableView
+{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+}
+-(void)fn_custom_gesture{
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapgesture.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapgesture];
+}
+-(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    [self.view resignFirstResponder];
+}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -129,5 +148,9 @@
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{
     NSArray *filtered=[alist_searchCriteria filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
+}
+#pragma mark advance search
+- (IBAction)fn_search_task:(id)sender {
+     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
 @end
