@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 @class Format_conversion;
-@interface ActivityViewController : UITableViewController
+@class DB_crmtask_browse;
+@interface ActivityViewController : UITableViewController<UISearchBarDelegate>
 @property(nonatomic,strong)Format_conversion *format;
+@property(nonatomic,strong)DB_crmtask_browse *db_crmtask;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
+- (IBAction)fn_advance_search_task:(id)sender;
+@property (weak, nonatomic) IBOutlet UISearchBar *is_searchbar;
 
 @end

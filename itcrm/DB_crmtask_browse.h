@@ -13,7 +13,9 @@
 @property(nonatomic,strong)DBManager *idb;
 
 -(BOOL)fn_save_crmtask_browse:(NSMutableArray*)alist_result;
--(NSMutableArray*)fn_get_crmtask_data;
+
+-(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name;
+
 -(BOOL)fn_delete_all_data;
 
 @end
