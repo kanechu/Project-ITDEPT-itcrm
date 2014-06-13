@@ -11,7 +11,6 @@
 @implementation Format_conversion
 
 -(NSMutableArray*)fn_format_conersion:(NSMutableArray*)arr_format browse:(NSMutableArray*)arr_browse{
-   
     NSString *t_title=nil;
     NSString *v_title=nil;
     NSString *t_desc1=nil;
@@ -55,33 +54,33 @@
     NSMutableArray *alist_crm_browse=[[NSMutableArray alloc]initWithCapacity:10];
     for (NSDictionary *dic in arr_browse) {
         NSString *joint_str=[NSString string];
-        t_title=[self fn_replaceString:t_title withParameter:arr_t_title atString:@"%s" :dic];
-        t_desc1=[self fn_replaceString:t_desc1 withParameter:arr_v_desc1 atString:@"%s" :dic];
+        NSString *ist_title=[self fn_replaceString:t_title withParameter:arr_t_title atString:@"%s" :dic];
+        NSString *ist_desc1=[self fn_replaceString:t_desc1 withParameter:arr_v_desc1 atString:@"%s" :dic];
         
-        t_desc2=[self fn_replaceString:t_desc2 withParameter:arr_v_desc2 atString:@"%s" :dic];
+      NSString *ist_desc2=[self fn_replaceString:t_desc2 withParameter:arr_v_desc2 atString:@"%s" :dic];
         
-        t_desc3=[self fn_replaceString:t_desc3 withParameter:arr_v_desc3 atString:@"%s" :dic];
+      NSString *ist_desc3=[self fn_replaceString:t_desc3 withParameter:arr_v_desc3 atString:@"%s" :dic];
         
-        t_desc4=[self fn_replaceString:t_desc4 withParameter:arr_v_desc4 atString:@"%s" :dic];
+      NSString *ist_desc4=[self fn_replaceString:t_desc4 withParameter:arr_v_desc4 atString:@"%s" :dic];
         
-        t_desc5=[self fn_replaceString:t_desc5 withParameter:arr_v_desc5 atString:@"%s" :dic];
-        if ([t_title length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n\n",t_title];
+      NSString *ist_desc5=[self fn_replaceString:t_desc5 withParameter:arr_v_desc5 atString:@"%s" :dic];
+        if ([ist_title length]!=0) {
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n\n",ist_title];
         }
-        if ([t_desc1 length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_desc1];
+        if ([ist_desc1 length]!=0) {
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc1];
         }
-        if ([t_desc2 length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_desc2];
+        if ([ist_desc2 length]!=0) {
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc2];
         }
-        if ([t_desc3 length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_desc3];
+        if ([ist_desc3 length]!=0) {
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc3];
         }
-        if ([t_desc4 length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_desc4];
+        if ([ist_desc4 length]!=0) {
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc4];
         }
-        if ([t_desc5 length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n",t_desc5];
+        if ([ist_desc5 length]!=0) {
+            joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc5];
         }
         [alist_crm_browse addObject:joint_str];
         
