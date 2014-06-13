@@ -48,8 +48,8 @@
 #pragma mark -初始化数组
 -(void)fn_init_arr{
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum];
-    alist_maintForm=[db fn_get_MaintForm_data];
+    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
+    alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
