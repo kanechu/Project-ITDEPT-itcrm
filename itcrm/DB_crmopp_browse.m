@@ -30,10 +30,10 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_data{
+-(NSMutableArray*)fn_get_crmopp_data:(NSString*)op_type{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmopp_browse"];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmopp_browse where op_type like ?",[NSString stringWithFormat:@"%@%%",op_type]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }

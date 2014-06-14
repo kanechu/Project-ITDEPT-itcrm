@@ -130,12 +130,16 @@
     // Configure the cell...
     return nil;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 40;
+}
 
 #pragma mark 对数组进行过滤
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{
     NSArray *filtered=[alist_miantTask filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
 }
+
 
 
 @end

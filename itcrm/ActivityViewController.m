@@ -40,6 +40,7 @@
     NSMutableArray *arr_crmtask=[NSMutableArray array];
     db_crmtask=[[DB_crmtask_browse alloc]init];
     arr_crmtask=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text];
+    format=[[Format_conversion alloc]init];
     [self fn_init_crmtask_arr:arr_crmtask];
 }
 
@@ -49,7 +50,6 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_init_crmtask_arr:(NSMutableArray*)arr_crmtask{
-    format=[[Format_conversion alloc]init];
     //获取crmtask列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];

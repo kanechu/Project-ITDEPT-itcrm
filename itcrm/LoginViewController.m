@@ -25,6 +25,8 @@
 #import "DB_formatlist.h"
 #import "DB_searchCriteria.h"
 #import "DB_systemIcon.h"
+#import "DB_crmtask_browse.h"
+#import "DB_crmopp_browse.h"
 #import "Custom_Color.h"
 #import "Web_resquestData.h"
 
@@ -200,6 +202,12 @@ enum TEXTFIELD_TAG {
     
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
     [db_crmacct fn_delete_all_data];
+    
+    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+    [db_crmtask fn_delete_all_data];
+    
+    DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
+    [db_crmopp fn_delete_all_data];
     
     DB_formatlist *db_formtlist=[[DB_formatlist alloc]init];
     [db_formtlist fn_delete_all_data];

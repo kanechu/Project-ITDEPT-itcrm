@@ -19,6 +19,7 @@
 @implementation OpportunitiesViewController
 @synthesize alist_crmopp_browse;
 @synthesize format;
+@synthesize db_crmopp;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,9 +34,14 @@
     [super viewDidLoad];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
-    [self fn_init_crmopp_browse_arr];
     self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
-  
+    _is_searchBar.delegate=self;
+    format=[[Format_conversion alloc]init];
+    db_crmopp=[[DB_crmopp_browse alloc]init];
+    //获取crmopp的参数数据
+    NSMutableArray *arr_crmopp=[NSMutableArray array];
+    arr_crmopp=[db_crmopp fn_get_crmopp_data:_is_searchBar.text];
+    [self fn_init_crmopp_browse_arr:arr_crmopp];
 	// Do any additional setup after loading the view.
 }
 
@@ -44,16 +50,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_init_crmopp_browse_arr{
-   format=[[Format_conversion alloc]init];
+-(void)fn_init_crmopp_browse_arr:(NSMutableArray*)arr_crmopp{
     //获取crmopp列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct_opp"];
-    //获取crmopp的参数数据
-    NSMutableArray *arr_crmopp=[NSMutableArray array];
-    DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
-    arr_crmopp=[db_crmopp fn_get_data];
     alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
    
 }
@@ -85,5 +86,16 @@
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
     return height+10;
 }
-
+#pragma mark UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    [self fn_init_crmopp_browse_arr:[db_crmopp fn_get_crmopp_data:searchText]];
+    [self.tableview reloadData];
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self fn_init_crmopp_browse_arr:[db_crmopp fn_get_crmopp_data:searchBar.text]];
+    [self.tableview reloadData];
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
+    [_is_searchBar resignFirstResponder];
+}
 @end
