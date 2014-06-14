@@ -168,6 +168,8 @@ enum TEXTFIELD_TAG {
 }
 - (void) fn_get_Web_addr_data
 {
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    [db fn_delete_all_data];
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
     auth.user_code=@"anonymous";
@@ -190,7 +192,6 @@ enum TEXTFIELD_TAG {
 }
 - (void) fn_save_login_list: (NSMutableArray *) alist_result {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    [db fn_delete_all_data];
     [db fn_save_data:alist_result];
 }
 
@@ -216,7 +217,6 @@ enum TEXTFIELD_TAG {
     [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
     
     DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
-  
     [dbSystemIcon fn_delete_systemIcon_data];
     [self fn_resquestAndsave_data];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
@@ -290,7 +290,7 @@ enum TEXTFIELD_TAG {
     [data fn_get_crmopp_browse_data:base_url];
     [data fn_get_maintForm_data:base_url];
     [data fn_get_crmtask_browse_data:base_url];
-    [SVProgressHUD dismiss];
+    
     
 }
 

@@ -86,6 +86,9 @@
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
     return height+10;
 }
+-(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
+    return NO;
+}
 #pragma mark UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     [self fn_init_crmopp_browse_arr:[db_crmopp fn_get_crmopp_data:searchText]];

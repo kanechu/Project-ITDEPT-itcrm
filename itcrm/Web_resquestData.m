@@ -271,7 +271,7 @@
 -(void)fn_save_crmtask_browse_list:(NSMutableArray*)ilist_result{
     DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
     [db fn_save_crmtask_browse:ilist_result];
-    
+    [SVProgressHUD dismiss];
 }
 
 
