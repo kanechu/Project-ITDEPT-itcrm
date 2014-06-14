@@ -43,6 +43,22 @@
     }
     return arr;
 }
+-(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)arr_parameter value:(NSMutableArray*)arr_value{
+    NSString *str_parameter=[arr_parameter componentsJoinedByString:@" like ? and "];
+    if ([str_parameter length]!=0) {
+        str_parameter=[str_parameter stringByAppendingString:@" like ?"];
+    }
+    NSString *sql=[NSString stringWithFormat:@"select * from crmtask_browse where %@",str_parameter];
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr_value];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
 
 
 -(BOOL)fn_delete_all_data{

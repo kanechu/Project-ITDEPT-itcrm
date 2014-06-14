@@ -90,7 +90,10 @@
 }
 #pragma mark 格式转换 %s用参数里面的值来替换
 -(NSString*)fn_replaceString:(NSString*)string withParameter:(NSArray*)parameter atString:(NSString*)key :(NSDictionary*)dic{
-    NSMutableString *resultString = [[NSMutableString alloc]initWithString:string];
+    NSMutableString *resultString=nil;
+    if ([string length]!=0) {
+        resultString = [[NSMutableString alloc]initWithString:string];
+    }
     NSRange range ;
     range = [string rangeOfString:key];
     int i = 0;

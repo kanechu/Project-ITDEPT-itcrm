@@ -18,4 +18,5 @@
 
 -(BOOL)fn_delete_all_data;
 
+-(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)arr_parameter value:(NSMutableArray*)arr_value;
 @end
