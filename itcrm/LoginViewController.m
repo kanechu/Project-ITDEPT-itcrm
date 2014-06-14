@@ -26,6 +26,7 @@
 #import "DB_searchCriteria.h"
 #import "DB_systemIcon.h"
 #import "Custom_Color.h"
+#import "Web_resquestData.h"
 
 @interface LoginViewController ()
 
@@ -51,6 +52,13 @@ enum TEXTFIELD_TAG {
     ilist_textfield=@[@"user ID",@"user password",@"systemcode"];
     self.view.backgroundColor=COLOR_LIGHT_YELLOW1;
    	// Do any additional setup after loading the view, typically from a nib.
+}
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self=[super initWithCoder:aDecoder];
+    if (self) {
+        [self fn_get_Web_addr_data];
+    }
+    return self;
 }
 -(void)fn_custom_style{
     _tableview_form.layer.cornerRadius=9;
@@ -156,15 +164,13 @@ enum TEXTFIELD_TAG {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void) fn_get_data: (NSString*)user_code :(NSString*)user_pass :(NSString*)system_code
+- (void) fn_get_Web_addr_data
 {
-  
-    [SVProgressHUD showWithStatus:@"Loading, please wait!"];
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
-    auth.user_code=user_code;
-    auth.password=user_pass;
-    auth.system =system_code;
+    auth.user_code=@"anonymous";
+    auth.password=@"anonymous1";
+    auth.system =@"ITNEW";
     auth.version=@"1.2";
     auth.com_sys_code=@"WTRANS/UAT";
     auth.app_code=@"ITCRM";
@@ -181,18 +187,14 @@ enum TEXTFIELD_TAG {
     
 }
 - (void) fn_save_login_list: (NSMutableArray *) alist_result {
-   
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    [db fn_delete_all_data];
     [db fn_save_data:alist_result];
-    [self performSegueWithIdentifier:@"segue_MainHomeVC" sender:self];
-    [SVProgressHUD dismiss];
 }
 
 
 - (IBAction)fn_login_app:(id)sender {
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    [db fn_delete_all_data];
-    
+    [SVProgressHUD showWithStatus:@"Loading, please wait!"];
     DB_searchCriteria *db_search=[[DB_searchCriteria alloc]init];
     [db_search fn_delete_all_data];
     
@@ -208,7 +210,11 @@ enum TEXTFIELD_TAG {
     DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
   
     [dbSystemIcon fn_delete_systemIcon_data];
-    [self fn_get_data:is_user :is_pass :is_systemCode];
+    [self fn_resquestAndsave_data];
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    if ([[db fn_get_all_data] count]!=0) {
+        [self performSegueWithIdentifier:@"segue_MainHomeVC" sender:self];
+    }
 }
 
 - (IBAction)fn_end_inputData:(id)sender {
@@ -239,18 +245,18 @@ enum TEXTFIELD_TAG {
     cell.it_textfield.placeholder=[ilist_textfield objectAtIndex:indexPath.row];
     if (indexPath.row==0) {
         cell.it_textfield.tag=TAG1;
-        cell.it_textfield.text=@"anonymous";
+        cell.it_textfield.text=@"YEN";
         is_user=cell.it_textfield.text;
     }
     if (indexPath.row==1) {
         cell.it_textfield.tag=TAG2;
         cell.it_textfield.secureTextEntry=YES;
-        cell.it_textfield.text=@"anonymous1";
+        cell.it_textfield.text=@"392016";
         is_pass=cell.it_textfield.text;
     }
     if (indexPath.row==2) {
         cell.it_textfield.tag=TAG3;
-        cell.it_textfield.text=@"ITNEW";
+        cell.it_textfield.text=@"ITCRM";
         is_systemCode=cell.it_textfield.text;
     }
     return cell;
@@ -258,6 +264,26 @@ enum TEXTFIELD_TAG {
 #pragma mark UITableViewDelegate
 -(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
     return NO;
+}
+
+#pragma mark 请求全部的数据
+-(void)fn_resquestAndsave_data{
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    NSMutableArray *arr=[db fn_get_all_data];
+    NSString* base_url=nil;
+    if (arr!=nil && [arr count]!=0) {
+        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
+    }
+    Web_resquestData *data=[[Web_resquestData alloc]init];
+    [data fn_get_search_data:base_url];
+    [data fn_get_formatlist_data:base_url];
+    [data fn_get_crmacct_browse_data:base_url];
+    [data fn_get_region_data:base_url];
+    [data fn_get_crmopp_browse_data:base_url];
+    [data fn_get_maintForm_data:base_url];
+    [data fn_get_crmtask_browse_data:base_url];
+    [SVProgressHUD dismiss];
+    
 }
 
 @end

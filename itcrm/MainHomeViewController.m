@@ -9,7 +9,6 @@
 #import "MainHomeViewController.h"
 #import "Menu_home.h"
 #import "Cell_menu_item.h"
-#import "Web_resquestData.h"
 #import "DB_RespLogin.h"
 #import "SVProgressHUD.h"
 #import "DB_systemIcon.h"
@@ -26,13 +25,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-    }
-    return self;
-}
--(id)initWithCoder:(NSCoder *)aDecoder{
-    self=[super initWithCoder:aDecoder];
-    if (self) {
-        [self fn_resquestAndsave_data];
     }
     return self;
 }
@@ -76,24 +68,7 @@
     [self.iui_collectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell_menu"];
     [self.iui_collectionview reloadData];
 }
-#pragma mark 请求全部的数据
--(void)fn_resquestAndsave_data{
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    NSMutableArray *arr=[db fn_get_all_data];
-    NSString* base_url=nil;
-    if (arr!=nil && [arr count]!=0) {
-        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
-    }
-    Web_resquestData *data=[[Web_resquestData alloc]init];
-    [data fn_get_search_data:base_url];
-    [data fn_get_formatlist_data:base_url];
-    [data fn_get_crmacct_browse_data:base_url];
-    [data fn_get_region_data:base_url];
-    [data fn_get_crmopp_browse_data:base_url];
-    [data fn_get_maintForm_data:base_url];
-    [data fn_get_crmtask_browse_data:base_url];
-    
-}
+
 #pragma mark UICollectionView Datasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return [ilist_menu count];
