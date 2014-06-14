@@ -11,6 +11,7 @@
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
+#import "Custom_Color.h"
 @interface MaintFormViewController ()
 
 @end
@@ -77,6 +78,7 @@
     if (!cell)
     { cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    cell.backgroundColor=COLOR_LIGTH_GREEN;
     cell.textLabel.text=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;

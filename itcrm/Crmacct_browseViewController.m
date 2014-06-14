@@ -42,6 +42,7 @@
     [_searchBar resignFirstResponder];
     self.tableView_acct.backgroundColor=COLOR_LIGHT_YELLOW;
     db_acct=[[DB_crmacct_browse alloc]init];
+    [self fn_init_account:[db_acct fn_get_data:_searchBar.text]];
 	// Do any additional setup after loading the view.
 }
 
@@ -70,12 +71,12 @@
     if (cell==nil) {
         cell=[[Cell_browse alloc]init];
     }
+    cell.backgroundColor=COLOR_LIGHT_YELLOW;
     UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
-    cell.il_show_text.textColor=[UIColor whiteColor];
+    cell.il_show_text.numberOfLines=0;
     cell.il_show_text.font=font;
     cell.il_show_text.text=[ilist_account objectAtIndex:indexPath.row];
-    
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     return cell;
@@ -84,6 +85,12 @@
 
 
 #pragma mark UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *cellText = [ilist_account objectAtIndex:indexPath.row];
+    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
+    CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
+    return height+10;
+}
 -(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
 }
