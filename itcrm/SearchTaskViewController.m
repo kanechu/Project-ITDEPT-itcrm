@@ -13,6 +13,7 @@
 #import "DB_searchCriteria.h"
 #import "PopViewManager.h"
 #import "MZFormSheetController.h"
+#import "AppConstants.h"
 @interface SearchTaskViewController ()
 
 @end
@@ -21,6 +22,10 @@
 @synthesize alist_filtered_data;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
+@synthesize alist_parameter;
+@synthesize alist_value;
+@synthesize iobj_target;
+@synthesize isel_action1;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,6 +58,8 @@
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmtask"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_value=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_parameter=[[NSMutableArray alloc]initWithCapacity:10];
 }
 #pragma mark 将额外的cell的线隐藏
 - (void)setExtraCellLineHidden: (UITableView *)tableView
@@ -119,7 +126,7 @@
     //是否为空
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
     //相关联的参数
-   // NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *col_code=[dic valueForKey:@"col_code"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
     }
@@ -133,7 +140,15 @@
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
-       
+        if ([col_label isEqualToString:@"Task Title*"]) {
+            cell.itf_searchData.tag=100;
+        }
+        if ([col_label isEqualToString:@"Task Description"]) {
+            cell.itf_searchData.tag=101;
+        }
+        if ([col_label isEqualToString:@"Event Period"]) {
+            cell.itf_searchData.tag=102;
+        }
         return cell;
     }
        // Configure the cell...
@@ -151,7 +166,21 @@
 }
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
-     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    UITextField *text=(UITextField*)[self.view viewWithTag:100];
+    UITextField *text1=(UITextField*)[self.view viewWithTag:101];
+    UITextField *text2=(UITextField*)[self.view viewWithTag:102];
+    if ([text.text length]!=0) {
+        [alist_value addObject:text.text];
+    }
+    if ([text1.text length]!=0) {
+        [alist_value addObject:text1.text];
+    }
+    if ([text2.text length]!=0) {
+        [alist_value addObject:text2.text];
+    }
+    
+    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_parameter withObject:alist_value]);
+    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
 
 - (IBAction)fn_go_back:(id)sender {

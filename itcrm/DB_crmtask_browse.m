@@ -45,10 +45,13 @@
 }
 -(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)arr_parameter value:(NSMutableArray*)arr_value{
     NSString *str_parameter=[arr_parameter componentsJoinedByString:@" like ? and "];
+    NSString *sql=nil;
     if ([str_parameter length]!=0) {
         str_parameter=[str_parameter stringByAppendingString:@" like ?"];
+        sql=[NSString stringWithFormat:@"select * from crmtask_browse where %@",str_parameter];
+    }else{
+       sql=[NSString string];
     }
-    NSString *sql=[NSString stringWithFormat:@"select * from crmtask_browse where %@",str_parameter];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
         FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr_value];
