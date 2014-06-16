@@ -110,14 +110,14 @@
 - (IBAction)fn_advance_search_task:(id)sender {
     SearchTaskViewController *VC=(SearchTaskViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SearchTaskViewController"];
     VC.iobj_target=self;
-    VC.isel_action1=@selector(fn_save_task::);
+    VC.isel_action1=@selector(fn_save_task:);
     PopViewManager *popV=[[PopViewManager alloc]init];
     [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
--(void)fn_save_task:(NSMutableArray*)arr_parameter :(NSMutableArray*)arr_value{
+-(void)fn_save_task:(NSMutableArray*)alist_searchData{
     NSMutableArray *arr_task=[NSMutableArray array];
     DB_crmtask_browse *db_crmacct=[[DB_crmtask_browse alloc]init];
-    arr_task=[db_crmacct fn_get_detail_crmtask_data:arr_parameter value:arr_value];
+    arr_task=[db_crmacct fn_get_detail_crmtask_data:alist_searchData ];
     [self fn_init_crmtask_arr:arr_task];
     [self.tableView reloadData];
 }

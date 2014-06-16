@@ -9,11 +9,13 @@
 #import "SearchTaskViewController.h"
 #import "Cell_search.h"
 #import "Custom_Color.h"
+#import "Cell_taskSearch.h"
 #import "SKSTableViewCell.h"
 #import "DB_searchCriteria.h"
 #import "PopViewManager.h"
 #import "MZFormSheetController.h"
 #import "AppConstants.h"
+#import "Advance_SearchData.h"
 @interface SearchTaskViewController ()
 
 @end
@@ -22,10 +24,10 @@
 @synthesize alist_filtered_data;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
-@synthesize alist_parameter;
-@synthesize alist_value;
 @synthesize iobj_target;
 @synthesize isel_action1;
+@synthesize idic_value;
+@synthesize idic_parameter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,8 +60,8 @@
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmtask"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
-    alist_value=[[NSMutableArray alloc]initWithCapacity:10];
-    alist_parameter=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 #pragma mark 将额外的cell的线隐藏
 - (void)setExtraCellLineHidden: (UITableView *)tableView
@@ -131,7 +133,7 @@
         col_label=[col_label stringByAppendingString:@"*"];
     }
     
-    if ([col_stye isEqualToString:@"string"] ||[col_stye isEqualToString:@"datetimerange"]) {
+    if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_search";
         Cell_search *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -142,14 +144,35 @@
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
         if ([col_label isEqualToString:@"Task Title*"]) {
             cell.itf_searchData.tag=100;
+            cell.itf_searchData.text=[idic_value valueForKey:@"title_value"];
+            [idic_parameter setObject:col_code forKey:@"task_title"];
         }
         if ([col_label isEqualToString:@"Task Description"]) {
             cell.itf_searchData.tag=101;
+            cell.itf_searchData.text=[idic_value valueForKey:@"desc_value"];
+            [idic_parameter setObject:col_code forKey:@"task_desc"];
         }
-        if ([col_label isEqualToString:@"Event Period"]) {
-            cell.itf_searchData.tag=102;
-        }
+        
         return cell;
+    }
+    if ([col_stye isEqualToString:@"datetimerange"]) {
+        static NSString *cellIndetifier=@"Cell_taskSearch";
+        Cell_taskSearch *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIndetifier];
+        if (cell==nil) {
+            cell=[[Cell_taskSearch alloc]init];
+        }
+        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        cell.il_prompt_label.text=col_label;
+        NSArray *arr=[col_code componentsSeparatedByString:@","];
+        if ([[arr objectAtIndex:0] isEqualToString:@"task_start_date"]) {
+            cell.itf_input_startDate.text=[idic_value valueForKey:@"start_date_value"];
+            [idic_parameter setObject:[arr objectAtIndex:0] forKey:@"task_start_date"];
+        }
+        if ([[arr objectAtIndex:1] isEqualToString:@"task_end_date"]) {
+            cell.itf_input_endDate.text=[idic_value valueForKey:@"end_date_value"];
+            [idic_parameter setObject:[arr objectAtIndex:1] forKey:@"task_end_date"];
+        }        return cell;
     }
        // Configure the cell...
     return nil;
@@ -166,24 +189,57 @@
 }
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
-    UITextField *text=(UITextField*)[self.view viewWithTag:100];
-    UITextField *text1=(UITextField*)[self.view viewWithTag:101];
-    UITextField *text2=(UITextField*)[self.view viewWithTag:102];
-    if ([text.text length]!=0) {
-        [alist_value addObject:text.text];
+    NSMutableArray *alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
+    if ([[idic_value valueForKey:@"title_value"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_value valueForKey:@"title_value"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"task_title"];
+        [alist_searchData addObject:searchData];
     }
-    if ([text1.text length]!=0) {
-        [alist_value addObject:text1.text];
+    if ([[idic_value valueForKey:@"desc_value"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_value valueForKey:@"desc_value"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"task_desc"];
+        [alist_searchData addObject:searchData];
     }
-    if ([text2.text length]!=0) {
-        [alist_value addObject:text2.text];
+    if ([[idic_value valueForKey:@"start_date_value"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_value valueForKey:@"start_date_value"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"task_start_date"];
+        [alist_searchData addObject:searchData];
     }
-    
-    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_parameter withObject:alist_value]);
+    if ([[idic_value valueForKey:@"end_date_value"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_value valueForKey:@"end_date_value"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"task_end_date"];
+        [alist_searchData addObject:searchData];
+    }
+    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_searchData ]);
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
 
 - (IBAction)fn_go_back:(id)sender {
      [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+}
+
+- (IBAction)fn_textfield_endEdit:(id)sender {
+    UITextField *textfield=(UITextField*)sender;
+    if (textfield.tag==100) {
+        [idic_value setObject:textfield.text forKey:@"title_value"];
+    }
+    if (textfield.tag==101) {
+        [idic_value setObject:textfield.text forKey:@"desc_value"];
+    }
+}
+
+- (IBAction)fn_startDate_endEdit:(id)sender {
+    UITextField *textfield=(UITextField*)sender;
+    [idic_value setObject:textfield.text forKey:@"start_date_value"];
+}
+
+- (IBAction)fn_endDate_endEdit:(id)sender {
+    UITextField *textfield=(UITextField*)sender;
+    [idic_value setObject:textfield.text forKey:@"end_date_value"];
+    
 }
 @end
