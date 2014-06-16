@@ -58,6 +58,8 @@
 		B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0D619404919007F89A6 /* UIViewController+TargetViewController.m */; };
 		B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */; };
 		B289A5E71947F62C0004B62B /* Cell_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B289A5E61947F62C0004B62B /* Cell_browse.m */; };
+		B28F1E68194EDF7800B7C5D7 /* Advance_SearchData.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1E67194EDF7800B7C5D7 /* Advance_SearchData.m */; };
+		B28F1E6B194EE2FD00B7C5D7 /* Cell_taskSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1E6A194EE2FD00B7C5D7 /* Cell_taskSearch.m */; };
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
@@ -250,6 +252,10 @@
 		B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crmacct_browseViewController.m; sourceTree = "<group>"; };
 		B289A5E51947F62C0004B62B /* Cell_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_browse.h; sourceTree = "<group>"; };
 		B289A5E61947F62C0004B62B /* Cell_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_browse.m; sourceTree = "<group>"; };
+		B28F1E66194EDF7800B7C5D7 /* Advance_SearchData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advance_SearchData.h; sourceTree = "<group>"; };
+		B28F1E67194EDF7800B7C5D7 /* Advance_SearchData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Advance_SearchData.m; sourceTree = "<group>"; };
+		B28F1E69194EE2FD00B7C5D7 /* Cell_taskSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_taskSearch.h; sourceTree = "<group>"; };
+		B28F1E6A194EE2FD00B7C5D7 /* Cell_taskSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_taskSearch.m; sourceTree = "<group>"; };
 		B298626E19385CCB0097B553 /* RespPermit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespPermit.h; sourceTree = "<group>"; };
 		B298626F19385CCB0097B553 /* RespPermit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespPermit.m; sourceTree = "<group>"; };
 		B298627719386FF30097B553 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -439,6 +445,8 @@
 				B25D7606193D6ACF005913D7 /* Cell_search.m */,
 				B27EDFC019401092007F89A6 /* Cell_search1.h */,
 				B27EDFC119401092007F89A6 /* Cell_search1.m */,
+				B28F1E69194EE2FD00B7C5D7 /* Cell_taskSearch.h */,
+				B28F1E6A194EE2FD00B7C5D7 /* Cell_taskSearch.m */,
 				B27EE0BC19402495007F89A6 /* Cell_region.h */,
 				B27EE0BD19402495007F89A6 /* Cell_region.m */,
 				B289A5E51947F62C0004B62B /* Cell_browse.h */,
@@ -651,6 +659,8 @@
 				B260D99C194596F10026A1E9 /* RespMaintForm.m */,
 				B257F2791935E0B600EC88F5 /* Menu_home.h */,
 				B257F27A1935E0B600EC88F5 /* Menu_home.m */,
+				B28F1E66194EDF7800B7C5D7 /* Advance_SearchData.h */,
+				B28F1E67194EDF7800B7C5D7 /* Advance_SearchData.m */,
 			);
 			name = DTOs;
 			sourceTree = "<group>";
@@ -846,6 +856,7 @@
 				B260D994194591A90026A1E9 /* MaintFormViewController.m in Sources */,
 				B2B092D219345E74002FE190 /* LoginViewController.m in Sources */,
 				B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */,
+				B28F1E6B194EE2FD00B7C5D7 /* Cell_taskSearch.m in Sources */,
 				B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */,
 				B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */,
 				B2452E7219416D9700D02A45 /* PopViewManager.m in Sources */,
@@ -867,6 +878,7 @@
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
+				B28F1E68194EDF7800B7C5D7 /* Advance_SearchData.m in Sources */,
 				B27EE0DD19404919007F89A6 /* NSInvocation+Copy.m in Sources */,
 				B2B704F7194699CA0012A531 /* DB_crmtask_browse.m in Sources */,
 				B27EE0D819404919007F89A6 /* MZFormSheetBackgroundWindow.m in Sources */,

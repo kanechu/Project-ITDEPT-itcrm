@@ -11,6 +11,7 @@
 #import "FMDatabaseAdditions.h"
 #import "RespCrmtask_browse.h"
 #import "NSDictionary.h"
+#import "Advance_SearchData.h"
 @implementation DB_crmtask_browse
 @synthesize idb;
 -(id)init{
@@ -43,18 +44,29 @@
     }
     return arr;
 }
--(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)arr_parameter value:(NSMutableArray*)arr_value{
-    NSString *str_parameter=[arr_parameter componentsJoinedByString:@" like ? and "];
-    NSString *sql=nil;
-    if ([str_parameter length]!=0) {
-        str_parameter=[str_parameter stringByAppendingString:@" like ?"];
-        sql=[NSString stringWithFormat:@"select * from crmtask_browse where %@",str_parameter];
-    }else{
-       sql=[NSString string];
+-(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData{
+    NSString *sql=@"select * from crmtask_browse ";
+    NSInteger flag=0;
+    NSMutableArray *arr1=[[NSMutableArray alloc]init];
+    for (Advance_SearchData *task in alist_searchData) {
+        NSString *sql1=[NSString string];
+        if (flag==0 && [task.is_searchValue length]!=0) {
+            sql=[sql stringByAppendingFormat:@"where %@ like ? ",task.is_parameter];
+            sql1=[NSString stringWithFormat:@"%@%%",task.is_searchValue];
+            [arr1 addObject:sql1];
+            
+        }
+        if (flag==1&&[task.is_searchValue length]!=0) {
+            sql=[sql stringByAppendingFormat:@"and %@ like ? ",task.is_parameter];
+            sql1=[NSString stringWithFormat:@"%@%%",task.is_searchValue];
+            [arr1 addObject:sql1];
+            
+        }
+        flag=1;
     }
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr_value];
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr1];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
