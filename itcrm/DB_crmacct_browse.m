@@ -63,7 +63,7 @@
     for (Advance_SearchData *acct in alist_searchData) {
          NSString *sql1=[NSString string];
         if (flag==0 && [acct.is_searchValue length]!=0) {
-            sql=[sql stringByAppendingFormat:@"where %@ like ?",acct.is_parameter];
+            sql=[sql stringByAppendingFormat:@" where %@ like ?",acct.is_parameter];
             sql1=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
             [parameter_arr addObject:sql1];
         }

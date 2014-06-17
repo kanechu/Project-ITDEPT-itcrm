@@ -142,7 +142,7 @@
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
-        if ([col_label isEqualToString:@"Task Title*"]) {
+        if ([col_code isEqualToString:@"task_title"]) {
             cell.itf_searchData.tag=100;
             cell.itf_searchData.text=[idic_value valueForKey:@"title_value"];
             [idic_parameter setObject:col_code forKey:@"task_title"];

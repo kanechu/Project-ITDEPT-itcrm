@@ -17,12 +17,17 @@
 #import "RegionViewController.h"
 #import "Custom_Color.h"
 #import "AppConstants.h"
+#import "Advance_SearchData.h"
 @interface AccountViewController ()
 
 @end
 enum TEXTFIELDTAG {
     TAG = 1,
     TAG1,TAG2
+    };
+enum TEXTFIELD_TAG {
+    ITF_TAG = 100,
+    ITF_IAG1,ITF_TAG2,ITF_IAG3,ITF_IAG4,ITF_TAG5,ITF_TAG6
     };
 
 @implementation AccountViewController
@@ -34,8 +39,8 @@ enum TEXTFIELDTAG {
 @synthesize idic_regionname;
 @synthesize idic_territoryname;
 @synthesize checkText;
-@synthesize alist_detail_search;
-@synthesize alist_parameter;
+@synthesize idic_search_value;
+@synthesize idic_parameter;
 @synthesize iobj_target;
 @synthesize isel_action1;
 
@@ -100,8 +105,8 @@ enum TEXTFIELDTAG {
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
-    alist_detail_search=[[NSMutableArray alloc]initWithCapacity:10];
-    alist_parameter=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 #pragma mark 将额外的cell的线隐藏
 
@@ -174,10 +179,42 @@ enum TEXTFIELDTAG {
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
-        if ([cell.itf_searchData.text length]!=0 && cell.itf_searchData.text!=nil) {
-            [alist_parameter addObject:col_code];
-            [alist_detail_search addObject:cell.itf_searchData.text];
+        if ([col_code isEqualToString:@"acct_code"]) {
+            cell.itf_searchData.tag=ITF_TAG;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"Account_code"];
+            [idic_parameter setObject:col_code forKey:@"acct_code"];
         }
+        if ([col_code isEqualToString:@"acct_name"]) {
+            cell.itf_searchData.tag=ITF_IAG1;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"Account_name"];
+            [idic_parameter setObject:col_code forKey:@"acct_name"];
+        }
+        if ([col_code isEqualToString:@"acct_addr_01"]) {
+            cell.itf_searchData.tag=ITF_TAG2;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"Address"];
+            [idic_parameter setObject:col_code forKey:@"acct_addr_01"];
+        }
+        if ([col_code isEqualToString:@"city"]) {
+            cell.itf_searchData.tag=ITF_IAG3;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"City"];
+            [idic_parameter setObject:col_code forKey:@"city"];
+        }
+        if ([col_code isEqualToString:@"acct_tel"]) {
+            cell.itf_searchData.tag=ITF_IAG4;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"Tel"];
+            [idic_parameter setObject:col_code forKey:@"acct_tel"];
+        }
+        if ([col_code isEqualToString:@"acct_fax"]) {
+            cell.itf_searchData.tag=ITF_TAG5;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"Fax"];
+            [idic_parameter setObject:col_code forKey:@"acct_fax"];
+        }
+        if ([col_code isEqualToString:@"acct_email"]) {
+            cell.itf_searchData.tag=ITF_TAG6;
+            cell.itf_searchData.text=[idic_search_value valueForKey:@"Email"];
+            [idic_parameter setObject:col_code forKey:@"acct_email"];
+        }
+        
         return cell;
     }
     if ([col_stye isEqualToString:@"lookup"]) {
@@ -190,22 +227,31 @@ enum TEXTFIELDTAG {
         if ([col_label isEqualToString:@"Country"]) {
             cell.ibtn_skip.tag=TAG;
             cell.itf_input_searchData.text=[idic_countryname valueForKey:@"display"];
+            if ([cell.itf_input_searchData.text length]!=0) {
+                [idic_search_value setObject:cell.itf_input_searchData.text forKey:@"country"];
+                [idic_parameter setObject:col_code forKey:@"country"];
+            }
+            
         }
         if ([col_label isEqualToString:@"Region"]) {
             cell.ibtn_skip.tag=TAG1;
             cell.itf_input_searchData.text=[idic_regionname valueForKey:@"display"];
+            if ([cell.itf_input_searchData.text length]!=0) {
+                [idic_search_value setObject:cell.itf_input_searchData.text forKey:@"region"];
+                [idic_parameter setObject:col_code forKey:@"region"];
+            }
         }
         if ([col_label isEqualToString:@"Territory"]) {
             cell.ibtn_skip.tag=TAG2;
             cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
+            if ([cell.itf_input_searchData.text length]!=0) {
+                [idic_search_value setObject:cell.itf_input_searchData.text forKey:@"territory"];
+                [idic_parameter setObject:col_code forKey:@"territory"];
+            }
         }
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
-        if ([cell.itf_input_searchData.text length]!=0 && cell.itf_input_searchData.text!=nil) {
-            [alist_parameter addObject:col_code];
-            [alist_detail_search addObject:cell.itf_input_searchData.text];
-        }
         
         return cell;
     }
@@ -224,7 +270,68 @@ enum TEXTFIELDTAG {
     return filtered;
 }
 - (IBAction)fn_search_account:(id)sender {
-    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_parameter withObject:alist_detail_search]);
+    NSMutableArray *alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
+    if ([[idic_search_value valueForKey:@"Account_code"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"Account_code"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"acct_code"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"Account_name"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"Account_name"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"acct_name"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"Address"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"Address"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"acct_addr_01"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"City"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"City"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"city"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"Tel"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"Tel"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"acct_tel"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"Fax"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"Fax"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"acct_fax"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"Email"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"Email"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"acct_email"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"country"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"country"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"country"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"region"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"region"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"region"];
+        [alist_searchData addObject:searchData];
+    }
+    if ([[idic_search_value valueForKey:@"territory"] length]!=0) {
+        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+        searchData.is_searchValue=[idic_search_value valueForKey:@"territory"];
+        searchData.is_parameter=[idic_parameter valueForKey:@"territory"];
+        [alist_searchData addObject:searchData];
+    }
+    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject: alist_searchData]);
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
     
 }
@@ -305,4 +412,30 @@ enum TEXTFIELDTAG {
     }
 }
 
+- (IBAction)fn_textfield_endEdit:(id)sender {
+    UITextField *textfield=(UITextField*)sender;
+    if (textfield.tag==ITF_TAG) {
+        [idic_search_value setObject:textfield.text forKey:@"Account_code"];
+    }
+    if (textfield.tag==ITF_IAG1) {
+        [idic_search_value setObject:textfield.text forKey:@"Account_name"];
+    }
+    if (textfield.tag==ITF_TAG2) {
+        [idic_search_value setObject:textfield.text forKey:@"Address"];
+    }
+    if (textfield.tag==ITF_IAG3) {
+        [idic_search_value setObject:textfield.text forKey:@"City"];
+    }
+    if (textfield.tag==ITF_IAG4) {
+        [idic_search_value setObject:textfield.text forKey:@"Tel"];
+    }
+    if (textfield.tag==ITF_TAG5) {
+        [idic_search_value setObject:textfield.text forKey:@"Fax"];
+    }
+    if (textfield.tag==ITF_TAG6) {
+        [idic_search_value setObject:textfield.text forKey:@"Email"];
+    }
+    
+    
+}
 @end

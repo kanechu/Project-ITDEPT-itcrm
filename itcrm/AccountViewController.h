@@ -16,9 +16,9 @@
 //存储搜索标准的组名和该组的行数
 @property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 //存储搜索条件的数据
-@property(nonatomic,strong)NSMutableArray *alist_detail_search;
+@property(nonatomic,strong)NSMutableDictionary *idic_search_value;
 //存储搜索条件的参数
-@property(nonatomic,strong)NSMutableArray *alist_parameter;
+@property(nonatomic,strong)NSMutableDictionary *idic_parameter;
 //用来记录选择的countryname
 @property (strong,nonatomic)NSMutableDictionary *idic_countryname;
 //用来记录选择的regionname
@@ -36,5 +36,6 @@
 - (IBAction)fn_go_back:(id)sender;
 - (IBAction)fn_skip_region:(id)sender;
 @property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
+- (IBAction)fn_textfield_endEdit:(id)sender;
 
 @end

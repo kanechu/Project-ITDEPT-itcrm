@@ -114,14 +114,15 @@
 - (IBAction)fn_advance_search:(id)sender {
     AccountViewController *VC=(AccountViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AccountViewController"];
     VC.iobj_target=self;
-    VC.isel_action1=@selector(fn_save_arr::);
+    VC.isel_action1=@selector(fn_save_arr:);
     PopViewManager *popV=[[PopViewManager alloc]init];
     [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
--(void)fn_save_arr:(NSMutableArray*)arr_parameter :(NSMutableArray*)arr_value{
+-(void)fn_save_arr:(NSMutableArray*)alist_searchData{
     NSMutableArray *arr_account=[NSMutableArray array];
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    arr_account=[db_crmacct fn_get_detail_crmacct_data:arr_parameter value:arr_value];
+    arr_account=[db_crmacct fn_get_detail_crmacct_data:alist_searchData];
     [self fn_init_account:arr_account];
+    [self.tableView_acct reloadData];
 }
 @end
