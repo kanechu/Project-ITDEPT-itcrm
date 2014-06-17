@@ -21,6 +21,7 @@
 @synthesize alist_groupNameAndNum;
 @synthesize alist_filtered_taskdata;
 @synthesize alist_miantTask;
+@synthesize checkText;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,6 +39,8 @@
     [self fn_init_arr];
     [self.skstableview fn_expandall];
     [self setExtraCellLineHidden:self.skstableview];
+    [self fn_custom_gesture];
+    [self fn_register_notifiction];
 	// Do any additional setup after loading the view.
 }
 
@@ -46,6 +49,67 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    checkText=textField;
+}
+-(void)fn_register_notifiction{
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // 键盘高度变化通知，ios5.0新增的
+    
+#ifdef __IPHONE_5_0
+    
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    
+    if (version >= 5.0) {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
+        
+    }
+    
+#endif
+}
+
+#pragma mark Responding to keyboard events
+- (void)keyboardWillShow:(NSNotification*)notification{
+    if (nil == checkText) {
+        
+        return;
+        
+    }
+    NSDictionary *userInfo = [notification userInfo];
+    // Get the origin of the keyboard when it's displayed.
+    
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    //设置表视图frame
+    [_skstableview setFrame:CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
+}
+
+//键盘被隐藏的时候调用的方法
+-(void)keyboardWillHide:(NSNotification*)notification {
+    if (checkText) {
+        //设置表视图frame,ios7的导航条加上状态栏是64
+        [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+    }
+}
+
+-(void)fn_custom_gesture{
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapgesture.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapgesture];
+}
+-(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    [checkText resignFirstResponder];
+}
+
 #pragma mark 将额外的cell的线隐藏
 - (void)setExtraCellLineHidden: (UITableView *)tableView
 {
@@ -113,6 +177,7 @@
         }
         cell.il_remind_label.text=col_label;
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
+        cell.itf_data_textfield.delegate=self;
 
         return cell;
     }

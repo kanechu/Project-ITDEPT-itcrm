@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface MaintTaskViewController : UIViewController<SKSTableViewDelegate>
+@interface MaintTaskViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong)NSMutableArray *alist_miantTask;
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
+@property (nonatomic,strong)UITextField *checkText;
 
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 

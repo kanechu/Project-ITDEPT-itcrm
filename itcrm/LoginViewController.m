@@ -168,6 +168,7 @@ enum TEXTFIELD_TAG {
 }
 - (void) fn_get_Web_addr_data
 {
+    [SVProgressHUD show];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -193,6 +194,7 @@ enum TEXTFIELD_TAG {
 - (void) fn_save_login_list: (NSMutableArray *) alist_result {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_save_data:alist_result];
+    [SVProgressHUD dismiss];
 }
 
 
