@@ -28,6 +28,7 @@
 @synthesize isel_action1;
 @synthesize idic_value;
 @synthesize idic_parameter;
+@synthesize checkText;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,10 +44,13 @@
     //设置表的代理
     self.skstableview.SKSTableViewDelegate=self;
     [self fn_init_arr];
+    [self fn_register_notifiction];
     //loadview的时候，打开所有expandable
     [self.skstableview fn_expandall];
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW2;
     [self setExtraCellLineHidden:self.skstableview];
+    [self fn_custom_gesture];
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -55,6 +59,57 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark UItextfieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    checkText = textField;//设置被点击的对象
+}
+-(void)fn_register_notifiction{
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    // 键盘高度变化通知，ios5.0新增的
+    
+#ifdef __IPHONE_5_0
+    
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    
+    if (version >= 5.0) {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
+        
+    }
+    
+#endif
+}
+#pragma mark Responding to keyboard events
+- (void)keyboardWillShow:(NSNotification*)notification{
+    if (nil == checkText) {
+        
+        return;
+        
+    }
+    NSDictionary *userInfo = [notification userInfo];
+    // Get the origin of the keyboard when it's displayed.
+    
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    //设置表视图frame
+    [_skstableview setFrame:CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
+}
+
+//键盘被隐藏的时候调用的方法
+-(void)keyboardWillHide:(NSNotification*)notification {
+    if (checkText) {
+        //设置表视图frame,ios7的导航条加上状态栏是64
+        [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+    }
+}
+
+
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
@@ -78,7 +133,7 @@
     [self.view addGestureRecognizer:tapgesture];
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
-    [self.view resignFirstResponder];
+    [checkText resignFirstResponder];
 }
 #pragma mark - UITableViewDataSource
 
@@ -142,6 +197,7 @@
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        cell.itf_searchData.delegate=self;
         if ([col_code isEqualToString:@"task_title"]) {
             cell.itf_searchData.tag=100;
             cell.itf_searchData.text=[idic_value valueForKey:@"title_value"];
@@ -161,6 +217,8 @@
         if (cell==nil) {
             cell=[[Cell_taskSearch alloc]init];
         }
+        cell.itf_input_endDate.delegate=self;
+        cell.itf_input_startDate.delegate=self;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.backgroundColor=COLOR_LIGHT_YELLOW2;
         cell.il_prompt_label.text=col_label;

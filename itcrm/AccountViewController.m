@@ -364,7 +364,7 @@ enum TEXTFIELD_TAG {
     CGRect keyboardRect = [aValue CGRectValue];
   
     //设置表视图frame
-    [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height-20)];
+    [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
 }
 
 //键盘被隐藏的时候调用的方法

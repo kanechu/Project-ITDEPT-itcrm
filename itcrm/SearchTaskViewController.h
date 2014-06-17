@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface SearchTaskViewController : UIViewController<SKSTableViewDelegate>
+@interface SearchTaskViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate>
 
 //获取task搜索标准数据
 @property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
@@ -19,6 +19,7 @@
 
 @property(nonatomic,strong)NSMutableDictionary *idic_value;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
+@property(nonatomic,strong)UITextField *checkText;
 @property (strong,nonatomic) id iobj_target;
 @property (nonatomic, assign) SEL isel_action1;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
