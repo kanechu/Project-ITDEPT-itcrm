@@ -190,32 +190,26 @@
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
     NSMutableArray *alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
-    if ([[idic_value valueForKey:@"title_value"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_value valueForKey:@"title_value"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"task_title"];
-        [alist_searchData addObject:searchData];
+    [alist_searchData addObject:[self fn_get_searchData:@"title_value" :@"task_title"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"desc_value" :@"task_desc"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"start_date_value" :@"task_start_date"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"end_date_value" :@"task_end_date"]];
+    if ([[idic_value valueForKey:@"title_value"]length]!=0) {
+        SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_searchData ]);
+        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    }else{
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
     }
-    if ([[idic_value valueForKey:@"desc_value"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_value valueForKey:@"desc_value"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"task_desc"];
-        [alist_searchData addObject:searchData];
+    
+}
+-(Advance_SearchData*)fn_get_searchData:(NSString*)value_key :(NSString*)parameter_key{
+    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+    if ([[idic_value valueForKey:value_key] length]!=0) {
+        searchData.is_searchValue=[idic_value valueForKey:value_key];
+        searchData.is_parameter=[idic_parameter valueForKey:parameter_key];
     }
-    if ([[idic_value valueForKey:@"start_date_value"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_value valueForKey:@"start_date_value"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"task_start_date"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_value valueForKey:@"end_date_value"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_value valueForKey:@"end_date_value"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"task_end_date"];
-        [alist_searchData addObject:searchData];
-    }
-    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_searchData ]);
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    return searchData;
 }
 
 - (IBAction)fn_go_back:(id)sender {

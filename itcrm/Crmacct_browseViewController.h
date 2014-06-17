@@ -14,6 +14,7 @@
 @property (nonatomic,strong) Format_conversion *format;
 @property (nonatomic,strong) NSMutableArray *ilist_account;
 @property (nonatomic,strong) DB_crmacct_browse *db_acct;
+@property (nonatomic,strong) UIImage *acct_icon;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView_acct;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

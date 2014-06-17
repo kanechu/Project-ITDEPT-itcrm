@@ -271,69 +271,32 @@ enum TEXTFIELD_TAG {
 }
 - (IBAction)fn_search_account:(id)sender {
     NSMutableArray *alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
+    [alist_searchData addObject:[self fn_get_searchData:@"Account_code" :@"acct_code"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"Account_name" :@"acct_name"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"Address" :@"acct_addr_01"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"City" :@"city"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"Tel" :@"acct_tel"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"Fax" :@"acct_fax"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"Email" :@"acct_email"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"country" :@"country"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"region" :@"region"]];
+    [alist_searchData addObject:[self fn_get_searchData:@"territory" :@"territory"]];
     if ([[idic_search_value valueForKey:@"Account_code"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"Account_code"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"acct_code"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"Account_name"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"Account_name"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"acct_name"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"Address"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"Address"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"acct_addr_01"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"City"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"City"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"city"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"Tel"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"Tel"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"acct_tel"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"Fax"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"Fax"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"acct_fax"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"Email"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"Email"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"acct_email"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"country"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"country"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"country"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"region"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"region"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"region"];
-        [alist_searchData addObject:searchData];
-    }
-    if ([[idic_search_value valueForKey:@"territory"] length]!=0) {
-        Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-        searchData.is_searchValue=[idic_search_value valueForKey:@"territory"];
-        searchData.is_parameter=[idic_parameter valueForKey:@"territory"];
-        [alist_searchData addObject:searchData];
-    }
-    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject: alist_searchData]);
+        SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject: alist_searchData]);
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    }else{
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alert show];
+    }
     
+}
+-(Advance_SearchData*)fn_get_searchData:(NSString*)value_key :(NSString*)parameter_key{
+    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+    if ([[idic_search_value valueForKey:value_key] length]!=0) {
+        searchData.is_searchValue=[idic_search_value valueForKey:value_key];
+        searchData.is_parameter=[idic_parameter valueForKey:parameter_key];
+    }
+    return searchData;
 }
 
 - (IBAction)fn_go_back:(id)sender {

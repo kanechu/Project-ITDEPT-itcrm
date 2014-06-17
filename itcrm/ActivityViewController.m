@@ -14,6 +14,7 @@
 #import "Custom_Color.h"
 #import "PopViewManager.h"
 #import "SearchTaskViewController.h"
+#import "DB_systemIcon.h"
 @interface ActivityViewController ()
 
 @end
@@ -22,6 +23,7 @@
 @synthesize alist_crmtask;
 @synthesize format;
 @synthesize db_crmtask;
+@synthesize task_icon;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -42,6 +44,7 @@
     arr_crmtask=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text];
     format=[[Format_conversion alloc]init];
     [self fn_init_crmtask_arr:arr_crmtask];
+    [self init_task_icon];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +60,24 @@
     //转换格式
     alist_crmtask=[format fn_format_conersion:arr_format browse:arr_crmtask];
 }
+-(void)init_task_icon{
+    //获取task 列表显示信息的格式
+    NSMutableArray *arr_format=[NSMutableArray array];
+    DB_formatlist *db_format=[[DB_formatlist alloc]init];
+    arr_format=[db_format fn_get_list_data:@"crmtask"];  DB_systemIcon *db_icon=[[DB_systemIcon alloc]init];
+    NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+    NSMutableArray *arr_icon=[db_icon fn_get_systemIcon_data:iconName];
+    NSString *str=nil;
+    if ([arr_icon count]!=0) {
+        str=[[arr_icon objectAtIndex:0]valueForKey:@"ic_content"];
+    }
+    if (str!=nil || [str length]!=0) {
+        NSData *data=[[NSData alloc]initWithBase64EncodedString:str options:0];
+        task_icon=[UIImage imageWithData:data];
+        
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -78,6 +99,7 @@
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.font=font;
     cell.il_show_text.text=[alist_crmtask objectAtIndex:indexPath.row];
+    cell.ii_image.image=task_icon;
      CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     // Configure the cell...
