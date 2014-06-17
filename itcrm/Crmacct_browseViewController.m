@@ -101,6 +101,9 @@
     
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
+    //改变cell选中时的背景色
+    cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW2;
     return cell;
     
 }
