@@ -40,34 +40,17 @@
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
-    [self fn_register_notifiction];
+    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
 }
-
+-(void)viewDidDisappear:(BOOL)animated{
+    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
--(void)fn_register_notifiction{
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    // 键盘高度变化通知，ios5.0新增的
-    
-#ifdef __IPHONE_5_0
-    
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    
-    if (version >= 5.0) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
-        
-    }
-    
-#endif
 }
 #pragma mark Responding to keyboard events
 - (void)keyboardWillShow:(NSNotification*)notification{

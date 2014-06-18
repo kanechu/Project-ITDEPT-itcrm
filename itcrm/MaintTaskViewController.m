@@ -13,6 +13,7 @@
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
 #import "Custom_Color.h"
+
 @interface MaintTaskViewController ()
 
 @end
@@ -41,7 +42,7 @@
     [self.skstableview fn_expandall];
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
-    [self fn_register_notifiction];
+    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
 	// Do any additional setup after loading the view.
 }
 
@@ -53,25 +54,6 @@
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText=textField;
-}
--(void)fn_register_notifiction{
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    // 键盘高度变化通知，ios5.0新增的
-    
-#ifdef __IPHONE_5_0
-    
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    
-    if (version >= 5.0) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
-        
-    }
-    
-#endif
 }
 
 #pragma mark Responding to keyboard events
@@ -89,14 +71,14 @@
     CGRect keyboardRect = [aValue CGRectValue];
     
     //设置表视图frame
-    [_skstableview setFrame:CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
+    [_skstableview setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
 }
 
 //键盘被隐藏的时候调用的方法
 -(void)keyboardWillHide:(NSNotification*)notification {
     if (checkText) {
         //设置表视图frame,ios7的导航条加上状态栏是64
-        [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+        [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-104)];
     }
 }
 
@@ -206,6 +188,9 @@
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{
     NSArray *filtered=[alist_miantTask filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
 }
 
 

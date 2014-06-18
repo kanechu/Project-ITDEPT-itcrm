@@ -62,7 +62,7 @@ enum TEXTFIELD_TAG {
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
     //注册通知
-    [self fn_register_notifiction];
+    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     [self fn_custom_gesture];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW1;
     [self setExtraCellLineHidden:self.skstableView];
@@ -74,24 +74,8 @@ enum TEXTFIELD_TAG {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_register_notifiction{
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    // 键盘高度变化通知，ios5.0新增的
-    
-#ifdef __IPHONE_5_0
-    
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    
-    if (version >= 5.0) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
-        
-    }
-    
-#endif
+-(void)viewDidDisappear:(BOOL)animated{
+    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
 }
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField{

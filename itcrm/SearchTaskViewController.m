@@ -16,6 +16,7 @@
 #import "MZFormSheetController.h"
 #import "AppConstants.h"
 #import "Advance_SearchData.h"
+
 @interface SearchTaskViewController ()
 
 @end
@@ -44,13 +45,12 @@
     //设置表的代理
     self.skstableview.SKSTableViewDelegate=self;
     [self fn_init_arr];
-    [self fn_register_notifiction];
     //loadview的时候，打开所有expandable
     [self.skstableview fn_expandall];
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW2;
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
-    
+    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
 	// Do any additional setup after loading the view.
 }
 
@@ -64,25 +64,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
 }
--(void)fn_register_notifiction{
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    // 键盘高度变化通知，ios5.0新增的
-    
-#ifdef __IPHONE_5_0
-    
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    
-    if (version >= 5.0) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)name:UIKeyboardWillChangeFrameNotification object:nil];
-        
-    }
-    
-#endif
-}
+
 #pragma mark Responding to keyboard events
 - (void)keyboardWillShow:(NSNotification*)notification{
     if (nil == checkText) {
@@ -98,7 +80,7 @@
     CGRect keyboardRect = [aValue CGRectValue];
     
     //设置表视图frame
-    [_skstableview setFrame:CGRectMake(0, 30, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
+    [_skstableview setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
 }
 
 //键盘被隐藏的时候调用的方法
