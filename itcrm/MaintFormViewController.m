@@ -13,6 +13,7 @@
 #import "Cell_maintForm2.h"
 #import "Custom_Color.h"
 
+
 @interface MaintFormViewController ()
 
 @end
@@ -23,6 +24,8 @@
 @synthesize alist_maintForm;
 @synthesize checkText;
 @synthesize idic_modified_value;
+@synthesize format;
+@synthesize checkText1;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,6 +45,7 @@
     [self.skstableView fn_expandall];
     [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     [self fn_custom_gesture];
+    format=[[Format_conversion alloc]init];
 	// Do any additional setup after loading the view.
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -86,10 +90,14 @@
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkText resignFirstResponder];
+    [checkText1 resignFirstResponder];
 }
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText=textField;
+}
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    checkText1=textView;
 }
 
 #pragma mark -初始化数组
@@ -155,7 +163,12 @@
         }
         cell.il_remind_label.text=col_label;
         cell.itf_data_textfield.delegate=self;
-        cell.itf_data_textfield.text=[idic_modified_value valueForKey:col_code];
+        //cell.itf_data_textfield.text=[idic_modified_value valueForKey:col_code];
+        cell.itv_data_textview.text=[idic_modified_value valueForKey:col_code];
+        CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.frame.size.width];
+        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+10)];
+        cell.itv_data_textview.delegate=self;
+        
         return cell;
     }
     if ([col_stye isEqualToString:@"checkbox"] ||[col_stye isEqualToString:@"lookup"]) {
@@ -180,6 +193,9 @@
 
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
+}
+-(float)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
 }
 #pragma mark 对数组进行过滤
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{
