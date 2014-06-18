@@ -13,6 +13,7 @@
 @property(nonatomic,strong)Format_conversion *format;
 @property(nonatomic,strong)DB_crmtask_browse *db_crmtask;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
+@property(nonatomic,strong)NSMutableArray *alist_crmtask_parameter;
 @property(nonatomic,strong)UIImage *task_icon;
 - (IBAction)fn_advance_search_task:(id)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchbar;

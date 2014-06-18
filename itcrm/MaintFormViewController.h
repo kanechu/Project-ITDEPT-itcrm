@@ -14,6 +14,7 @@
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
+@property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
 @property (nonatomic,strong)UITextField *checkText;
 - (IBAction)fn_save_modified_data:(id)sender;
 @end

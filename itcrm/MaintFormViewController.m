@@ -12,6 +12,7 @@
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
 #import "Custom_Color.h"
+
 @interface MaintFormViewController ()
 
 @end
@@ -21,6 +22,7 @@
 @synthesize alist_groupNameAndNum;
 @synthesize alist_maintForm;
 @synthesize checkText;
+@synthesize idic_modified_value;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -40,7 +42,6 @@
     [self.skstableView fn_expandall];
     [self fn_register_notifiction];
     [self fn_custom_gesture];
-   
 	// Do any additional setup after loading the view.
 }
 
@@ -160,6 +161,8 @@
     NSString *col_label=[dic valueForKey:@"col_label"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //col_code 类型名
+    NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *is_enable=[dic valueForKey:@"is_enable"];
     if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"date"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1";
@@ -169,6 +172,7 @@
         }
         cell.il_remind_label.text=col_label;
         cell.itf_data_textfield.delegate=self;
+        cell.itf_data_textfield.text=[idic_modified_value valueForKey:col_code];
         return cell;
     }
     if ([col_stye isEqualToString:@"checkbox"] ||[col_stye isEqualToString:@"lookup"]) {

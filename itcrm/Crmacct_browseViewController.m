@@ -15,6 +15,7 @@
 #import "Format_conversion.h"
 #import "Custom_Color.h"
 #import "DB_systemIcon.h"
+#import "MaintFormViewController.h"
 @interface Crmacct_browseViewController ()
 
 @end
@@ -24,6 +25,7 @@
 @synthesize format;
 @synthesize db_acct;
 @synthesize acct_icon;
+@synthesize alist_account_parameter;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,7 +47,8 @@
     self.tableView_acct.backgroundColor=COLOR_LIGHT_YELLOW;
     db_acct=[[DB_crmacct_browse alloc]init];
     format=[[Format_conversion alloc]init];
-    [self fn_init_account:[db_acct fn_get_data:_searchBar.text]];
+    alist_account_parameter=[db_acct fn_get_data:_searchBar.text];
+    [self fn_init_account:alist_account_parameter];
     [self init_acct_icon];
 	// Do any additional setup after loading the view.
 }
@@ -125,14 +128,16 @@
 
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self fn_init_account:[db_acct fn_get_data:searchBar.text]];
+    alist_account_parameter=[db_acct fn_get_data:searchBar.text];
+    [self fn_init_account:alist_account_parameter];
     [self.tableView_acct reloadData];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_searchBar resignFirstResponder];
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    [self fn_init_account:[db_acct fn_get_data:searchText]];
+    alist_account_parameter=[db_acct fn_get_data:searchText];
+    [self fn_init_account:alist_account_parameter];
     [self.tableView_acct reloadData];
 }
 
@@ -149,5 +154,13 @@
     arr_account=[db_crmacct fn_get_detail_crmacct_data:alist_searchData];
     [self fn_init_account:arr_account];
     [self.tableView_acct reloadData];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSIndexPath *selectedRowIndex=[self.tableView_acct indexPathForSelectedRow];
+    if ([[segue identifier] isEqualToString:@"segue_maintForm"]) {
+        MaintFormViewController *maintVC=[segue destinationViewController];
+        maintVC.idic_modified_value=[alist_account_parameter objectAtIndex:selectedRowIndex.row];
+    }
 }
 @end

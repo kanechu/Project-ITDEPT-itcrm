@@ -22,6 +22,7 @@
 @synthesize alist_filtered_taskdata;
 @synthesize alist_miantTask;
 @synthesize checkText;
+@synthesize idic_parameter_value;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -167,6 +168,7 @@
     NSMutableDictionary *dic=alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
+    NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
     if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"date"]) {
@@ -178,6 +180,7 @@
         cell.il_remind_label.text=col_label;
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         cell.itf_data_textfield.delegate=self;
+        cell.itf_data_textfield.text=[idic_parameter_value valueForKey:col_code];
 
         return cell;
     }

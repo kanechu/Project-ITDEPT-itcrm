@@ -15,6 +15,7 @@
 #import "PopViewManager.h"
 #import "SearchTaskViewController.h"
 #import "DB_systemIcon.h"
+#import "MaintTaskViewController.h"
 @interface ActivityViewController ()
 
 @end
@@ -24,6 +25,7 @@
 @synthesize format;
 @synthesize db_crmtask;
 @synthesize task_icon;
+@synthesize alist_crmtask_parameter;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -39,11 +41,10 @@
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     _is_searchbar.delegate=self;
     //获取crmtask的参数
-    NSMutableArray *arr_crmtask=[NSMutableArray array];
     db_crmtask=[[DB_crmtask_browse alloc]init];
-    arr_crmtask=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text];
     format=[[Format_conversion alloc]init];
-    [self fn_init_crmtask_arr:arr_crmtask];
+    [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self init_task_icon];
 }
 
@@ -120,12 +121,14 @@
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self fn_init_crmtask_arr:[db_crmtask fn_get_search_crmtask_data:searchBar.text]];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchBar.text];
+    [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableView reloadData];
     [_is_searchbar resignFirstResponder];
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    [self fn_init_crmtask_arr:[db_crmtask fn_get_search_crmtask_data:searchText]];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchText];
+    [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableView reloadData];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
@@ -144,5 +147,14 @@
     arr_task=[db_crmacct fn_get_detail_crmtask_data:alist_searchData ];
     [self fn_init_crmtask_arr:arr_task];
     [self.tableView reloadData];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSIndexPath *selectedRowIndex=[self.tableView indexPathForSelectedRow];
+    if([[segue identifier] isEqualToString:@"segue_maintTask"]){
+        MaintTaskViewController *taskVC=[segue destinationViewController];
+        taskVC.idic_parameter_value=[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row];
+        
+    }
 }
 @end
