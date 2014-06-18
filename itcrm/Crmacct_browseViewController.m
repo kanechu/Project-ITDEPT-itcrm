@@ -152,6 +152,7 @@
     NSMutableArray *arr_account=[NSMutableArray array];
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
     arr_account=[db_crmacct fn_get_detail_crmacct_data:alist_searchData];
+    alist_account_parameter=arr_account;
     [self fn_init_account:arr_account];
     [self.tableView_acct reloadData];
 }

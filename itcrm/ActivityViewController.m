@@ -145,6 +145,7 @@
     NSMutableArray *arr_task=[NSMutableArray array];
     DB_crmtask_browse *db_crmacct=[[DB_crmtask_browse alloc]init];
     arr_task=[db_crmacct fn_get_detail_crmtask_data:alist_searchData ];
+    alist_crmtask_parameter=arr_task;
     [self fn_init_crmtask_arr:arr_task];
     [self.tableView reloadData];
 }
