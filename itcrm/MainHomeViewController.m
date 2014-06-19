@@ -51,8 +51,9 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_isLogin_crm{
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    if ([[db fn_get_all_data]count]==0) {
+    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
+    NSInteger flag_isLogin=[user_isLogin integerForKey:@"isLogin"];
+    if (flag_isLogin==0) {
         LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         PopViewManager *popV=[[PopViewManager alloc]init];
         [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
@@ -134,6 +135,9 @@
     [db_formtlist fn_delete_all_data];
     DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
     [dbSystemIcon fn_delete_systemIcon_data];
+    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
+    [user_isLogin setInteger:0 forKey:@"isLogin"];
+    [user_isLogin synchronize];
 }
 
 

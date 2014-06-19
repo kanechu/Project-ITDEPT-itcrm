@@ -190,11 +190,15 @@ enum TEXTFIELD_TAG {
 - (IBAction)fn_login_app:(id)sender {
     [SVProgressHUD showWithStatus:@"Loading, please wait!"];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
     if ([[db fn_get_all_data] count]!=0) {
        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
         DB_Login *dbLogin=[[DB_Login alloc]init];
         [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
         [self fn_resquestAndsave_data];
+       
+        [user_isLogin setInteger:1 forKey:@"isLogin"];
+        [user_isLogin synchronize];
     }
 }
 
