@@ -22,10 +22,9 @@
 @synthesize alist_filtered_data;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_maintForm;
-@synthesize checkText;
 @synthesize idic_modified_value;
 @synthesize format;
-@synthesize checkText1;
+@synthesize checkTextView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,7 +40,7 @@
     [self fn_init_arr];
     //设置表的代理
     self.skstableView.SKSTableViewDelegate=self;
-    //loadview的时候，打开所有expandable
+    //loadview的时候，打开第一个expandable
     [self.skstableView fn_expandall];
     [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     [self fn_custom_gesture];
@@ -58,7 +57,7 @@
 }
 #pragma mark Responding to keyboard events
 - (void)keyboardWillShow:(NSNotification*)notification{
-    if (nil == checkText) {
+    if (nil == checkTextView) {
         
         return;
         
@@ -76,7 +75,7 @@
 
 //键盘被隐藏的时候调用的方法
 -(void)keyboardWillHide:(NSNotification*)notification {
-    if (checkText) {
+    if (checkTextView) {
         //设置表视图frame,ios7的导航条加上状态栏是64
         [_skstableView setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
     }
@@ -89,15 +88,11 @@
     [self.view addGestureRecognizer:tapgesture];
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
-    [checkText resignFirstResponder];
-    [checkText1 resignFirstResponder];
+    [checkTextView resignFirstResponder];
 }
-#pragma mark - UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    checkText=textField;
-}
+
 - (void)textViewDidBeginEditing:(UITextView *)textView{
-    checkText1=textView;
+    checkTextView=textView;
 }
 
 #pragma mark -初始化数组
@@ -162,13 +157,11 @@
             cell=[[Cell_maintForm1 alloc]init];
         }
         cell.il_remind_label.text=col_label;
-        cell.itf_data_textfield.delegate=self;
-        //cell.itf_data_textfield.text=[idic_modified_value valueForKey:col_code];
         cell.itv_data_textview.text=[idic_modified_value valueForKey:col_code];
-        CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.frame.size.width];
-        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+10)];
+        CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         cell.itv_data_textview.delegate=self;
-        
+        cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
     if ([col_stye isEqualToString:@"checkbox"] ||[col_stye isEqualToString:@"lookup"]) {
@@ -195,7 +188,15 @@
     return 40;
 }
 -(float)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    static NSString *cellIdentifier=@"Cell_maintForm1";
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    //提取每行的数据
+    NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
+    //col_code 类型名
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *str=[idic_modified_value valueForKey:col_code];
+    CGFloat height=[format fn_heightWithString:str font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    return height+16+10;
 }
 #pragma mark 对数组进行过滤
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{

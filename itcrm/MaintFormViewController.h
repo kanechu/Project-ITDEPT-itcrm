@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface MaintFormViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate,UITextViewDelegate>
+@interface MaintFormViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 @property (nonatomic,strong)NSMutableArray *alist_maintForm;
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
-@property (nonatomic,strong)UITextField *checkText;
-@property (nonatomic,strong)UITextView *checkText1;
+@property (nonatomic,strong)UITextView *checkTextView;
 @property (nonatomic,strong)Format_conversion *format;
 - (IBAction)fn_save_modified_data:(id)sender;
 @end

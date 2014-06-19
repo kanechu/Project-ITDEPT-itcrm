@@ -22,8 +22,9 @@
 @synthesize alist_groupNameAndNum;
 @synthesize alist_filtered_taskdata;
 @synthesize alist_miantTask;
-@synthesize checkText;
+@synthesize checkTextView;
 @synthesize idic_parameter_value;
+@synthesize format;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,6 +44,7 @@
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     [KeyboardNoticeManager fn_registKeyBoardNotification:self];
+    format=[[Format_conversion alloc]init];
 	// Do any additional setup after loading the view.
 }
 
@@ -51,14 +53,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    checkText=textField;
+
+#pragma mark UITextViewDelegate
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    checkTextView=textView;
 }
 
 #pragma mark Responding to keyboard events
 - (void)keyboardWillShow:(NSNotification*)notification{
-    if (nil == checkText) {
+    if (nil == checkTextView) {
         
         return;
         
@@ -76,7 +79,7 @@
 
 //键盘被隐藏的时候调用的方法
 -(void)keyboardWillHide:(NSNotification*)notification {
-    if (checkText) {
+    if (checkTextView) {
         //设置表视图frame,ios7的导航条加上状态栏是64
         [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-104)];
     }
@@ -90,7 +93,7 @@
     [self.view addGestureRecognizer:tapgesture];
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
-    [checkText resignFirstResponder];
+    [checkTextView resignFirstResponder];
 }
 
 #pragma mark 将额外的cell的线隐藏
@@ -161,9 +164,12 @@
         }
         cell.il_remind_label.text=col_label;
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
-        cell.itf_data_textfield.delegate=self;
-        cell.itf_data_textfield.text=[idic_parameter_value valueForKey:col_code];
-
+        cell.itv_data_textview.delegate=self;
+        cell.itv_data_textview.text=[idic_parameter_value valueForKey:col_code];
+        //UITextView 上下左右有8px
+        CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
+        cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
     if ([col_stye isEqualToString:@"checkbox"] ||[col_stye isEqualToString:@"lookup"]) {
@@ -182,6 +188,17 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
+}
+-(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellIdentifier=@"Cell_maintForm1";
+    Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
+    //提取每行的数据
+    NSMutableDictionary *dic=alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
+    //col_code 类型名
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *str=[idic_parameter_value valueForKey:col_code];
+    CGFloat height=[format fn_heightWithString:str font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.frame.size.width-16];
+    return height+16+10;
 }
 
 #pragma mark 对数组进行过滤

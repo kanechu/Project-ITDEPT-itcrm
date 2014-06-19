@@ -20,6 +20,7 @@
 #import "DB_systemIcon.h"
 #import "DB_crmtask_browse.h"
 #import "DB_crmopp_browse.h"
+#import "DB_MaintForm.h"
 @interface MainHomeViewController ()
 
 @end
@@ -135,6 +136,8 @@
     [db_formtlist fn_delete_all_data];
     DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
     [dbSystemIcon fn_delete_systemIcon_data];
+    DB_MaintForm *db_MaintForm=[[DB_MaintForm alloc]init];
+    [db_MaintForm fn_delete_all_data];
     NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
     [user_isLogin setInteger:0 forKey:@"isLogin"];
     [user_isLogin synchronize];
