@@ -16,6 +16,8 @@
 
 @interface MaintFormViewController ()
 
+@property(nonatomic,assign)CGPoint Old_Offset;
+
 @end
 
 @implementation MaintFormViewController
@@ -25,6 +27,7 @@
 @synthesize idic_modified_value;
 @synthesize format;
 @synthesize checkTextView;
+@synthesize Old_Offset;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -66,18 +69,21 @@
     // Get the origin of the keyboard when it's displayed.
     
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
+    Old_Offset=self.skstableView.contentOffset;
     CGRect keyboardRect = [aValue CGRectValue];
-    
-    //设置表视图frame
-    [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
+    CGRect parentRect=[checkTextView convertRect:checkTextView.bounds toView:self.view];
+    if (parentRect.origin.y+parentRect.size.height>keyboardRect.origin.y
+        ) {
+      CGPoint topOffset=CGPointMake(self.skstableView.contentOffset.x, parentRect.origin.y+parentRect.size.height-keyboardRect.size.height);
+          [self.skstableView setContentOffset:topOffset animated:NO];
+    }
+     
 }
 
 //键盘被隐藏的时候调用的方法
 -(void)keyboardWillHide:(NSNotification*)notification {
     if (checkTextView) {
-        //设置表视图frame,ios7的导航条加上状态栏是64
-        [_skstableView setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
+        [self.skstableView setContentOffset:Old_Offset animated:NO];
     }
 }
 -(void)fn_custom_gesture{
