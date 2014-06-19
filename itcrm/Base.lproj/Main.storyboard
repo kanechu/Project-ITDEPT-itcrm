@@ -12,12 +12,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="cft-XM-Gaj"/>
+                        <segue destination="SJP-5q-18v" kind="relationship" relationship="rootViewController" id="9AD-oL-xeQ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmV-mC-kQY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2730" y="-296"/>
+            <point key="canvasLocation" x="-3274" y="-256"/>
         </scene>
         <!--Login View Controller - Login-->
         <scene sceneID="ufC-wZ-h7g">
@@ -88,12 +88,11 @@
                     <connections>
                         <outlet property="ibt_loginButton" destination="0pg-e7-gcN" id="01Q-Q1-g98"/>
                         <outlet property="tableview_form" destination="ka8-cZ-QFV" id="n3W-RA-L5V"/>
-                        <segue destination="SJP-5q-18v" kind="push" identifier="segue_MainHomeVC" id="f6S-2l-1me"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2319" y="-289"/>
+            <point key="canvasLocation" x="-2695" y="-953"/>
         </scene>
         <!--Main Home View Controller-->
         <scene sceneID="o15-jf-fX1">
@@ -159,6 +158,19 @@
                     </view>
                     <navigationItem key="navigationItem" id="3Jj-h2-AhD">
                         <barButtonItem key="backBarButtonItem" title="Back" id="JDO-0c-nqV"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="CpW-tS-xw8">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vRa-ea-rWh">
+                                <rect key="frame" x="233" y="5" width="71" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fn_Logout_crm:" destination="SJP-5q-18v" eventType="touchUpInside" id="cVG-wW-e30"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
@@ -172,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VzC-RK-HZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1786" y="-296"/>
+            <point key="canvasLocation" x="-2618" y="-240"/>
         </scene>
         <!--Quotation View Controller - Quotation-->
         <scene sceneID="ZxU-AP-7pE">

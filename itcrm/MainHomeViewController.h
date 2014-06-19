@@ -14,5 +14,6 @@
 @property(weak,nonatomic) Menu_home *menu_item;
 @property (weak, nonatomic) IBOutlet UICollectionView *iui_collectionview;
 - (IBAction)fn_menu_btn_clicked:(id)sender;
+- (IBAction)fn_Logout_crm:(id)sender;
 
 @end

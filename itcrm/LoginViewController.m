@@ -21,15 +21,9 @@
 #import "Cell_login.h"
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
-#import "DB_crmacct_browse.h"
-#import "DB_formatlist.h"
-#import "DB_searchCriteria.h"
-#import "DB_systemIcon.h"
-#import "DB_crmtask_browse.h"
-#import "DB_crmopp_browse.h"
 #import "Custom_Color.h"
 #import "Web_resquestData.h"
-
+#import "MZFormSheetController.h"
 @interface LoginViewController ()
 
 @end
@@ -49,7 +43,8 @@ enum TEXTFIELD_TAG {
     [super viewDidLoad];
     [self fn_custom_gesture];
     [self fn_custom_style];
-    [self fn_register_notification];
+    //注册通知
+    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     ilist_imageName=@[@"user",@"pass",@"systemcode"];
     ilist_textfield=@[@"user ID",@"user password",@"systemcode"];
     self.view.backgroundColor=COLOR_LIGHT_YELLOW1;
@@ -62,6 +57,9 @@ enum TEXTFIELD_TAG {
     }
     return self;
 }
+-(void)viewDidDisappear:(BOOL)animated{
+    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
+}
 -(void)fn_custom_style{
     _tableview_form.layer.cornerRadius=9;
     _tableview_form.delegate=self;
@@ -71,14 +69,7 @@ enum TEXTFIELD_TAG {
     _ibt_loginButton.layer.borderWidth=1;
     _ibt_loginButton.layer.borderColor=[UIColor whiteColor].CGColor;
 }
--(void)fn_register_notification{
-    //注册通知
-  
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-   
-}
 -(void)textFieldDidBeginEditing:(UITextField*)textField{
     
     checkText = textField;//设置被点击的对象
@@ -168,7 +159,6 @@ enum TEXTFIELD_TAG {
 }
 - (void) fn_get_Web_addr_data
 {
-    [SVProgressHUD show];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -194,36 +184,17 @@ enum TEXTFIELD_TAG {
 - (void) fn_save_login_list: (NSMutableArray *) alist_result {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_save_data:alist_result];
-    [SVProgressHUD dismiss];
 }
 
 
 - (IBAction)fn_login_app:(id)sender {
     [SVProgressHUD showWithStatus:@"Loading, please wait!"];
-    DB_searchCriteria *db_search=[[DB_searchCriteria alloc]init];
-    [db_search fn_delete_all_data];
-    
-    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    [db_crmacct fn_delete_all_data];
-    
-    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
-    [db_crmtask fn_delete_all_data];
-    
-    DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
-    [db_crmopp fn_delete_all_data];
-    
-    DB_formatlist *db_formtlist=[[DB_formatlist alloc]init];
-    [db_formtlist fn_delete_all_data];
-    
-    DB_Login *dbLogin=[[DB_Login alloc]init];
-    [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
-    
-    DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
-    [dbSystemIcon fn_delete_systemIcon_data];
-    [self fn_resquestAndsave_data];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     if ([[db fn_get_all_data] count]!=0) {
-        [self performSegueWithIdentifier:@"segue_MainHomeVC" sender:self];
+       [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+        DB_Login *dbLogin=[[DB_Login alloc]init];
+        [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
+        [self fn_resquestAndsave_data];
     }
 }
 
@@ -293,7 +264,6 @@ enum TEXTFIELD_TAG {
     [data fn_get_maintForm_data:base_url];
     [data fn_get_crmtask_browse_data:base_url];
     [data fn_get_systemIcon_data:base_url];
-    
     
 }
 

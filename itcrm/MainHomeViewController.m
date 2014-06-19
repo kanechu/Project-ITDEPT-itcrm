@@ -9,9 +9,17 @@
 #import "MainHomeViewController.h"
 #import "Menu_home.h"
 #import "Cell_menu_item.h"
-#import "DB_RespLogin.h"
 #import "SVProgressHUD.h"
+#import "LoginViewController.h"
+
+#import "DB_RespLogin.h"
+#import "DB_Login.h"
+#import "DB_crmacct_browse.h"
+#import "DB_formatlist.h"
+#import "DB_searchCriteria.h"
 #import "DB_systemIcon.h"
+#import "DB_crmtask_browse.h"
+#import "DB_crmopp_browse.h"
 @interface MainHomeViewController ()
 
 @end
@@ -28,10 +36,10 @@
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_isLogin_crm];
     [self fn_refresh_menu];
     
 	// Do any additional setup after loading the view.
@@ -42,19 +50,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//二进制文件编码转换为图片
--(UIImage*)fn_get_icon:(NSString*)str{
-    NSData *data=[[NSData alloc]initWithBase64EncodedString:str options:0];
-    UIImage *image=[[UIImage alloc]initWithData:data];
-    return image;
+-(void)fn_isLogin_crm{
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    if ([[db fn_get_all_data]count]==0) {
+        LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        PopViewManager *popV=[[PopViewManager alloc]init];
+        [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    }
 }
+
 //初始化Item
 - (void) fn_refresh_menu;
 {
     ilist_menu = [[NSMutableArray alloc] init];
-    /*DB_systemIcon *db=[[DB_systemIcon alloc]init];
-    NSString *icon_crmacct=[[[db fn_get_systemIcon_data:@"crmacct"]objectAtIndex:0]valueForKey:@"ic_content"];
-    NSString *icon_maport=[[[db fn_get_systemIcon_data:@"maport"]objectAtIndex:0]valueForKey:@"ic_content"];*/
     [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_menu1"segue:@"segue_account"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_menu2" segue:@"segue_activity"]];
     [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_menu3" segue:@"segue_contactList"]];
@@ -101,6 +109,31 @@
     //button.tag用来区分点击那个Item
     menu_item=[ilist_menu objectAtIndex:btn.tag];
     [self performSegueWithIdentifier:menu_item.is_segue sender:self];
+}
+
+- (IBAction)fn_Logout_crm:(id)sender {
+    LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    PopViewManager *popV=[[PopViewManager alloc]init];
+    [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    [db fn_delete_all_data];
+    DB_searchCriteria *db_search=[[DB_searchCriteria alloc]init];
+    [db_search fn_delete_all_data];
+    
+    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+    [db_crmacct fn_delete_all_data];
+    
+    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+    [db_crmtask fn_delete_all_data];
+    
+    DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
+    [db_crmopp fn_delete_all_data];
+    
+    DB_formatlist *db_formtlist=[[DB_formatlist alloc]init];
+    [db_formtlist fn_delete_all_data];
+    DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
+    [dbSystemIcon fn_delete_systemIcon_data];
 }
 
 
