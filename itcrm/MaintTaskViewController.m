@@ -190,14 +190,15 @@
     return 40;
 }
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *cellIdentifier=@"Cell_maintForm1";
+    static NSString *cellIdentifier=@"Cell_maintForm11";
     Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
     //提取每行的数据
     NSMutableDictionary *dic=alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
     //col_code 类型名
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *str=[idic_parameter_value valueForKey:col_code];
-    CGFloat height=[format fn_heightWithString:str font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.frame.size.width-16];
+   CGFloat height=[format fn_heightWithString:str font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+   
     return height+16+10;
 }
 
