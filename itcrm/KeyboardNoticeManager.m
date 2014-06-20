@@ -41,6 +41,9 @@
     CGRect keyboardRect = [aValue CGRectValue];
     int height = keyboardRect.size.height;
     UITableView *tableview=(UITableView *)[self fn_getTableview];
+    if (tableview==nil) {
+        return;
+    }
     if (!oldView) {
         oldView = tableview;
         oldTableFrame=oldView.frame;
