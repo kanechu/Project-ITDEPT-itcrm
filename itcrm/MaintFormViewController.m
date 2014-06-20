@@ -13,10 +13,7 @@
 #import "Cell_maintForm2.h"
 #import "Custom_Color.h"
 
-
 @interface MaintFormViewController ()
-
-@property(nonatomic,assign)CGPoint Old_Offset;
 
 @end
 
@@ -27,7 +24,7 @@
 @synthesize idic_modified_value;
 @synthesize format;
 @synthesize checkTextView;
-@synthesize Old_Offset;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,47 +42,19 @@
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开第一个expandable
     [self.skstableView fn_expandall];
-    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
+    //避免键盘挡住UITextView
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
     format=[[Format_conversion alloc]init];
 	// Do any additional setup after loading the view.
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark Responding to keyboard events
-- (void)keyboardWillShow:(NSNotification*)notification{
-    if (nil == checkTextView) {
-        
-        return;
-        
-    }
-    NSDictionary *userInfo = [notification userInfo];
-    // Get the origin of the keyboard when it's displayed.
-    
-    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    Old_Offset=self.skstableView.contentOffset;
-    CGRect keyboardRect = [aValue CGRectValue];
-    CGRect parentRect=[checkTextView convertRect:checkTextView.bounds toView:self.view];
-    if (parentRect.origin.y+parentRect.size.height>keyboardRect.origin.y
-        ) {
-      CGPoint topOffset=CGPointMake(self.skstableView.contentOffset.x, parentRect.origin.y+parentRect.size.height-keyboardRect.size.height);
-          [self.skstableView setContentOffset:topOffset animated:NO];
-    }
-     
-}
 
-//键盘被隐藏的时候调用的方法
--(void)keyboardWillHide:(NSNotification*)notification {
-    if (checkTextView) {
-        [self.skstableView setContentOffset:Old_Offset animated:NO];
-    }
-}
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -96,7 +65,6 @@
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkTextView resignFirstResponder];
 }
-
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
 }

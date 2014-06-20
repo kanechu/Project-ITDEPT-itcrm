@@ -61,12 +61,12 @@ enum TEXTFIELD_TAG {
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
-    //注册通知
-    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     [self fn_custom_gesture];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW1;
     [self setExtraCellLineHidden:self.skstableView];
-// Do any additional setup after loading the view.
+    //避免键盘挡住UItextfield
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,9 +74,7 @@ enum TEXTFIELD_TAG {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
-}
+
 #pragma mark UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
@@ -332,31 +330,6 @@ enum TEXTFIELD_TAG {
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkText resignFirstResponder];
-}
-#pragma mark Responding to keyboard events
-- (void)keyboardWillShow:(NSNotification*)notification{
-    if (nil == checkText) {
-        
-        return;
-        
-    }
-    NSDictionary *userInfo = [notification userInfo];
-    // Get the origin of the keyboard when it's displayed.
-    
-    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-    CGRect keyboardRect = [aValue CGRectValue];
-  
-    //设置表视图frame
-    [_skstableView setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
-}
-
-//键盘被隐藏的时候调用的方法
--(void)keyboardWillHide:(NSNotification*)notification {
-    if (checkText) {
-        //设置表视图frame,ios7的导航条加上状态栏是64
-        [_skstableView setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
-    }
 }
 
 - (IBAction)fn_textfield_endEdit:(id)sender {

@@ -44,7 +44,7 @@ enum TEXTFIELD_TAG {
     [self fn_custom_gesture];
     [self fn_custom_style];
     //注册通知
-    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
+    [self fn_registKeyBoardNotification];
     ilist_imageName=@[@"user",@"pass",@"systemcode"];
     ilist_textfield=@[@"user ID",@"user password",@"systemcode"];
     self.view.backgroundColor=COLOR_LIGHT_YELLOW1;
@@ -57,8 +57,19 @@ enum TEXTFIELD_TAG {
     }
     return self;
 }
+
 -(void)viewDidDisappear:(BOOL)animated{
-    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
+    [self fn_removeKeyBoarNotificaton];
+}
+//监听键盘隐藏和显示事件
+-(void)fn_registKeyBoardNotification{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+//注销监听事件
+-(void)fn_removeKeyBoarNotificaton{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)fn_custom_style{
     _tableview_form.layer.cornerRadius=9;

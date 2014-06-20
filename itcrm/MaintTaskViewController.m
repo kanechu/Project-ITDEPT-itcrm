@@ -43,8 +43,9 @@
     [self.skstableview fn_expandall];
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
-    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
     format=[[Format_conversion alloc]init];
+    //避免键盘挡住UITextView
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
 	// Do any additional setup after loading the view.
 }
 
@@ -57,32 +58,6 @@
 #pragma mark UITextViewDelegate
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
-}
-
-#pragma mark Responding to keyboard events
-- (void)keyboardWillShow:(NSNotification*)notification{
-    if (nil == checkTextView) {
-        
-        return;
-        
-    }
-    NSDictionary *userInfo = [notification userInfo];
-    // Get the origin of the keyboard when it's displayed.
-    
-    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-    CGRect keyboardRect = [aValue CGRectValue];
-    
-    //设置表视图frame
-    [_skstableview setFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height-20)];
-}
-
-//键盘被隐藏的时候调用的方法
--(void)keyboardWillHide:(NSNotification*)notification {
-    if (checkTextView) {
-        //设置表视图frame,ios7的导航条加上状态栏是64
-        [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-104)];
-    }
 }
 
 -(void)fn_custom_gesture{
@@ -207,9 +182,7 @@
     NSArray *filtered=[alist_miantTask filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [KeyboardNoticeManager fn_removeKeyBoarNotificaton:self];
-}
+
 
 
 

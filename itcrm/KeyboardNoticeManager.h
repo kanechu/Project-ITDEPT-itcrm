@@ -7,14 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-@protocol keyNotificationPro<NSObject>
-@optional
--(void)keyboardWillHide:(NSNotification*)notification;
-- (void)keyboardWillShow:(NSNotification*)notification;
-@end;
+
 @interface KeyboardNoticeManager : NSObject
 
-+(void)fn_registKeyBoardNotification:(NSObject*)object;
-+(void)fn_removeKeyBoarNotificaton:(NSObject*)object;
++(id)sharedKeyboardNoticeManager;
 
 @end

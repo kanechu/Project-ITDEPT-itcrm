@@ -50,7 +50,8 @@
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW2;
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
-    [KeyboardNoticeManager fn_registKeyBoardNotification:self];
+    //避免键盘挡住UITextField
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
 	// Do any additional setup after loading the view.
 }
 
@@ -64,33 +65,6 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
 }
-
-#pragma mark Responding to keyboard events
-- (void)keyboardWillShow:(NSNotification*)notification{
-    if (nil == checkText) {
-        
-        return;
-        
-    }
-    NSDictionary *userInfo = [notification userInfo];
-    // Get the origin of the keyboard when it's displayed.
-    
-    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-    CGRect keyboardRect = [aValue CGRectValue];
-    
-    //设置表视图frame
-    [_skstableview setFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-keyboardRect.size.height)];
-}
-
-//键盘被隐藏的时候调用的方法
--(void)keyboardWillHide:(NSNotification*)notification {
-    if (checkText) {
-        //设置表视图frame,ios7的导航条加上状态栏是64
-        [_skstableview setFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
-    }
-}
-
 
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
