@@ -19,6 +19,7 @@
 		B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7419417B9500D02A45 /* RegionViewController.m */; };
 		B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E78194195CA00D02A45 /* RespSystemIcon.m */; };
 		B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7B1941979200D02A45 /* DB_systemIcon.m */; };
+		B256627319580C0900856C3E /* CrmTask_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B256627219580C0900856C3E /* CrmTask_browseViewController.m */; };
 		B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F27A1935E0B600EC88F5 /* Menu_home.m */; };
 		B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F2821935E16500EC88F5 /* Cell_menu_item.m */; };
 		B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B25D75F7193D64A2005913D7 /* SKSTableView.m */; };
@@ -93,7 +94,6 @@
 		B2B0933E193475E7002FE190 /* Web_base.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B0933D193475E7002FE190 /* Web_base.m */; };
 		B2B22FB21939B44E0083E0C4 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */; };
 		B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB41939B4E90083E0C4 /* AccountViewController.m */; };
-		B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */; };
 		B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */; };
 		B2B22FC11939B7690083E0C4 /* AttachmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC01939B7690083E0C4 /* AttachmentViewController.m */; };
 		B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC31939C0D50083E0C4 /* DB_Login.m */; };
@@ -175,6 +175,8 @@
 		B2452E78194195CA00D02A45 /* RespSystemIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSystemIcon.m; sourceTree = "<group>"; };
 		B2452E7A1941979200D02A45 /* DB_systemIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_systemIcon.h; sourceTree = "<group>"; };
 		B2452E7B1941979200D02A45 /* DB_systemIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_systemIcon.m; sourceTree = "<group>"; };
+		B256627119580C0900856C3E /* CrmTask_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrmTask_browseViewController.h; sourceTree = "<group>"; };
+		B256627219580C0900856C3E /* CrmTask_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmTask_browseViewController.m; sourceTree = "<group>"; };
 		B257F2791935E0B600EC88F5 /* Menu_home.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu_home.h; sourceTree = "<group>"; };
 		B257F27A1935E0B600EC88F5 /* Menu_home.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu_home.m; sourceTree = "<group>"; };
 		B257F2811935E16500EC88F5 /* Cell_menu_item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_menu_item.h; sourceTree = "<group>"; };
@@ -305,8 +307,6 @@
 		B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
 		B2B22FB31939B4E90083E0C4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B2B22FB41939B4E90083E0C4 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
-		B2B22FB61939B5E20083E0C4 /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
-		B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotationViewController.h; sourceTree = "<group>"; };
 		B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotationViewController.m; sourceTree = "<group>"; };
 		B2B22FBF1939B7690083E0C4 /* AttachmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentViewController.h; sourceTree = "<group>"; };
@@ -685,8 +685,8 @@
 				B260D993194591A90026A1E9 /* MaintFormViewController.m */,
 				B2452E7319417B9500D02A45 /* RegionViewController.h */,
 				B2452E7419417B9500D02A45 /* RegionViewController.m */,
-				B2B22FB61939B5E20083E0C4 /* ActivityViewController.h */,
-				B2B22FB71939B5E20083E0C4 /* ActivityViewController.m */,
+				B256627119580C0900856C3E /* CrmTask_browseViewController.h */,
+				B256627219580C0900856C3E /* CrmTask_browseViewController.m */,
 				B273F490194ADA620007E055 /* SearchTaskViewController.h */,
 				B273F491194ADA620007E055 /* SearchTaskViewController.m */,
 				B273F496194AE9A30007E055 /* MaintTaskViewController.h */,
@@ -874,7 +874,6 @@
 				B2759998193EF955005CF480 /* DB_formatlist.m in Sources */,
 				B27EDFC219401092007F89A6 /* Cell_search1.m in Sources */,
 				B2B092C819345E74002FE190 /* main.m in Sources */,
-				B2B22FB81939B5E20083E0C4 /* ActivityViewController.m in Sources */,
 				B275998F193EF22A005CF480 /* Web_resquestData.m in Sources */,
 				B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */,
 				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
@@ -913,6 +912,7 @@
 				B26CBCA519347E5A00C5287B /* NSArray.m in Sources */,
 				B273F498194AE9A30007E055 /* MaintTaskViewController.m in Sources */,
 				B22903FF1936C9CB004D1862 /* FMResultSet.m in Sources */,
+				B256627319580C0900856C3E /* CrmTask_browseViewController.m in Sources */,
 				B22903FD1936C9CB004D1862 /* FMDatabasePool.m in Sources */,
 				B273F492194ADA620007E055 /* SearchTaskViewController.m in Sources */,
 				B260D98E1945519D0026A1E9 /* RespCrmopp_browse.m in Sources */,
