@@ -73,6 +73,9 @@
     UIView *superView=[firstResponder superview];
     while (![superView isKindOfClass:[UITableView class]]) {
         superView=[superView superview];
+        if (superView==nil) {
+            return nil;
+        }
         if ([superView isKindOfClass:[UIWindow class]]) {
             return nil;
         }
