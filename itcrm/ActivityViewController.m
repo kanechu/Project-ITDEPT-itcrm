@@ -97,9 +97,11 @@
     }
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
     UIFont *font = [UIFont systemFontOfSize:15.0];
+    cell.il_title.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"title"];
+    cell.il_title.font=font;
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.font=font;
-    cell.il_show_text.text=[alist_crmtask objectAtIndex:indexPath.row];
+    cell.il_show_text.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"body"];
     cell.ii_image.image=task_icon;
      CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
@@ -111,10 +113,10 @@
 }
 #pragma mark UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *cellText = [alist_crmtask objectAtIndex:indexPath.row];
+    NSString *cellText = [[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"body"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
-    return height+10;
+    return height+10+23;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"segue_maintTask" sender:self];

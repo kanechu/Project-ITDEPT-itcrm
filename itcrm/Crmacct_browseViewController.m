@@ -96,10 +96,12 @@
     }
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
     UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    cell.il_title.text=[[ilist_account objectAtIndex:indexPath.row]valueForKey:@"title"];
+    cell.il_title.font=font;
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.numberOfLines=0;
     cell.il_show_text.font=font;
-    cell.il_show_text.text=[ilist_account objectAtIndex:indexPath.row];
+    cell.il_show_text.text=[[ilist_account objectAtIndex:indexPath.row] valueForKey:@"body"];
     cell.ii_image.image=acct_icon;
     
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
@@ -114,10 +116,10 @@
 
 #pragma mark UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *cellText = [ilist_account objectAtIndex:indexPath.row];
+    NSString *cellText = [[ilist_account objectAtIndex:indexPath.row]valueForKey:@"body"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
-    return height+10;
+    return height+10+23;
 }
 -(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
     return YES;

@@ -11,5 +11,6 @@
 @interface Cell_browse : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *ii_image;
 @property (weak, nonatomic) IBOutlet UILabel *il_show_text;
+@property (weak, nonatomic) IBOutlet UILabel *il_title;
 
 @end

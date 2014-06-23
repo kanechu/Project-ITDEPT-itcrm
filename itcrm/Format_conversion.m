@@ -53,19 +53,20 @@
     
     NSMutableArray *alist_crm_browse=[[NSMutableArray alloc]initWithCapacity:10];
     for (NSDictionary *dic in arr_browse) {
+        NSMutableDictionary *dic1=[NSMutableDictionary dictionary];
         NSString *joint_str=[NSString string];
         NSString *ist_title=[self fn_replaceString:t_title withParameter:arr_t_title atString:@"%s" :dic];
         NSString *ist_desc1=[self fn_replaceString:t_desc1 withParameter:arr_v_desc1 atString:@"%s" :dic];
         
-      NSString *ist_desc2=[self fn_replaceString:t_desc2 withParameter:arr_v_desc2 atString:@"%s" :dic];
+        NSString *ist_desc2=[self fn_replaceString:t_desc2 withParameter:arr_v_desc2 atString:@"%s" :dic];
         
-      NSString *ist_desc3=[self fn_replaceString:t_desc3 withParameter:arr_v_desc3 atString:@"%s" :dic];
+        NSString *ist_desc3=[self fn_replaceString:t_desc3 withParameter:arr_v_desc3 atString:@"%s" :dic];
         
-      NSString *ist_desc4=[self fn_replaceString:t_desc4 withParameter:arr_v_desc4 atString:@"%s" :dic];
+        NSString *ist_desc4=[self fn_replaceString:t_desc4 withParameter:arr_v_desc4 atString:@"%s" :dic];
         
-      NSString *ist_desc5=[self fn_replaceString:t_desc5 withParameter:arr_v_desc5 atString:@"%s" :dic];
+        NSString *ist_desc5=[self fn_replaceString:t_desc5 withParameter:arr_v_desc5 atString:@"%s" :dic];
         if ([ist_title length]!=0) {
-            joint_str=[joint_str stringByAppendingFormat:@"%@\n\n",ist_title];
+            [dic1 setObject:ist_title forKey:@"title"];
         }
         if ([ist_desc1 length]!=0) {
             joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc1];
@@ -82,7 +83,11 @@
         if ([ist_desc5 length]!=0) {
             joint_str=[joint_str stringByAppendingFormat:@"%@\n",ist_desc5];
         }
-        [alist_crm_browse addObject:joint_str];
+        if ([joint_str length]!=0) {
+            [dic1 setObject:joint_str forKey:@"body"];
+        }
+        
+        [alist_crm_browse addObject:dic1];
         
     }
     return alist_crm_browse;
