@@ -26,6 +26,7 @@
 @synthesize db_acct;
 @synthesize acct_icon;
 @synthesize alist_account_parameter;
+@synthesize alist_crmacct_hbl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,6 +51,7 @@
     alist_account_parameter=[db_acct fn_get_data:_searchBar.text];
     [self fn_init_account:alist_account_parameter];
     [self init_acct_icon];
+    [self fn_init_crmacct_hbl:alist_account_parameter];
 	// Do any additional setup after loading the view.
 }
 
@@ -59,6 +61,13 @@
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct"];
     ilist_account=[format fn_format_conersion:arr_format browse:arr_account];
+}
+-(void)fn_init_crmacct_hbl:(NSMutableArray*)arr_crmacct_hbl{
+    //获取acct_hbl列表显示信息的格式
+    NSMutableArray *arr_format_hbl=[NSMutableArray array];
+    DB_formatlist *db_format=[[DB_formatlist alloc]init];
+    arr_crmacct_hbl=[db_format fn_get_list_data:@"crmacct_hbl"];
+    alist_crmacct_hbl=[format fn_format_conersion:arr_format_hbl browse:arr_crmacct_hbl];
 }
 -(void)init_acct_icon{
     //获取acct 列表显示信息的格式
@@ -85,9 +94,29 @@
 }
 
 #pragma mark UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [ilist_account count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section==0) {
+        return @"account";
+    }
+    if (section==1) {
+        return @"crmacct_hbl";
+    }
+    return nil;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section==0) {
+        return [ilist_account count];
+    }
+    if (section==1) {
+        return [alist_crmacct_hbl count];
+    }
+    return 0;
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIndentifier=@"Cell_browse";
     Cell_browse *cell=[self.tableView_acct dequeueReusableCellWithIdentifier:cellIndentifier];
@@ -96,12 +125,20 @@
     }
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
     UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
-    cell.il_title.text=[[ilist_account objectAtIndex:indexPath.row]valueForKey:@"title"];
+    if (indexPath.section==0) {
+        cell.il_title.text=[[ilist_account objectAtIndex:indexPath.row]valueForKey:@"title"];
+        cell.il_show_text.text=[[ilist_account objectAtIndex:indexPath.row] valueForKey:@"body"];
+    }
+    if (indexPath.section==1) {
+        cell.il_title.text=[[alist_crmacct_hbl objectAtIndex:indexPath.row]valueForKey:@"title"];
+        cell.il_show_text.text=[[alist_crmacct_hbl objectAtIndex:indexPath.row]valueForKey:@"body"];
+    }
+    
     cell.il_title.font=font;
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.numberOfLines=0;
     cell.il_show_text.font=font;
-    cell.il_show_text.text=[[ilist_account objectAtIndex:indexPath.row] valueForKey:@"body"];
+    
     cell.ii_image.image=acct_icon;
     
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
@@ -120,6 +157,9 @@
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
     return height+10+23;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40;
 }
 -(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
     return YES;

@@ -86,8 +86,10 @@
         if ([joint_str length]!=0) {
             [dic1 setObject:joint_str forKey:@"body"];
         }
+        if ([dic1 count]!=0) {
+            [alist_crm_browse addObject:dic1];
+        }
         
-        [alist_crm_browse addObject:dic1];
         
     }
     return alist_crm_browse;
