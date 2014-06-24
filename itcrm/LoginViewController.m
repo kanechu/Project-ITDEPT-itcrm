@@ -278,7 +278,7 @@ enum TEXTFIELD_TAG {
     [data fn_get_crmopp_browse_data:base_url];
     [data fn_get_maintForm_data:base_url];
     [data fn_get_crmtask_browse_data:base_url];
-    [data fn_get_systemIcon_data:base_url];
+    [data fn_get_systemIcon_data:base_url os_value:@"1400231924493"];
     
 }
 

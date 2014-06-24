@@ -11,6 +11,7 @@
 #import "Cell_menu_item.h"
 #import "SVProgressHUD.h"
 #import "LoginViewController.h"
+#import "Web_resquestData.h"
 
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
@@ -117,9 +118,17 @@
     LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     PopViewManager *popV=[[PopViewManager alloc]init];
     [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
-    
+    [self fn_delete_all_data];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
+    DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
+    [dbSystemIcon fn_delete_systemIcon_data];
+    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
+    [user_isLogin setInteger:0 forKey:@"isLogin"];
+    [user_isLogin synchronize];
+}
+-(void)fn_delete_all_data{
+   
     DB_searchCriteria *db_search=[[DB_searchCriteria alloc]init];
     [db_search fn_delete_all_data];
     
@@ -134,13 +143,35 @@
     
     DB_formatlist *db_formtlist=[[DB_formatlist alloc]init];
     [db_formtlist fn_delete_all_data];
-    DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
-    [dbSystemIcon fn_delete_systemIcon_data];
+    
     DB_MaintForm *db_MaintForm=[[DB_MaintForm alloc]init];
     [db_MaintForm fn_delete_all_data];
-    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
-    [user_isLogin setInteger:0 forKey:@"isLogin"];
-    [user_isLogin synchronize];
+}
+
+- (IBAction)fn_Refresh_data:(id)sender {
+    [self fn_delete_all_data];
+    [SVProgressHUD showWithStatus:@"Loading, please wait!"];
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
+    NSMutableArray *arr=[db fn_get_all_data];
+    NSString* base_url=nil;
+    if (arr!=nil && [arr count]!=0) {
+        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
+    }
+    Web_resquestData *data=[[Web_resquestData alloc]init];
+    [data fn_get_search_data:base_url];
+    [data fn_get_formatlist_data:base_url];
+    [data fn_get_crmacct_browse_data:base_url];
+    [data fn_get_region_data:base_url];
+    [data fn_get_crmopp_browse_data:base_url];
+    [data fn_get_maintForm_data:base_url];
+    [data fn_get_crmtask_browse_data:base_url];
+    DB_systemIcon *db_systemIcon=[[DB_systemIcon alloc]init];
+    NSString *recentDate=nil;
+    if ([[db_systemIcon fn_get_last_update_time] count]!=0) {
+        recentDate=[[[db_systemIcon fn_get_last_update_time]objectAtIndex:0]valueForKey:@"recent_date"];
+    }
+    
+    [data fn_get_systemIcon_data:base_url os_value:recentDate];
 }
 
 

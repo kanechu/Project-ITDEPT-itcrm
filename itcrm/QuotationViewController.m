@@ -7,7 +7,7 @@
 //
 
 #import "QuotationViewController.h"
-
+#import "DB_systemIcon.h"
 @interface QuotationViewController ()
 
 @end
@@ -26,7 +26,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    DB_systemIcon *db=[[DB_systemIcon alloc]init];
+    NSMutableArray *arr=[db fn_get_systemIcon_data:@"crmacct_task"];
+    NSString *millisecond=[[arr objectAtIndex:0]valueForKey:@"upd_date"];
+    float millisecond_value=[millisecond floatValue];
+    NSTimeInterval timeinterval=millisecond_value/1000.0f;
+    
+    NSLog(@"更新日期：%@",[self dateFromUnixTimestamp:timeinterval]);
+    
+    NSLog(@"%@",[db fn_get_last_update_time]);
 	// Do any additional setup after loading the view.
+}
+-(NSDate*)dateFromUnixTimestamp:(NSTimeInterval)timestamp{
+    return [NSDate dateWithTimeIntervalSince1970:timestamp];
 }
 
 - (void)didReceiveMemoryWarning
