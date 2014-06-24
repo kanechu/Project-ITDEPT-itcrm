@@ -22,6 +22,7 @@
 #import "DB_crmtask_browse.h"
 #import "DB_crmopp_browse.h"
 #import "DB_MaintForm.h"
+#import "DB_crmhbl_browse.h"
 @interface MainHomeViewController ()
 
 @end
@@ -141,6 +142,9 @@
     DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
     [db_crmopp fn_delete_all_data];
     
+    DB_crmhbl_browse *db_crmhbl=[[DB_crmhbl_browse alloc]init];
+    [db_crmhbl fn_delete_all_data];
+    
     DB_formatlist *db_formtlist=[[DB_formatlist alloc]init];
     [db_formtlist fn_delete_all_data];
     
@@ -165,6 +169,7 @@
     [data fn_get_crmopp_browse_data:base_url];
     [data fn_get_maintForm_data:base_url];
     [data fn_get_crmtask_browse_data:base_url];
+    [data fn_get_crmhbl_browse_data:base_url];
     DB_systemIcon *db_systemIcon=[[DB_systemIcon alloc]init];
     NSString *recentDate=nil;
     if ([[db_systemIcon fn_get_last_update_time] count]!=0) {
