@@ -57,5 +57,15 @@
     }
     return NO;
 }
-
+-(NSMutableArray*)fn_get_last_update_time{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select MAX(upd_date)  as recent_date from systemIcon"];
+        while ([fmdb_result next]) {
+            [arr addObject:[fmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
 @end

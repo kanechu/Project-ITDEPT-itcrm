@@ -15,5 +15,6 @@
 -(BOOL)fn_save_systemIcon_data:(NSMutableArray*)ilist_result;
 -(NSMutableArray*)fn_get_systemIcon_data:(NSString*)ic_name;
 -(BOOL)fn_delete_systemIcon_data;
+-(NSMutableArray*)fn_get_last_update_time;
 
 @end

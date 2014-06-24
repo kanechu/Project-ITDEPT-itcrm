@@ -176,7 +176,7 @@
 }
 
 #pragma mark 请求systemIcon的数据
-- (void) fn_get_systemIcon_data:(NSString*)base_url
+- (void) fn_get_systemIcon_data:(NSString*)base_url os_value:(NSString*)value
 {
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
@@ -185,7 +185,7 @@
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"rec_upd_date";
-    search.os_value = @"1400231924493";
+    search.os_value =value;
     req_form.SearchForm = [NSSet setWithObjects:search,nil];
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_SYSTEMICON_URL;
