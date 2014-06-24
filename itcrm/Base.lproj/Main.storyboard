@@ -181,7 +181,7 @@
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
                         <segue destination="sUH-eH-Mej" kind="push" identifier="segue_Quotation" id="aBn-az-hQe"/>
                         <segue destination="FVg-cX-FBO" kind="push" identifier="segue_contactList" id="yG0-5i-wDy"/>
-                        <segue destination="6EJ-hd-7lb" kind="push" identifier="segue_Attachment" id="968-I5-Fhr"/>
+                        <segue destination="6EJ-hd-7lb" kind="push" identifier="segue_ShipmentHistory" id="968-I5-Fhr"/>
                         <segue destination="EQ7-pG-KJY" kind="push" identifier="segue_account" id="Fxb-MW-MhA"/>
                         <segue destination="2dk-cr-CFp" kind="push" identifier="segue_opportunities" id="0a2-Gq-wrG"/>
                         <segue destination="zbT-eX-JTl" kind="push" identifier="segue_activity" id="Sat-dv-523"/>
@@ -206,10 +206,10 @@
             </objects>
             <point key="canvasLocation" x="-1224" y="391"/>
         </scene>
-        <!--Attachment View Controller - Attachment-->
+        <!--Shipment History View Controller - Attachment-->
         <scene sceneID="6E0-2L-b8z">
             <objects>
-                <viewController storyboardIdentifier="AttachmentViewController" id="6EJ-hd-7lb" customClass="AttachmentViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShipmentHistoryViewController" id="6EJ-hd-7lb" customClass="ShipmentHistoryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EaL-t3-MXK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
