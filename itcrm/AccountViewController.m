@@ -62,7 +62,7 @@ enum TEXTFIELD_TAG {
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
     [self fn_custom_gesture];
-    self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW1;
+    self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
     [self setExtraCellLineHidden:self.skstableView];
     //避免键盘挡住UItextfield
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
@@ -160,7 +160,7 @@ enum TEXTFIELD_TAG {
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW;
         if ([col_code isEqualToString:@"acct_code"]) {
             cell.itf_searchData.tag=ITF_TAG;
             cell.itf_searchData.text=[idic_search_value valueForKey:@"Account_code"];
@@ -233,7 +233,7 @@ enum TEXTFIELD_TAG {
         }
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW;
         
         return cell;
     }
