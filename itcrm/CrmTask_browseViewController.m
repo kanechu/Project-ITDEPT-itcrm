@@ -99,8 +99,7 @@
     static NSString *CellIdentifier = @"Cell_browse";
     Cell_browse *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
-        NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_browse" owner:self options:nil];
-        cell=[nib objectAtIndex:0];
+        cell=[[Cell_browse alloc]init];
     }
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
     UIFont *font = [UIFont systemFontOfSize:15.0];

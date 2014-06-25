@@ -51,7 +51,7 @@
 -(NSMutableArray*)fn_get_crmhbl_data:(NSString*)acct_name{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmhbl_browse"];
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmhbl_browse where acct_name like ?",[NSString stringWithFormat:@"%@%%",acct_name]];
         while ([fmdb_result next]) {
             [arr addObject:[fmdb_result resultDictionary]];
         }

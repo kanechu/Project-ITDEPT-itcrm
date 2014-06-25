@@ -16,7 +16,6 @@
 @property (nonatomic,strong) DB_crmacct_browse *db_acct;
 @property (nonatomic,strong) UIImage *acct_icon;
 
-@property (nonatomic,strong) NSMutableArray *alist_crmacct_hbl;
 @property (nonatomic,strong) NSMutableArray *alist_account_parameter;
 @property (weak, nonatomic) IBOutlet UITableView *tableView_acct;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;

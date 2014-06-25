@@ -14,6 +14,9 @@
 #import "Custom_Color.h"
 @interface OpportunitiesViewController ()
 
+@property(nonatomic,strong)Format_conversion *format;
+@property(nonatomic,strong)DB_crmopp_browse *db_crmopp;
+
 @end
 
 @implementation OpportunitiesViewController

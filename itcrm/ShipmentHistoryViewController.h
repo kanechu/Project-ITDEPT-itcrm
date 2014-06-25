@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@interface ShipmentHistoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
-@interface ShipmentHistoryViewController : UIViewController
+@property (nonatomic,strong)NSMutableArray *alist_crmhbl;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UISearchBar *is_searchbar;
 
 @end
