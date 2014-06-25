@@ -44,7 +44,6 @@
     [super viewDidLoad];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
-    
 	// Do any additional setup after loading the view.
 }
 
@@ -127,6 +126,7 @@
     NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
     [user_isLogin setInteger:0 forKey:@"isLogin"];
     [user_isLogin synchronize];
+    _toolbar.hidden=YES;
 }
 -(void)fn_delete_all_data{
    
@@ -177,8 +177,12 @@
     }
     
     [data fn_get_systemIcon_data:base_url os_value:recentDate];
+    _toolbar.hidden=YES;
 }
 
 
 
+- (IBAction)fn_show_toolbar:(id)sender {
+    _toolbar.hidden=NO;
+}
 @end
