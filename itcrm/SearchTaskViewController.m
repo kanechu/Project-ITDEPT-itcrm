@@ -250,4 +250,10 @@
     [idic_value setObject:textfield.text forKey:@"end_date_value"];
     
 }
+
+- (IBAction)fn_clear_input_data:(id)sender {
+    idic_value=nil;
+    idic_value=[[NSMutableDictionary alloc]init];
+    [self.skstableview reloadData];
+}
 @end

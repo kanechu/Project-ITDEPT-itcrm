@@ -30,12 +30,13 @@
 
 @property (strong,nonatomic) id iobj_target;
 @property (nonatomic, assign) SEL isel_action1;
-
+@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
+
 - (IBAction)fn_search_account:(id)sender;
 - (IBAction)fn_go_back:(id)sender;
 - (IBAction)fn_skip_region:(id)sender;
-@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
 - (IBAction)fn_textfield_endEdit:(id)sender;
+- (IBAction)fn_clear_input_data:(id)sender;
 
 @end

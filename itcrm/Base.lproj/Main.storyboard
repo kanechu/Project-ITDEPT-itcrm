@@ -486,7 +486,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aZF-gq-Lul">
-                                <rect key="frame" x="0.0" y="527" width="320" height="40"/>
+                                <rect key="frame" x="0.0" y="528" width="160" height="40"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.51372549019607838" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Search">
@@ -495,6 +495,18 @@
                                 </state>
                                 <connections>
                                     <action selector="fn_search_task:" destination="8dQ-IT-1nN" eventType="touchUpInside" id="nj0-6p-czw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HAS-H6-qeo">
+                                <rect key="frame" x="161" y="528" width="160" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.51372549020000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fn_clear_input_data:" destination="8dQ-IT-1nN" eventType="touchUpInside" id="K5E-Qw-B7V"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" id="Yda-F7-J93">
@@ -937,7 +949,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="c3x-u3-HwU">
-                                <rect key="frame" x="1" y="528" width="318" height="40"/>
+                                <rect key="frame" x="0.0" y="528" width="160" height="40"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.51372549020000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -961,6 +973,18 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qwa-9F-qdT">
+                                <rect key="frame" x="161" y="528" width="159" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.51372549020000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Clear">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fn_clear_input_data:" destination="jD9-aI-6zc" eventType="touchUpInside" id="AKe-iM-5gx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>

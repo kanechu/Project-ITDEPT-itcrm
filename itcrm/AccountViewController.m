@@ -171,7 +171,7 @@ enum TEXTFIELD_TAG {
             cell.itf_searchData.text=[idic_search_value valueForKey:@"Account_name"];
             [idic_parameter setObject:col_code forKey:@"acct_name"];
         }
-        if ([col_code isEqualToString:@"acct_addr_01"]) {
+        if ([col_label isEqualToString:@"Address"]) {
             cell.itf_searchData.tag=ITF_TAG2;
             cell.itf_searchData.text=[idic_search_value valueForKey:@"Address"];
             [idic_parameter setObject:col_code forKey:@"acct_addr_01"];
@@ -358,4 +358,11 @@ enum TEXTFIELD_TAG {
     
     
 }
+
+- (IBAction)fn_clear_input_data:(id)sender {
+    idic_search_value=nil;
+    idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [self.skstableView reloadData];
+}
+
 @end

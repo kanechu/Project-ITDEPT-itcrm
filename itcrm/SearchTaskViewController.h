@@ -29,5 +29,6 @@
 - (IBAction)fn_textfield_endEdit:(id)sender;
 - (IBAction)fn_startDate_endEdit:(id)sender;
 - (IBAction)fn_endDate_endEdit:(id)sender;
+- (IBAction)fn_clear_input_data:(id)sender;
 
 @end
