@@ -11,4 +11,5 @@
 @interface Format_conversion : NSObject
 -(NSMutableArray*)fn_format_conersion:(NSMutableArray*)arr_format browse:(NSMutableArray*)arr_browse;
 -(CGFloat)fn_heightWithString:(NSString *)string font:(UIFont *)font constrainedToWidth:(CGFloat)width;
+-(UIImage*)fn_binaryData_convert_image:(NSString*)binary_str;
 @end

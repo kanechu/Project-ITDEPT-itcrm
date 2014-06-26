@@ -130,6 +130,13 @@
         return rtSize.height;
     }
 }
-
-
+-(UIImage*)fn_binaryData_convert_image:(NSString*)binary_str{
+    UIImage *image=nil;
+    if (binary_str!=nil || [binary_str length]!=0) {
+        NSData *data=[[NSData alloc]initWithBase64EncodedString:binary_str options:0];
+        image=[UIImage imageWithData:data];
+        
+    }
+    return image;
+}
 @end
