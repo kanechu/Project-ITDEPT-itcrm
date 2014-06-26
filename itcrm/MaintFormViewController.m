@@ -147,9 +147,9 @@
         cell.il_remind_label.text=col_label;
         if ([is_enable isEqualToString:@"1"]) {
         
-            cell.ibt_select.titleLabel.text=@"Yes";
+            [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
         }else{
-            cell.ibt_select.titleLabel.text=@"NO";
+            [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateNormal];
         }
         return cell;
     }

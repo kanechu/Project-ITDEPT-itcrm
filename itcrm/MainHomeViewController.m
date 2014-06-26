@@ -24,13 +24,13 @@
 #import "DB_MaintForm.h"
 #import "DB_crmhbl_browse.h"
 @interface MainHomeViewController ()
-
+@property(nonatomic,assign)NSInteger flag;
 @end
 
 @implementation MainHomeViewController
 @synthesize menu_item;
 @synthesize ilist_menu;
-
+@synthesize flag;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,6 +44,7 @@
     [super viewDidLoad];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
+    flag=0;
 	// Do any additional setup after loading the view.
 }
 
@@ -127,6 +128,7 @@
     [user_isLogin setInteger:0 forKey:@"isLogin"];
     [user_isLogin synchronize];
     _toolbar.hidden=YES;
+    flag=0;
 }
 -(void)fn_delete_all_data{
    
@@ -178,11 +180,18 @@
     
     [data fn_get_systemIcon_data:base_url os_value:recentDate];
     _toolbar.hidden=YES;
+    flag=0;
 }
 
 
 
 - (IBAction)fn_show_toolbar:(id)sender {
-    _toolbar.hidden=NO;
+    if (flag==0) {
+         _toolbar.hidden=NO;
+        flag=1;
+    }else{
+          _toolbar.hidden=YES;
+        flag=0;
+    }
 }
 @end
