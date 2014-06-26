@@ -14,9 +14,13 @@
 #import "Custom_Color.h"
 #import "PopViewManager.h"
 #import "SearchTaskViewController.h"
-#import "DB_systemIcon.h"
 #import "MaintTaskViewController.h"
 @interface CrmTask_browseViewController ()
+
+@property(nonatomic,strong)Format_conversion *format;
+@property(nonatomic,strong)DB_crmtask_browse *db_crmtask;
+@property(nonatomic,strong)NSMutableArray *alist_crmtask_parameter;
+@property(nonatomic,strong)UIImage *task_icon;
 
 @end
 
@@ -49,8 +53,6 @@
     alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text];
     format=[[Format_conversion alloc]init];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
-    [self init_task_icon];
-    
     
 	// Do any additional setup after loading the view.
 }
@@ -67,25 +69,12 @@
     arr_format=[db_format fn_get_list_data:@"crmtask"];
     //转换格式
     alist_crmtask=[format fn_format_conersion:arr_format browse:arr_crmtask];
-}
--(void)init_task_icon{
-    //获取task 列表显示信息的格式
-    NSMutableArray *arr_format=[NSMutableArray array];
-    DB_formatlist *db_format=[[DB_formatlist alloc]init];
-    arr_format=[db_format fn_get_list_data:@"crmtask"];  DB_systemIcon *db_icon=[[DB_systemIcon alloc]init];
+    
     NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-    NSMutableArray *arr_icon=[db_icon fn_get_systemIcon_data:iconName];
-    NSString *str=nil;
-    if ([arr_icon count]!=0) {
-        str=[[arr_icon objectAtIndex:0]valueForKey:@"ic_content"];
-    }
-    if (str!=nil || [str length]!=0) {
-        NSData *data=[[NSData alloc]initWithBase64EncodedString:str options:0];
-        task_icon=[UIImage imageWithData:data];
-        
-    }
-}
+    NSString *binary_str=[format fn_get_binaryData:iconName];
+    task_icon=[format fn_binaryData_convert_image:binary_str];
 
+}
 
 #pragma mark - Table view data source
 
@@ -145,11 +134,8 @@
     [_is_searchbar resignFirstResponder];
 }
 -(void)fn_save_task:(NSMutableArray*)alist_searchData{
-    NSMutableArray *arr_task=[NSMutableArray array];
-    DB_crmtask_browse *db_crmacct=[[DB_crmtask_browse alloc]init];
-    arr_task=[db_crmacct fn_get_detail_crmtask_data:alist_searchData ];
-    alist_crmtask_parameter=arr_task;
-    [self fn_init_crmtask_arr:arr_task];
+    alist_crmtask_parameter=[db_crmtask fn_get_detail_crmtask_data:alist_searchData];
+    [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableview reloadData];
 }
 
