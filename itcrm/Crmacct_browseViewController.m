@@ -71,15 +71,9 @@
     arr_format=[db_format fn_get_list_data:@"crmacct"];
     ilist_account=[format fn_format_conersion:arr_format browse:arr_account];
     
-    DB_systemIcon *db_icon=[[DB_systemIcon alloc]init];
     NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-    NSMutableArray *arr_icon=[db_icon fn_get_systemIcon_data:iconName];
-    NSString *binary_str=nil;
-    if ([arr_icon count]!=0) {
-        binary_str=[[arr_icon objectAtIndex:0]valueForKey:@"ic_content"];
-    }
+    NSString *binary_str=[format fn_get_binaryData:iconName];
     acct_icon=[format fn_binaryData_convert_image:binary_str];
-    
 }
 
 #pragma mark UITableViewDataSource

@@ -9,6 +9,7 @@
 #import "ShipmentHistoryViewController.h"
 #import "DB_crmhbl_browse.h"
 #import "DB_formatlist.h"
+#import "DB_systemIcon.h"
 #import "Format_conversion.h"
 #import "Cell_browse.h"
 
@@ -16,6 +17,7 @@
 
 @property (nonatomic,strong) Format_conversion *convert;
 @property (nonatomic,strong) DB_crmhbl_browse *db_crmhbl;
+@property (nonatomic,strong) UIImage *hbl_image;
 
 @end
 
@@ -23,6 +25,8 @@
 @synthesize alist_crmhbl;
 @synthesize convert;
 @synthesize db_crmhbl;
+@synthesize hbl_image;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -50,14 +54,16 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_init_crmhbl_browse:(NSMutableArray*)crmhbl_browse{
-   // 获取crmhbl列表显示信息的格式
+    // 获取crmhbl列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct_hbl"];
-    
     //转换格式
     alist_crmhbl=[convert fn_format_conersion:arr_format browse:crmhbl_browse];
     
+    NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+    NSString *binary_str=[convert fn_get_binaryData:iconName];
+    hbl_image=[convert fn_binaryData_convert_image:binary_str];
 }
 #pragma mark UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -70,11 +76,14 @@
         cell=[[Cell_browse alloc]init];
     }
     UIFont *font=[UIFont systemFontOfSize:15.0f];
-    cell.il_show_text.text=[[alist_crmhbl objectAtIndex:indexPath.row]valueForKey:@"body"];
     cell.il_title.text=[[alist_crmhbl objectAtIndex:indexPath.row]valueForKey:@"title"];
-    cell.il_title.lineBreakMode=NSLineBreakByWordWrapping;
+    cell.il_title.font=font;
+    cell.il_show_text.text=[[alist_crmhbl objectAtIndex:indexPath.row]valueForKey:@"body"];
+    cell.il_show_text.lineBreakMode=NSLineBreakByWordWrapping;
+    cell.il_show_text.font=font;
     CGFloat height=[convert fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x,cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
+    cell.ii_image.image=hbl_image;
     return cell;
 }
 #pragma mark UITableViewDelegate

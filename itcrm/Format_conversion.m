@@ -7,6 +7,7 @@
 //
 
 #import "Format_conversion.h"
+#import "DB_systemIcon.h"
 #define ISIOS7      ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 @implementation Format_conversion
 
@@ -138,5 +139,14 @@
         
     }
     return image;
+}
+-(NSString*)fn_get_binaryData:(NSString*)iconName{
+    DB_systemIcon *db_icon=[[DB_systemIcon alloc]init];
+    NSMutableArray *arr_icon=[db_icon fn_get_systemIcon_data:iconName];
+    NSString *binary_str=nil;
+    if ([arr_icon count]!=0) {
+        binary_str=[[arr_icon objectAtIndex:0]valueForKey:@"ic_content"];
+    }
+    return binary_str;
 }
 @end
