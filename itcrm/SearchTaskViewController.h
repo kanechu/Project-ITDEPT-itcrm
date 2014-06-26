@@ -22,6 +22,7 @@
 @property(nonatomic,strong)UITextField *checkText;
 @property (strong,nonatomic) id iobj_target;
 @property (nonatomic, assign) SEL isel_action1;
+@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navigationbar;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 
 - (IBAction)fn_search_task:(id)sender;

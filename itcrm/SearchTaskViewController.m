@@ -47,7 +47,9 @@
     [self fn_init_arr];
     //loadview的时候，打开所有expandable
     [self.skstableview fn_expandall];
-    self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW2;
+    self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW;
+    self.view.backgroundColor=COLOR_LIGHT_YELLOW;
+    [_inav_navigationbar setBarTintColor:COLOR_LIGHT_YELLOW];
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     //避免键盘挡住UITextField
@@ -152,7 +154,7 @@
         }
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.itf_searchData.delegate=self;
         if ([col_code isEqualToString:@"task_title"]) {
             cell.itf_searchData.tag=100;
@@ -176,7 +178,7 @@
         cell.itf_input_endDate.delegate=self;
         cell.itf_input_startDate.delegate=self;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW2;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.il_prompt_label.text=col_label;
         NSArray *arr=[col_code componentsSeparatedByString:@","];
         if ([[arr objectAtIndex:0] isEqualToString:@"task_start_date"]) {

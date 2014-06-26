@@ -19,6 +19,7 @@
 @property (nonatomic,copy)NSString *type;
 @property (nonatomic,strong)DB_Region *db;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navigationbar;
 - (IBAction)fn_return_acctSearch:(id)sender;
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchBar;
 

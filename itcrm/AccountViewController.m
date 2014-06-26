@@ -63,9 +63,11 @@ enum TEXTFIELD_TAG {
     [self.skstableView fn_expandall];
     [self fn_custom_gesture];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
+    self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     [self setExtraCellLineHidden:self.skstableView];
     //避免键盘挡住UItextfield
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [_inav_navBar setBarTintColor:COLOR_LIGHT_YELLOW];
     // Do any additional setup after loading the view.
 }
 

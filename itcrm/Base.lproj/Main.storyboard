@@ -536,6 +536,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="inav_navigationbar" destination="Yda-F7-J93" id="iwn-y7-LEe"/>
                         <outlet property="skstableview" destination="ThG-L4-c5N" id="7ms-QV-toF"/>
                     </connections>
                 </viewController>
@@ -1042,7 +1043,8 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="agc-8t-g8d">
                                                     <rect key="frame" x="2" y="2" width="45" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="backgroundColor" red="0.96175462369999998" green="0.60518228559999998" blue="0.58282753229999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.17547508419999999" green="0.60327646680000002" blue="0.24312657430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1HR-eZ-Id9">
                                                     <rect key="frame" x="55" y="0.0" width="260" height="21"/>
@@ -1059,6 +1061,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="tintColor" red="0.17547508419999999" green="0.60327646680000002" blue="0.24312657430000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="il_data" destination="g99-gr-iBn" id="Vu8-cS-nh4"/>
                                             <outlet property="il_display" destination="1HR-eZ-Id9" id="Axj-UM-Wzk"/>
@@ -1076,6 +1079,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="inav_navigationbar" destination="KSa-DU-Msk" id="R06-em-d2p"/>
                         <outlet property="is_searchBar" destination="7t5-Q8-5YQ" id="1xU-yh-kbA"/>
                         <outlet property="tableview" destination="Bdm-KU-lds" id="t1N-21-jTD"/>
                     </connections>
