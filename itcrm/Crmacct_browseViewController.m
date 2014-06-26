@@ -68,11 +68,13 @@
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct"];
-    ilist_account=[format fn_format_conersion:arr_format browse:arr_account];
-    
-    NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-    NSString *binary_str=[format fn_get_binaryData:iconName];
-    acct_icon=[format fn_binaryData_convert_image:binary_str];
+    if ([arr_format count]!=0) {
+        ilist_account=[format fn_format_conersion:arr_format browse:arr_account];
+        
+        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[format fn_get_binaryData:iconName];
+        acct_icon=[format fn_binaryData_convert_image:binary_str];
+    }
 }
 
 #pragma mark UITableViewDataSource

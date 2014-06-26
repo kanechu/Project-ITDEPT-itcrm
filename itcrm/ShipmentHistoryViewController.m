@@ -58,12 +58,14 @@
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct_hbl"];
-    //转换格式
-    alist_crmhbl=[convert fn_format_conersion:arr_format browse:crmhbl_browse];
-    
-    NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-    NSString *binary_str=[convert fn_get_binaryData:iconName];
-    hbl_image=[convert fn_binaryData_convert_image:binary_str];
+    if ([arr_format count]!=0) {
+        //转换格式
+        alist_crmhbl=[convert fn_format_conersion:arr_format browse:crmhbl_browse];
+        
+        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[convert fn_get_binaryData:iconName];
+        hbl_image=[convert fn_binaryData_convert_image:binary_str];
+    }
 }
 #pragma mark UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -16,6 +16,7 @@
 
 @property(nonatomic,strong)Format_conversion *format;
 @property(nonatomic,strong)DB_crmopp_browse *db_crmopp;
+@property (nonatomic,strong) UIImage *opp_image;
 
 @end
 
@@ -23,6 +24,7 @@
 @synthesize alist_crmopp_browse;
 @synthesize format;
 @synthesize db_crmopp;
+@synthesize opp_image;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,8 +60,12 @@
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmacct_opp"];
-    alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
-   
+    if ([arr_format count]!=0) {
+        alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
+        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[format fn_get_binaryData:iconName];
+        opp_image=[format fn_binaryData_convert_image:binary_str];
+    }
 }
 
 #pragma mark UITableViewDataSource

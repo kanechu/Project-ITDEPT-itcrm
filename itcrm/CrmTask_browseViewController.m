@@ -67,13 +67,14 @@
     NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmtask"];
-    //转换格式
-    alist_crmtask=[format fn_format_conersion:arr_format browse:arr_crmtask];
+    if ([arr_format count]!=0) {
+        //转换格式
+        alist_crmtask=[format fn_format_conersion:arr_format browse:arr_crmtask];
     
-    NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-    NSString *binary_str=[format fn_get_binaryData:iconName];
-    task_icon=[format fn_binaryData_convert_image:binary_str];
-
+        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[format fn_get_binaryData:iconName];
+        task_icon=[format fn_binaryData_convert_image:binary_str];
+    }
 }
 
 #pragma mark - Table view data source
