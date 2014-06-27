@@ -59,4 +59,17 @@
     }
     return arr;
 }
+-(NSMutableArray*)fn_get_relate_crmhbl_data:(NSString *)acct_id{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmhbl_browse where acct_id like ?",[NSString stringWithFormat:@"%@",acct_id]];
+        while ([fmdb_result next]) {
+            [arr addObject:[fmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
+
+
 @end

@@ -16,5 +16,5 @@
 -(BOOL)fn_delete_all_data;
 
 -(NSMutableArray*)fn_get_crmhbl_data:(NSString*)acct_name;
-
+-(NSMutableArray*)fn_get_relate_crmhbl_data:(NSString *)acct_id;
 @end

@@ -74,7 +74,17 @@
     }
     return arr;
 }
-
+-(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmtask_browse where task_ref_id like ?",[NSString stringWithFormat:@"%@",task_ref_id]];
+        while ([fmdb_result next]) {
+            [arr addObject:[fmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
 
 -(BOOL)fn_delete_all_data{
     if ([[idb fn_get_db]open]) {

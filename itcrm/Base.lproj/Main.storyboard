@@ -311,7 +311,7 @@
             </objects>
             <point key="canvasLocation" x="-1224" y="-357"/>
         </scene>
-        <!--Maint Task View Controller - maint Task-->
+        <!--Maint Task View Controller - Task Edit-->
         <scene sceneID="YWI-bY-Zna">
             <objects>
                 <viewController storyboardIdentifier="MaintTaskViewController" automaticallyAdjustsScrollViewInsets="NO" id="NEG-fv-6xJ" customClass="MaintTaskViewController" sceneMemberID="viewController">
@@ -394,7 +394,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="maint Task" id="MG2-ij-y8L"/>
+                    <navigationItem key="navigationItem" title="Task Edit" id="MG2-ij-y8L"/>
                     <connections>
                         <outlet property="skstableview" destination="IwR-Om-nSN" id="qf5-AA-Q8X"/>
                     </connections>
@@ -695,7 +695,7 @@
             </objects>
             <point key="canvasLocation" x="-2355" y="-1820"/>
         </scene>
-        <!--Maint Form View Controller-->
+        <!--Maint Form View Controller - Account Edit-->
         <scene sceneID="Ckt-zg-r4G">
             <objects>
                 <viewController storyboardIdentifier="MaintFormViewController" automaticallyAdjustsScrollViewInsets="NO" id="RJe-1J-1t0" customClass="MaintFormViewController" sceneMemberID="viewController">
@@ -768,6 +768,41 @@
                                             <outlet property="il_remind_label" destination="Rt6-YJ-o5C" id="7pl-E1-ZXH"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_browse_edit" rowHeight="60" id="fVr-Ud-l8V" customClass="Cell_browse">
+                                        <rect key="frame" x="0.0" y="110" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fVr-Ud-l8V" id="ajO-Ko-yht">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="zF8-39-Olk">
+                                                    <rect key="frame" x="5" y="5" width="45" height="45"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rEC-1P-YzE">
+                                                    <rect key="frame" x="58" y="2" width="260" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.095784356540000004" green="0.32188287110000002" blue="0.92099808670000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="body" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IgR-Iv-WV6">
+                                                    <rect key="frame" x="58" y="28" width="260" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="ii_image" destination="zF8-39-Olk" id="cGz-0h-Cxn"/>
+                                            <outlet property="il_show_text" destination="IgR-Iv-WV6" id="a96-gv-jk2"/>
+                                            <outlet property="il_title" destination="rEC-1P-YzE" id="uAz-J4-bYr"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="27w-3Q-sjC">
@@ -785,7 +820,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="UsF-6v-TkQ"/>
+                    <navigationItem key="navigationItem" title="Account Edit" id="UsF-6v-TkQ"/>
                     <connections>
                         <outlet property="skstableView" destination="i0F-TE-qRT" id="yBF-Vv-ZLz"/>
                     </connections>

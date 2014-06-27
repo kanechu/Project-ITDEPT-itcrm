@@ -19,4 +19,7 @@
 -(BOOL)fn_delete_all_data;
 
 -(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData;
+
+-(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id;
+
 @end
