@@ -8,8 +8,6 @@
 
 #import "NSDictionary.h"
 
-
-
 @implementation NSDictionary(dictionaryWithObject)
 
 +(NSDictionary *) dictionaryWithPropertiesOfObject:(id)obj
@@ -21,13 +19,14 @@
     
     for (int i = 0; i < count; i++) {
         NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
-        if ([obj valueForKey:key]!=nil) {
-             [dict setObject:[obj valueForKey:key] forKey:key];
+        if ([obj valueForKey:key]==nil) {
+            [dict setObject:@"" forKey:key];
+        }else{
+            [dict setObject:[obj valueForKey:key] forKey:key];
         }
     }
     
     free(properties);
-    
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 

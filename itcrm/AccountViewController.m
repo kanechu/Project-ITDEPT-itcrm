@@ -13,7 +13,6 @@
 #import "Cell_search1.h"
 #import "DB_searchCriteria.h"
 #import "MZFormSheetController.h"
-#import "PopViewManager.h"
 #import "RegionViewController.h"
 #import "Custom_Color.h"
 #import "AppConstants.h"
@@ -145,7 +144,7 @@ enum TEXTFIELD_TAG {
     NSString *col_label=[dic valueForKey:@"col_label"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
-    //是否为空
+    //是否为必填项
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
     //相关联的参数
     NSString *col_code=[dic valueForKey:@"col_code"];
@@ -212,7 +211,7 @@ enum TEXTFIELD_TAG {
             cell.ibtn_skip.tag=TAG;
             cell.itf_input_searchData.text=[idic_countryname valueForKey:@"display"];
             if ([cell.itf_input_searchData.text length]!=0) {
-                [idic_search_value setObject:cell.itf_input_searchData.text forKey:@"country"];
+                [idic_search_value setObject:[idic_countryname valueForKey:@"data"] forKey:@"country"];
                 [idic_parameter setObject:col_code forKey:@"country"];
             }
             
@@ -221,7 +220,7 @@ enum TEXTFIELD_TAG {
             cell.ibtn_skip.tag=TAG1;
             cell.itf_input_searchData.text=[idic_regionname valueForKey:@"display"];
             if ([cell.itf_input_searchData.text length]!=0) {
-                [idic_search_value setObject:cell.itf_input_searchData.text forKey:@"region"];
+                [idic_search_value setObject:[idic_regionname valueForKey:@"data"] forKey:@"region"];
                 [idic_parameter setObject:col_code forKey:@"region"];
             }
         }
@@ -229,7 +228,7 @@ enum TEXTFIELD_TAG {
             cell.ibtn_skip.tag=TAG2;
             cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
             if ([cell.itf_input_searchData.text length]!=0) {
-                [idic_search_value setObject:cell.itf_input_searchData.text forKey:@"territory"];
+                [idic_search_value setObject:[idic_territoryname valueForKey:@"data"] forKey:@"territory"];
                 [idic_parameter setObject:col_code forKey:@"territory"];
             }
         }
