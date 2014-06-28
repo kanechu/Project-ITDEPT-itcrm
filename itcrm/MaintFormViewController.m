@@ -57,6 +57,7 @@
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
+    _ibtn_save.layer.cornerRadius=5;
     
 	// Do any additional setup after loading the view.
 }

@@ -16,6 +16,7 @@
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
 @property (nonatomic,strong)UITextView *checkTextView;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_save;
 
 - (IBAction)fn_save_modified_data:(id)sender;
 @end

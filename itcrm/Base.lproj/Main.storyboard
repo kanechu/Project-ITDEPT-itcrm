@@ -695,7 +695,7 @@
             </objects>
             <point key="canvasLocation" x="-2355" y="-1820"/>
         </scene>
-        <!--Maint Form View Controller - Account Edit-->
+        <!--Maint Form View Controller - Edit Account-->
         <scene sceneID="Ckt-zg-r4G">
             <objects>
                 <viewController storyboardIdentifier="MaintFormViewController" automaticallyAdjustsScrollViewInsets="NO" id="RJe-1J-1t0" customClass="MaintFormViewController" sceneMemberID="viewController">
@@ -705,7 +705,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SKSTableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="i0F-TE-qRT" customClass="SKSTableView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_maintForm1" id="CjV-g6-dMH" customClass="Cell_maintForm1">
                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
@@ -745,7 +745,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rt6-YJ-o5C">
-                                                    <rect key="frame" x="20" y="11" width="143" height="21"/>
+                                                    <rect key="frame" x="15" y="11" width="143" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -775,20 +775,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="zF8-39-Olk">
-                                                    <rect key="frame" x="5" y="5" width="45" height="45"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rEC-1P-YzE">
-                                                    <rect key="frame" x="58" y="2" width="260" height="21"/>
+                                                    <rect key="frame" x="10" y="2" width="300" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.095784356540000004" green="0.32188287110000002" blue="0.92099808670000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="body" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IgR-Iv-WV6">
-                                                    <rect key="frame" x="58" y="28" width="260" height="21"/>
+                                                    <rect key="frame" x="10" y="28" width="300" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -798,15 +793,19 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <outlet property="ii_image" destination="zF8-39-Olk" id="cGz-0h-Cxn"/>
                                             <outlet property="il_show_text" destination="IgR-Iv-WV6" id="a96-gv-jk2"/>
                                             <outlet property="il_title" destination="rEC-1P-YzE" id="uAz-J4-bYr"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="27w-3Q-sjC">
-                                <rect key="frame" x="0.0" y="528" width="320" height="40"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Account" id="UsF-6v-TkQ">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="EDe-1Q-aM7">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="27w-3Q-sjC">
+                                <rect key="frame" x="264" y="7" width="40" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.51372549020000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -817,11 +816,10 @@
                                     <action selector="fn_save_modified_data:" destination="RJe-1J-1t0" eventType="touchUpInside" id="pF2-Pg-hJM"/>
                                 </connections>
                             </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Account Edit" id="UsF-6v-TkQ"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="ibtn_save" destination="27w-3Q-sjC" id="mPA-ND-Lp0"/>
                         <outlet property="skstableView" destination="i0F-TE-qRT" id="yBF-Vv-ZLz"/>
                     </connections>
                 </viewController>
