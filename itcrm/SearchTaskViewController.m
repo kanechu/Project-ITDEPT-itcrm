@@ -14,7 +14,6 @@
 #import "DB_searchCriteria.h"
 #import "PopViewManager.h"
 #import "MZFormSheetController.h"
-#import "AppConstants.h"
 #import "Advance_SearchData.h"
 
 @interface SearchTaskViewController ()
@@ -25,8 +24,6 @@
 @synthesize alist_filtered_data;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
-@synthesize iobj_target;
-@synthesize isel_action1;
 @synthesize idic_value;
 @synthesize idic_parameter;
 @synthesize checkText;
@@ -211,7 +208,9 @@
     [alist_searchData addObject:[self fn_get_searchData:@"start_date_value" :@"task_start_date"]];
     [alist_searchData addObject:[self fn_get_searchData:@"end_date_value" :@"task_end_date"]];
     if ([[idic_value valueForKey:@"title_value"]length]!=0) {
-        SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject:alist_searchData ]);
+        if (_callback_task) {
+            _callback_task(alist_searchData);
+        }
         [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
     }else{
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];

@@ -15,7 +15,6 @@
 #import "MZFormSheetController.h"
 #import "RegionViewController.h"
 #import "Custom_Color.h"
-#import "AppConstants.h"
 #import "Advance_SearchData.h"
 @interface AccountViewController ()
 
@@ -40,8 +39,6 @@ enum TEXTFIELD_TAG {
 @synthesize checkText;
 @synthesize idic_search_value;
 @synthesize idic_parameter;
-@synthesize iobj_target;
-@synthesize isel_action1;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -265,7 +262,9 @@ enum TEXTFIELD_TAG {
     [alist_searchData addObject:[self fn_get_searchData:@"region" :@"region"]];
     [alist_searchData addObject:[self fn_get_searchData:@"territory" :@"territory"]];
     if ([[idic_search_value valueForKey:@"Account_code"] length]!=0) {
-        SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action1 withObject: alist_searchData]);
+        if (_callback_acct) {
+            _callback_acct(alist_searchData);
+        }
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
     }else{
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];

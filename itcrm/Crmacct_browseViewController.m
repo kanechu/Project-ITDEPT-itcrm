@@ -147,17 +147,14 @@
 
 - (IBAction)fn_advance_search:(id)sender {
     AccountViewController *VC=(AccountViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AccountViewController"];
-    VC.iobj_target=self;
-    VC.isel_action1=@selector(fn_save_arr:);
+    VC.callback_acct=^(NSMutableArray *arr){
+        alist_account_parameter=[db_acct fn_get_detail_crmacct_data:arr];
+        [self fn_init_account:alist_account_parameter];
+        [self.tableView_acct reloadData];
+    };
     PopViewManager *popV=[[PopViewManager alloc]init];
     [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
--(void)fn_save_arr:(NSMutableArray*)alist_searchData{
-    alist_account_parameter=[db_acct fn_get_detail_crmacct_data:alist_searchData];
-    [self fn_init_account:alist_account_parameter];
-    [self.tableView_acct reloadData];
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *selectedRowIndex=[self.tableView_acct indexPathForSelectedRow];
     if ([[segue identifier] isEqualToString:@"segue_maintForm"]) {

@@ -134,11 +134,6 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_is_searchbar resignFirstResponder];
 }
--(void)fn_save_task:(NSMutableArray*)alist_searchData{
-    alist_crmtask_parameter=[db_crmtask fn_get_detail_crmtask_data:alist_searchData];
-    [self fn_init_crmtask_arr:alist_crmtask_parameter];
-    [self.tableview reloadData];
-}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
@@ -150,8 +145,11 @@
 }
 - (IBAction)fn_advance_search_task:(id)sender {
     SearchTaskViewController *VC=(SearchTaskViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SearchTaskViewController"];
-    VC.iobj_target=self;
-    VC.isel_action1=@selector(fn_save_task:);
+    VC.callback_task=^(NSMutableArray *arr_searchData){
+        alist_crmtask_parameter=[db_crmtask fn_get_detail_crmtask_data:arr_searchData];
+        [self fn_init_crmtask_arr:alist_crmtask_parameter];
+        [self.tableview reloadData];
+    };
     PopViewManager *popV=[[PopViewManager alloc]init];
     [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }

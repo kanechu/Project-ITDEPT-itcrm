@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
+typedef void (^CallBack_task)(NSMutableArray *arr_searchData);
 @interface SearchTaskViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate>
-
+@property(nonatomic,strong)CallBack_task callback_task;
 //获取task搜索标准数据
 @property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
 //按组名过滤后的搜索标准数据
@@ -20,8 +21,6 @@
 @property(nonatomic,strong)NSMutableDictionary *idic_value;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
 @property(nonatomic,strong)UITextField *checkText;
-@property (strong,nonatomic) id iobj_target;
-@property (nonatomic, assign) SEL isel_action1;
 @property (weak, nonatomic) IBOutlet UINavigationBar *inav_navigationbar;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 

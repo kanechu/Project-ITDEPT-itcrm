@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
+//定义回调函数
+typedef void (^CallBack_acct)(NSMutableArray * arr);
 @interface AccountViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate>
+//设置一个属性
+@property (nonatomic,strong)CallBack_acct callback_acct;
 //获取搜索标准数据
 @property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
 //按组名过滤后的搜索标准数据
@@ -28,8 +32,6 @@
 //用来标识点击哪个uitextfield
 @property (nonatomic,weak)UITextField *checkText;
 
-@property (strong,nonatomic) id iobj_target;
-@property (nonatomic, assign) SEL isel_action1;
 @property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 
