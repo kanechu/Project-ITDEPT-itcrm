@@ -67,6 +67,7 @@
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
+		B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA4D4B19614123004C440F /* Cell_lookup.m */; };
 		B2B092BC19345E74002FE190 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BB19345E74002FE190 /* Foundation.framework */; };
 		B2B092BE19345E74002FE190 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BD19345E74002FE190 /* CoreGraphics.framework */; };
 		B2B092C019345E74002FE190 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BF19345E74002FE190 /* UIKit.framework */; };
@@ -273,6 +274,8 @@
 		B298627819386FF30097B553 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		B298627D193874140097B553 /* DB_RespLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_RespLogin.h; sourceTree = "<group>"; };
 		B298627E193874140097B553 /* DB_RespLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_RespLogin.m; sourceTree = "<group>"; };
+		B2AA4D4A19614123004C440F /* Cell_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_lookup.h; sourceTree = "<group>"; };
+		B2AA4D4B19614123004C440F /* Cell_lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_lookup.m; sourceTree = "<group>"; };
 		B2B092B819345E74002FE190 /* itcrm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itcrm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B092BB19345E74002FE190 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B2B092BD19345E74002FE190 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -468,6 +471,8 @@
 				B260D996194593580026A1E9 /* Cell_maintForm1.m */,
 				B260D998194594D80026A1E9 /* Cell_maintForm2.h */,
 				B260D999194594D80026A1E9 /* Cell_maintForm2.m */,
+				B2AA4D4A19614123004C440F /* Cell_lookup.h */,
+				B2AA4D4B19614123004C440F /* Cell_lookup.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -916,6 +921,7 @@
 				B260D99A194594D80026A1E9 /* Cell_maintForm2.m in Sources */,
 				B260D9911945674F0026A1E9 /* DB_crmopp_browse.m in Sources */,
 				B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */,
+				B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */,
 				B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */,
 				B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */,
 				B26CBCA519347E5A00C5287B /* NSArray.m in Sources */,

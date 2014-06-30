@@ -11,7 +11,7 @@
 #import "SKSTableViewCell.h"
 #import "DB_MaintForm.h"
 #import "Cell_maintForm1.h"
-#import "Cell_maintForm2.h"
+#import "Cell_lookup.h"
 #import "Custom_Color.h"
 
 @interface MaintTaskViewController ()
@@ -147,14 +147,16 @@
         cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
-    if ([col_stye isEqualToString:@"checkbox"] ||[col_stye isEqualToString:@"lookup"]) {
-        static NSString *cellIdentifier=@"Cell_maintForm22";
-        Cell_maintForm2 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
+    if ([col_stye isEqualToString:@"lookup"]) {
+        static NSString *cellIdentifier=@"Cell_lookup1";
+        Cell_lookup *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
-            cell=[[Cell_maintForm2 alloc]init];
+            cell=[[Cell_lookup alloc]init];
         }
         cell.il_remind_label.text=col_label;
-         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
+        cell.itv_edit_textview.text=[idic_parameter_value valueForKey:col_code];
+        cell.itv_edit_textview.layer.cornerRadius=5;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         return cell;
     }
     
@@ -186,4 +188,6 @@
 
 
 
+- (IBAction)fn_lookup_data:(id)sender {
+}
 @end

@@ -17,12 +17,15 @@
 #import "Cell_maintForm2.h"
 #import "Custom_Color.h"
 #import "Cell_browse.h"
+#import "Cell_lookup.h"
 
 @interface MaintFormViewController ()
 @property(nonatomic,strong)NSMutableArray *alist_crmopp;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
 @property(nonatomic,strong)NSMutableArray *alist_crmhbl;
 @property (nonatomic,strong)Format_conversion *format;
+//标识acct_maint服务器返回的分组数
+@property (nonatomic,assign)NSInteger flag_groupNum;
 @end
 
 @implementation MaintFormViewController
@@ -35,6 +38,7 @@
 @synthesize alist_crmhbl;
 @synthesize alist_crmopp;
 @synthesize alist_crmtask;
+@synthesize flag_groupNum;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -103,14 +107,21 @@
     NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
     NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
     NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
-    [crmtask_dic setObject:@"Activity" forKey:@"group_name"];
-    [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
-    [crmopp_dic setObject:@"Opportunity" forKey:@"group_name"];
-    [crmopp_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmopp count]] forKey:@"COUNT(group_name)"];
-    [crmhbl_dic setObject:@"Shipment History" forKey:@"group_name"];
-    [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
+    if ([alist_crmtask count]!=0) {
+        [crmtask_dic setObject:@"Activity" forKey:@"group_name"];
+        [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
+    }
+    if ([alist_crmopp count]!=0) {
+        [crmopp_dic setObject:@"Opportunity" forKey:@"group_name"];
+        [crmopp_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmopp count]] forKey:@"COUNT(group_name)"];
+    }
+    if ([alist_crmhbl count]!=0) {
+        [crmhbl_dic setObject:@"Shipment History" forKey:@"group_name"];
+        [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
+    }
+   
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
-    
+    flag_groupNum=[alist_groupNameAndNum count];
    
     [alist_groupNameAndNum addObject:crmtask_dic];
     [alist_groupNameAndNum addObject:crmopp_dic];
@@ -119,7 +130,7 @@
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 -(NSMutableArray*)fn_format_convert:(NSMutableArray*)arr_crm list_id:(NSString*)list_id; {
-    //获取crmtask列表显示信息的格式
+    //获取crm列表显示信息的格式
     NSMutableArray *arr_format=[NSMutableArray array];
     NSMutableArray *arr_browse=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
@@ -127,10 +138,7 @@
     if ([arr_format count]!=0) {
         //转换格式
         arr_browse=[format fn_format_conersion:arr_format browse:arr_crm];
-        
-        /*NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-        NSString *binary_str=[format fn_get_binaryData:iconName];
-        task_icon=[format fn_binaryData_convert_image:binary_str];*/
+      
     }
     return arr_browse;
 }
@@ -206,7 +214,7 @@
         cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
-    if ([col_stye isEqualToString:@"checkbox"] ||[col_stye isEqualToString:@"lookup"]) {
+    if ([col_stye isEqualToString:@"checkbox"] ) {
         static NSString *cellIdentifier=@"Cell_maintForm2";
         Cell_maintForm2 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -221,7 +229,19 @@
         }
         return cell;
     }
-    if (indexPath.section>1) {
+    if ([col_stye isEqualToString:@"lookup"]) {
+        static NSString *cellIndentifier=@"Cell_lookup";
+        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
+        if (!cell) {
+            cell=[[Cell_lookup alloc]init];
+        }
+        cell.il_remind_label.text=col_label;
+        cell.itv_edit_textview.text=[idic_modified_value valueForKey:col_code];
+        cell.itv_edit_textview.layer.cornerRadius=5;
+        return cell;
+        
+    }
+    if (indexPath.section>flag_groupNum-1) {
         static NSString *cellIndentifier=@"Cell_browse_edit";
         Cell_browse *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (!cell) {
@@ -249,7 +269,7 @@
     CGFloat height;
     //提取每行的数据
     NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
-    if (indexPath.section<1) {
+    if (indexPath.section<flag_groupNum) {
         static NSString *cellIdentifier=@"Cell_maintForm1";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         //col_code 类型名
@@ -270,6 +290,9 @@
 -(NSArray*)fn_filtered_criteriaData:(NSString*)key{
     NSArray *filtered=[alist_maintForm filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
+}
+
+- (IBAction)fn_lookup_data:(id)sender {
 }
 
 - (IBAction)fn_save_modified_data:(id)sender {

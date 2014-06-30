@@ -17,5 +17,6 @@
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
 @property (nonatomic,strong)Format_conversion *format;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
+- (IBAction)fn_lookup_data:(id)sender;
 
 @end
