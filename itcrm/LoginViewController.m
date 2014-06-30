@@ -187,16 +187,13 @@ enum TEXTFIELD_TAG {
     web_base.base_url=STR_BASE_URL;
     web_base.iresp_class=[RespLogin class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespLogin class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_login_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_RespLogin *db=[[DB_RespLogin alloc]init];
+        [db fn_save_data:arr_resp_result];
+    };
     [web_base fn_get_data:req_form];
     
 }
-- (void) fn_save_login_list: (NSMutableArray *) alist_result {
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    [db fn_save_data:alist_result];
-}
-
 
 - (IBAction)fn_login_app:(id)sender {
     [SVProgressHUD showWithStatus:@"Loading, please wait!"];

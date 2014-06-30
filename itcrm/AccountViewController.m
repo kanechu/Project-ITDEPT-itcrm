@@ -288,39 +288,36 @@ enum TEXTFIELD_TAG {
 - (IBAction)fn_skip_region:(id)sender {
     UIButton *btn=(UIButton*)sender;
     if (btn.tag==TAG) {
-        SEL isel_action=@selector(fn_show_country_textfield:);
-        [self fn_pop_regionView:@"Please fill in Country" type:@"macountry" action:isel_action];
+        [self fn_pop_regionView:@"Please fill in Country" type:@"macountry" key_flag:@"country"];
     }
     if (btn.tag==TAG1) {
-        SEL isel_action=@selector(fn_show_Region_textfield:);
-        [self fn_pop_regionView:@"Please fill in Region" type:@"crmmain_region" action:isel_action];
+        [self fn_pop_regionView:@"Please fill in Region" type:@"crmmain_region" key_flag:@"region"];
     }
     if (btn.tag==TAG2) {
-        SEL isel_action=@selector(fn_show_Territory_textfield:);
-        [self fn_pop_regionView:@"Please fill in Territory" type:@"maport" action:isel_action];
+        [self fn_pop_regionView:@"Please fill in Territory" type:@"maport" key_flag:@"territory"];
     }
 }
--(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type action:(SEL)isel_action{
+-(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
     RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
     VC.is_placeholder=placeholder;
     VC.type=is_type;
-    VC.iobj_target=self;
-    VC.isel_action=isel_action;
+    VC.callback_region=^(NSMutableDictionary *dic){
+        if ([key isEqualToString:@"country"]) {
+            idic_countryname=dic;
+        }
+        if ([key isEqualToString:@"region"]) {
+            idic_regionname=dic;
+        }
+        if ([key isEqualToString:@"territory"]) {
+            idic_territoryname=dic;
+        }
+        [self.skstableView reloadData];
+    
+    };
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
--(void)fn_show_country_textfield:(NSMutableDictionary*)dic{
-    idic_countryname=dic;
-    [_skstableView reloadData];
-}
--(void)fn_show_Region_textfield:(NSMutableDictionary*)dic{
-    idic_regionname=dic;
-    [_skstableView reloadData];
-}
--(void)fn_show_Territory_textfield:(NSMutableDictionary*)dic{
-    idic_territoryname=dic;
-    [_skstableView reloadData];
-}
+
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。

@@ -17,15 +17,9 @@
 
 @synthesize il_url;
 @synthesize base_url;
-
 @synthesize ilist_resp_result;
-@synthesize isel_action;
-@synthesize iobj_target;
 @synthesize iresp_class;
 @synthesize ilist_resp_mapping;
-
-
-
 
 - (void) fn_get_data:(RequestContract*)ao_form
 {
@@ -78,11 +72,10 @@
     [manager setAcceptHeaderWithMIMEType:RKMIMETypeJSON];
     [manager postObject:ao_form path:path parameters:nil
                 success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
-                    
                     ilist_resp_result = [NSMutableArray arrayWithArray:result.array];
-                   
-                    SuppressPerformSelectorLeakWarning(  [iobj_target performSelector:isel_action withObject:ilist_resp_result];);
-                  
+                    if (_callback) {
+                        _callback(ilist_resp_result);
+                    }
             
                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                     RKLogError(@"Operation failed with error: %@", error);

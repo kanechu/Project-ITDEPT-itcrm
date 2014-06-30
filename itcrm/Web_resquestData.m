@@ -58,14 +58,13 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespPermit class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespPermit class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_login_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        
+    };
     [web_base fn_get_data:req_form];
     
 }
-- (void) fn_save_login_list: (NSMutableArray *) alist_result {
-   
-}
+
 #pragma mark 请求searchCriteria的数据
 - (void) fn_get_search_data:(NSString*)base_url
 {
@@ -84,16 +83,14 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespSearchCriteria class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSearchCriteria class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_searchCriteria_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        [db fn_save_searchCriteria_data:arr_resp_result];
+    };
     [web_base fn_get_data:req_form];
     
 }
 
-- (void) fn_save_searchCriteria_list: (NSMutableArray *) alist_result {
-    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-    [db fn_save_searchCriteria_data:alist_result];
-}
 #pragma mark 请求formatlist的数据
 - (void) fn_get_formatlist_data:(NSString*)base_url{
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -110,14 +107,13 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespFormatlist class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespFormatlist class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_formatlist_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_formatlist *db=[[DB_formatlist alloc]init];
+        [db fn_save_formatlist_data:arr_resp_result];
+    };
     [web_base fn_get_data:req_form];
 }
-- (void) fn_save_formatlist_list: (NSMutableArray *) alist_result {
-    DB_formatlist *db=[[DB_formatlist alloc]init];
-    [db fn_save_formatlist_data:alist_result];
-}
+
 #pragma mark 请求crmacct_browse的数据
 - (void) fn_get_crmacct_browse_data:(NSString*)base_url{
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -130,16 +126,12 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmacct_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_crmacct_browse_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
+        [db fn_save_crmacct_browse:arr_resp_result];
+    };
     [web_base fn_get_data:req_form];
 }
-- (void) fn_save_crmacct_browse_list: (NSMutableArray *) alist_result {
- 
-    DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
-    [db fn_save_crmacct_browse:alist_result];
-}
-
 
 #pragma mark 请求region的数据
 - (void) fn_get_region_data:(NSString*)base_url
@@ -165,15 +157,12 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespRegion class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespRegion class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_region_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_Region *db=[[DB_Region alloc]init];
+        [db fn_save_region_data:arr_resp_result];
+    };
+
     [web_base fn_get_data:req_form];
-    
-}
-- (void) fn_save_region_list: (NSMutableArray *) alist_result {
-    
-    DB_Region *db=[[DB_Region alloc]init];
-    [db fn_save_region_data:alist_result];
     
 }
 
@@ -194,15 +183,14 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespSystemIcon class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSystemIcon class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_systemIcon_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_systemIcon *db=[[DB_systemIcon alloc]init];
+        [db fn_save_systemIcon_data:arr_resp_result];
+    };
+
     [web_base fn_get_data:req_form];
 }
--(void)fn_save_systemIcon_list:(NSMutableArray*)ilist_result{
-    DB_systemIcon *db=[[DB_systemIcon alloc]init];
-    [db fn_save_systemIcon_data:ilist_result];
-   
-}
+
 #pragma mark 请求crmopp_browse的数据
 - (void) fn_get_crmopp_browse_data:(NSString*)base_url
 {
@@ -216,20 +204,16 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmopp_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmopp_browse class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_crmopp_browse_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
+        [db fn_save_crmopp_browse:arr_resp_result];
+    };
     [web_base fn_get_data:req_form];
-}
--(void)fn_save_crmopp_browse_list:(NSMutableArray*)ilist_result{
-    DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
-    [db fn_save_crmopp_browse:ilist_result];
-    
 }
 
 #pragma mark 请求maintForm的数据
 - (void) fn_get_maintForm_data:(NSString*)base_url
 {
-    
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
@@ -244,15 +228,15 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespMaintForm class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespMaintForm class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_maintForm_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        [db fn_save_MaintForm_data:arr_resp_result];
+    };
+
     [web_base fn_get_data:req_form];
     
 }
--(void)fn_save_maintForm_list:(NSMutableArray*)ilist_result{
-    DB_MaintForm *db=[[DB_MaintForm alloc]init];
-    [db fn_save_MaintForm_data:ilist_result];
-}
+
 #pragma mark 请求crmtask_browse的数据
 - (void) fn_get_crmtask_browse_data:(NSString*)base_url
 {
@@ -266,14 +250,14 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[Respcrmtask_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[Respcrmtask_browse class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_crmtask_browse_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+        [db fn_save_crmtask_browse:arr_resp_result];
+    };
+
     [web_base fn_get_data:req_form];
 }
--(void)fn_save_crmtask_browse_list:(NSMutableArray*)ilist_result{
-    DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
-    [db fn_save_crmtask_browse:ilist_result];
-}
+
 #pragma mark 请求crmhbl_browse的数据
 - (void) fn_get_crmhbl_browse_data:(NSString*)base_url
 {
@@ -287,15 +271,13 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmhbl_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmhbl_browse class]];
-    web_base.iobj_target = self;
-    web_base.isel_action = @selector(fn_save_crmhbl_browse_list:);
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_crmhbl_browse *db=[[DB_crmhbl_browse alloc]init];
+        [db fn_save_crmhbl_browse:arr_resp_result];
+        [SVProgressHUD dismiss];
+    };
+
     [web_base fn_get_data:req_form];
 }
--(void)fn_save_crmhbl_browse_list:(NSMutableArray*)ilist_result{
-    DB_crmhbl_browse *db=[[DB_crmhbl_browse alloc]init];
-    [db fn_save_crmhbl_browse:ilist_result];
-    [SVProgressHUD dismiss];
-}
-
 
 @end

@@ -10,16 +10,13 @@
 #import "DB_Region.h"
 #import "Cell_region.h"
 #import "MZFormSheetController.h"
-#import "AppConstants.h"
 #import "Custom_Color.h"
 @interface RegionViewController ()
-
+@property (nonatomic,strong)DB_Region *db;
 @end
 
 @implementation RegionViewController
 @synthesize ilist_region;
-@synthesize isel_action;
-@synthesize iobj_target;
 @synthesize is_placeholder;
 @synthesize type;
 @synthesize db;
@@ -79,7 +76,9 @@
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSMutableDictionary *dic=[ilist_region objectAtIndex:indexPath.row];
-    SuppressPerformSelectorLeakWarning([iobj_target performSelector:isel_action withObject:dic];);
+    if (_callback_region) {
+        _callback_region(dic);
+    }
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
 #pragma mark UISearchBarDelegate
