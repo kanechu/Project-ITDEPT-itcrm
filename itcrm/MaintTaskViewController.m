@@ -13,11 +13,15 @@
 #import "Cell_maintForm1.h"
 #import "Cell_lookup.h"
 #import "Custom_Color.h"
+#import "OptionViewController.h"
 
 @interface MaintTaskViewController ()
-
+@property(nonatomic,strong)NSMutableDictionary *idic_lookup_type;
 @end
-
+enum LOOKUP_TAG {
+    TAG = 1,
+    TAG1 = 2
+};
 @implementation MaintTaskViewController
 @synthesize alist_groupNameAndNum;
 @synthesize alist_filtered_taskdata;
@@ -25,6 +29,7 @@
 @synthesize checkTextView;
 @synthesize idic_parameter_value;
 @synthesize format;
+@synthesize idic_lookup_type;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -84,6 +89,7 @@
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
     alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
     alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 
 #pragma mark SKSTableViewDelegate and datasourse
@@ -156,6 +162,15 @@
         cell.il_remind_label.text=col_label;
         cell.itv_edit_textview.text=[idic_parameter_value valueForKey:col_code];
         cell.itv_edit_textview.layer.cornerRadius=5;
+        cell.itv_edit_textview.delegate=self;
+        if ([col_code isEqualToString:@"task_status"]) {
+            cell.ibtn_lookup.tag=TAG;
+            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
+        }
+        if ([col_code isEqualToString:@"task_type"]) {
+            cell.ibtn_lookup.tag=TAG1;
+            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"type"];
+        }
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         return cell;
     }
@@ -189,5 +204,32 @@
 
 
 - (IBAction)fn_lookup_data:(id)sender {
+    UIButton *btn=(UIButton*)sender;
+    if (btn.tag==TAG) {
+        NSString *str_type=[idic_lookup_type valueForKey:@"status"];
+        [self fn_pop_lookup_View:str_type key_flag:@"status" lookup_title:@"select the task_status"];
+    }
+    if (btn.tag==TAG1) {
+       NSString *str_type=[idic_lookup_type valueForKey:@"type"];
+        [self fn_pop_lookup_View:str_type key_flag:@"type" lookup_title:@"select the task_type"];
+    }
+}
+-(void)fn_pop_lookup_View:(NSString*)is_type key_flag:(NSString*)key lookup_title:(NSString*)title{
+    OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+    VC.lookup_title=title;
+    VC.lookup_type=is_type;
+    VC.callback=^(NSMutableDictionary *dic){
+        if ([key isEqualToString:@"country"]) {
+           
+        }
+        if ([key isEqualToString:@"region"]) {
+           
+        }
+        
+        [self.skstableview reloadData];
+        
+    };
+    PopViewManager *pop=[[PopViewManager alloc]init];
+    [pop PopupView:VC Size:CGSizeMake(250,300) uponView:self];
 }
 @end

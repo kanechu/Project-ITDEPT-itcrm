@@ -236,6 +236,7 @@
         if (!cell) {
             cell=[[Cell_lookup alloc]init];
         }
+        cell.itv_edit_textview.delegate=self;
         cell.il_remind_label.text=col_label;
         cell.itv_edit_textview.text=[idic_modified_value valueForKey:col_code];
         cell.itv_edit_textview.layer.cornerRadius=5;
@@ -295,6 +296,11 @@
 
 - (IBAction)fn_lookup_data:(id)sender {
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+    VC.lookup_type=@"crmacct_status";
+    VC.lookup_title=@"select the status";
+    VC.callback=^(NSMutableDictionary *dic){
+        
+    };
     PopViewManager *popView=[[PopViewManager alloc]init];
    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }

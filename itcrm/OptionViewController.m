@@ -9,6 +9,7 @@
 #import "OptionViewController.h"
 #import "Cell_Option.h"
 #import "MZFormSheetController.h"
+#import "DB_Region.h"
 @interface OptionViewController ()
 
 @end
@@ -32,6 +33,7 @@
     self.tableview.layer.cornerRadius=5;
     _ibtn_cancel.layer.cornerRadius=5;
     self.view.backgroundColor=[UIColor clearColor];
+    [self fn_init_arr];
 	// Do any additional setup after loading the view.
 }
 
@@ -39,6 +41,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)fn_init_arr{
+    DB_Region *db=[[DB_Region alloc]init];
+    alist_option=[db fn_get_region_data:_lookup_type];
 }
 
 #pragma mark UITableViewDataSource
@@ -52,7 +58,7 @@
     if (!cell) {
         cell=[[Cell_Option alloc]init];
     }
-    //cell.il_option_label.text=[alist_option objectAtIndex:indexPath.row];
+    cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"display"];
     return cell;
 }
 #pragma mark UITableViewDelegate
@@ -65,7 +71,7 @@
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *CellIdentifier = @"Cell_Option_title";
     Cell_Option *headerView = [self.tableview dequeueReusableCellWithIdentifier:CellIdentifier];
-    headerView.il_option_label.text=@"hello";
+    headerView.il_option_label.text=_lookup_title;
     if (headerView == nil){
         [NSException raise:@"headerView == nil.." format:@"No cells with matching CellIdentifier loaded from your storyboard"];
     }
