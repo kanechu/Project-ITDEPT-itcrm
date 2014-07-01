@@ -23,10 +23,11 @@
 @interface MaintFormViewController ()
 @property(nonatomic,strong)NSMutableArray *alist_crmopp;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
-@property(nonatomic,strong)NSMutableArray *alist_crmhbl;
+@property (nonatomic,strong)NSMutableArray *alist_crmhbl;
 @property (nonatomic,strong)Format_conversion *format;
 //标识acct_maint服务器返回的分组数
 @property (nonatomic,assign)NSInteger flag_groupNum;
+@property (nonatomic,strong)NSMutableDictionary *idic_lookup;
 @end
 
 @implementation MaintFormViewController
@@ -40,6 +41,7 @@
 @synthesize alist_crmopp;
 @synthesize alist_crmtask;
 @synthesize flag_groupNum;
+@synthesize idic_lookup;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -129,6 +131,7 @@
     [alist_groupNameAndNum addObject:crmhbl_dic];
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_lookup=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 -(NSMutableArray*)fn_format_convert:(NSMutableArray*)arr_crm list_id:(NSString*)list_id; {
     //获取crm列表显示信息的格式
@@ -240,6 +243,9 @@
         cell.il_remind_label.text=col_label;
         cell.itv_edit_textview.text=[idic_modified_value valueForKey:col_code];
         cell.itv_edit_textview.layer.cornerRadius=5;
+        [idic_lookup setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
+        [idic_lookup setObject:col_code forKey:@"key_parameter"];
+        
         return cell;
         
     }
@@ -296,10 +302,11 @@
 
 - (IBAction)fn_lookup_data:(id)sender {
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
-    VC.lookup_type=@"crmacct_status";
+    VC.lookup_type=[idic_lookup valueForKey:@"status"];
     VC.lookup_title=@"select the status";
     VC.callback=^(NSMutableDictionary *dic){
-        
+        [idic_modified_value setObject:[dic valueForKey:@"display"] forKey:[idic_lookup valueForKey:@"key_parameter"]];
+        [self.skstableView reloadData];
     };
     PopViewManager *popView=[[PopViewManager alloc]init];
    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];

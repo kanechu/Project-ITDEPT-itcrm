@@ -219,11 +219,11 @@ enum LOOKUP_TAG {
     VC.lookup_title=title;
     VC.lookup_type=is_type;
     VC.callback=^(NSMutableDictionary *dic){
-        if ([key isEqualToString:@"country"]) {
-           
+        if ([key isEqualToString:@"status"]) {
+            [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_status"];
         }
-        if ([key isEqualToString:@"region"]) {
-           
+        if ([key isEqualToString:@"type"]) {
+            [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_type"];
         }
         
         [self.skstableview reloadData];
