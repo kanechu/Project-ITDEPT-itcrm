@@ -18,6 +18,7 @@
 #import "Custom_Color.h"
 #import "Cell_browse.h"
 #import "Cell_lookup.h"
+#import "OptionViewController.h"
 
 @interface MaintFormViewController ()
 @property(nonatomic,strong)NSMutableArray *alist_crmopp;
@@ -200,7 +201,7 @@
     //col_code 类型名
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *is_enable=[dic valueForKey:@"is_enable"];
-    if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"date"]) {
+    if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -293,6 +294,9 @@
 }
 
 - (IBAction)fn_lookup_data:(id)sender {
+    OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+    PopViewManager *popView=[[PopViewManager alloc]init];
+   [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
 
 - (IBAction)fn_save_modified_data:(id)sender {
