@@ -104,6 +104,8 @@
 		B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F0194693840012A531 /* RespCrmtask_browse.m */; };
 		B2B704F7194699CA0012A531 /* DB_crmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */; };
 		B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704FC1946E0250012A531 /* Format_conversion.m */; };
+		B2CA048919625227005A6F9A /* Cell_Option.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CA048819625227005A6F9A /* Cell_Option.m */; };
+		B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CA048E1962532B005A6F9A /* OptionViewController.m */; };
 		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
 		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
 		B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F6CCFB1948401500081059 /* Custom_Color.m */; };
@@ -330,6 +332,10 @@
 		B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmtask_browse.m; sourceTree = "<group>"; };
 		B2B704FB1946E0250012A531 /* Format_conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Format_conversion.h; sourceTree = "<group>"; };
 		B2B704FC1946E0250012A531 /* Format_conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Format_conversion.m; sourceTree = "<group>"; };
+		B2CA048719625227005A6F9A /* Cell_Option.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_Option.h; sourceTree = "<group>"; };
+		B2CA048819625227005A6F9A /* Cell_Option.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_Option.m; sourceTree = "<group>"; };
+		B2CA048D1962532B005A6F9A /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionViewController.h; sourceTree = "<group>"; };
+		B2CA048E1962532B005A6F9A /* OptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionViewController.m; sourceTree = "<group>"; };
 		B2CB6E7D193DB0E20061F484 /* DB_searchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_searchCriteria.h; sourceTree = "<group>"; };
 		B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_searchCriteria.m; sourceTree = "<group>"; };
 		B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespSearchCriteria.h; sourceTree = "<group>"; };
@@ -473,6 +479,8 @@
 				B260D999194594D80026A1E9 /* Cell_maintForm2.m */,
 				B2AA4D4A19614123004C440F /* Cell_lookup.h */,
 				B2AA4D4B19614123004C440F /* Cell_lookup.m */,
+				B2CA048719625227005A6F9A /* Cell_Option.h */,
+				B2CA048819625227005A6F9A /* Cell_Option.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -700,6 +708,8 @@
 				B260D993194591A90026A1E9 /* MaintFormViewController.m */,
 				B2452E7319417B9500D02A45 /* RegionViewController.h */,
 				B2452E7419417B9500D02A45 /* RegionViewController.m */,
+				B2CA048D1962532B005A6F9A /* OptionViewController.h */,
+				B2CA048E1962532B005A6F9A /* OptionViewController.m */,
 				B256627119580C0900856C3E /* CrmTask_browseViewController.h */,
 				B256627219580C0900856C3E /* CrmTask_browseViewController.m */,
 				B273F490194ADA620007E055 /* SearchTaskViewController.h */,
@@ -873,6 +883,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2CA048919625227005A6F9A /* Cell_Option.m in Sources */,
 				B260D994194591A90026A1E9 /* MaintFormViewController.m in Sources */,
 				B2B092D219345E74002FE190 /* LoginViewController.m in Sources */,
 				B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */,
@@ -893,6 +904,7 @@
 				B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */,
 				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
 				B2B0931F19346A52002FE190 /* RequestContract.m in Sources */,
+				B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,

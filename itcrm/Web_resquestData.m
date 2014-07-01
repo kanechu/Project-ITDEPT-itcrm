@@ -133,8 +133,8 @@
     [web_base fn_get_data:req_form];
 }
 
-#pragma mark 请求region的数据
-- (void) fn_get_region_data:(NSString*)base_url
+#pragma mark 请求lookup的数据
+- (void) fn_get_mslookup_data:(NSString*)base_url
 {
     
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -143,15 +143,9 @@
     auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
-    search.os_column = @"form";
-    search.os_value = @"crmregion";
-    SearchFormContract *search1 = [[SearchFormContract alloc]init];
-    search1.os_column = @"ms_code";
-    search1.os_value = @"cn";
-    SearchFormContract *search2 = [[SearchFormContract alloc]init];
-    search2.os_column = @"ms_desc";
-    search2.os_value = @"chin";
-    req_form.SearchForm = [NSSet setWithObjects:search,search1,search2,nil];
+    search.os_column = @"type";
+    search.os_value = @"";
+    req_form.SearchForm = [NSSet setWithObjects:search,nil];
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_REGION_URL;
     web_base.base_url=base_url;

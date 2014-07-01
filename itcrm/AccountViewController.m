@@ -17,7 +17,7 @@
 #import "Custom_Color.h"
 #import "Advance_SearchData.h"
 @interface AccountViewController ()
-
+@property(nonatomic,strong)NSMutableDictionary *idic_lookup_type;
 @end
 enum TEXTFIELDTAG {
     TAG = 1,
@@ -39,6 +39,7 @@ enum TEXTFIELD_TAG {
 @synthesize checkText;
 @synthesize idic_search_value;
 @synthesize idic_parameter;
+@synthesize idic_lookup_type;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,6 +88,7 @@ enum TEXTFIELD_TAG {
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:10];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
+    idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 #pragma mark 将额外的cell的线隐藏
 
@@ -205,6 +207,7 @@ enum TEXTFIELD_TAG {
         }
         cell.il_prompt_label.text=col_label;
         if ([col_label isEqualToString:@"Country"]) {
+            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"country_type"];
             cell.ibtn_skip.tag=TAG;
             cell.itf_input_searchData.text=[idic_countryname valueForKey:@"display"];
             if ([cell.itf_input_searchData.text length]!=0) {
@@ -214,6 +217,7 @@ enum TEXTFIELD_TAG {
             
         }
         if ([col_label isEqualToString:@"Region"]) {
+            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"region_type"];
             cell.ibtn_skip.tag=TAG1;
             cell.itf_input_searchData.text=[idic_regionname valueForKey:@"display"];
             if ([cell.itf_input_searchData.text length]!=0) {
@@ -222,6 +226,7 @@ enum TEXTFIELD_TAG {
             }
         }
         if ([col_label isEqualToString:@"Territory"]) {
+            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"territory_type"];
             cell.ibtn_skip.tag=TAG2;
             cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
             if ([cell.itf_input_searchData.text length]!=0) {
@@ -288,13 +293,16 @@ enum TEXTFIELD_TAG {
 - (IBAction)fn_skip_region:(id)sender {
     UIButton *btn=(UIButton*)sender;
     if (btn.tag==TAG) {
-        [self fn_pop_regionView:@"Please fill in Country" type:@"macountry" key_flag:@"country"];
+        NSString *str_type=[idic_lookup_type valueForKey:@"country_type"];
+        [self fn_pop_regionView:@"Please fill in Country" type:str_type key_flag:@"country"];
     }
     if (btn.tag==TAG1) {
-        [self fn_pop_regionView:@"Please fill in Region" type:@"crmmain_region" key_flag:@"region"];
+         NSString *str_type=[idic_lookup_type valueForKey:@"region_type"];
+        [self fn_pop_regionView:@"Please fill in Region" type:str_type key_flag:@"region"];
     }
     if (btn.tag==TAG2) {
-        [self fn_pop_regionView:@"Please fill in Territory" type:@"maport" key_flag:@"territory"];
+         NSString *str_type=[idic_lookup_type valueForKey:@"territory_type"];
+        [self fn_pop_regionView:@"Please fill in Territory" type:str_type key_flag:@"territory"];
     }
 }
 -(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
