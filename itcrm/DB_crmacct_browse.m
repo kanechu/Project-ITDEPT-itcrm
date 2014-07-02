@@ -59,30 +59,71 @@
 -(NSMutableArray*)fn_get_detail_crmacct_data:(NSMutableArray*)alist_searchData{
     NSString *sql=@"select * from crmacct_browse";
     NSInteger flag=0;
-    NSMutableArray *parameter_arr=[[NSMutableArray alloc]initWithCapacity:10];
+    NSMutableArray *arr_value=[[NSMutableArray alloc]initWithCapacity:10];
     for (Advance_SearchData *acct in alist_searchData) {
-         NSString *sql1=[NSString string];
-        if (flag==0 && [acct.is_searchValue length]!=0) {
+        NSString *sql_value=[NSString string];
+        BOOL isHas=[self fn_isContain_a_character:acct.is_parameter substring:@","];
+        if (flag==0 && [acct.is_searchValue length]!=0 && !isHas) {
             sql=[sql stringByAppendingFormat:@" where %@ like ?",acct.is_parameter];
-            sql1=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
-            [parameter_arr addObject:sql1];
+            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
         }
-        if (flag==1 && [acct.is_searchValue length]!=0) {
+        if (flag==1 && [acct.is_searchValue length]!=0 && !isHas) {
             sql=[sql stringByAppendingFormat:@" and %@ like ?",acct.is_parameter];
-            sql1=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
-            [parameter_arr addObject:sql1];
+            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
         }
+        if (flag==0 && [acct.is_searchValue length]!=0 && isHas) {
+            
+            NSArray *arr_parameter=[acct.is_parameter componentsSeparatedByString:@","];
+            NSString *str_parameter=[self fn_joint_string_from_array:arr_parameter];
+            sql=[sql stringByAppendingFormat:@" where %@ like ?",str_parameter];
+            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
+        }
+        if (flag==1 && [acct.is_searchValue length]!=0 && isHas) {
+            
+            NSArray *arr_parameter=[acct.is_parameter componentsSeparatedByString:@","];
+            NSString *str_parameter=[self fn_joint_string_from_array:arr_parameter];
+            sql=[sql stringByAppendingFormat:@" and %@ like ?",str_parameter];
+            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
+        }
+        
         flag=1;
     }
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:parameter_arr];
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr_value];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
         [[idb fn_get_db]close];
     }
     return arr;
+}
+//把一个数组元素串成一个字符串
+-(NSString*)fn_joint_string_from_array:(NSArray*)arr_parameter{
+    NSString *str_parameter=[NSString string];
+    NSInteger str_flag=0;
+    for (NSString *str in arr_parameter) {
+        if (str_flag==0) {
+            str_parameter=[str_parameter stringByAppendingString:str];
+        }
+        if (str_flag==1) {
+            str_parameter=[str_parameter stringByAppendingFormat:@"+%@",str];
+        }
+        str_flag=1;
+    }
+    return str_parameter;
+}
+//检测一个字符串中是否含有某个字符
+-(BOOL)fn_isContain_a_character:(NSString*)_parentString substring:(NSString*)_substring{
+    if ([_parentString rangeOfString:_substring].location!=NSNotFound) {
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 @end
