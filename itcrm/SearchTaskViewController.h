@@ -23,6 +23,7 @@ typedef void (^CallBack_task)(NSMutableArray *arr_searchData);
 @property(nonatomic,strong)UITextField *checkText;
 @property (weak, nonatomic) IBOutlet UINavigationBar *inav_navigationbar;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_clear;
 
 - (IBAction)fn_search_task:(id)sender;
 - (IBAction)fn_go_back:(id)sender;

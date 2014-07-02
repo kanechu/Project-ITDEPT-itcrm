@@ -17,6 +17,12 @@
 #import "Custom_Color.h"
 #import "Advance_SearchData.h"
 @interface AccountViewController ()
+//用来记录选择的countryname
+@property (strong,nonatomic)NSMutableDictionary *idic_countryname;
+//用来记录选择的regionname
+@property (strong,nonatomic)NSMutableDictionary *idic_regionname;
+//用来记录选择的territoryname
+@property (strong,nonatomic)NSMutableDictionary *idic_territoryname;
 @property(nonatomic,strong)NSMutableDictionary *idic_lookup_type;
 @end
 enum TEXTFIELDTAG {
@@ -65,6 +71,7 @@ enum TEXTFIELD_TAG {
     //避免键盘挡住UItextfield
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [_inav_navBar setBarTintColor:COLOR_LIGHT_YELLOW];
+    _ibtn_clear.layer.cornerRadius=8;
     // Do any additional setup after loading the view.
 }
 

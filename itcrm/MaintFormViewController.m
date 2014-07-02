@@ -204,6 +204,9 @@
     //col_code 类型名
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *is_enable=[dic valueForKey:@"is_enable"];
+    if ([[dic valueForKey:@"is_mandatory"] isEqualToString:@"1"]) {
+        col_label=[col_label stringByAppendingString:@"*"];
+    }
     if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -225,11 +228,11 @@
             cell=[[Cell_maintForm2 alloc]init];
         }
         cell.il_remind_label.text=col_label;
-        if ([is_enable isEqualToString:@"1"]) {
+        if ([is_enable isEqualToString:@"0"]) {
         
             [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
-        }else{
-            [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateNormal];
+            cell.ibt_select.enabled=NO;
+            
         }
         return cell;
     }

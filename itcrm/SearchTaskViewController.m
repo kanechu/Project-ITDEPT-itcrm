@@ -51,6 +51,7 @@
     [self fn_custom_gesture];
     //避免键盘挡住UITextField
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    _ibtn_clear.layer.cornerRadius=8;
 	// Do any additional setup after loading the view.
 }
 

@@ -23,17 +23,12 @@ typedef void (^CallBack_acct)(NSMutableArray * arr);
 @property(nonatomic,strong)NSMutableDictionary *idic_search_value;
 //存储搜索条件的参数
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
-//用来记录选择的countryname
-@property (strong,nonatomic)NSMutableDictionary *idic_countryname;
-//用来记录选择的regionname
-@property (strong,nonatomic)NSMutableDictionary *idic_regionname;
-//用来记录选择的territoryname
-@property (strong,nonatomic)NSMutableDictionary *idic_territoryname;
 //用来标识点击哪个uitextfield
 @property (nonatomic,weak)UITextField *checkText;
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_clear;
 
 - (IBAction)fn_search_account:(id)sender;
 - (IBAction)fn_go_back:(id)sender;

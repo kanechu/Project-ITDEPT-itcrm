@@ -51,7 +51,7 @@
     oldOffSet_Y = tableview.contentOffset.y;
     CGRect newFrame=oldTableFrame;
     //取Tableview在屏幕的固定位置
-    CGRect constant_Frame = [tableview convertRect:tableview.bounds toView:nil];
+    CGRect constant_Frame = [tableview convertRect:tableview.bounds toView:[tableview superview]];
     tableview.frame=newFrame;
     newFrame.size.height-=(height - (key_iPhoneHeight - constant_Frame.origin.y-constant_Frame.size.height));
     NSNumber *dur = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
