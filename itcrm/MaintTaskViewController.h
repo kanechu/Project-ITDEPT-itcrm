@@ -14,8 +14,7 @@
 @property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)UITextView *checkTextView;
-@property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
-@property (nonatomic,strong)Format_conversion *format;
+@property (nonatomic,copy) NSString* is_task_id;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 - (IBAction)fn_lookup_data:(id)sender;
 

@@ -14,8 +14,11 @@
 #import "Cell_lookup.h"
 #import "Custom_Color.h"
 #import "OptionViewController.h"
+#import "DB_crmtask_browse.h"
 
 @interface MaintTaskViewController ()
+@property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
+@property (nonatomic,strong)Format_conversion *format;
 @property(nonatomic,strong)NSMutableDictionary *idic_lookup_type;
 @end
 enum LOOKUP_TAG {
@@ -30,6 +33,7 @@ enum LOOKUP_TAG {
 @synthesize idic_parameter_value;
 @synthesize format;
 @synthesize idic_lookup_type;
+@synthesize is_task_id;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,6 +55,8 @@ enum LOOKUP_TAG {
     format=[[Format_conversion alloc]init];
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+    idic_parameter_value=[[db_crmtask fn_get_crmtask_data_from_id:is_task_id]objectAtIndex:0];
 	// Do any additional setup after loading the view.
 }
 
@@ -191,8 +197,11 @@ enum LOOKUP_TAG {
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *str=[idic_parameter_value valueForKey:col_code];
    CGFloat height=[format fn_heightWithString:str font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-   
-    return height+16+10;
+    height=height+16+10;
+    if (height<44) {
+        height=44;
+    }
+    return height;
 }
 
 #pragma mark 对数组进行过滤

@@ -21,6 +21,7 @@
 @property(nonatomic,strong)DB_crmtask_browse *db_crmtask;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask_parameter;
 @property(nonatomic,strong)UIImage *task_icon;
+@property(nonatomic,copy) NSString *select_sql;
 
 @end
 
@@ -30,6 +31,7 @@
 @synthesize db_crmtask;
 @synthesize task_icon;
 @synthesize alist_crmtask_parameter;
+@synthesize select_sql;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -50,7 +52,9 @@
     self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
     //获取crmtask的参数
     db_crmtask=[[DB_crmtask_browse alloc]init];
-    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text];
+    DB_formatlist *db_format=[[DB_formatlist alloc]init];
+    select_sql=[db_format fn_get_select_sql:@"crmtask"];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
     format=[[Format_conversion alloc]init];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     
@@ -121,13 +125,13 @@
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchBar.text];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchBar.text select_sql:select_sql];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableview reloadData];
     [_is_searchbar resignFirstResponder];
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchText];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchText select_sql:select_sql];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableview reloadData];
 }
@@ -139,14 +143,14 @@
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
     if([[segue identifier] isEqualToString:@"segue_maintTask"]){
         MaintTaskViewController *taskVC=[segue destinationViewController];
-        taskVC.idic_parameter_value=[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row];
+        taskVC.is_task_id=[[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row]valueForKey:@"task_id"];
         
     }
 }
 - (IBAction)fn_advance_search_task:(id)sender {
     SearchTaskViewController *VC=(SearchTaskViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"SearchTaskViewController"];
     VC.callback_task=^(NSMutableArray *arr_searchData){
-        alist_crmtask_parameter=[db_crmtask fn_get_detail_crmtask_data:arr_searchData];
+        alist_crmtask_parameter=[db_crmtask fn_get_detail_crmtask_data:arr_searchData select_sql:select_sql];
         [self fn_init_crmtask_arr:alist_crmtask_parameter];
         [self.tableview reloadData];
     };

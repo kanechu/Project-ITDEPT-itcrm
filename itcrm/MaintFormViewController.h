@@ -14,7 +14,7 @@
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
-@property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
+@property (nonatomic,strong)NSString *is_acct_id;
 @property (nonatomic,strong)UITextView *checkTextView;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_save;
 - (IBAction)fn_lookup_data:(id)sender;

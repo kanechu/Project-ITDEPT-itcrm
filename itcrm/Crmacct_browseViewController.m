@@ -19,6 +19,7 @@
 
 @property (nonatomic,strong) Format_conversion *format;
 @property (nonatomic,strong) DB_crmacct_browse *db_acct;
+@property (nonatomic,strong)NSString *select_sql;
 @property (nonatomic,strong) NSMutableArray *alist_account_parameter;
 
 @end
@@ -29,7 +30,7 @@
 @synthesize db_acct;
 @synthesize acct_icon;
 @synthesize alist_account_parameter;
-
+@synthesize select_sql;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,8 +52,9 @@
     self.tableView_acct.backgroundColor=COLOR_LIGHT_YELLOW;
     db_acct=[[DB_crmacct_browse alloc]init];
     format=[[Format_conversion alloc]init];
-    
-    alist_account_parameter=[db_acct fn_get_data:_searchBar.text];
+    DB_formatlist *db_format=[[DB_formatlist alloc]init];
+    select_sql=[db_format fn_get_select_sql:@"crmacct"];
+    alist_account_parameter=[db_acct fn_get_data:_searchBar.text select_sql:select_sql];
     [self fn_init_account:alist_account_parameter];
    
 	// Do any additional setup after loading the view.
@@ -132,7 +134,7 @@
 
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    alist_account_parameter=[db_acct fn_get_data:searchBar.text];
+    alist_account_parameter=[db_acct fn_get_data:_searchBar.text select_sql:select_sql];
     [self fn_init_account:alist_account_parameter];
     [self.tableView_acct reloadData];
 }
@@ -140,7 +142,7 @@
     [_searchBar resignFirstResponder];
 }
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    alist_account_parameter=[db_acct fn_get_data:searchText];
+    alist_account_parameter=[db_acct fn_get_data:_searchBar.text select_sql:select_sql];
     [self fn_init_account:alist_account_parameter];
     [self.tableView_acct reloadData];
 }
@@ -148,7 +150,7 @@
 - (IBAction)fn_advance_search:(id)sender {
     AccountViewController *VC=(AccountViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"AccountViewController"];
     VC.callback_acct=^(NSMutableArray *arr){
-        alist_account_parameter=[db_acct fn_get_detail_crmacct_data:arr];
+        alist_account_parameter=[db_acct fn_get_detail_crmacct_data:arr select_sql:select_sql];
         [self fn_init_account:alist_account_parameter];
         [self.tableView_acct reloadData];
     };
@@ -159,7 +161,7 @@
     NSIndexPath *selectedRowIndex=[self.tableView_acct indexPathForSelectedRow];
     if ([[segue identifier] isEqualToString:@"segue_maintForm"]) {
         MaintFormViewController *maintVC=[segue destinationViewController];
-        maintVC.idic_modified_value=[alist_account_parameter objectAtIndex:selectedRowIndex.row];
+        maintVC.is_acct_id=[[alist_account_parameter objectAtIndex:selectedRowIndex.row] valueForKey:@"acct_id"];
     }
 }
 @end

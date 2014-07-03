@@ -12,6 +12,7 @@
 #import "DB_crmhbl_browse.h"
 #import "DB_crmopp_browse.h"
 #import "DB_crmtask_browse.h"
+#import "DB_crmacct_browse.h"
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
@@ -29,6 +30,7 @@
 //标识acct_maint服务器返回的分组数
 @property (nonatomic,assign)NSInteger flag_groupNum;
 @property (nonatomic,strong)NSMutableDictionary *idic_lookup;
+@property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
 @end
 
 @implementation MaintFormViewController
@@ -66,7 +68,8 @@
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
     _ibtn_save.layer.cornerRadius=5;
-    
+    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+    idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];;
 	// Do any additional setup after loading the view.
 }
 
@@ -92,20 +95,19 @@
 
 #pragma mark -初始化数组
 -(void)fn_init_arr{
-    NSString *acct_id=[idic_modified_value valueForKey:@"acct_id"];
-    
+    DB_formatlist *db_format=[[DB_formatlist alloc]init];
     //获取crmtask的列表数据
     DB_crmtask_browse  *db_crmtask=[[DB_crmtask_browse alloc]init];
-    NSMutableArray *crmtask_arr=[db_crmtask fn_get_relate_crmtask_data:acct_id];
+    NSMutableArray *crmtask_arr=[db_crmtask fn_get_relate_crmtask_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_task"]];
     alist_crmtask=[self fn_format_convert:crmtask_arr list_id:@"crmacct_task"];
     //获取crmopp的列表数据
     DB_crmopp_browse  *db_crmopp=[[DB_crmopp_browse alloc]init];
-    NSMutableArray *crmopp_arr=[db_crmopp fn_get_relate_crmopp_data:acct_id];
+    NSMutableArray *crmopp_arr=[db_crmopp fn_get_relate_crmopp_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_opp"]];
     alist_crmopp=[self fn_format_convert:crmopp_arr list_id:@"crmacct_opp"];
     
     //获取crmhbl的列表数据
     DB_crmhbl_browse  *db_crmhbl=[[DB_crmhbl_browse alloc]init];
-    NSMutableArray *crmhbl_arr=[db_crmhbl fn_get_relate_crmhbl_data:acct_id];
+    NSMutableArray *crmhbl_arr=[db_crmhbl fn_get_relate_crmhbl_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_hbl"]];
     alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
@@ -143,7 +145,6 @@
     if ([arr_format count]!=0) {
         //转换格式
         arr_browse=[format fn_format_conersion:arr_format browse:arr_crm];
-      
     }
     return arr_browse;
 }
@@ -296,6 +297,9 @@
         NSString *str=[dic valueForKey:@"body"];
         height=[format fn_heightWithString:str font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.il_show_text.frame.size.width];
         height=height+10+23;
+    }
+    if (height<44) {
+        height=44;
     }
     return height;
 }
