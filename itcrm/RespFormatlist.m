@@ -26,5 +26,5 @@
 @synthesize v_desc4;
 @synthesize v_desc5;
 @synthesize icon;
-
+@synthesize select_sql;
 @end

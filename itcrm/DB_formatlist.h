@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 @class DBManager;
 @interface DB_formatlist : NSObject
-
 @property(nonatomic,strong)DBManager *idb;
 
 -(BOOL)fn_save_formatlist_data:(NSMutableArray*)arr;

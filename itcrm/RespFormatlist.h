@@ -26,6 +26,6 @@
 @property(nonatomic,copy)NSString *v_desc4;
 @property(nonatomic,copy)NSString *v_desc5;
 @property(nonatomic,copy)NSString *icon;
-
+@property(nonatomic,copy)NSString *select_sql;
 
 @end
