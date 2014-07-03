@@ -18,6 +18,7 @@
 #import "Custom_Color.h"
 #import "Cell_browse.h"
 #import "Cell_lookup.h"
+#import "DB_Region.h"
 #import "OptionViewController.h"
 
 @interface MaintFormViewController ()
@@ -244,7 +245,8 @@
         }
         cell.itv_edit_textview.delegate=self;
         cell.il_remind_label.text=col_label;
-        cell.itv_edit_textview.text=[idic_modified_value valueForKey:col_code];
+        NSString *str_status=[idic_modified_value valueForKey:col_code];
+        cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.layer.cornerRadius=5;
         [idic_lookup setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
         [idic_lookup setObject:col_code forKey:@"key_parameter"];
@@ -314,7 +316,6 @@
     PopViewManager *popView=[[PopViewManager alloc]init];
    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
-
 - (IBAction)fn_save_modified_data:(id)sender {
 }
 @end

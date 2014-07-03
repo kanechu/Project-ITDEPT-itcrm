@@ -117,12 +117,12 @@ enum LOOKUP_TAG {
     { cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    cell.textLabel.text=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
+    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
     
-    NSString *str=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
-    NSArray *arr=[self fn_filtered_criteriaData:str];
+    NSArray *arr=[self fn_filtered_criteriaData:str_name];
     if (arr!=nil) {
         [alist_filtered_taskdata addObject:arr];
     }
@@ -160,7 +160,8 @@ enum LOOKUP_TAG {
             cell=[[Cell_lookup alloc]init];
         }
         cell.il_remind_label.text=col_label;
-        cell.itv_edit_textview.text=[idic_parameter_value valueForKey:col_code];
+        NSString *str_status=[idic_parameter_value valueForKey:col_code];
+        cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.layer.cornerRadius=5;
         cell.itv_edit_textview.delegate=self;
         if ([col_code isEqualToString:@"task_status"]) {

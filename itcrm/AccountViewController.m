@@ -130,12 +130,12 @@ enum TEXTFIELD_TAG {
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    cell.textLabel.text=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
+    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    
-    NSString *str=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
-    NSArray *arr=[self fn_filtered_criteriaData:str];
+
+    NSArray *arr=[self fn_filtered_criteriaData:str_name];
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }

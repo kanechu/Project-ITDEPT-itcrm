@@ -8,6 +8,7 @@
 
 #import "Format_conversion.h"
 #import "DB_systemIcon.h"
+#import "DB_Region.h"
 #define ISIOS7      ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 @implementation Format_conversion
 
@@ -149,4 +150,21 @@
     }
     return binary_str;
 }
+-(NSString*)fn_convert_display_status:(NSString*)data col_option:(NSString*)option_type{
+    NSString *display_str=[NSString string];
+    DB_Region *db=[[DB_Region alloc]init];
+    NSMutableArray  *arr_lookup=[db fn_get_region_data:option_type];
+    NSInteger flag=0;
+    for (NSMutableDictionary *dic in arr_lookup) {
+        if ([data isEqualToString:[dic valueForKey:@"data"]]) {
+            display_str=[dic valueForKey:@"display"];
+            flag=1;
+        }
+    }
+    if (flag==0) {
+        display_str=data;
+    }
+    return display_str;
+}
+
 @end
