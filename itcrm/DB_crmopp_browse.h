@@ -13,8 +13,11 @@
 @property(nonatomic,strong)DBManager *idb;
 
 -(BOOL)fn_save_crmopp_browse:(NSMutableArray*)alist_result;
+
 -(NSMutableArray*)fn_get_crmopp_data:(NSString*)op_type;
--(NSMutableArray*)fn_get_relate_crmopp_data:(NSString *)opp_ref_id;
+
+-(NSMutableArray*)fn_get_relate_crmopp_data:(NSString *)opp_ref_id select_sql:(NSString *)select_sql;
+
 -(BOOL)fn_delete_all_data;
 
 @end

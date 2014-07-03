@@ -14,12 +14,14 @@
 
 -(BOOL)fn_save_crmtask_browse:(NSMutableArray*)alist_result;
 
--(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name;
+-(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name select_sql:(NSString *)select_sql;
+
+-(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData select_sql:(NSString *)select_sql;
+
+-(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id select_sql:(NSString *)select_sql;
+
+-(NSMutableArray*)fn_get_crmtask_data_from_id:(NSString*)task_id;
 
 -(BOOL)fn_delete_all_data;
-
--(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData;
-
--(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id;
 
 @end

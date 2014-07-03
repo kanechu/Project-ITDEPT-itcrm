@@ -57,5 +57,12 @@
     }
     return NO;
 }
-
+-(NSString*)fn_get_select_sql:(NSString*)list_id{
+    NSMutableArray *alist_format=[self fn_get_list_data:list_id];
+    NSString *select_sql=nil;
+    if ([alist_format count]!=0) {
+        select_sql=[[alist_format objectAtIndex:0]valueForKey:@"select_sql"];
+    }
+    return select_sql;
+}
 @end

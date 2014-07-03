@@ -41,10 +41,11 @@
     }
     return arr;
 }
--(NSMutableArray*)fn_get_relate_crmopp_data:(NSString *)opp_ref_id{
+-(NSMutableArray*)fn_get_relate_crmopp_data:(NSString *)opp_ref_id select_sql:(NSString *)select_sql{
+    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmopp_browse where opp_ref_id like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmopp_browse where opp_ref_id like ?",[NSString stringWithFormat:@"%@",opp_ref_id]];
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%@",opp_ref_id]];
         while ([fmdb_result next]) {
             [arr addObject:[fmdb_result resultDictionary]];
         }

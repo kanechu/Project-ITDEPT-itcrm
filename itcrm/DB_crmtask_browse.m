@@ -33,10 +33,11 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name{
+-(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name select_sql:(NSString *)select_sql{
+    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmtask_browse where task_ref_name like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmtask_browse where task_ref_name like ?",[NSString stringWithFormat:@"%@%%",task_ref_name]];
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%@%%",task_ref_name]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
@@ -44,8 +45,8 @@
     }
     return arr;
 }
--(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData{
-    NSString *sql=@"select * from crmtask_browse ";
+-(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData select_sql:(NSString *)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"select %@ from crmtask_browse ",select_sql];
     NSInteger flag=0;
     NSMutableArray *arr1=[[NSMutableArray alloc]init];
     for (Advance_SearchData *task in alist_searchData) {
@@ -74,10 +75,11 @@
     }
     return arr;
 }
--(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id{
+-(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id select_sql:(NSString *)select_sql{
+    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmtask_browse where task_ref_id like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmtask_browse where task_ref_id like ?",[NSString stringWithFormat:@"%@",task_ref_id]];
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%@",task_ref_id]];
         while ([fmdb_result next]) {
             [arr addObject:[fmdb_result resultDictionary]];
         }
@@ -85,7 +87,17 @@
     }
     return arr;
 }
-
+-(NSMutableArray*)fn_get_crmtask_data_from_id:(NSString*)task_id{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmtask_browse where task_id like ?",[NSString stringWithFormat:@"%@",task_id]];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
 -(BOOL)fn_delete_all_data{
     if ([[idb fn_get_db]open]) {
         BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from crmtask_browse"];

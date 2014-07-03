@@ -33,10 +33,22 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_data:(NSString*)acct_name{
+-(NSMutableArray*)fn_get_data:(NSString*)acct_name select_sql:(NSString*)select_sql{
+    NSString *is_sql=[NSString stringWithFormat:@"SELECT %@ FROM crmacct_browse where acct_name like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmacct_browse where acct_name like ?",[NSString stringWithFormat:@"%@%%",acct_name]];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:is_sql,[NSString stringWithFormat:@"%@%%",acct_name]];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db] close];
+    }
+    return arr;
+}
+-(NSMutableArray*)fn_get_data_from_id:(NSString*)acct_id{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmacct_browse where acct_id like ?",[NSString stringWithFormat:@"%@",acct_id]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
@@ -56,8 +68,8 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_detail_crmacct_data:(NSMutableArray*)alist_searchData{
-    NSString *sql=@"select * from crmacct_browse";
+-(NSMutableArray*)fn_get_detail_crmacct_data:(NSMutableArray*)alist_searchData select_sql:(NSString*)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"select %@ from crmacct_browse",select_sql];
     NSInteger flag=0;
     NSMutableArray *arr_value=[[NSMutableArray alloc]initWithCapacity:10];
     for (Advance_SearchData *acct in alist_searchData) {
