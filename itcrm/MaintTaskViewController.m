@@ -152,7 +152,14 @@ enum LOOKUP_TAG {
         cell.il_remind_label.text=col_label;
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         cell.itv_data_textview.delegate=self;
-        cell.itv_data_textview.text=[idic_parameter_value valueForKey:col_code];
+        NSString *text_value=[idic_parameter_value valueForKey:col_code];
+       
+        if ([col_stye isEqualToString:@"date"]) {
+            NSDateFormatter *dateFormat=[[NSDateFormatter alloc]init];
+            [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            text_value=[dateFormat stringFromDate:[format dateFromUnixTimestamp:text_value]];
+        }
+        cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
          [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
@@ -242,4 +249,5 @@ enum LOOKUP_TAG {
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(250,300) uponView:self];
 }
+
 @end

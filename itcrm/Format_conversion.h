@@ -14,4 +14,5 @@
 -(UIImage*)fn_binaryData_convert_image:(NSString*)binary_str;
 -(NSString*)fn_get_binaryData:(NSString*)iconName;
 -(NSString*)fn_convert_display_status:(NSString*)data col_option:(NSString*)option_type;
+-(NSDate*)dateFromUnixTimestamp:(NSString*)millisecond;
 @end
