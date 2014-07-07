@@ -16,6 +16,8 @@
 @property (nonatomic,strong)UITextView *checkTextView;
 @property (nonatomic,copy) NSString* is_task_id;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
+- (IBAction)fn_save_edit_data:(id)sender;
+
 - (IBAction)fn_lookup_data:(id)sender;
 
 @end

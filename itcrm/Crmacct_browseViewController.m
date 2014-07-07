@@ -119,9 +119,11 @@
 
 #pragma mark UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellIndentifier=@"Cell_browse";
+    Cell_browse *cell=[self.tableView_acct dequeueReusableCellWithIdentifier:cellIndentifier];
     NSString *cellText = [[ilist_account objectAtIndex:indexPath.row]valueForKey:@"body"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
-    CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
+    CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:cell.il_show_text.frame.size.width];
     return height+10+23;
 }
 

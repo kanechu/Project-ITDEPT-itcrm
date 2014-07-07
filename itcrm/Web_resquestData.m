@@ -58,7 +58,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespPermit class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespPermit class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         
     };
@@ -84,7 +83,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespSearchCriteria class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSearchCriteria class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
         [db fn_save_searchCriteria_data:arr_resp_result];
@@ -109,7 +107,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespFormatlist class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespFormatlist class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_formatlist *db=[[DB_formatlist alloc]init];
         [db fn_save_formatlist_data:arr_resp_result];
@@ -129,7 +126,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmacct_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
         [db fn_save_crmacct_browse:arr_resp_result];
@@ -155,7 +151,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespRegion class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespRegion class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_Region *db=[[DB_Region alloc]init];
         [db fn_save_region_data:arr_resp_result];
@@ -182,7 +177,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespSystemIcon class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSystemIcon class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_systemIcon *db=[[DB_systemIcon alloc]init];
         [db fn_save_systemIcon_data:arr_resp_result];
@@ -204,7 +198,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmopp_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmopp_browse class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
         [db fn_save_crmopp_browse:arr_resp_result];
@@ -229,7 +222,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespMaintForm class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespMaintForm class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_MaintForm *db=[[DB_MaintForm alloc]init];
         [db fn_save_MaintForm_data:arr_resp_result];
@@ -252,7 +244,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[Respcrmtask_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[Respcrmtask_browse class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
         [db fn_save_crmtask_browse:arr_resp_result];
@@ -274,7 +265,6 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmhbl_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmhbl_browse class]];
-    web_base.ilist_search_mapping=[NSArray arrayWithPropertiesOfObject:[SearchFormContract class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_crmhbl_browse *db=[[DB_crmhbl_browse alloc]init];
         [db fn_save_crmhbl_browse:arr_resp_result];

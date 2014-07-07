@@ -23,4 +23,5 @@ extern NSString* const STR_CRMOOP_BROWSE_URL;
 extern NSString* const STR_MAINTFORM_URL;
 extern NSString* const STR_CRMTASK_BROWSE_URL;
 extern NSString* const STR_CRMHBL_BROWSE_URL;
+extern NSString* const STR_CRMTASK_UPDATE_URL;
 @end
