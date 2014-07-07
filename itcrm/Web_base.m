@@ -20,12 +20,13 @@
 @synthesize ilist_resp_result;
 @synthesize iresp_class;
 @synthesize ilist_resp_mapping;
+@synthesize ilist_search_mapping;
 
 - (void) fn_get_data:(RequestContract*)ao_form
 {
     RKObjectMapping *lo_searchMapping = [RKObjectMapping requestMapping];
-    [lo_searchMapping addAttributeMappingsFromArray:@[@"os_column",@"os_value"]];
-    
+    //[lo_searchMapping addAttributeMappingsFromArray:@[@"os_column",@"os_value"]];
+    [lo_searchMapping addAttributeMappingsFromArray:ilist_search_mapping];
     RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
     [lo_authMapping addAttributeMappingsFromDictionary:@{ @"user_code": @"user_code",
                                                           @"password": @"password",

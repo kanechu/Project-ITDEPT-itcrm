@@ -19,6 +19,7 @@ typedef void (^CallBack_resp_result)(NSMutableArray* arr_resp_result);
 @property (strong,nonatomic) Class iresp_class;
 @property (strong,nonatomic) NSMutableArray *ilist_resp_result;
 @property (strong,nonatomic) NSArray *ilist_resp_mapping;
+@property (strong,nonatomic) NSArray *ilist_search_mapping;
 
 - (void) fn_get_data:(RequestContract*)ao_form ;
 

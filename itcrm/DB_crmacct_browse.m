@@ -37,7 +37,7 @@
     NSString *is_sql=[NSString stringWithFormat:@"SELECT %@ FROM crmacct_browse where acct_name like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:is_sql,[NSString stringWithFormat:@"%@%%",acct_name]];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:is_sql,[NSString stringWithFormat:@"%%%@%%",acct_name]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
@@ -77,12 +77,12 @@
         BOOL isHas=[self fn_isContain_a_character:acct.is_parameter substring:@","];
         if (flag==0 && [acct.is_searchValue length]!=0 && !isHas) {
             sql=[sql stringByAppendingFormat:@" where %@ like ?",acct.is_parameter];
-            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
             [arr_value addObject:sql_value];
         }
         if (flag==1 && [acct.is_searchValue length]!=0 && !isHas) {
             sql=[sql stringByAppendingFormat:@" and %@ like ?",acct.is_parameter];
-            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
             [arr_value addObject:sql_value];
         }
         if (flag==0 && [acct.is_searchValue length]!=0 && isHas) {
@@ -90,7 +90,7 @@
             NSArray *arr_parameter=[acct.is_parameter componentsSeparatedByString:@","];
             NSString *str_parameter=[self fn_joint_string_from_array:arr_parameter];
             sql=[sql stringByAppendingFormat:@" where %@ like ?",str_parameter];
-            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
             [arr_value addObject:sql_value];
         }
         if (flag==1 && [acct.is_searchValue length]!=0 && isHas) {
@@ -98,7 +98,7 @@
             NSArray *arr_parameter=[acct.is_parameter componentsSeparatedByString:@","];
             NSString *str_parameter=[self fn_joint_string_from_array:arr_parameter];
             sql=[sql stringByAppendingFormat:@" and %@ like ?",str_parameter];
-            sql_value=[NSString stringWithFormat:@"%@%%",acct.is_searchValue];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
             [arr_value addObject:sql_value];
         }
         
@@ -123,7 +123,7 @@
             str_parameter=[str_parameter stringByAppendingString:str];
         }
         if (str_flag==1) {
-            str_parameter=[str_parameter stringByAppendingFormat:@"+%@",str];
+            str_parameter=[str_parameter stringByAppendingFormat:@"||%@",str];
         }
         str_flag=1;
     }

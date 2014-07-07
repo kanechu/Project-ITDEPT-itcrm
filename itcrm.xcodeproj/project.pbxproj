@@ -67,6 +67,8 @@
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
+		B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */; };
+		B2A18D74196A506000045E1C /* RespUpdateStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D73196A506000045E1C /* RespUpdateStatus.m */; };
 		B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA4D4B19614123004C440F /* Cell_lookup.m */; };
 		B2B092BC19345E74002FE190 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BB19345E74002FE190 /* Foundation.framework */; };
 		B2B092BE19345E74002FE190 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BD19345E74002FE190 /* CoreGraphics.framework */; };
@@ -276,6 +278,10 @@
 		B298627819386FF30097B553 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		B298627D193874140097B553 /* DB_RespLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_RespLogin.h; sourceTree = "<group>"; };
 		B298627E193874140097B553 /* DB_RespLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_RespLogin.m; sourceTree = "<group>"; };
+		B2A18D6C196A3D5200045E1C /* UpdateFormContract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateFormContract.h; sourceTree = "<group>"; };
+		B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateFormContract.m; sourceTree = "<group>"; };
+		B2A18D72196A506000045E1C /* RespUpdateStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespUpdateStatus.h; sourceTree = "<group>"; };
+		B2A18D73196A506000045E1C /* RespUpdateStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespUpdateStatus.m; sourceTree = "<group>"; };
 		B2AA4D4A19614123004C440F /* Cell_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_lookup.h; sourceTree = "<group>"; };
 		B2AA4D4B19614123004C440F /* Cell_lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_lookup.m; sourceTree = "<group>"; };
 		B2B092B819345E74002FE190 /* itcrm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itcrm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -663,6 +669,8 @@
 				B2B0931B19346A52002FE190 /* RequestContract.m */,
 				B2B0931C19346A52002FE190 /* SearchFormContract.h */,
 				B2B0931D19346A52002FE190 /* SearchFormContract.m */,
+				B2A18D6C196A3D5200045E1C /* UpdateFormContract.h */,
+				B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */,
 				B298626E19385CCB0097B553 /* RespPermit.h */,
 				B298626F19385CCB0097B553 /* RespPermit.m */,
 				B26CBC9C19347CBA00C5287B /* RespLogin.h */,
@@ -685,6 +693,8 @@
 				B258B2DE19597E6B00996C12 /* RespCrmhbl_browse.m */,
 				B260D99B194596F10026A1E9 /* RespMaintForm.h */,
 				B260D99C194596F10026A1E9 /* RespMaintForm.m */,
+				B2A18D72196A506000045E1C /* RespUpdateStatus.h */,
+				B2A18D73196A506000045E1C /* RespUpdateStatus.m */,
 				B257F2791935E0B600EC88F5 /* Menu_home.h */,
 				B257F27A1935E0B600EC88F5 /* Menu_home.m */,
 				B28F1E66194EDF7800B7C5D7 /* Advance_SearchData.h */,
@@ -923,6 +933,7 @@
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
 				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
+				B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */,
 				B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */,
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
 				B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */,
@@ -951,6 +962,7 @@
 				B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */,
 				B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,
+				B2A18D74196A506000045E1C /* RespUpdateStatus.m in Sources */,
 				B27EE0D719404919007F89A6 /* MZAppearance.m in Sources */,
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
 				B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */,
