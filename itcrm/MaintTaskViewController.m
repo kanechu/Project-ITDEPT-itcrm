@@ -15,16 +15,9 @@
 #import "Custom_Color.h"
 #import "OptionViewController.h"
 #import "DB_crmtask_browse.h"
-
-#import "UploadingContract.h"
 #import "UpdateFormContract.h"
-#import "RespUpdateStatus.h"
-#import "NSDictionary.h"
-#import "DB_Login.h"
-#import "DB_RespLogin.h"
-#import "Web_base.h"
-#import "NSArray.h"
-#import "AppConstants.h"
+#import "Web_updateData.h"
+
 @interface MaintTaskViewController ()
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
 @property (nonatomic,strong)Format_conversion *format;
@@ -44,6 +37,7 @@ enum LOOKUP_TAG {
 @synthesize format;
 @synthesize idic_lookup_type;
 @synthesize is_task_id;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -231,7 +225,10 @@ enum LOOKUP_TAG {
 
 
 - (IBAction)fn_save_edit_data:(id)sender {
-    [self fn_get_updateStatus_data];
+    Web_updateData *web_update=[[Web_updateData alloc]init];
+    [web_update fn_get_updateStatus_data:[self fn_init_updateform] :^(NSMutableArray *arr){
+        _alist_updateStatus=arr;
+    }];
 }
 
 - (IBAction)fn_lookup_data:(id)sender {
@@ -263,36 +260,9 @@ enum LOOKUP_TAG {
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(250,300) uponView:self];
 }
-#pragma mark update
-- (void) fn_get_updateStatus_data{
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    NSMutableArray *arr=[db fn_get_all_data];
-    NSString* base_url=nil;
-    if (arr!=nil && [arr count]!=0) {
-        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
-    }
-    UploadingContract *req_form = [[UploadingContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
-    DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
-    req_form.Auth =auth;
-    req_form.UpdateForm=[self fn_init_updateform];
-    Web_base *web_base=[[Web_base alloc]init];
-    web_base.il_url=STR_CRMTASK_UPDATE_URL;
-    web_base.base_url=base_url;
-    web_base.iresp_class=[RespUpdateStatus class];
-    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUpdateStatus class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        _alist_updateStatus=arr_resp_result;
-        NSLog(@"%@",_alist_updateStatus);
-    };
-    
-    [web_base fn_update_data:req_form];
-}
 -(UpdateFormContract*)fn_init_updateform{
     UpdateFormContract *upd_form=[[UpdateFormContract alloc]init];
     [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
     return upd_form;
-
 }
 @end

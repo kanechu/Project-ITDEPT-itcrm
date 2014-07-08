@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "AuthContract.h"
-#import "UpdateFormContract.h"
 @interface UploadingContract : NSObject
 
-@property(nonatomic, strong) UpdateFormContract *UpdateForm;
-
+@property(nonatomic, strong) NSSet *UpdateForm;
 @property(nonatomic, strong) AuthContract *Auth;
 
 @end
