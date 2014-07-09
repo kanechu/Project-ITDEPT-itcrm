@@ -13,7 +13,7 @@
 @property(nonatomic,strong)DBManager *idb;
 
 -(BOOL)fn_save_crmtask_browse:(NSMutableArray*)alist_result;
-
+-(BOOL)fn_update_crmtask_browse:(NSMutableDictionary*)idic_update task_id:(NSString*)task_id;
 -(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name select_sql:(NSString *)select_sql;
 
 -(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData select_sql:(NSString *)select_sql;
