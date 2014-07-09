@@ -18,16 +18,24 @@
 #import "UpdateFormContract.h"
 #import "Web_updateData.h"
 
-@interface MaintTaskViewController ()
-@property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
-@property (nonatomic,strong)Format_conversion *format;
-@property(nonatomic,strong)NSMutableDictionary *idic_lookup_type;
-@property(nonatomic,strong)NSMutableArray *alist_updateStatus;
-@end
 enum LOOKUP_TAG {
     TAG = 1,
     TAG1 = 2
 };
+enum TEXTVIEW_TAG {
+    TEXT_TAG = 100
+};
+typedef NSString* (^pass_colCode)(NSInteger);
+@interface MaintTaskViewController ()
+@property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
+@property (nonatomic,strong)Format_conversion *format;
+@property (nonatomic,strong)NSMutableDictionary *idic_lookup_type;
+@property (nonatomic,strong)NSMutableArray *alist_updateStatus;
+//备份原来要修改的crmtask
+@property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
+@property (nonatomic,strong)pass_colCode pass_value;
+@end
+
 @implementation MaintTaskViewController
 @synthesize alist_groupNameAndNum;
 @synthesize alist_filtered_taskdata;
@@ -37,6 +45,7 @@ enum LOOKUP_TAG {
 @synthesize format;
 @synthesize idic_lookup_type;
 @synthesize is_task_id;
+@synthesize idic_parameter_value_copy;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,17 +59,17 @@ enum LOOKUP_TAG {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_init_arr];
+    [self fn_init_idic_parameter];
     self.skstableview.SKSTableViewDelegate=self;
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW1;
-    [self fn_init_arr];
     [self.skstableview fn_expandall];
     [self setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     format=[[Format_conversion alloc]init];
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
-    idic_parameter_value=[[db_crmtask fn_get_crmtask_data_from_id:is_task_id]objectAtIndex:0];
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -69,7 +78,24 @@ enum LOOKUP_TAG {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark 获取要修改的crmtask
+-(void)fn_init_idic_parameter{
+    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+    NSMutableArray *arr_crmtask=[db_crmtask fn_get_crmtask_data_from_id:is_task_id];
+    if ([arr_crmtask count]!=0) {
+        idic_parameter_value=[arr_crmtask objectAtIndex:0];
+    }
+    //深拷贝，备份一份要修改的crmtask
+    idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
+}
+#pragma mark -获取定制maint版面的数据
+-(void)fn_init_arr{
+    DB_MaintForm *db=[[DB_MaintForm alloc]init];
+    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
+    alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
+    alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
+}
 #pragma mark UITextViewDelegate
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
@@ -92,14 +118,6 @@ enum LOOKUP_TAG {
     UIView *view =[ [UIView alloc]init];
     view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
-}
-#pragma mark -初始化数组
--(void)fn_init_arr{
-    DB_MaintForm *db=[[DB_MaintForm alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
-    alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
-    alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
-    idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 
 #pragma mark SKSTableViewDelegate and datasourse
@@ -147,6 +165,11 @@ enum LOOKUP_TAG {
     NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
+    __block MaintTaskViewController *blockSelf=self;
+    _pass_value=^NSString*(NSInteger tag){
+        return [blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
+    };
     if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"date"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
         Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -156,8 +179,8 @@ enum LOOKUP_TAG {
         cell.il_remind_label.text=col_label;
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         cell.itv_data_textview.delegate=self;
+        cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
-       
         if ([col_stye isEqualToString:@"date"]) {
             NSDateFormatter *dateFormat=[[NSDateFormatter alloc]init];
             [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -179,6 +202,7 @@ enum LOOKUP_TAG {
         cell.il_remind_label.text=col_label;
         NSString *str_status=[idic_parameter_value valueForKey:col_code];
         cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
+        cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.layer.cornerRadius=5;
         cell.itv_edit_textview.delegate=self;
         if ([col_code isEqualToString:@"task_status"]) {
@@ -192,6 +216,7 @@ enum LOOKUP_TAG {
         cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         return cell;
     }
+    
     
     // Configure the cell...
     return nil;
@@ -222,15 +247,30 @@ enum LOOKUP_TAG {
 }
 
 
-
-
 - (IBAction)fn_save_edit_data:(id)sender {
-    Web_updateData *web_update=[[Web_updateData alloc]init];
-    [web_update fn_get_updateStatus_data:[self fn_init_updateform] :^(NSMutableArray *arr){
-        _alist_updateStatus=arr;
-    }];
+    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"Whether to save the modified data" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
+    [alertview show];
 }
-
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        //还原数据
+        idic_parameter_value=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value_copy];
+        [self.skstableview reloadData];
+    }
+    if (buttonIndex==0) {
+        Web_updateData *web_update=[[Web_updateData alloc]init];
+        [web_update fn_get_updateStatus_data:[self fn_init_updateform] :^(NSMutableArray *arr){
+            _alist_updateStatus=arr;
+            DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+        BOOL isSuccess= [db fn_update_crmtask_browse:idic_parameter_value task_id:[idic_parameter_value valueForKey:@"task_id"]];
+            if (isSuccess) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+            }
+           
+        }];
+    }
+}
 - (IBAction)fn_lookup_data:(id)sender {
     UIButton *btn=(UIButton*)sender;
     if (btn.tag==TAG) {
@@ -262,7 +302,14 @@ enum LOOKUP_TAG {
 }
 -(UpdateFormContract*)fn_init_updateform{
     UpdateFormContract *upd_form=[[UpdateFormContract alloc]init];
+    //使用kvc给模型数据赋值
     [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
     return upd_form;
 }
+#pragma mark UITextViewDelegate
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    NSString *parameter_key=_pass_value(textView.tag);
+    [idic_parameter_value setObject:textView.text forKey:parameter_key];
+}
+
 @end

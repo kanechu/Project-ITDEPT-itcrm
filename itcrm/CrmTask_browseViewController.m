@@ -124,7 +124,15 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"segue_maintTask" sender:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmtask_browse) name:@"update" object:nil];
 }
+-(void)fn_update_crmtask_browse{
+    DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+    alist_crmtask_parameter=[db fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
+    [self fn_init_crmtask_arr:alist_crmtask_parameter];
+    [self.tableview reloadData];
+}
+
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:searchBar.text select_sql:select_sql];
