@@ -120,6 +120,9 @@
     NSString *cellText = [[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"body"];
     UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:cell.il_show_text.frame.size.width];
+    if (indexPath.row==2) {
+        height=height+15;
+    }
     return height+10+25;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

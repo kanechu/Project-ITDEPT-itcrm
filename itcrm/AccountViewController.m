@@ -314,23 +314,17 @@ enum TEXTFIELD_TAG {
 - (IBAction)fn_textfield_endEdit:(id)sender {
     UITextField *textfield=(UITextField*)sender;
     NSString *col_code=_pass_value(textfield.tag);
+    NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
+    for (Advance_SearchData *searchData in alist_searchData_copy) {
+        if ([searchData.is_parameter isEqualToString:col_code]) {
+            [alist_searchData removeObject:searchData];
+        }
+    }
     if ([textfield.text length]!=0) {
         [idic_search_value setObject:textfield.text forKey:col_code];
         [idic_parameter setObject:col_code forKey:col_code];
+        [alist_searchData addObject:[self fn_get_searchData:col_code]];
     }
-    NSInteger i=0;
-    NSInteger flag=0;
-    for (Advance_SearchData *searchData in alist_searchData) {
-        if ([searchData.is_parameter isEqualToString:col_code]) {
-            flag=1;
-            break;
-        }
-        i++;
-    }
-    if (flag==1) {
-        [alist_searchData removeObjectAtIndex:i];
-    }
-    [alist_searchData addObject:[self fn_get_searchData:col_code]];
 }
 
 - (IBAction)fn_clear_input_data:(id)sender {
