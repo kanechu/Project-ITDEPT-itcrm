@@ -189,11 +189,11 @@
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
                         <outlet property="toolbar" destination="dLb-kP-gBR" id="Hlo-wB-aHI"/>
                         <segue destination="sUH-eH-Mej" kind="push" identifier="segue_Quotation" id="aBn-az-hQe"/>
-                        <segue destination="FVg-cX-FBO" kind="push" identifier="segue_contactList" id="yG0-5i-wDy"/>
                         <segue destination="6EJ-hd-7lb" kind="push" identifier="segue_ShipmentHistory" id="968-I5-Fhr"/>
                         <segue destination="EQ7-pG-KJY" kind="push" identifier="segue_account" id="Fxb-MW-MhA"/>
                         <segue destination="2dk-cr-CFp" kind="push" identifier="segue_opportunities" id="0a2-Gq-wrG"/>
                         <segue destination="zbT-eX-JTl" kind="push" identifier="segue_activity" id="Sat-dv-523"/>
+                        <segue destination="KCK-OR-bYT" kind="push" identifier="segue_crmcontact_browse" id="ucc-q9-1sg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VzC-RK-HZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -281,35 +281,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ayu-zK-NZC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1224" y="1132"/>
-        </scene>
-        <!--Contact List View Controller - ContactList-->
-        <scene sceneID="glL-jO-FKi">
-            <objects>
-                <tableViewController storyboardIdentifier="ContactListViewController" id="FVg-cX-FBO" customClass="ContactListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Rna-xt-t2H">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="NzR-Gf-q2H">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NzR-Gf-q2H" id="IDH-jt-FY2">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="FVg-cX-FBO" id="2Al-gQ-faj"/>
-                            <outlet property="delegate" destination="FVg-cX-FBO" id="b7H-tj-Tmk"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="ContactList" id="PEp-9z-s0M"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qqG-DX-KcR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1224" y="-357"/>
         </scene>
         <!--Maint Task View Controller - Task Edit-->
         <scene sceneID="YWI-bY-Zna">
@@ -1045,6 +1016,74 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zBY-1v-5qX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1401" y="-1062"/>
+        </scene>
+        <!--Crm Contact browse View Controller - Contact-->
+        <scene sceneID="fby-P5-pc7">
+            <objects>
+                <viewController storyboardIdentifier="CrmContact_browseViewController" id="KCK-OR-bYT" customClass="CrmContact_browseViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="f2m-kM-aAr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" placeholder="Please enter a contact name" showsCancelButton="YES" id="JXx-Za-P92">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="22" sectionFooterHeight="22" id="ELa-94-u4b">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_browse_contact" rowHeight="55" id="dU2-ut-Mzb" customClass="Cell_browse">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dU2-ut-Mzb" id="Oy1-Xy-zSi">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="gMv-z6-AZk">
+                                                    <rect key="frame" x="5" y="5" width="45" height="45"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YiJ-So-2Pc">
+                                                    <rect key="frame" x="58" y="2" width="260" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="body" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x86-ps-UcS">
+                                                    <rect key="frame" x="58" y="28" width="230" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="ii_image" destination="gMv-z6-AZk" id="wGh-Mb-GyO"/>
+                                            <outlet property="il_show_text" destination="x86-ps-UcS" id="Ner-qT-Yz1"/>
+                                            <outlet property="il_title" destination="YiJ-So-2Pc" id="kB2-6G-zyf"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Contact" id="eWt-Uo-VbX"/>
+                    <connections>
+                        <outlet property="is_searchBar" destination="JXx-Za-P92" id="qOA-gC-HXb"/>
+                        <outlet property="tableview" destination="ELa-94-u4b" id="lE9-pp-fZd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2N2-IR-8kX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1395" y="-354"/>
         </scene>
         <!--Account View Controller-->
         <scene sceneID="QAI-0h-TeW">

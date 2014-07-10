@@ -170,7 +170,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     _pass_value=^NSString*(NSInteger tag){
         return [blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
     };
-    if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"date"]) {
+    if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"datetime"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
         Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {

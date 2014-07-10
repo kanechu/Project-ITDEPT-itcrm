@@ -39,6 +39,7 @@
 		B260D9A0194599570026A1E9 /* DB_MaintForm.m in Sources */ = {isa = PBXBuildFile; fileRef = B260D99F194599570026A1E9 /* DB_MaintForm.m */; };
 		B26861F9196E65EA00B14251 /* RespCrmcontact_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B26861F8196E65EA00B14251 /* RespCrmcontact_browse.m */; };
 		B26861FF196E6B1600B14251 /* DB_crmcontact_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B26861FE196E6B1600B14251 /* DB_crmcontact_browse.m */; };
+		B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */; };
 		B26CBC9B193476B500C5287B /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBC9A193476B500C5287B /* AppConstants.m */; };
 		B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBC9D19347CBA00C5287B /* RespLogin.m */; };
 		B26CBCA419347E5A00C5287B /* NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBCA119347E5A00C5287B /* NSDictionary.m */; };
@@ -101,7 +102,6 @@
 		B2B0933719346F4C002FE190 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B0933619346F4C002FE190 /* libsqlite3.0.dylib */; };
 		B2B0933919346F57002FE190 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B0933819346F57002FE190 /* libsqlite3.dylib */; };
 		B2B0933E193475E7002FE190 /* Web_base.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B0933D193475E7002FE190 /* Web_base.m */; };
-		B2B22FB21939B44E0083E0C4 /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */; };
 		B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB41939B4E90083E0C4 /* AccountViewController.m */; };
 		B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */; };
 		B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC31939C0D50083E0C4 /* DB_Login.m */; };
@@ -226,6 +226,8 @@
 		B26861F8196E65EA00B14251 /* RespCrmcontact_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespCrmcontact_browse.m; sourceTree = "<group>"; };
 		B26861FD196E6B1600B14251 /* DB_crmcontact_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_crmcontact_browse.h; sourceTree = "<group>"; };
 		B26861FE196E6B1600B14251 /* DB_crmcontact_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmcontact_browse.m; sourceTree = "<group>"; };
+		B2686200196E7B2D00B14251 /* CrmContact_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrmContact_browseViewController.h; sourceTree = "<group>"; };
+		B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmContact_browseViewController.m; sourceTree = "<group>"; };
 		B26CBC99193476B500C5287B /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		B26CBC9A193476B500C5287B /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		B26CBC9C19347CBA00C5287B /* RespLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespLogin.h; sourceTree = "<group>"; };
@@ -332,8 +334,6 @@
 		B2B0933819346F57002FE190 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B2B0933C193475E7002FE190 /* Web_base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web_base.h; sourceTree = "<group>"; };
 		B2B0933D193475E7002FE190 /* Web_base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Web_base.m; sourceTree = "<group>"; };
-		B2B22FB01939B44E0083E0C4 /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListViewController.h; sourceTree = "<group>"; };
-		B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
 		B2B22FB31939B4E90083E0C4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B2B22FB41939B4E90083E0C4 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotationViewController.h; sourceTree = "<group>"; };
@@ -744,8 +744,8 @@
 				B273F491194ADA620007E055 /* SearchTaskViewController.m */,
 				B273F496194AE9A30007E055 /* MaintTaskViewController.h */,
 				B273F497194AE9A30007E055 /* MaintTaskViewController.m */,
-				B2B22FB01939B44E0083E0C4 /* ContactListViewController.h */,
-				B2B22FB11939B44E0083E0C4 /* ContactListViewController.m */,
+				B2686200196E7B2D00B14251 /* CrmContact_browseViewController.h */,
+				B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */,
 				B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */,
 				B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */,
 				B258B2DA19597B2D00996C12 /* ShipmentHistoryViewController.h */,
@@ -954,13 +954,13 @@
 				B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */,
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
 				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
+				B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
 				B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */,
 				B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */,
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
 				B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */,
 				B26CBC9B193476B500C5287B /* AppConstants.m in Sources */,
-				B2B22FB21939B44E0083E0C4 /* ContactListViewController.m in Sources */,
 				B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */,
 				B27EE0DE19404919007F89A6 /* UIImage+Additional.m in Sources */,
 				B260D99A194594D80026A1E9 /* Cell_maintForm2.m in Sources */,
