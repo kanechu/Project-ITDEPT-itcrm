@@ -21,6 +21,7 @@
 #import "RespMaintForm.h"
 #import "RespCrmtask_browse.h"
 #import "RespCrmhbl_browse.h"
+#import "RespCrmcontact_browse.h"
 #import "Web_base.h"
 #import "NSArray.h"
 #import "NSDictionary.h"
@@ -34,6 +35,7 @@
 #import "DB_crmtask_browse.h"
 #import "DB_MaintForm.h"
 #import "DB_crmhbl_browse.h"
+#import "DB_crmcontact_browse.h"
 #import "SVProgressHUD.h"
 @implementation Web_resquestData
 
@@ -268,10 +270,32 @@
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_crmhbl_browse *db=[[DB_crmhbl_browse alloc]init];
         [db fn_save_crmhbl_browse:arr_resp_result];
-        [SVProgressHUD dismiss];
     };
 
     [web_base fn_get_data:req_form];
 }
-
+#pragma mark 请求crmcontact_browse的数据
+- (void) fn_get_crmcontact_browse_data:(NSString*)base_url{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    AuthContract *auth=[[AuthContract alloc]init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    SearchFormContract *search = [[SearchFormContract alloc]init];
+    search.os_column = @"form";
+    search.os_value = @"crm";
+    req_form.SearchForm = [NSSet setWithObjects:search, nil];
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_CRMCONTACT_BROWSE_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[RespCrmcontact_browse class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmcontact_browse class]];
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
+        [db fn_save_crmcontact_browse:arr_resp_result];
+        [SVProgressHUD dismiss];
+    };
+    
+    [web_base fn_get_data:req_form];
+}
 @end

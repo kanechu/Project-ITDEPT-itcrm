@@ -20,4 +20,5 @@
 - (void) fn_get_maintForm_data:(NSString*)base_url;
 - (void) fn_get_crmtask_browse_data:(NSString*)base_url;
 - (void) fn_get_crmhbl_browse_data:(NSString*)base_url;
+- (void) fn_get_crmcontact_browse_data:(NSString*)base_url;
 @end
