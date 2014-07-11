@@ -32,11 +32,11 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_ref_name select_sql:(NSString *)select_sql{
-    NSString *sql=[NSString stringWithFormat:@"select %@ from crmcontact_browse where contact_ref_name like ?",select_sql];
+-(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_name select_sql:(NSString *)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"select %@ from crmcontact_browse where contact_name like ?",select_sql];
     NSMutableArray *arr_crmcontact=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql,[NSString stringWithFormat:@"%%%@%%",contact_ref_name]];
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql,[NSString stringWithFormat:@"%%%@%%",contact_name]];
         while ([lfmdb_result next]) {
             [arr_crmcontact addObject:[lfmdb_result resultDictionary]];
         }
@@ -69,6 +69,16 @@
             [arr addObject:[lfmdb_result resultDictionary]];
         }
         [[idb fn_get_db]close];
+    }
+    return arr;
+}
+-(NSMutableArray*)fn_get_crmcontact_browse:(NSString*)contact_id{
+    NSMutableArray *arr=[[NSMutableArray alloc]init];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmcontact_browse where contact_id like ?",[NSString stringWithFormat:@"%@",contact_id]];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
     }
     return arr;
 }

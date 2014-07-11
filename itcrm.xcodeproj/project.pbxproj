@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B2223C90196FB38C00FFE884 /* SearchCrmContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */; };
+		B2223C96196FDB4000FFE884 /* EditContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2223C95196FDB4000FFE884 /* EditContactViewController.m */; };
 		B22903DE1936C4A6004D1862 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B22903DB1936C4A6004D1862 /* SVProgressHUD.bundle */; };
 		B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903DD1936C4A6004D1862 /* SVProgressHUD.m */; };
 		B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903F21936C9CB004D1862 /* FMDatabase.m */; };
@@ -169,6 +170,8 @@
 /* Begin PBXFileReference section */
 		B2223C8E196FB38C00FFE884 /* SearchCrmContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmContactViewController.h; sourceTree = "<group>"; };
 		B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCrmContactViewController.m; sourceTree = "<group>"; };
+		B2223C94196FDB4000FFE884 /* EditContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditContactViewController.h; sourceTree = "<group>"; };
+		B2223C95196FDB4000FFE884 /* EditContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditContactViewController.m; sourceTree = "<group>"; };
 		B22903DB1936C4A6004D1862 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		B22903DC1936C4A6004D1862 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		B22903DD1936C4A6004D1862 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -766,6 +769,8 @@
 				B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */,
 				B2223C8E196FB38C00FFE884 /* SearchCrmContactViewController.h */,
 				B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */,
+				B2223C94196FDB4000FFE884 /* EditContactViewController.h */,
+				B2223C95196FDB4000FFE884 /* EditContactViewController.m */,
 				B2D13E3E196F7A5900E97F81 /* CrmQuo_browseViewController.h */,
 				B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */,
 				B258B2DA19597B2D00996C12 /* ShipmentHistoryViewController.h */,
@@ -980,6 +985,7 @@
 				B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
 				B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */,
+				B2223C96196FDB4000FFE884 /* EditContactViewController.m in Sources */,
 				B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */,
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
 				B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */,

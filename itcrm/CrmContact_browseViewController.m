@@ -11,6 +11,7 @@
 #import "DB_crmcontact_browse.h"
 #import "DB_formatlist.h"
 #import "SearchCrmContactViewController.h"
+#import "EditContactViewController.h"
 
 @interface CrmContact_browseViewController ()
 @property(nonatomic,strong)Format_conversion *convert;
@@ -45,6 +46,7 @@
     [self fn_get_formatlist];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
+    _is_searchBar.delegate=self;
     convert=[[Format_conversion alloc]init];
     db_crmcontact=[[DB_crmcontact_browse alloc]init];
     alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:_is_searchBar.text select_sql:select_sql];
@@ -103,6 +105,18 @@
     CGFloat height=[convert fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     return height+10+23;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self performSegueWithIdentifier:@"Segue_editContact" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
+    if([[segue identifier] isEqualToString:@"Segue_editContact"]){
+        EditContactViewController *VC=[segue destinationViewController];
+        VC.is_contact_id=[[alist_contact_parameter objectAtIndex:selectedRowIndex.row]valueForKey:@"contact_id"];
+        
+    }
+}
+
 #pragma mark UISearchBarDelegate
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_is_searchBar resignFirstResponder];
