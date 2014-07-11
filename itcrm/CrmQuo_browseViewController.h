@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CrmQuo_browseViewController : UIViewController
+@interface CrmQuo_browseViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
+
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 

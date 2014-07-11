@@ -188,7 +188,7 @@
                     <connections>
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
                         <outlet property="toolbar" destination="dLb-kP-gBR" id="Hlo-wB-aHI"/>
-                        <segue destination="sUH-eH-Mej" kind="push" identifier="segue_Quotation" id="aBn-az-hQe"/>
+                        <segue destination="sUH-eH-Mej" kind="push" identifier="segue_crmquo_browse" id="aBn-az-hQe"/>
                         <segue destination="6EJ-hd-7lb" kind="push" identifier="segue_ShipmentHistory" id="968-I5-Fhr"/>
                         <segue destination="EQ7-pG-KJY" kind="push" identifier="segue_account" id="Fxb-MW-MhA"/>
                         <segue destination="2dk-cr-CFp" kind="push" identifier="segue_opportunities" id="0a2-Gq-wrG"/>
@@ -228,6 +228,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="kRx-Qp-llN">
                                                     <rect key="frame" x="5" y="5" width="45" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CPa-ud-nut">
                                                     <rect key="frame" x="58" y="2" width="260" height="21"/>
@@ -236,7 +237,7 @@
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cIa-ZL-eT0">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cIa-ZL-eT0">
                                                     <rect key="frame" x="58" y="28" width="230" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
