@@ -40,6 +40,8 @@
 		B26861F9196E65EA00B14251 /* RespCrmcontact_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B26861F8196E65EA00B14251 /* RespCrmcontact_browse.m */; };
 		B26861FF196E6B1600B14251 /* DB_crmcontact_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B26861FE196E6B1600B14251 /* DB_crmcontact_browse.m */; };
 		B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */; };
+		B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2686204196E92CA00B14251 /* RespCrmquo_browse.m */; };
+		B2686208196EA0E000B14251 /* DB_crmquo_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2686207196EA0E000B14251 /* DB_crmquo_browse.m */; };
 		B26CBC9B193476B500C5287B /* AppConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBC9A193476B500C5287B /* AppConstants.m */; };
 		B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBC9D19347CBA00C5287B /* RespLogin.m */; };
 		B26CBCA419347E5A00C5287B /* NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = B26CBCA119347E5A00C5287B /* NSDictionary.m */; };
@@ -103,7 +105,6 @@
 		B2B0933919346F57002FE190 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B0933819346F57002FE190 /* libsqlite3.dylib */; };
 		B2B0933E193475E7002FE190 /* Web_base.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B0933D193475E7002FE190 /* Web_base.m */; };
 		B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB41939B4E90083E0C4 /* AccountViewController.m */; };
-		B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */; };
 		B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC31939C0D50083E0C4 /* DB_Login.m */; };
 		B2B308F71951648B00568256 /* KeyboardNoticeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B308F61951648B00568256 /* KeyboardNoticeManager.m */; };
 		B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F0194693840012A531 /* RespCrmtask_browse.m */; };
@@ -113,6 +114,7 @@
 		B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CA048E1962532B005A6F9A /* OptionViewController.m */; };
 		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
 		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
+		B2D13E40196F7A5900E97F81 /* CrmQuo_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */; };
 		B2DA4614196A85FC001FD4F0 /* UploadingContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DA4613196A85FC001FD4F0 /* UploadingContract.m */; };
 		B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F6CCFB1948401500081059 /* Custom_Color.m */; };
 /* End PBXBuildFile section */
@@ -228,6 +230,10 @@
 		B26861FE196E6B1600B14251 /* DB_crmcontact_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmcontact_browse.m; sourceTree = "<group>"; };
 		B2686200196E7B2D00B14251 /* CrmContact_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrmContact_browseViewController.h; sourceTree = "<group>"; };
 		B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmContact_browseViewController.m; sourceTree = "<group>"; };
+		B2686203196E92CA00B14251 /* RespCrmquo_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespCrmquo_browse.h; sourceTree = "<group>"; };
+		B2686204196E92CA00B14251 /* RespCrmquo_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespCrmquo_browse.m; sourceTree = "<group>"; };
+		B2686206196EA0E000B14251 /* DB_crmquo_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_crmquo_browse.h; sourceTree = "<group>"; };
+		B2686207196EA0E000B14251 /* DB_crmquo_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmquo_browse.m; sourceTree = "<group>"; };
 		B26CBC99193476B500C5287B /* AppConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstants.h; sourceTree = "<group>"; };
 		B26CBC9A193476B500C5287B /* AppConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConstants.m; sourceTree = "<group>"; };
 		B26CBC9C19347CBA00C5287B /* RespLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespLogin.h; sourceTree = "<group>"; };
@@ -336,8 +342,6 @@
 		B2B0933D193475E7002FE190 /* Web_base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Web_base.m; sourceTree = "<group>"; };
 		B2B22FB31939B4E90083E0C4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		B2B22FB41939B4E90083E0C4 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
-		B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuotationViewController.h; sourceTree = "<group>"; };
-		B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuotationViewController.m; sourceTree = "<group>"; };
 		B2B22FC21939C0D50083E0C4 /* DB_Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_Login.h; sourceTree = "<group>"; };
 		B2B22FC31939C0D50083E0C4 /* DB_Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_Login.m; sourceTree = "<group>"; };
 		B2B308F51951648B00568256 /* KeyboardNoticeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardNoticeManager.h; sourceTree = "<group>"; };
@@ -356,6 +360,8 @@
 		B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_searchCriteria.m; sourceTree = "<group>"; };
 		B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespSearchCriteria.h; sourceTree = "<group>"; };
 		B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSearchCriteria.m; sourceTree = "<group>"; };
+		B2D13E3E196F7A5900E97F81 /* CrmQuo_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrmQuo_browseViewController.h; sourceTree = "<group>"; };
+		B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmQuo_browseViewController.m; sourceTree = "<group>"; };
 		B2DA4612196A85FC001FD4F0 /* UploadingContract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadingContract.h; sourceTree = "<group>"; };
 		B2DA4613196A85FC001FD4F0 /* UploadingContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadingContract.m; sourceTree = "<group>"; };
 		B2F6CCFA1948401500081059 /* Custom_Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_Color.h; sourceTree = "<group>"; };
@@ -445,6 +451,8 @@
 				B258B2E1195981C600996C12 /* DB_crmhbl_browse.m */,
 				B26861FD196E6B1600B14251 /* DB_crmcontact_browse.h */,
 				B26861FE196E6B1600B14251 /* DB_crmcontact_browse.m */,
+				B2686206196EA0E000B14251 /* DB_crmquo_browse.h */,
+				B2686207196EA0E000B14251 /* DB_crmquo_browse.m */,
 				B27EDFC91940185A007F89A6 /* DB_Region.h */,
 				B27EDFCA1940185A007F89A6 /* DB_Region.m */,
 				B2452E7A1941979200D02A45 /* DB_systemIcon.h */,
@@ -709,6 +717,8 @@
 				B258B2DE19597E6B00996C12 /* RespCrmhbl_browse.m */,
 				B26861F7196E65EA00B14251 /* RespCrmcontact_browse.h */,
 				B26861F8196E65EA00B14251 /* RespCrmcontact_browse.m */,
+				B2686203196E92CA00B14251 /* RespCrmquo_browse.h */,
+				B2686204196E92CA00B14251 /* RespCrmquo_browse.m */,
 				B260D99B194596F10026A1E9 /* RespMaintForm.h */,
 				B260D99C194596F10026A1E9 /* RespMaintForm.m */,
 				B2A18D72196A506000045E1C /* RespUpdateStatus.h */,
@@ -746,8 +756,8 @@
 				B273F497194AE9A30007E055 /* MaintTaskViewController.m */,
 				B2686200196E7B2D00B14251 /* CrmContact_browseViewController.h */,
 				B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */,
-				B2B22FBC1939B7040083E0C4 /* QuotationViewController.h */,
-				B2B22FBD1939B7040083E0C4 /* QuotationViewController.m */,
+				B2D13E3E196F7A5900E97F81 /* CrmQuo_browseViewController.h */,
+				B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */,
 				B258B2DA19597B2D00996C12 /* ShipmentHistoryViewController.h */,
 				B258B2DB19597B2D00996C12 /* ShipmentHistoryViewController.m */,
 				B260D98319454C4D0026A1E9 /* OpportunitiesViewController.h */,
@@ -937,6 +947,7 @@
 				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
 				B2B0931F19346A52002FE190 /* RequestContract.m in Sources */,
 				B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */,
+				B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
@@ -952,6 +963,7 @@
 				B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */,
 				B25D7607193D6ACF005913D7 /* Cell_search.m in Sources */,
 				B26CBC9E19347CBA00C5287B /* RespLogin.m in Sources */,
+				B2D13E40196F7A5900E97F81 /* CrmQuo_browseViewController.m in Sources */,
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
 				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
 				B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */,
@@ -961,7 +973,6 @@
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
 				B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */,
 				B26CBC9B193476B500C5287B /* AppConstants.m in Sources */,
-				B2B22FBE1939B7040083E0C4 /* QuotationViewController.m in Sources */,
 				B27EE0DE19404919007F89A6 /* UIImage+Additional.m in Sources */,
 				B260D99A194594D80026A1E9 /* Cell_maintForm2.m in Sources */,
 				B260D9911945674F0026A1E9 /* DB_crmopp_browse.m in Sources */,
@@ -981,6 +992,7 @@
 				B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */,
 				B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */,
 				B258B2DF19597E6B00996C12 /* RespCrmhbl_browse.m in Sources */,
+				B2686208196EA0E000B14251 /* DB_crmquo_browse.m in Sources */,
 				B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */,
 				B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,

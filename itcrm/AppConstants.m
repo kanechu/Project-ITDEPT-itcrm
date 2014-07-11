@@ -27,6 +27,8 @@ NSString* const STR_CRMTASK_BROWSE_URL=@"api/crm/crmtask_browse";
 NSString* const STR_CRMHBL_BROWSE_URL=@"api/crm/crmhbl_browse";
 NSString* const STR_CRMTASK_UPDATE_URL=@"/kie_web_api/api/crm/crmtask_update";
 NSString* const STR_CRMCONTACT_BROWSE_URL=@"/kie_web_api/api/crm/crmcontact_browse";
+NSString* const STR_CRMQUO_BROWSE_URL=@"/kie_web_api/api/crm/crmquo_browse";
+
 #else
 NSString* const STR_BASE_URL = @"http://223.255.167.158/";
 #endif

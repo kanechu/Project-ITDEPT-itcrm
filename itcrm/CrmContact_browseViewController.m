@@ -91,7 +91,7 @@
     NSString *str_body=[[alist_crmcontact objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[convert fn_heightWithString:str_body font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x,cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
-    
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 #pragma mark UITableViewDelegate

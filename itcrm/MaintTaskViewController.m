@@ -181,7 +181,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
-        if ([col_stye isEqualToString:@"date"]) {
+        if ([col_stye isEqualToString:@"datetime"]) {
             NSDateFormatter *dateFormat=[[NSDateFormatter alloc]init];
             [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
             text_value=[dateFormat stringFromDate:[format dateFromUnixTimestamp:text_value]];

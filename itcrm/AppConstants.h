@@ -25,5 +25,5 @@ extern NSString* const STR_CRMTASK_BROWSE_URL;
 extern NSString* const STR_CRMHBL_BROWSE_URL;
 extern NSString* const STR_CRMTASK_UPDATE_URL;
 extern NSString* const STR_CRMCONTACT_BROWSE_URL;
-
+extern NSString* const STR_CRMQUO_BROWSE_URL;
 @end
