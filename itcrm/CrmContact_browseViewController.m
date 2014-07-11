@@ -8,9 +8,10 @@
 
 #import "CrmContact_browseViewController.h"
 #import "Cell_browse.h"
-#import "Format_conversion.h"
 #import "DB_crmcontact_browse.h"
 #import "DB_formatlist.h"
+#import "SearchCrmContactViewController.h"
+
 @interface CrmContact_browseViewController ()
 @property(nonatomic,strong)Format_conversion *convert;
 @property(nonatomic,strong)DB_crmcontact_browse *db_crmcontact;
@@ -115,5 +116,15 @@
     alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:searchBar.text select_sql:select_sql];
     [self fn_init_crmcontact_arr:alist_contact_parameter];
     [self.tableview reloadData];
+}
+- (IBAction)fn_advance_search:(id)sender {
+    SearchCrmContactViewController *crm_contact=[self.storyboard instantiateViewControllerWithIdentifier:@"SearchCrmContactViewController"];
+    crm_contact.callback=^(NSMutableArray *alist_conditions){
+        alist_contact_parameter=[db_crmcontact fn_get_detail_crmcontact_data:alist_conditions select_sql:select_sql];
+        [self fn_init_crmcontact_arr:alist_contact_parameter];
+        [self.tableview reloadData];
+    };
+    PopViewManager *popVC=[[PopViewManager alloc]init];
+    [popVC PopupView:crm_contact Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
 @end

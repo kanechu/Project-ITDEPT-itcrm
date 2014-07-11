@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2223C90196FB38C00FFE884 /* SearchCrmContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */; };
 		B22903DE1936C4A6004D1862 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B22903DB1936C4A6004D1862 /* SVProgressHUD.bundle */; };
 		B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903DD1936C4A6004D1862 /* SVProgressHUD.m */; };
 		B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903F21936C9CB004D1862 /* FMDatabase.m */; };
@@ -115,6 +116,7 @@
 		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
 		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
 		B2D13E40196F7A5900E97F81 /* CrmQuo_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */; };
+		B2D13E44196F9EC900E97F81 /* Get_Browse_arr.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D13E43196F9EC900E97F81 /* Get_Browse_arr.m */; };
 		B2DA4614196A85FC001FD4F0 /* UploadingContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DA4613196A85FC001FD4F0 /* UploadingContract.m */; };
 		B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F6CCFB1948401500081059 /* Custom_Color.m */; };
 /* End PBXBuildFile section */
@@ -165,6 +167,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2223C8E196FB38C00FFE884 /* SearchCrmContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmContactViewController.h; sourceTree = "<group>"; };
+		B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCrmContactViewController.m; sourceTree = "<group>"; };
 		B22903DB1936C4A6004D1862 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
 		B22903DC1936C4A6004D1862 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
 		B22903DD1936C4A6004D1862 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
@@ -362,6 +366,8 @@
 		B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSearchCriteria.m; sourceTree = "<group>"; };
 		B2D13E3E196F7A5900E97F81 /* CrmQuo_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrmQuo_browseViewController.h; sourceTree = "<group>"; };
 		B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmQuo_browseViewController.m; sourceTree = "<group>"; };
+		B2D13E42196F9EC900E97F81 /* Get_Browse_arr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Get_Browse_arr.h; sourceTree = "<group>"; };
+		B2D13E43196F9EC900E97F81 /* Get_Browse_arr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Get_Browse_arr.m; sourceTree = "<group>"; };
 		B2DA4612196A85FC001FD4F0 /* UploadingContract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadingContract.h; sourceTree = "<group>"; };
 		B2DA4613196A85FC001FD4F0 /* UploadingContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadingContract.m; sourceTree = "<group>"; };
 		B2F6CCFA1948401500081059 /* Custom_Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_Color.h; sourceTree = "<group>"; };
@@ -472,6 +478,8 @@
 				B2B704FC1946E0250012A531 /* Format_conversion.m */,
 				B2B308F51951648B00568256 /* KeyboardNoticeManager.h */,
 				B2B308F61951648B00568256 /* KeyboardNoticeManager.m */,
+				B2D13E42196F9EC900E97F81 /* Get_Browse_arr.h */,
+				B2D13E43196F9EC900E97F81 /* Get_Browse_arr.m */,
 			);
 			name = GlobalClass;
 			sourceTree = "<group>";
@@ -756,6 +764,8 @@
 				B273F497194AE9A30007E055 /* MaintTaskViewController.m */,
 				B2686200196E7B2D00B14251 /* CrmContact_browseViewController.h */,
 				B2686201196E7B2D00B14251 /* CrmContact_browseViewController.m */,
+				B2223C8E196FB38C00FFE884 /* SearchCrmContactViewController.h */,
+				B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */,
 				B2D13E3E196F7A5900E97F81 /* CrmQuo_browseViewController.h */,
 				B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */,
 				B258B2DA19597B2D00996C12 /* ShipmentHistoryViewController.h */,
@@ -949,6 +959,7 @@
 				B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */,
 				B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
+				B2D13E44196F9EC900E97F81 /* Get_Browse_arr.m in Sources */,
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
@@ -1001,6 +1012,7 @@
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
 				B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */,
 				B2B308F71951648B00568256 /* KeyboardNoticeManager.m in Sources */,
+				B2223C90196FB38C00FFE884 /* SearchCrmContactViewController.m in Sources */,
 				B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */,
 				B260D997194593580026A1E9 /* Cell_maintForm1.m in Sources */,
 				B26861F9196E65EA00B14251 /* RespCrmcontact_browse.m in Sources */,

@@ -11,6 +11,7 @@
 #import "NSDictionary.h"
 #import "FMDatabaseAdditions.h"
 #import "RespCrmcontact_browse.h"
+#import "Advance_SearchData.h"
 @implementation DB_crmcontact_browse
 @synthesize idb;
 -(id)init{
@@ -42,6 +43,36 @@
     }
     return arr_crmcontact;
 }
+-(NSMutableArray*)fn_get_detail_crmcontact_data:(NSMutableArray*)alist_searchData select_sql:(NSString*)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"select %@ from crmcontact_browse",select_sql];
+    NSInteger flag=0;
+    NSMutableArray *arr_value=[[NSMutableArray alloc]initWithCapacity:10];
+    for (Advance_SearchData *acct in alist_searchData) {
+        NSString *sql_value=[NSString string];
+        if (flag==0 && [acct.is_searchValue length]!=0 ) {
+            sql=[sql stringByAppendingFormat:@" where %@ like ?",acct.is_parameter];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
+        }
+        if (flag==1 && [acct.is_searchValue length]!=0 ) {
+            sql=[sql stringByAppendingFormat:@" and %@ like ?",acct.is_parameter];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
+        }
+       
+        flag=1;
+    }
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr_value];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
+
 -(BOOL)fn_delete_all_crmcontact_data{
     if ([[idb fn_get_db]open]) {
         BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from crmcontact_browse"];
