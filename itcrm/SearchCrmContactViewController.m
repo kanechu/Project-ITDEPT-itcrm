@@ -56,6 +56,7 @@ enum TEXT_TAG {
     [self setExtraCellLineHidden:self.skstableView];
     [self fn_custom_gesture];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [_inav_bar setBarTintColor:COLOR_LIGHT_YELLOW];
     
 	// Do any additional setup after loading the view.
 }

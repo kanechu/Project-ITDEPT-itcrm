@@ -12,6 +12,8 @@
 #import "Cell_browse.h"
 #import "Format_conversion.h"
 #import "Custom_Color.h"
+#import "SearchCrmOppViewController.h"
+#import "EditOppViewController.h"
 @interface OpportunitiesViewController ()
 
 @property(nonatomic,strong)Format_conversion *format;
@@ -88,6 +90,7 @@
     cell.il_show_text.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     cell.il_show_text.frame=CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height);
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 #pragma mark UITableViewDelegate
@@ -97,8 +100,16 @@
     CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
     return height+10+23;
 }
--(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
-    return NO;
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self performSegueWithIdentifier:@"segue_editopp" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];
+    if ([[segue identifier]isEqualToString:@"segue_editopp"]) {
+        EditOppViewController *VC=[segue destinationViewController];
+        VC.opp_id=[[[db_crmopp fn_get_crmopp_data:_is_searchBar.text]objectAtIndex:indexpath.row]valueForKey:@"opp_id"];
+    }
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
@@ -111,5 +122,10 @@
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_is_searchBar resignFirstResponder];
+}
+- (IBAction)fn_advance_search_opp:(id)sender {
+    SearchCrmOppViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"SearchCrmOppViewController"];
+    PopViewManager *pop=[[PopViewManager alloc]init];
+    [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
 @end

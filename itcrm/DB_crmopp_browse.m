@@ -53,6 +53,16 @@
     }
     return arr;
 }
+-(NSMutableArray*)fn_get_crmopp_with_id:(NSString*)opp_id{
+    NSMutableArray *arr_result=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmopp_browse where opp_id like ?",[NSString stringWithFormat:@"%@",opp_id]];
+        while ([lfmdb_result next]) {
+            [arr_result addObject:[lfmdb_result resultDictionary]];
+        }
+    }
+    return arr_result;
+}
 -(BOOL)fn_delete_all_data{
     if ([[idb fn_get_db]open]) {
         BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from crmopp_browse"];

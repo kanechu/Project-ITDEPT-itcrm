@@ -13,5 +13,6 @@
 @property (nonatomic,strong)NSMutableArray *alist_crmopp_browse;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchBar;
+- (IBAction)fn_advance_search_opp:(id)sender;
 
 @end

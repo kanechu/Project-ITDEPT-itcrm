@@ -77,6 +77,10 @@
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
 		B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */; };
 		B2A18D74196A506000045E1C /* RespUpdateStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D73196A506000045E1C /* RespUpdateStatus.m */; };
+		B2A642B01970CE8500CF7B36 /* SearchCrmOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */; };
+		B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */; };
+		B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BB1970E20200CF7B36 /* Custom_Button.m */; };
+		B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BE1971089A00CF7B36 /* EditOppViewController.m */; };
 		B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA4D4B19614123004C440F /* Cell_lookup.m */; };
 		B2B092BC19345E74002FE190 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BB19345E74002FE190 /* Foundation.framework */; };
 		B2B092BE19345E74002FE190 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BD19345E74002FE190 /* CoreGraphics.framework */; };
@@ -307,6 +311,14 @@
 		B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateFormContract.m; sourceTree = "<group>"; };
 		B2A18D72196A506000045E1C /* RespUpdateStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespUpdateStatus.h; sourceTree = "<group>"; };
 		B2A18D73196A506000045E1C /* RespUpdateStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespUpdateStatus.m; sourceTree = "<group>"; };
+		B2A642AE1970CE8500CF7B36 /* SearchCrmOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmOppViewController.h; sourceTree = "<group>"; };
+		B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCrmOppViewController.m; sourceTree = "<group>"; };
+		B2A642B51970D4C300CF7B36 /* Cell_opp_search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_opp_search.h; sourceTree = "<group>"; };
+		B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_opp_search.m; sourceTree = "<group>"; };
+		B2A642BA1970E20200CF7B36 /* Custom_Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_Button.h; sourceTree = "<group>"; };
+		B2A642BB1970E20200CF7B36 /* Custom_Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_Button.m; sourceTree = "<group>"; };
+		B2A642BD1971089A00CF7B36 /* EditOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditOppViewController.h; sourceTree = "<group>"; };
+		B2A642BE1971089A00CF7B36 /* EditOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditOppViewController.m; sourceTree = "<group>"; };
 		B2AA4D4A19614123004C440F /* Cell_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_lookup.h; sourceTree = "<group>"; };
 		B2AA4D4B19614123004C440F /* Cell_lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_lookup.m; sourceTree = "<group>"; };
 		B2B092B819345E74002FE190 /* itcrm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itcrm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -490,6 +502,7 @@
 		B257F27F1935E0FA00EC88F5 /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				B2A642B91970E1E600CF7B36 /* customControl */,
 				B257F2801935E10300EC88F5 /* Cell */,
 			);
 			name = GUI;
@@ -520,6 +533,8 @@
 				B2AA4D4B19614123004C440F /* Cell_lookup.m */,
 				B2CA048719625227005A6F9A /* Cell_Option.h */,
 				B2CA048819625227005A6F9A /* Cell_Option.m */,
+				B2A642B51970D4C300CF7B36 /* Cell_opp_search.h */,
+				B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -580,6 +595,15 @@
 				B27EE0D619404919007F89A6 /* UIViewController+TargetViewController.m */,
 			);
 			path = MZFormSheet;
+			sourceTree = "<group>";
+		};
+		B2A642B91970E1E600CF7B36 /* customControl */ = {
+			isa = PBXGroup;
+			children = (
+				B2A642BA1970E20200CF7B36 /* Custom_Button.h */,
+				B2A642BB1970E20200CF7B36 /* Custom_Button.m */,
+			);
+			name = customControl;
 			sourceTree = "<group>";
 		};
 		B2B092AF19345E74002FE190 = {
@@ -777,6 +801,10 @@
 				B258B2DB19597B2D00996C12 /* ShipmentHistoryViewController.m */,
 				B260D98319454C4D0026A1E9 /* OpportunitiesViewController.h */,
 				B260D98419454C4D0026A1E9 /* OpportunitiesViewController.m */,
+				B2A642BD1971089A00CF7B36 /* EditOppViewController.h */,
+				B2A642BE1971089A00CF7B36 /* EditOppViewController.m */,
+				B2A642AE1970CE8500CF7B36 /* SearchCrmOppViewController.h */,
+				B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -946,6 +974,7 @@
 				B28F1E6B194EE2FD00B7C5D7 /* Cell_taskSearch.m in Sources */,
 				B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */,
 				B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */,
+				B2A642B01970CE8500CF7B36 /* SearchCrmOppViewController.m in Sources */,
 				B2452E7219416D9700D02A45 /* PopViewManager.m in Sources */,
 				B2B0933E193475E7002FE190 /* Web_base.m in Sources */,
 				B260D98519454C4D0026A1E9 /* OpportunitiesViewController.m in Sources */,
@@ -960,6 +989,7 @@
 				B275998F193EF22A005CF480 /* Web_resquestData.m in Sources */,
 				B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */,
 				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
+				B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */,
 				B2B0931F19346A52002FE190 /* RequestContract.m in Sources */,
 				B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */,
 				B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */,
@@ -1006,6 +1036,7 @@
 				B260D98E1945519D0026A1E9 /* RespCrmopp_browse.m in Sources */,
 				B260D99D194596F10026A1E9 /* RespMaintForm.m in Sources */,
 				B298627919386FF30097B553 /* DBManager.m in Sources */,
+				B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */,
 				B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */,
 				B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */,
 				B258B2DF19597E6B00996C12 /* RespCrmhbl_browse.m in Sources */,
@@ -1023,6 +1054,7 @@
 				B260D997194593580026A1E9 /* Cell_maintForm1.m in Sources */,
 				B26861F9196E65EA00B14251 /* RespCrmcontact_browse.m in Sources */,
 				B258B2E2195981C600996C12 /* DB_crmhbl_browse.m in Sources */,
+				B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */,
 				B289A5E71947F62C0004B62B /* Cell_browse.m in Sources */,
 				B298627019385CCB0097B553 /* RespPermit.m in Sources */,
 				B240CA6D196BA8E100C0B6F4 /* Web_updateData.m in Sources */,
