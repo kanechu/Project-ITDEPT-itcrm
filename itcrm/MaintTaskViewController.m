@@ -64,7 +64,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     self.skstableview.SKSTableViewDelegate=self;
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW1;
     [self.skstableview fn_expandall];
-    [self setExtraCellLineHidden:self.skstableview];
+    [expand_helper setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     format=[[Format_conversion alloc]init];
     //避免键盘挡住UITextView
@@ -112,14 +112,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
     [checkTextView resignFirstResponder];
 }
 
-#pragma mark 将额外的cell的线隐藏
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
-
 #pragma mark SKSTableViewDelegate and datasourse
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -150,7 +142,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
     
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_miantTask];
     if (arr!=nil) {
         [alist_filtered_taskdata addObject:arr];
     }
@@ -239,13 +231,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
     }
     return height;
 }
-
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_miantTask filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
-}
-
 
 - (IBAction)fn_save_edit_data:(id)sender {
     UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"Whether to save the modified data" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];

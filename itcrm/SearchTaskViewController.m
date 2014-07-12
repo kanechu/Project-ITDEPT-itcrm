@@ -47,7 +47,7 @@
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW;
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     [_inav_navigationbar setBarTintColor:COLOR_LIGHT_YELLOW];
-    [self setExtraCellLineHidden:self.skstableview];
+    [expand_helper setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     //避免键盘挡住UITextField
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
@@ -74,13 +74,7 @@
     idic_value=[[NSMutableDictionary alloc]initWithCapacity:10];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
-#pragma mark 将额外的cell的线隐藏
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
+
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -120,7 +114,7 @@
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }
@@ -195,11 +189,6 @@
     return 40;
 }
 
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_searchCriteria filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
-}
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
     NSMutableArray *alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];

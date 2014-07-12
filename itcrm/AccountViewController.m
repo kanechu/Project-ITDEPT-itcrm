@@ -70,7 +70,7 @@ enum TEXTFIELD_TAG {
     [self fn_custom_gesture];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;
-    [self setExtraCellLineHidden:self.skstableView];
+    [expand_helper setExtraCellLineHidden:self.skstableView];
     //避免键盘挡住UItextfield
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [_inav_navBar setBarTintColor:COLOR_LIGHT_YELLOW];
@@ -100,14 +100,7 @@ enum TEXTFIELD_TAG {
     idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
 }
-#pragma mark 将额外的cell的线隐藏
 
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -137,8 +130,7 @@ enum TEXTFIELD_TAG {
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }
@@ -231,11 +223,6 @@ enum TEXTFIELD_TAG {
     return 40;
 }
 
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_searchCriteria filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
-}
 - (IBAction)fn_search_account:(id)sender {
     [alist_searchData addObject:[self fn_get_searchData:@"country"]];
     [alist_searchData addObject:[self fn_get_searchData:@"region" ]];

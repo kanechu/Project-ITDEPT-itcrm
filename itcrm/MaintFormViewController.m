@@ -179,7 +179,7 @@
     cell.expandable=YES;
     
     NSString *str=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
-    NSArray *arr=[self fn_filtered_criteriaData:str];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str arr:alist_maintForm];
     if (arr!=nil && [arr count]!=0) {
         [alist_filtered_data addObject:arr];
     }else{
@@ -302,11 +302,6 @@
         height=44;
     }
     return height;
-}
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_maintForm filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
 }
 
 - (IBAction)fn_lookup_data:(id)sender {

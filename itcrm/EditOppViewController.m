@@ -40,7 +40,7 @@ enum TEXT_TAG{
     [super viewDidLoad];
     [self fn_get_maint_crmopp];
     self.skstableView.SKSTableViewDelegate=self;
-    [self setExtraCellLineHidden:self.skstableView];
+    [expand_helper setExtraCellLineHidden:self.skstableView];
     [self.skstableView fn_expandall];
 	// Do any additional setup after loading the view.
 }
@@ -57,13 +57,7 @@ enum TEXT_TAG{
     alist_maintOpp=[db fn_get_MaintForm_data:@"crmopp"];
     alist_filtered_oppdata=[[NSMutableArray alloc]initWithCapacity:10];
 }
-#pragma mark 将额外的cell的线隐藏
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
+
 #pragma mark SKSTableViewDelegate 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return [alist_groupNameAndNum count];
@@ -88,8 +82,7 @@ enum TEXT_TAG{
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintOpp];
     if (arr!=nil) {
         [alist_filtered_oppdata addObject:arr];
     }
@@ -129,13 +122,6 @@ enum TEXT_TAG{
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
-}
-
-
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_maintOpp filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
 }
 
 - (IBAction)fn_save_modified_data:(id)sender {

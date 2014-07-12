@@ -81,6 +81,7 @@
 		B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */; };
 		B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BB1970E20200CF7B36 /* Custom_Button.m */; };
 		B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BE1971089A00CF7B36 /* EditOppViewController.m */; };
+		B2A642C2197124E900CF7B36 /* expand_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642C1197124E900CF7B36 /* expand_helper.m */; };
 		B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA4D4B19614123004C440F /* Cell_lookup.m */; };
 		B2B092BC19345E74002FE190 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BB19345E74002FE190 /* Foundation.framework */; };
 		B2B092BE19345E74002FE190 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BD19345E74002FE190 /* CoreGraphics.framework */; };
@@ -319,6 +320,8 @@
 		B2A642BB1970E20200CF7B36 /* Custom_Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_Button.m; sourceTree = "<group>"; };
 		B2A642BD1971089A00CF7B36 /* EditOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditOppViewController.h; sourceTree = "<group>"; };
 		B2A642BE1971089A00CF7B36 /* EditOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditOppViewController.m; sourceTree = "<group>"; };
+		B2A642C0197124E900CF7B36 /* expand_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expand_helper.h; sourceTree = "<group>"; };
+		B2A642C1197124E900CF7B36 /* expand_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = expand_helper.m; sourceTree = "<group>"; };
 		B2AA4D4A19614123004C440F /* Cell_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_lookup.h; sourceTree = "<group>"; };
 		B2AA4D4B19614123004C440F /* Cell_lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_lookup.m; sourceTree = "<group>"; };
 		B2B092B819345E74002FE190 /* itcrm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itcrm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -493,6 +496,8 @@
 				B2B704FC1946E0250012A531 /* Format_conversion.m */,
 				B2B308F51951648B00568256 /* KeyboardNoticeManager.h */,
 				B2B308F61951648B00568256 /* KeyboardNoticeManager.m */,
+				B2A642C0197124E900CF7B36 /* expand_helper.h */,
+				B2A642C1197124E900CF7B36 /* expand_helper.m */,
 				B2D13E42196F9EC900E97F81 /* Get_Browse_arr.h */,
 				B2D13E43196F9EC900E97F81 /* Get_Browse_arr.m */,
 			);
@@ -974,6 +979,7 @@
 				B28F1E6B194EE2FD00B7C5D7 /* Cell_taskSearch.m in Sources */,
 				B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */,
 				B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */,
+				B2A642C2197124E900CF7B36 /* expand_helper.m in Sources */,
 				B2A642B01970CE8500CF7B36 /* SearchCrmOppViewController.m in Sources */,
 				B2452E7219416D9700D02A45 /* PopViewManager.m in Sources */,
 				B2B0933E193475E7002FE190 /* Web_base.m in Sources */,

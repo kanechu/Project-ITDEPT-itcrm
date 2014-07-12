@@ -22,14 +22,14 @@ enum TEXT_TAG {
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact;
 @property(nonatomic,strong)NSMutableArray *alist_maintContact;
 //过滤后的数组
-@property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
+@property (nonatomic,strong)NSMutableArray *alist_filtered_contactdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)UITextView *checkTextView;
 @property (nonatomic,strong)Format_conversion *convert;
 @end
 
 @implementation EditContactViewController
-@synthesize alist_filtered_taskdata;
+@synthesize alist_filtered_contactdata;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_maintContact;
 @synthesize checkTextView;
@@ -51,7 +51,7 @@ enum TEXT_TAG {
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
     [self fn_custom_gesture];
-    [self setExtraCellLineHidden:self.skstableView];
+    [expand_helper setExtraCellLineHidden:self.skstableView];
     _convert=[[Format_conversion alloc]init];
 	// Do any additional setup after loading the view.
 }
@@ -74,7 +74,7 @@ enum TEXT_TAG {
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmcontact"];
     alist_maintContact=[db fn_get_MaintForm_data:@"crmcontact"];
-    alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_filtered_contactdata=[[NSMutableArray alloc]initWithCapacity:10];
     
 }
 #pragma mark UITextViewDelegate
@@ -91,14 +91,6 @@ enum TEXT_TAG {
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkTextView resignFirstResponder];
-}
-
-#pragma mark 将额外的cell的线隐藏
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
 }
 #pragma mark SKSTableViewDelegate and datasourse
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -125,17 +117,16 @@ enum TEXT_TAG {
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintContact];
     if (arr!=nil) {
-        [alist_filtered_taskdata addObject:arr];
+        [alist_filtered_contactdata addObject:arr];
     }
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     NSString *col_code=[dic valueForKey:@"col_code"];
@@ -194,12 +185,6 @@ enum TEXT_TAG {
     return 40;
 }
 
-
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_maintContact filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
-}
 - (IBAction)fn_save_modified_contact:(id)sender {
 }
 @end

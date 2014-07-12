@@ -41,7 +41,8 @@ enum IBTN_TAG{
     [self fn_init_arr];
    // [self fn_custom_gesture];
     self.skstableView.SKSTableViewDelegate=self;
-    [self setExtraCellLineHidden:self.skstableView];
+    //将额外的cell的线隐藏
+    [expand_helper setExtraCellLineHidden:self.skstableView];
     [self.skstableView fn_expandall];
     [_inav_bar setBarTintColor:COLOR_LIGHT_YELLOW];
 	// Do any additional setup after loading the view.
@@ -59,13 +60,6 @@ enum IBTN_TAG{
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
-#pragma mark 将额外的cell的线隐藏
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
 #pragma mark SKSTableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return [alist_groupNameAndNum count];
@@ -88,7 +82,7 @@ enum IBTN_TAG{
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }
@@ -122,11 +116,6 @@ enum IBTN_TAG{
 }
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
-}
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_searchCriteria filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
 }
 - (IBAction)fn_go_back:(id)sender {
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *FormSheet){}];

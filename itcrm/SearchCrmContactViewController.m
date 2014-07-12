@@ -53,7 +53,7 @@ enum TEXT_TAG {
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
-    [self setExtraCellLineHidden:self.skstableView];
+    [expand_helper setExtraCellLineHidden:self.skstableView];
     [self fn_custom_gesture];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [_inav_bar setBarTintColor:COLOR_LIGHT_YELLOW];
@@ -79,13 +79,7 @@ enum TEXT_TAG {
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText=textField;
 }
-#pragma mark 将额外的cell的线隐藏
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
+
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -118,7 +112,7 @@ enum TEXT_TAG {
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[self fn_filtered_criteriaData:str_name];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }
@@ -161,11 +155,6 @@ enum TEXT_TAG {
 }
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
-}
-#pragma mark 对数组进行过滤
--(NSArray*)fn_filtered_criteriaData:(NSString*)key{
-    NSArray *filtered=[alist_searchCriteria filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
-    return filtered;
 }
 
 - (IBAction)fn_go_back:(id)sender {
