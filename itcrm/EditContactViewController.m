@@ -18,14 +18,18 @@
 enum TEXT_TAG {
     TEXT_TAG = 100
 };
+typedef NSString* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact;
+@property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact_copy;
 @property(nonatomic,strong)NSMutableArray *alist_maintContact;
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_contactdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)UITextView *checkTextView;
 @property (nonatomic,strong)Format_conversion *convert;
+@property (nonatomic,strong)passValue_contact passValue;
+@property (nonatomic,strong)UITextView *checkText;
 @end
 
 @implementation EditContactViewController
@@ -34,6 +38,8 @@ enum TEXT_TAG {
 @synthesize alist_maintContact;
 @synthesize checkTextView;
 @synthesize idic_parameter_contact;
+@synthesize passValue;
+@synthesize idic_parameter_contact_copy;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,6 +59,7 @@ enum TEXT_TAG {
     [self fn_custom_gesture];
     [expand_helper setExtraCellLineHidden:self.skstableView];
     _convert=[[Format_conversion alloc]init];
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
 	// Do any additional setup after loading the view.
 }
 
@@ -68,6 +75,8 @@ enum TEXT_TAG {
     if ([arr_crmcontact count]!=0) {
         idic_parameter_contact=[arr_crmcontact objectAtIndex:0];
     }
+    //深拷贝一份要修改的contact,用于还原
+    idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
 }
 #pragma mark -获取定制contact maint版面的数据
 -(void)fn_get_maint_crmcontact{
@@ -77,11 +86,6 @@ enum TEXT_TAG {
     alist_filtered_contactdata=[[NSMutableArray alloc]initWithCapacity:10];
     
 }
-#pragma mark UITextViewDelegate
--(void)textViewDidBeginEditing:(UITextView *)textView{
-    checkTextView=textView;
-}
-
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -133,10 +137,10 @@ enum TEXT_TAG {
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
-   /* __block MaintTaskViewController *blockSelf=self;
-    _pass_value=^NSString*(NSInteger tag){
-        return [blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
-    };*/
+    __block EditContactViewController *blockSelf=self;
+    passValue=^NSString*(NSInteger tag){
+        return [blockSelf-> alist_filtered_contactdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
+    };
     if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1_contact";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -166,6 +170,9 @@ enum TEXT_TAG {
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.layer.cornerRadius=5;
         cell.itv_edit_textview.delegate=self;
+        CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
+        [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+14)];
+        
        /* if ([col_code isEqualToString:@"task_status"]) {
             cell.ibtn_lookup.tag=TAG;
             [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
@@ -184,7 +191,54 @@ enum TEXT_TAG {
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
-
-- (IBAction)fn_save_modified_contact:(id)sender {
+-(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSMutableDictionary *idic=alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    NSString *col_type=[idic valueForKey:@"col_type"];
+    NSString *str_value=[idic_parameter_contact valueForKey:col_code];
+    CGFloat height=0;
+    if ([col_type isEqualToString:@"string"]) {
+        static NSString *cellIndetifier=@"Cell_maintForm1_contact";
+        Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndetifier];
+        CGFloat height=[_convert fn_heightWithString:str_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+            height=height+16+10;
+    }
+    if ([col_type isEqualToString:@"local_lookup"]) {
+        static NSString *cellIdentifier=@"Cell_lookup_contact";
+        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        height=[_convert fn_heightWithString:str_value font:cell.itv_edit_textview.font  constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
+        height=height+16+28;
+        
+    }
+   
+   
+    if (height<44) {
+        height=44;
+    }
+    return height;
 }
+#pragma mark UITextViewDelegate
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    checkTextView=textView;
+}
+-(void)textViewDidEndEditing:(UITextView *)textView{
+    NSString *col_code=passValue(textView.tag);
+    [idic_parameter_contact setObject:textView.text forKey:col_code];
+}
+- (IBAction)fn_save_modified_contact:(id)sender {
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"whether save the modified data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"cancel", nil];
+    [alertView show];
+}
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==0) {
+        NSLog(@"保存数据");
+    }
+    if (buttonIndex==1) {
+        NSLog(@"不保存数据");
+        idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];
+        [self.skstableView reloadData];
+    }
+}
+
 @end

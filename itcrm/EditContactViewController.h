@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface EditContactViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate>
+@interface EditContactViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate,UIAlertViewDelegate>
 
 @property(nonatomic,copy)NSString *is_contact_id;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;

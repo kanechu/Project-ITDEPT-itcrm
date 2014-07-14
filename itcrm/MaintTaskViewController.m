@@ -96,10 +96,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
     alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
-#pragma mark UITextViewDelegate
--(void)textViewDidBeginEditing:(UITextView *)textView{
-    checkTextView=textView;
-}
 
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
@@ -292,6 +288,9 @@ typedef NSString* (^pass_colCode)(NSInteger);
     return upd_form;
 }
 #pragma mark UITextViewDelegate
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    checkTextView=textView;
+}
 - (void)textViewDidEndEditing:(UITextView *)textView{
     NSString *parameter_key=_pass_value(textView.tag);
     [idic_parameter_value setObject:textView.text forKey:parameter_key];
