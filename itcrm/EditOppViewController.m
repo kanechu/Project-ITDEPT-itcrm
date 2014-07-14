@@ -11,6 +11,8 @@
 #import "SKSTableViewCell.h"
 #import "Custom_Color.h"
 #import "Cell_maintForm1.h"
+#import "DB_crmopp_browse.h"
+#import "Format_conversion.h"
 enum TEXT_TAG{
     TEXT_TAG=100
 };
@@ -19,6 +21,8 @@ enum TEXT_TAG{
 @property(nonatomic,strong)NSMutableArray *alist_maintOpp;
 @property (nonatomic,strong)NSMutableArray *alist_filtered_oppdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
+@property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp;
+@property (nonatomic,strong)Format_conversion *convert;
 @end
 
 @implementation EditOppViewController
@@ -26,6 +30,8 @@ enum TEXT_TAG{
 @synthesize alist_filtered_oppdata;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_maintOpp;
+@synthesize idic_parameter_opp;
+@synthesize convert;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,9 +45,11 @@ enum TEXT_TAG{
 {
     [super viewDidLoad];
     [self fn_get_maint_crmopp];
+    [self fn_get_idic_parameter];
     self.skstableView.SKSTableViewDelegate=self;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     [self.skstableView fn_expandall];
+    convert=[[Format_conversion alloc]init];
 	// Do any additional setup after loading the view.
 }
 
@@ -49,6 +57,14 @@ enum TEXT_TAG{
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark -获取要修改的opp数据
+-(void)fn_get_idic_parameter{
+    DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
+    NSMutableArray *arr_crmcontact=[db fn_get_crmopp_with_id:opp_id];
+    if ([arr_crmcontact count]!=0) {
+        idic_parameter_opp=[arr_crmcontact objectAtIndex:0];
+    }
 }
 #pragma mark -获取定制opp maint版面的数据
 -(void)fn_get_maint_crmopp{
@@ -110,11 +126,11 @@ enum TEXT_TAG{
         cell.il_remind_label.text=col_label;
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-       // NSString *text_value=[idic_parameter_contact valueForKey:col_code];
-       // cell.itv_data_textview.text=text_value;
+        NSString *text_value=[idic_parameter_opp valueForKey:col_code];
+        cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
-       // CGFloat height=[_convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-       // [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
+        CGFloat height=[convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
    
@@ -123,7 +139,10 @@ enum TEXT_TAG{
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
-
+#pragma mark UITextViewDelegate
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    
+}
 - (IBAction)fn_save_modified_data:(id)sender {
 }
 @end
