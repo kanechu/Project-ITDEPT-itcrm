@@ -11,6 +11,7 @@
 #import "FMDatabaseAdditions.h"
 #import "NSDictionary.h"
 #import "RespCrmopp_browse.h"
+#import "Advance_SearchData.h"
 @implementation DB_crmopp_browse
 @synthesize idb;
 -(id)init{
@@ -30,10 +31,11 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_crmopp_data:(NSString*)op_type{
+-(NSMutableArray*)fn_get_crmopp_data:(NSString*)op_type select_sql:(NSString*)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"SELECT %@ FROM crmopp_browse where op_type like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM crmopp_browse where op_type like ?",[NSString stringWithFormat:@"%@%%",op_type]];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:sql,[NSString stringWithFormat:@"%@%%",op_type]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
@@ -62,6 +64,35 @@
         }
     }
     return arr_result;
+}
+-(NSMutableArray*)fn_get_detail_crmopp_data:(NSMutableArray*)alist_searchData select_sql:(NSString*)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"select %@ from crmopp_browse",select_sql];
+    NSInteger flag=0;
+    NSMutableArray *arr_value=[[NSMutableArray alloc]initWithCapacity:10];
+    for (Advance_SearchData *acct in alist_searchData) {
+        NSString *sql_value=[NSString string];
+        if (flag==0 && [acct.is_searchValue length]!=0 ) {
+            sql=[sql stringByAppendingFormat:@" where %@ like ?",acct.is_parameter];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
+        }
+        if (flag==1 && [acct.is_searchValue length]!=0 ) {
+            sql=[sql stringByAppendingFormat:@" and %@ like ?",acct.is_parameter];
+            sql_value=[NSString stringWithFormat:@"%%%@%%",acct.is_searchValue];
+            [arr_value addObject:sql_value];
+        }
+        
+        flag=1;
+    }
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr_value];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
 }
 -(BOOL)fn_delete_all_data{
     if ([[idb fn_get_db]open]) {

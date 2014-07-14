@@ -10,23 +10,27 @@
 #import "DB_crmopp_browse.h"
 #import "DB_formatlist.h"
 #import "Cell_browse.h"
-#import "Format_conversion.h"
 #import "Custom_Color.h"
 #import "SearchCrmOppViewController.h"
 #import "EditOppViewController.h"
+#import "DB_formatlist.h"
 @interface OpportunitiesViewController ()
-
+@property (nonatomic,strong)DB_crmopp_browse *db_crmopp;
 @property(nonatomic,strong)Format_conversion *format;
-@property(nonatomic,strong)DB_crmopp_browse *db_crmopp;
 @property (nonatomic,strong) UIImage *opp_image;
-
+@property (nonatomic,strong) NSMutableArray *alist_opp_parameter;
+@property (nonatomic,copy)  NSString *select_sql;
+@property (nonatomic,strong) NSMutableArray *arr_format;
 @end
 
 @implementation OpportunitiesViewController
 @synthesize alist_crmopp_browse;
 @synthesize format;
-@synthesize db_crmopp;
 @synthesize opp_image;
+@synthesize alist_opp_parameter;
+@synthesize select_sql;
+@synthesize arr_format;
+@synthesize db_crmopp;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,10 +49,11 @@
     _is_searchBar.delegate=self;
     format=[[Format_conversion alloc]init];
     db_crmopp=[[DB_crmopp_browse alloc]init];
+    [self fn_get_formatlist];
     //获取crmopp的参数数据
-    NSMutableArray *arr_crmopp=[NSMutableArray array];
-    arr_crmopp=[db_crmopp fn_get_crmopp_data:_is_searchBar.text];
-    [self fn_init_crmopp_browse_arr:arr_crmopp];
+    alist_opp_parameter=[db_crmopp fn_get_crmopp_data:_is_searchBar.text select_sql:select_sql];
+    [self fn_init_crmopp_browse_arr:alist_opp_parameter];
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -57,11 +62,17 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_init_crmopp_browse_arr:(NSMutableArray*)arr_crmopp{
+-(void)fn_get_formatlist{
     //获取crmopp列表显示信息的格式
-    NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
-    arr_format=[db_format fn_get_list_data:@"crmacct_opp"];
+    arr_format=[db_format fn_get_list_data:@"crmopp"];
+    if ([arr_format count]!=0) {
+        select_sql=[[arr_format objectAtIndex:0]valueForKey:@"select_sql"];
+    }
+}
+
+
+-(void)fn_init_crmopp_browse_arr:(NSMutableArray*)arr_crmopp{
     if ([arr_format count]!=0) {
         alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
         NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
@@ -108,16 +119,19 @@
     NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];
     if ([[segue identifier]isEqualToString:@"segue_editopp"]) {
         EditOppViewController *VC=[segue destinationViewController];
-        VC.opp_id=[[[db_crmopp fn_get_crmopp_data:_is_searchBar.text]objectAtIndex:indexpath.row]valueForKey:@"opp_id"];
+        
+        VC.opp_id=[[alist_opp_parameter objectAtIndex:indexpath.row ] valueForKey:@"opp_id"];
     }
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
-    [self fn_init_crmopp_browse_arr:[db_crmopp fn_get_crmopp_data:searchText]];
+    alist_opp_parameter=[db_crmopp fn_get_crmopp_data:searchText select_sql:select_sql];
+    [self fn_init_crmopp_browse_arr:alist_opp_parameter];
     [self.tableview reloadData];
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self fn_init_crmopp_browse_arr:[db_crmopp fn_get_crmopp_data:searchBar.text]];
+    alist_opp_parameter=[db_crmopp fn_get_crmopp_data:searchBar.text select_sql:select_sql];
+    [self fn_init_crmopp_browse_arr:alist_opp_parameter];
     [self.tableview reloadData];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
@@ -125,6 +139,11 @@
 }
 - (IBAction)fn_advance_search_opp:(id)sender {
     SearchCrmOppViewController *VC=[self.storyboard instantiateViewControllerWithIdentifier:@"SearchCrmOppViewController"];
+    VC.callBack=^(NSMutableArray *alist_back){
+        alist_opp_parameter=[db_crmopp fn_get_detail_crmopp_data:alist_back select_sql:select_sql];
+        [self fn_init_crmopp_browse_arr:alist_opp_parameter];
+        [self.tableview reloadData];
+    };
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }

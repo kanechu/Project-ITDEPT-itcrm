@@ -12,19 +12,32 @@
 #import "Cell_opp_search.h"
 #import "Custom_Color.h"
 #import "DB_searchCriteria.h"
+#import "RegionViewController.h"
+#import "Advance_SearchData.h"
+
 enum IBTN_TAG{
     IBTN_TAG=100
 };
+typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 @interface SearchCrmOppViewController ()
 @property(nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property(nonatomic,strong)NSMutableArray * alist_groupNameAndNum;
 @property(nonatomic,strong)NSMutableArray * alist_searchCriteria;
+@property(nonatomic,strong)NSMutableDictionary *idic_opp_parameter;
+@property(nonatomic,strong)NSMutableDictionary *idic_opp_value;
+@property(nonatomic,strong)opp_passValue pass_value;
+@property(nonatomic,strong)NSMutableArray *alist_searchData;
 @end
 
 @implementation SearchCrmOppViewController
 @synthesize alist_filtered_data;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
+@synthesize idic_opp_parameter;
+@synthesize idic_opp_value;
+@synthesize pass_value;
+@synthesize alist_searchData;
+@synthesize callBack;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,6 +71,9 @@ enum IBTN_TAG{
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmopp"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_opp_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
+    idic_opp_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    alist_searchData=[[NSMutableArray alloc]init];
 }
 
 #pragma mark SKSTableViewDelegate
@@ -95,8 +111,21 @@ enum IBTN_TAG{
     NSString *col_label=[dic valueForKey:@"col_label"];
     //是否为必填项
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
-    //相关联的参数
     NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *col_option=[dic valueForKey:@"col_option"];
+    //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
+     __block SearchCrmOppViewController *blockSelf=self;
+     pass_value=^NSMutableDictionary*(NSInteger tag){
+         NSMutableDictionary *idic=[NSMutableDictionary dictionary];
+         NSString *col_code=[blockSelf-> alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100]
+                             valueForKey:@"col_code"];
+         NSString *col_option=[blockSelf-> alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100]
+                               valueForKey:@"col_option"];
+         [idic setObject:col_code forKey:@"col_code"];
+         [idic setObject:col_option forKey:@"col_option"];
+         return idic;
+     };
+    
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
     }
@@ -108,6 +137,10 @@ enum IBTN_TAG{
     cell.il_remind_label.text=col_label;
     cell.il_remind_label.textColor=COLOR_DARK_JUNGLE_GREEN;
     cell.ibtn_lookup_label.tag=IBTN_TAG+indexPath.section*100+indexPath.subRow-1;
+    Format_conversion *convert=[[Format_conversion alloc]init];
+    NSString *str_data=[idic_opp_value valueForKey:col_code];
+    NSString *str_display=[convert fn_convert_display_status:str_data col_option:col_option];
+    cell.ibtn_lookup_label.label.text=str_display;
     return cell;
 
 }
@@ -122,12 +155,49 @@ enum IBTN_TAG{
 }
 
 - (IBAction)fn_search_opp:(id)sender {
-    
-     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *FormSheet){}];
+    if (callBack) {
+        callBack(alist_searchData);
+    }
+    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *FormSheet){}];
 }
 
 - (IBAction)fn_lookup_opp:(id)sender {
     Custom_Button *ibtn=(Custom_Button*)sender;
-    NSLog(@"%d",ibtn.tag);
+    NSMutableDictionary *idic=pass_value(ibtn.tag);
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    NSString *col_option=[idic valueForKey:@"col_option"];
+    NSString *str_placeholder=[NSString stringWithFormat:@"please input %@",col_code];
+    [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
 }
+-(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
+    RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
+    VC.is_placeholder=placeholder;
+    VC.type=is_type;
+    VC.callback_region=^(NSMutableDictionary *dic){
+        NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
+        for (Advance_SearchData *searchData in alist_searchData_copy) {
+            if ([searchData.is_parameter isEqualToString:key]) {
+                [alist_searchData removeObject:searchData];
+            }
+        }
+        NSString *str_data=[dic valueForKey:@"data"];
+        [idic_opp_parameter setObject:key forKey:key];
+        [idic_opp_value setObject:str_data forKey:key];
+        
+        [alist_searchData addObject:[self fn_get_searchData:key]];
+        [self.skstableView reloadData];
+        
+    };
+    PopViewManager *pop=[[PopViewManager alloc]init];
+    [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+}
+-(Advance_SearchData*)fn_get_searchData:(NSString*)key{
+    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+    if ([[idic_opp_value valueForKey:key] length]!=0) {
+        searchData.is_searchValue=[idic_opp_value valueForKey:key];
+        searchData.is_parameter=[idic_opp_parameter valueForKey:key];
+    }
+    return searchData;
+}
+
 @end

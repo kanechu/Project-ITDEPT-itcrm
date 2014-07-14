@@ -113,6 +113,8 @@ enum TEXT_TAG{
     NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //col_opption
+    NSString *col_option=[dic valueForKey:@"col_option"];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     /* __block MaintTaskViewController *blockSelf=self;
      _pass_value=^NSString*(NSInteger tag){
@@ -123,13 +125,14 @@ enum TEXT_TAG{
         if (cell==nil) {
             cell=[[Cell_maintForm1 alloc]init];
         }
-        cell.il_remind_label.text=col_label;
-        cell.itv_data_textview.delegate=self;
-        cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        NSString *text_value=[idic_parameter_opp valueForKey:col_code];
-        cell.itv_data_textview.text=text_value;
-        //UITextView 上下左右有8px
-        CGFloat height=[convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    cell.il_remind_label.text=col_label;
+    cell.itv_data_textview.delegate=self;
+    cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+    NSString *text_value=[idic_parameter_opp valueForKey:col_code];
+    NSString *text_display=[convert fn_convert_display_status:text_value col_option:col_option];
+    cell.itv_data_textview.text=text_display;
+    //UITextView 上下左右有8px
+    CGFloat height=[convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
@@ -138,6 +141,22 @@ enum TEXT_TAG{
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
+}
+-(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellIdentifier=@"Cell_maintForm1_opp";
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    //提取每行的数据
+    NSMutableDictionary *dic=alist_filtered_oppdata[indexPath.section][indexPath.subRow-1];
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *col_option=[dic valueForKey:@"col_option"];
+    NSString *text_value=[idic_parameter_opp valueForKey:col_code];
+    NSString *text_display=[convert fn_convert_display_status:text_value col_option:col_option];
+    CGFloat height=[convert fn_heightWithString:text_display font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    height=height+16+10;
+    if (height<44) {
+        height=44;
+    }
+    return height;
 }
 #pragma mark UITextViewDelegate
 - (void)textViewDidEndEditing:(UITextView *)textView{
