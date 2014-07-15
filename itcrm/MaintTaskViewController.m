@@ -17,6 +17,7 @@
 #import "DB_crmtask_browse.h"
 #import "UpdateFormContract.h"
 #import "Web_updateData.h"
+#import "DB_Region.h"
 
 enum LOOKUP_TAG {
     TAG = 1,
@@ -263,9 +264,11 @@ typedef NSString* (^pass_colCode)(NSInteger);
     }
 }
 -(void)fn_pop_lookup_View:(NSString*)is_type key_flag:(NSString*)key lookup_title:(NSString*)title{
+    DB_Region *db=[[DB_Region alloc]init];
+    NSMutableArray* alist_option=[db fn_get_region_data:is_type];
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
     VC.lookup_title=title;
-    VC.lookup_type=is_type;
+    VC.alist_option=alist_option;
     VC.callback=^(NSMutableDictionary *dic){
         if ([key isEqualToString:@"status"]) {
             [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_status"];

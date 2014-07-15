@@ -1471,6 +1471,9 @@
                                                     <state key="normal" title="lookup">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="fn_lookup_data:" destination="DNb-w7-p0C" eventType="touchUpInside" id="0JD-5h-wz4"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>

@@ -9,7 +9,6 @@
 #import "OptionViewController.h"
 #import "Cell_Option.h"
 #import "MZFormSheetController.h"
-#import "DB_Region.h"
 @interface OptionViewController ()
 
 @end
@@ -33,7 +32,6 @@
     self.tableview.layer.cornerRadius=5;
     _ibtn_cancel.layer.cornerRadius=5;
     self.view.backgroundColor=[UIColor clearColor];
-    [self fn_init_arr];
 	// Do any additional setup after loading the view.
 }
 
@@ -41,10 +39,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
--(void)fn_init_arr{
-    DB_Region *db=[[DB_Region alloc]init];
-    alist_option=[db fn_get_region_data:_lookup_type];
 }
 
 #pragma mark UITableViewDataSource
@@ -58,7 +52,11 @@
     if (!cell) {
         cell=[[Cell_Option alloc]init];
     }
-    cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"display"];
+    if (_flag==1) {
+        cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"acct_name"];
+    }else{
+        cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"display"];
+    }
     return cell;
 }
 #pragma mark UITableViewDelegate

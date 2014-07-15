@@ -14,4 +14,5 @@
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 - (IBAction)fn_save_modified_contact:(id)sender;
 
+- (IBAction)fn_lookup_data:(id)sender;
 @end

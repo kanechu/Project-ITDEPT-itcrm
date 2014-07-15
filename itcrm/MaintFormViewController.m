@@ -306,7 +306,9 @@
 
 - (IBAction)fn_lookup_data:(id)sender {
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
-    VC.lookup_type=[idic_lookup valueForKey:@"status"];
+    DB_Region *db=[[DB_Region alloc]init];
+    NSString *str_type=[idic_lookup valueForKey:@"status"];
+    VC.alist_option=[db fn_get_region_data:str_type];
     VC.lookup_title=@"select the status";
     VC.callback=^(NSMutableDictionary *dic){
         [idic_modified_value setObject:[dic valueForKey:@"display"] forKey:[idic_lookup valueForKey:@"key_parameter"]];

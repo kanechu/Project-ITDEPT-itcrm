@@ -13,8 +13,9 @@
 #import "Cell_lookup.h"
 #import "Custom_Color.h"
 #import "DB_crmcontact_browse.h"
-#import "Format_conversion.h"
-
+#import "DB_crmacct_browse.h"
+#import "MZFormSheetController.h"
+#import "OptionViewController.h"
 enum TEXT_TAG {
     TEXT_TAG = 100
 };
@@ -168,6 +169,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         NSString *str_status=[idic_parameter_contact valueForKey:col_code];
         cell.itv_edit_textview.text=[_convert fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+        cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.layer.cornerRadius=5;
         cell.itv_edit_textview.delegate=self;
         CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
@@ -228,6 +230,21 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 - (IBAction)fn_save_modified_contact:(id)sender {
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"whether save the modified data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"cancel", nil];
     [alertView show];
+}
+
+- (IBAction)fn_lookup_data:(id)sender {
+    UIButton *ibtn=(UIButton*)sender;
+    OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+    DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
+    VC.alist_option=[db fn_get_data:@"" select_sql:@"acct_name"];
+    VC.lookup_title=@"select the account name";
+    VC.flag=1;
+    VC.callback=^(NSMutableDictionary *dic){
+        [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
+        [self.skstableView reloadData];
+    };
+    PopViewManager *popView=[[PopViewManager alloc]init];
+    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
