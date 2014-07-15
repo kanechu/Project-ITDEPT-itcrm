@@ -23,6 +23,7 @@
 #import "DB_crmopp_browse.h"
 #import "DB_MaintForm.h"
 #import "DB_crmhbl_browse.h"
+#import "DB_crmquo_browse.h"
 @interface MainHomeViewController ()
 @property(nonatomic,assign)NSInteger flag;
 @end
@@ -152,6 +153,9 @@
     
     DB_MaintForm *db_MaintForm=[[DB_MaintForm alloc]init];
     [db_MaintForm fn_delete_all_data];
+    
+    DB_crmquo_browse *db_crmquo=[[DB_crmquo_browse alloc]init];
+    [db_crmquo fn_delete_all_crmquo_data];
 }
 
 - (IBAction)fn_Refresh_data:(id)sender {

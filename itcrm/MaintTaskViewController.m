@@ -244,11 +244,10 @@ typedef NSString* (^pass_colCode)(NSInteger);
         [web_update fn_get_updateStatus_data:[self fn_init_updateform] :^(NSMutableArray *arr){
             _alist_updateStatus=arr;
             DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
-            BOOL isSuccess= [db fn_update_crmtask_browse:idic_parameter_value task_id:[idic_parameter_value valueForKey:@"task_id"]];
+            BOOL isSuccess= [db fn_update_crmtask_browse:idic_parameter_value task_id:[idic_parameter_value valueForKey:@"unique_id"]];
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
             }
-            
         }];
     }
 }

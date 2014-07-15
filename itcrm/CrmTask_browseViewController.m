@@ -10,9 +10,7 @@
 #import "DB_formatlist.h"
 #import "DB_crmtask_browse.h"
 #import "Cell_browse.h"
-#import "Format_conversion.h"
 #import "Custom_Color.h"
-#import "PopViewManager.h"
 #import "SearchTaskViewController.h"
 #import "MaintTaskViewController.h"
 @interface CrmTask_browseViewController ()
@@ -20,6 +18,7 @@
 @property(nonatomic,strong)Format_conversion *format;
 @property(nonatomic,strong)DB_crmtask_browse *db_crmtask;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask_parameter;
+@property(nonatomic,strong)NSMutableArray *alist_format;
 @property(nonatomic,strong)UIImage *task_icon;
 @property(nonatomic,copy) NSString *select_sql;
 
@@ -27,6 +26,7 @@
 
 @implementation CrmTask_browseViewController
 @synthesize alist_crmtask;
+@synthesize alist_format;
 @synthesize format;
 @synthesize db_crmtask;
 @synthesize task_icon;
@@ -50,10 +50,9 @@
     _is_searchbar.delegate=self;
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
+    [self fn_get_formatlist];
     //获取crmtask的参数
     db_crmtask=[[DB_crmtask_browse alloc]init];
-    DB_formatlist *db_format=[[DB_formatlist alloc]init];
-    select_sql=[db_format fn_get_select_sql:@"crmtask"];
     alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
     format=[[Format_conversion alloc]init];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
@@ -66,16 +65,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_init_crmtask_arr:(NSMutableArray*)arr_crmtask{
+-(void)fn_get_formatlist{
     //获取crmtask列表显示信息的格式
-    NSMutableArray *arr_format=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
-    arr_format=[db_format fn_get_list_data:@"crmtask"];
-    if ([arr_format count]!=0) {
+    alist_format=[db_format fn_get_list_data:@"crmtask"];
+    if ([alist_format count]!=0) {
+        select_sql=[db_format fn_get_select_sql:@"crmtask"];
+    }
+}
+-(void)fn_init_crmtask_arr:(NSMutableArray*)arr_crmtask{
+    if ([alist_format count]!=0) {
         //转换格式
-        alist_crmtask=[format fn_format_conersion:arr_format browse:arr_crmtask];
-    
-        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        alist_crmtask=[format fn_format_conersion:alist_format browse:arr_crmtask];
+        NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
         NSString *binary_str=[format fn_get_binaryData:iconName];
         task_icon=[format fn_binaryData_convert_image:binary_str];
     }
@@ -127,8 +129,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmtask_browse) name:@"update" object:nil];
 }
 -(void)fn_update_crmtask_browse{
-    DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
-    alist_crmtask_parameter=[db fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableview reloadData];
 }

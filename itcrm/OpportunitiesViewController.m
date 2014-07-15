@@ -119,7 +119,6 @@
     NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];
     if ([[segue identifier]isEqualToString:@"segue_editopp"]) {
         EditOppViewController *VC=[segue destinationViewController];
-        
         VC.opp_id=[[alist_opp_parameter objectAtIndex:indexpath.row ] valueForKey:@"opp_id"];
     }
 }

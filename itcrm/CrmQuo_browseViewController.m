@@ -9,7 +9,6 @@
 #import "CrmQuo_browseViewController.h"
 #import "DB_crmquo_browse.h"
 #import "DB_formatlist.h"
-#import "Format_conversion.h"
 #import "Cell_browse.h"
 
 @interface CrmQuo_browseViewController ()
@@ -49,7 +48,7 @@
     [self fn_init_crmquo_arr:alist_crmquo_parameter];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
-    
+    _is_searchBar.delegate=self;
 	// Do any additional setup after loading the view.
 }
 
@@ -103,5 +102,19 @@
     NSString *cellText = [[alist_crmquo objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[convert fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     return height+10+23;
+}
+#pragma mark UISearchBarDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    alist_crmquo_parameter=[db_crmquo fn_get_crmquo_browse_data:searchText select_sql:select_sql];
+    [self fn_init_crmquo_arr:alist_crmquo_parameter];
+    [self.tableview reloadData];
+}
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    [_is_searchBar resignFirstResponder];
+}
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    alist_crmquo_parameter=[db_crmquo fn_get_crmquo_browse_data:searchBar.text select_sql:select_sql];
+    [self fn_init_crmquo_arr:alist_crmquo_parameter];
+    [self.tableview reloadData];
 }
 @end
