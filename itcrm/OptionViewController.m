@@ -54,7 +54,10 @@
     }
     if (_flag==1) {
         cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"acct_name"];
-    }else{
+    }else if(_flag==2){
+        cell.il_option_label.text=[alist_option objectAtIndex:indexPath.row];
+    }else
+    {
         cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"display"];
     }
     return cell;
@@ -62,7 +65,9 @@
 #pragma mark UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_callback) {
-        _callback([alist_option objectAtIndex:indexPath.row]);
+        NSString *str_option=[alist_option objectAtIndex:indexPath.row];
+        NSMutableDictionary *idic_option=[NSMutableDictionary dictionaryWithObject:str_option forKey:@"choice"];
+        _callback(idic_option);
     }
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheet){}];
 }

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface EditOppViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate>
+@interface EditOppViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate,UIAlertViewDelegate>
 @property (nonatomic,copy) NSString *opp_id;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 - (IBAction)fn_save_modified_data:(id)sender;
+- (IBAction)fn_lookup_data:(id)sender;
 
 @end
