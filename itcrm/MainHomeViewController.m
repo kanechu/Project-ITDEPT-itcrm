@@ -128,7 +128,6 @@
     NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
     [user_isLogin setInteger:0 forKey:@"isLogin"];
     [user_isLogin synchronize];
-    _toolbar.hidden=YES;
     flag=0;
 }
 -(void)fn_delete_all_data{
@@ -183,19 +182,7 @@
     }
     
     [data fn_get_systemIcon_data:base_url os_value:recentDate];
-    _toolbar.hidden=YES;
     flag=0;
 }
 
-
-
-- (IBAction)fn_show_toolbar:(id)sender {
-    if (flag==0) {
-         _toolbar.hidden=NO;
-        flag=1;
-    }else{
-          _toolbar.hidden=YES;
-        flag=0;
-    }
-}
 @end

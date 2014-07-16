@@ -24,6 +24,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @property(nonatomic,strong)NSMutableArray *alist_maintOpp;
 @property (nonatomic,strong)NSMutableArray *alist_filtered_oppdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
+@property (nonatomic,strong)NSMutableArray *alist_option;
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp;
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp_copy;
 @property (nonatomic,strong)Format_conversion *convert;
@@ -39,6 +40,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @synthesize convert;
 @synthesize pass_value;
 @synthesize idic_parameter_opp_copy;
+@synthesize alist_option;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -80,6 +82,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
     alist_maintOpp=[db fn_get_MaintForm_data:@"crmopp"];
     alist_filtered_oppdata=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_option=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
 #pragma mark SKSTableViewDelegate 
@@ -123,6 +126,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSString *col_stye=[dic valueForKey:@"col_type"];
     //col_opption
     NSString *col_option=[dic valueForKey:@"col_option"];
+    [self fn_get_choice_arr:col_option];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
      __block EditOppViewController *blockSelf=self;
     NSMutableDictionary *idic=[NSMutableDictionary dictionary];
@@ -164,7 +168,12 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_opp valueForKey:col_code];
-        NSString *text_display=[convert fn_convert_display_status:text_value col_option:col_option];
+        NSString *text_display=nil;
+        if ([col_stye isEqualToString:@"choice"]){
+            text_display=[self fn_convert_display_status:text_value];
+        }else{
+            text_display=[convert fn_convert_display_status:text_value col_option:col_option];
+        }
         cell.itv_edit_textview.text=text_display;
         //UITextView 上下左右有8px
         CGFloat height=[convert fn_heightWithString:cell.itv_edit_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
@@ -234,12 +243,11 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
         DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
         if ([col_type isEqualToString:@"choice"]) {
-            NSArray *arr=[col_option componentsSeparatedByString:@","];
-            VC.alist_option=[arr mutableCopy];
+            [self fn_get_choice_arr:col_option];
+            VC.alist_option=alist_option;
             VC.lookup_title=[NSString stringWithFormat:@"select the %@",col_code];
-            VC.flag=2;
             VC.callback=^(NSMutableDictionary *dic){
-                [idic_parameter_opp setObject:[dic valueForKey:@"choice"] forKey:col_code];
+                [idic_parameter_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
                 [self.skstableView reloadData];
             };
             
@@ -258,6 +266,34 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
     }
 }
+-(void)fn_get_choice_arr:(NSString*)col_option{
+    [alist_option removeAllObjects];
+    NSArray *arr_option=[col_option componentsSeparatedByString:@","];
+    for (NSString *str_option in arr_option) {
+        NSArray *arr=[str_option componentsSeparatedByString:@"/"];
+        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+        if ([arr count]==2) {
+            [dic setObject:[arr objectAtIndex:0] forKey:@"data"];
+            [dic setObject:[arr objectAtIndex:1] forKey:@"display"];
+        }
+        [alist_option addObject:dic];
+    }
+}
+-(NSString*)fn_convert_display_status:(NSString*)data{
+    NSString *display_str=nil;
+    NSInteger flag=0;
+    for (NSMutableDictionary *dic in alist_option) {
+        if ([data isEqualToString:[dic valueForKey:@"data"]]) {
+            display_str=[dic valueForKey:@"display"];
+            flag=1;
+        }
+    }
+    if (flag==0) {
+        display_str=data;
+    }
+    return display_str;
+}
+
 -(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
     RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
     VC.is_placeholder=placeholder;
