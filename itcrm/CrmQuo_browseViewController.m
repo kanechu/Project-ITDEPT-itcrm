@@ -116,5 +116,6 @@
     alist_crmquo_parameter=[db_crmquo fn_get_crmquo_browse_data:searchBar.text select_sql:select_sql];
     [self fn_init_crmquo_arr:alist_crmquo_parameter];
     [self.tableview reloadData];
+    [_is_searchBar resignFirstResponder];
 }
 @end

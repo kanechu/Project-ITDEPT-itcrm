@@ -10,7 +10,6 @@
 #import "DB_crmhbl_browse.h"
 #import "DB_formatlist.h"
 #import "DB_systemIcon.h"
-#import "Format_conversion.h"
 #import "Cell_browse.h"
 
 @interface ShipmentHistoryViewController ()

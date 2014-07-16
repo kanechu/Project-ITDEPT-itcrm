@@ -103,7 +103,6 @@ enum TEXT_TAG {
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"SKSTableViewCell";
-    
     SKSTableViewCell *cell = [self.skstableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -128,6 +127,7 @@ enum TEXT_TAG {
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
     //相关联的参数
     NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *col_type=[dic valueForKey:@"col_type"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
     }
@@ -136,19 +136,22 @@ enum TEXT_TAG {
         return [blockSelf-> alist_filtered_data [tag/100-1][tag-TEXT_TAG1-(tag/100-1)*100]
                 valueForKey:@"col_code"];
     };
-    static NSString *cellIndentifier=@"Cell_search_contact";
-    Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
-    if (cell==nil) {
-        cell=[[Cell_search alloc]init];
+    if ([col_type isEqualToString:@"string"]) {
+        
+        static NSString *cellIndentifier=@"Cell_search_contact";
+        Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
+        if (cell==nil) {
+            cell=[[Cell_search alloc]init];
+        }
+        cell.il_prompt_label.text=col_label;
+        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
+        cell.itf_searchData.delegate=self;
+        cell.backgroundColor=COLOR_LIGHT_YELLOW;
+        cell.itf_searchData.tag=TEXT_TAG1+indexPath.section*100+indexPath.subRow-1;
+        cell.itf_searchData.text=[idic_value valueForKey:col_code];
+        return cell;
     }
-    cell.il_prompt_label.text=col_label;
-    cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-    cell.itf_searchData.delegate=self;
-    cell.backgroundColor=COLOR_LIGHT_YELLOW;
-    cell.itf_searchData.tag=TEXT_TAG1+indexPath.section*100+indexPath.subRow-1;
-    cell.itf_searchData.text=[idic_value valueForKey:col_code];
-    return cell;
-
+    return nil;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
@@ -168,7 +171,7 @@ enum TEXT_TAG {
     NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
     for (Advance_SearchData *searchData in alist_searchData_copy) {
         if ([searchData.is_parameter isEqualToString:col_code]) {
-            [alist_searchCriteria removeObject:searchData];
+            [alist_searchData removeObject:searchData];
         }
     }
     if ([textfield.text length]!=0) {

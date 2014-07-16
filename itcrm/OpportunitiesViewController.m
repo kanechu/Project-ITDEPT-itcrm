@@ -132,6 +132,7 @@
     alist_opp_parameter=[db_crmopp fn_get_crmopp_data:searchBar.text select_sql:select_sql];
     [self fn_init_crmopp_browse_arr:alist_opp_parameter];
     [self.tableview reloadData];
+    [_is_searchBar resignFirstResponder];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_is_searchBar resignFirstResponder];

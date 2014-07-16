@@ -10,9 +10,7 @@
 #import "DB_formatlist.h"
 #import "DB_crmacct_browse.h"
 #import "Cell_browse.h"
-#import "PopViewManager.h"
 #import "AccountViewController.h"
-#import "Format_conversion.h"
 #import "Custom_Color.h"
 #import "MaintFormViewController.h"
 @interface Crmacct_browseViewController ()
@@ -139,6 +137,7 @@
     alist_account_parameter=[db_acct fn_get_data:_searchBar.text select_sql:select_sql];
     [self fn_init_account:alist_account_parameter];
     [self.tableView_acct reloadData];
+    [_searchBar resignFirstResponder];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
     [_searchBar resignFirstResponder];

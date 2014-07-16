@@ -130,6 +130,7 @@
     alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:searchBar.text select_sql:select_sql];
     [self fn_init_crmcontact_arr:alist_contact_parameter];
     [self.tableview reloadData];
+    [_is_searchBar resignFirstResponder];
 }
 - (IBAction)fn_advance_search:(id)sender {
     SearchCrmContactViewController *crm_contact=[self.storyboard instantiateViewControllerWithIdentifier:@"SearchCrmContactViewController"];
