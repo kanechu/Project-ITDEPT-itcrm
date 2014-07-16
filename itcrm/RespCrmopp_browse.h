@@ -31,6 +31,7 @@
 @property(nonatomic,copy)NSString *contact_mobile;
 @property(nonatomic,copy)NSString *opp_stage;
 @property(nonatomic,copy)NSString *opp_stage_desc;
+@property(nonatomic,copy)NSString *opp_stage_lang;
 @property(nonatomic,copy)NSString *exp_close_date;
 @property(nonatomic,copy)NSString *opp_remark;
 @property(nonatomic,copy)NSString *opp_probability;
@@ -41,16 +42,20 @@
 @property(nonatomic,copy)NSString *op_type;
 @property(nonatomic,copy)NSString *load_main_region_code;
 @property(nonatomic,copy)NSString *load_main_region_name;
+@property(nonatomic,copy)NSString *load_main_region_lang;
 @property(nonatomic,copy)NSString *load_sub_region_code;
 @property(nonatomic,copy)NSString *load_sub_region_name;
+@property(nonatomic,copy)NSString *load_sub_region_lang;
 @property(nonatomic,copy)NSString *load_region_code;
 @property(nonatomic,copy)NSString *load_region_name;
 @property(nonatomic,copy)NSString *load_code;
 @property(nonatomic,copy)NSString *load_name;
 @property(nonatomic,copy)NSString *dish_main_region_code;
 @property(nonatomic,copy)NSString *dish_main_region_name;
+@property(nonatomic,copy)NSString *dish_main_region_lang;
 @property(nonatomic,copy)NSString *dish_sub_region_code;
 @property(nonatomic,copy)NSString *dish_sub_region_name;
+@property(nonatomic,copy)NSString *dish_sub_region_lang;
 @property(nonatomic,copy)NSString *dish_region_code;
 @property(nonatomic,copy)NSString *dish_region_name;
 @property(nonatomic,copy)NSString *dish_code;
@@ -63,6 +68,7 @@
 @property(nonatomic,copy)NSString *movement_desc;
 @property(nonatomic,copy)NSString *inco_term;
 @property(nonatomic,copy)NSString *inco_term_desc;
+@property(nonatomic,copy)NSString *inco_term_lang;
 @property(nonatomic,copy)NSString *brand;
 @property(nonatomic,copy)NSString *competitor_rmk;
 @property(nonatomic,copy)NSString *volume;

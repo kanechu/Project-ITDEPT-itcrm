@@ -30,6 +30,7 @@
 @synthesize contact_mobile;
 @synthesize opp_stage;
 @synthesize opp_stage_desc;
+@synthesize opp_stage_lang;
 @synthesize exp_close_date;
 @synthesize opp_remark;
 @synthesize opp_probability;
@@ -40,16 +41,20 @@
 @synthesize op_type;
 @synthesize load_main_region_code;
 @synthesize load_main_region_name;
+@synthesize load_main_region_lang;
 @synthesize load_sub_region_code;
 @synthesize load_sub_region_name;
+@synthesize load_sub_region_lang;
 @synthesize load_region_code;
 @synthesize load_region_name;
 @synthesize load_code;
 @synthesize load_name;
 @synthesize dish_main_region_code;
 @synthesize dish_main_region_name;
+@synthesize dish_main_region_lang;
 @synthesize dish_sub_region_code;
 @synthesize dish_sub_region_name;
+@synthesize dish_sub_region_lang;
 @synthesize dish_region_code;
 @synthesize dish_region_name;
 @synthesize dish_code;
@@ -62,6 +67,7 @@
 @synthesize movement_desc;
 @synthesize inco_term;
 @synthesize inco_term_desc;
+@synthesize inco_term_lang;
 @synthesize brand;
 @synthesize competitor_rmk;
 @synthesize volume;

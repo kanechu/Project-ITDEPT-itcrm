@@ -110,28 +110,26 @@
     NSMutableArray *crmhbl_arr=[db_crmhbl fn_get_relate_crmhbl_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_hbl"]];
     alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
+    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
+    flag_groupNum=[alist_groupNameAndNum count];
     NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
     NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
     NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
     if ([alist_crmtask count]!=0) {
         [crmtask_dic setObject:@"Activity" forKey:@"group_name"];
         [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
+        [alist_groupNameAndNum addObject:crmtask_dic];
     }
     if ([alist_crmopp count]!=0) {
         [crmopp_dic setObject:@"Opportunity" forKey:@"group_name"];
         [crmopp_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmopp count]] forKey:@"COUNT(group_name)"];
+        [alist_groupNameAndNum addObject:crmopp_dic];
     }
     if ([alist_crmhbl count]!=0) {
         [crmhbl_dic setObject:@"Shipment History" forKey:@"group_name"];
         [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
+        [alist_groupNameAndNum addObject:crmhbl_dic];
     }
-   
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
-    flag_groupNum=[alist_groupNameAndNum count];
-   
-    [alist_groupNameAndNum addObject:crmtask_dic];
-    [alist_groupNameAndNum addObject:crmopp_dic];
-    [alist_groupNameAndNum addObject:crmhbl_dic];
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup=[[NSMutableDictionary alloc]initWithCapacity:10];

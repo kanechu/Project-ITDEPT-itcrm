@@ -49,8 +49,10 @@
 @property(nonatomic,copy)NSString *rec_deletable;
 @property(nonatomic,copy)NSString *task_type;
 @property(nonatomic,copy)NSString *task_type_desc;
+@property(nonatomic,copy)NSString *task_type_lang;
 @property(nonatomic,copy)NSString *task_status;
 @property(nonatomic,copy)NSString *task_status_desc;
+@property(nonatomic,copy)NSString *task_status_lang;
 @property(nonatomic,copy)NSString *quo_uid;
 @property(nonatomic,copy)NSString *quo_no;
 @property(nonatomic,copy)NSString *task_date_period;

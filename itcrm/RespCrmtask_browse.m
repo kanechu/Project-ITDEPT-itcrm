@@ -49,8 +49,10 @@
 @synthesize rec_deletable;
 @synthesize task_type;
 @synthesize task_type_desc;
+@synthesize task_type_lang;
 @synthesize task_status;
 @synthesize task_status_desc;
+@synthesize task_status_lang;
 @synthesize quo_uid;
 @synthesize quo_no;
 @synthesize task_date_period;
