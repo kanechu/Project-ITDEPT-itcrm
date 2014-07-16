@@ -177,7 +177,7 @@ enum TEXT_TAG {
     if ([textfield.text length]!=0) {
         [idic_value setObject:textfield.text forKey:col_code];
         [idic_parameter setObject:col_code forKey:col_code];
-        [alist_searchData addObject:[self fn_get_searchData:col_code]];
+        [alist_searchData addObject:[expand_helper fn_get_searchData:col_code idic_value:idic_value idic_parameter:idic_parameter]];
     }
 
 }
@@ -187,13 +187,5 @@ enum TEXT_TAG {
         _callback(alist_searchData);
     }
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
-}
--(Advance_SearchData*)fn_get_searchData:(NSString*)key{
-    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-    if ([[idic_value valueForKey:key] length]!=0) {
-        searchData.is_searchValue=[idic_value valueForKey:key];
-        searchData.is_parameter=[idic_parameter valueForKey:key];
-    }
-    return searchData;
 }
 @end

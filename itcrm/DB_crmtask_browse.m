@@ -65,13 +65,13 @@
         NSString *sql1=[NSString string];
         if (flag==0 && [task.is_searchValue length]!=0) {
             sql=[sql stringByAppendingFormat:@"where %@ like ? ",task.is_parameter];
-            sql1=[NSString stringWithFormat:@"%@%%",task.is_searchValue];
+            sql1=[NSString stringWithFormat:@"%%%@%%",task.is_searchValue];
             [arr1 addObject:sql1];
             
         }
         if (flag==1&&[task.is_searchValue length]!=0) {
             sql=[sql stringByAppendingFormat:@"and %@ like ? ",task.is_parameter];
-            sql1=[NSString stringWithFormat:@"%@%%",task.is_searchValue];
+            sql1=[NSString stringWithFormat:@"%%%@%%",task.is_searchValue];
             [arr1 addObject:sql1];
             
         }

@@ -15,8 +15,11 @@
 #import "MZFormSheetController.h"
 #import "Advance_SearchData.h"
 
+#define TEXTFIELD_TAG 100
+typedef NSString* (^passValue_task)(NSInteger tag);
 @interface SearchTaskViewController ()
-
+@property(nonatomic,strong)passValue_task pass_Value;
+@property(nonatomic,strong)NSMutableArray *alist_searchData;
 @end
 
 @implementation SearchTaskViewController
@@ -26,6 +29,8 @@
 @synthesize idic_value;
 @synthesize idic_parameter;
 @synthesize checkText;
+@synthesize pass_Value;
+@synthesize alist_searchData;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -72,6 +77,7 @@
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_value=[[NSMutableDictionary alloc]initWithCapacity:10];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
+    alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
 }
 
 -(void)fn_custom_gesture{
@@ -104,7 +110,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"SKSTableViewCell";
-    
     SKSTableViewCell *cell = [self.skstableview dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -117,7 +122,6 @@
     if (arr!=nil) {
         [alist_filtered_data addObject:arr];
     }
-    
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,7 +139,10 @@
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
     }
-    
+    __block SearchTaskViewController *blockSelf=self;
+    pass_Value=^NSString*(NSInteger tag){
+        return [blockSelf->alist_filtered_data[indexPath.section][tag-TEXTFIELD_TAG-indexPath.section*100]valueForKey:@"col_code"];
+    };
     if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_search";
         Cell_search *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -146,6 +153,7 @@
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.itf_searchData.delegate=self;
+        cell.itf_searchData.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
         if ([col_code isEqualToString:@"task_title"]) {
             cell.itf_searchData.tag=100;
             cell.itf_searchData.text=[idic_value valueForKey:@"title_value"];
@@ -170,6 +178,8 @@
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.il_prompt_label.text=col_label;
+        cell.itf_input_endDate.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
+        cell.itf_input_startDate.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
         NSArray *arr=[col_code componentsSeparatedByString:@","];
         if ([[arr objectAtIndex:0] isEqualToString:@"task_start_date"]) {
             cell.itf_input_startDate.text=[idic_value valueForKey:@"start_date_value"];
@@ -187,15 +197,21 @@
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
+-(float)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
+    //提取每行的数据
+    NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
+    //col_stye 类型名
+    NSString *col_stye=[dic valueForKey:@"col_type"];
+    if ([col_stye isEqualToString:@"string"]) {
+        return 44;
+    }else{
+        return 80;
+    }
+}
 
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
-    NSMutableArray *alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
-    [alist_searchData addObject:[self fn_get_searchData:@"title_value" :@"task_title"]];
-    [alist_searchData addObject:[self fn_get_searchData:@"desc_value" :@"task_desc"]];
-    [alist_searchData addObject:[self fn_get_searchData:@"start_date_value" :@"task_start_date"]];
-    [alist_searchData addObject:[self fn_get_searchData:@"end_date_value" :@"task_end_date"]];
-    if ([[idic_value valueForKey:@"title_value"]length]!=0) {
+    if ([[idic_value valueForKey:@"task_title"]length]!=0) {
         if (_callback_task) {
             _callback_task(alist_searchData);
         }
@@ -206,14 +222,6 @@
     }
     
 }
--(Advance_SearchData*)fn_get_searchData:(NSString*)value_key :(NSString*)parameter_key{
-    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-    if ([[idic_value valueForKey:value_key] length]!=0) {
-        searchData.is_searchValue=[idic_value valueForKey:value_key];
-        searchData.is_parameter=[idic_parameter valueForKey:parameter_key];
-    }
-    return searchData;
-}
 
 - (IBAction)fn_go_back:(id)sender {
      [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
@@ -221,25 +229,41 @@
 
 - (IBAction)fn_textfield_endEdit:(id)sender {
     UITextField *textfield=(UITextField*)sender;
-    if (textfield.tag==100) {
-        [idic_value setObject:textfield.text forKey:@"title_value"];
+    NSString *col_code=pass_Value(textfield.tag);
+    [self fn_save_searchData:col_code text_value:textfield.text];
+}
+-(void)fn_save_searchData:(NSString*)col_code text_value:(NSString*)text_value{
+    NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
+    for (Advance_SearchData *searchData in alist_searchData_copy) {
+        if ([searchData.is_parameter isEqualToString:col_code]) {
+            [alist_searchData removeObject:searchData];
+        }
     }
-    if (textfield.tag==101) {
-        [idic_value setObject:textfield.text forKey:@"desc_value"];
+    if (text_value!=0) {
+        [idic_value setObject:text_value forKey:col_code];
+        [idic_parameter setObject:col_code forKey:col_code];
+        [alist_searchData addObject:[expand_helper fn_get_searchData:col_code idic_value:idic_value idic_parameter:idic_parameter]];
     }
 }
 
 - (IBAction)fn_startDate_endEdit:(id)sender {
     UITextField *textfield=(UITextField*)sender;
-    [idic_value setObject:textfield.text forKey:@"start_date_value"];
+    NSString *col_code=pass_Value(textfield.tag);
+    NSString *col_code_start=[self fn_separate_code:col_code index:0];
+    [self fn_save_searchData:col_code_start text_value:textfield.text];
 }
 
 - (IBAction)fn_endDate_endEdit:(id)sender {
     UITextField *textfield=(UITextField*)sender;
-    [idic_value setObject:textfield.text forKey:@"end_date_value"];
+    NSString *col_code=pass_Value(textfield.tag);
+    NSString *col_code_end=[self fn_separate_code:col_code index:1];
+    [self fn_save_searchData:col_code_end text_value:textfield.text];
+}
+-(NSString*)fn_separate_code:(NSString*)col_code index:(NSInteger)index{
+    NSArray *arr=[col_code componentsSeparatedByString:@","];
+    return [arr objectAtIndex:index];
     
 }
-
 - (IBAction)fn_clear_input_data:(id)sender {
     idic_value=nil;
     idic_value=[[NSMutableDictionary alloc]init];

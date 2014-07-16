@@ -184,20 +184,11 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
         [idic_opp_parameter setObject:key forKey:key];
         [idic_opp_value setObject:str_data forKey:key];
         
-        [alist_searchData addObject:[self fn_get_searchData:key]];
+        [alist_searchData addObject:[expand_helper fn_get_searchData:key idic_value:idic_opp_value idic_parameter:idic_opp_parameter]];
         [self.skstableView reloadData];
         
     };
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
 }
--(Advance_SearchData*)fn_get_searchData:(NSString*)key{
-    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-    if ([[idic_opp_value valueForKey:key] length]!=0) {
-        searchData.is_searchValue=[idic_opp_value valueForKey:key];
-        searchData.is_parameter=[idic_opp_parameter valueForKey:key];
-    }
-    return searchData;
-}
-
 @end

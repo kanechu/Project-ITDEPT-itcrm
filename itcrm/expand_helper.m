@@ -7,7 +7,7 @@
 //
 
 #import "expand_helper.h"
-
+#import "Advance_SearchData.h"
 @implementation expand_helper
 
 #pragma mark 将额外的cell的线隐藏
@@ -21,5 +21,14 @@
 +(NSArray*)fn_filtered_criteriaData:(NSString*)key arr:(NSMutableArray*)alist_will_filter{
     NSArray *filtered=[alist_will_filter filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(group_name==%@)",key]];
     return filtered;
+}
+#pragma mark 进阶查询
++(Advance_SearchData*)fn_get_searchData:(NSString*)key idic_value:(NSMutableDictionary*)idic_value idic_parameter:(NSMutableDictionary*)idic_parameter{
+    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
+    if ([[idic_value valueForKey:key] length]!=0) {
+        searchData.is_searchValue=[idic_value valueForKey:key];
+        searchData.is_parameter=[idic_parameter valueForKey:key];
+    }
+    return searchData;
 }
 @end

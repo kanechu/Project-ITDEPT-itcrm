@@ -224,9 +224,9 @@ enum TEXTFIELD_TAG {
 }
 
 - (IBAction)fn_search_account:(id)sender {
-    [alist_searchData addObject:[self fn_get_searchData:@"country"]];
-    [alist_searchData addObject:[self fn_get_searchData:@"region" ]];
-    [alist_searchData addObject:[self fn_get_searchData:@"territory"]];
+    [alist_searchData addObject:[expand_helper fn_get_searchData:@"country" idic_value:idic_search_value idic_parameter:idic_parameter]];
+    [alist_searchData addObject:[expand_helper fn_get_searchData:@"region" idic_value:idic_search_value idic_parameter:idic_parameter]];
+    [alist_searchData addObject:[expand_helper fn_get_searchData:@"territory" idic_value:idic_search_value idic_parameter:idic_parameter]];
     if ([[idic_search_value valueForKey:@"acct_code"] length]!=0) {
         if (_callback_acct) {
             _callback_acct(alist_searchData);
@@ -237,14 +237,6 @@ enum TEXTFIELD_TAG {
         [alert show];
     }
     
-}
--(Advance_SearchData*)fn_get_searchData:(NSString*)key{
-    Advance_SearchData *searchData=[[Advance_SearchData alloc]init];
-    if ([[idic_search_value valueForKey:key] length]!=0) {
-        searchData.is_searchValue=[idic_search_value valueForKey:key];
-        searchData.is_parameter=[idic_parameter valueForKey:key];
-    }
-    return searchData;
 }
 
 - (IBAction)fn_go_back:(id)sender {
@@ -310,7 +302,7 @@ enum TEXTFIELD_TAG {
     if ([textfield.text length]!=0) {
         [idic_search_value setObject:textfield.text forKey:col_code];
         [idic_parameter setObject:col_code forKey:col_code];
-        [alist_searchData addObject:[self fn_get_searchData:col_code]];
+        [alist_searchData addObject:[expand_helper fn_get_searchData:col_code idic_value:idic_search_value idic_parameter:idic_parameter]];
     }
 }
 
