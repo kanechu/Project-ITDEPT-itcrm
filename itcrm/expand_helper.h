@@ -10,7 +10,15 @@
 #import "Advance_SearchData.h"
 @interface expand_helper : NSObject
 +(void)setExtraCellLineHidden: (UITableView *)tableView;
-#pragma mark 对数组进行过滤
+/**
+ *  根据字典里的key,对数组过滤
+ *
+ *  @param key               数组中字典里面的key
+ *  @param alist_will_filter 将要过滤的数组
+ *
+ *  @return 过滤得到的数组
+ */
 +(NSArray*)fn_filtered_criteriaData:(NSString*)key arr:(NSMutableArray*)alist_will_filter;
+
 +(Advance_SearchData*)fn_get_searchData:(NSString*)key idic_value:(NSMutableDictionary*)idic_value idic_parameter:(NSMutableDictionary*)idic_parameter;
 @end

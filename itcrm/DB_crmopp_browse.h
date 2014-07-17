@@ -14,7 +14,7 @@
 
 -(BOOL)fn_save_crmopp_browse:(NSMutableArray*)alist_result;
 
--(NSMutableArray*)fn_get_crmopp_data:(NSString*)op_type select_sql:(NSString*)select_sql;
+-(NSMutableArray*)fn_get_crmopp_data:(NSString*)opp_name select_sql:(NSString*)select_sql;
 
 -(NSMutableArray*)fn_get_relate_crmopp_data:(NSString *)opp_ref_id select_sql:(NSString *)select_sql;
 

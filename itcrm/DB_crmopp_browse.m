@@ -31,11 +31,11 @@
     }
     return NO;
 }
--(NSMutableArray*)fn_get_crmopp_data:(NSString*)op_type select_sql:(NSString*)select_sql{
-    NSString *sql=[NSString stringWithFormat:@"SELECT %@ FROM crmopp_browse where op_type like ?",select_sql];
+-(NSMutableArray*)fn_get_crmopp_data:(NSString*)opp_name select_sql:(NSString*)select_sql{
+    NSString *sql=[NSString stringWithFormat:@"SELECT %@ FROM crmopp_browse where opp_name like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:sql,[NSString stringWithFormat:@"%@%%",op_type]];
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:sql,[NSString stringWithFormat:@"%%%@%%",opp_name]];
         while ([lfmdb_result next]) {
             [arr addObject:[lfmdb_result resultDictionary]];
         }
