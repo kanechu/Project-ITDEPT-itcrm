@@ -101,6 +101,9 @@
     cell.il_show_text.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
     cell.il_show_text.frame=CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height);
+    //设置选中cell的背景颜色
+    cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

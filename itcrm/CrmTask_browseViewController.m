@@ -110,7 +110,7 @@
     // Configure the cell...
     //设置选中cell的背景颜色
     cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW2;
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
     //示意标识
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;

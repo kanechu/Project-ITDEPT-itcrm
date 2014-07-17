@@ -337,7 +337,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IwR-Om-nSN" customClass="SKSTableView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="469"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_maintForm11" rowHeight="40" id="tTQ-uU-jcH" customClass="Cell_maintForm1">
                                         <rect key="frame" x="0.0" y="22" width="320" height="40"/>
@@ -362,6 +362,7 @@
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="il_remind_label" destination="ebt-VV-v0e" id="SyF-xp-fBU"/>
                                             <outlet property="itv_data_textview" destination="0vO-Sg-Tqu" id="GO9-mK-Sx1"/>
@@ -399,6 +400,7 @@
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="ibtn_lookup" destination="Pmr-Lf-6N4" id="5h4-mD-0iJ"/>
                                             <outlet property="il_remind_label" destination="COy-WA-upT" id="C47-H3-s5z"/>
@@ -1465,7 +1467,7 @@
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="1" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="il_remind_label" destination="m6X-6d-oGp" id="IjX-Qq-2Rd"/>
                                             <outlet property="itv_data_textview" destination="0Es-6z-MKO" id="FEr-Go-mF6"/>

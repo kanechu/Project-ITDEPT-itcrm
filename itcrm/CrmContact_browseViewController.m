@@ -12,6 +12,7 @@
 #import "DB_formatlist.h"
 #import "SearchCrmContactViewController.h"
 #import "EditContactViewController.h"
+#import "Custom_Color.h"
 
 @interface CrmContact_browseViewController ()
 @property(nonatomic,strong)Format_conversion *convert;
@@ -94,6 +95,9 @@
     NSString *str_body=[[alist_crmcontact objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[convert fn_heightWithString:str_body font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x,cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
+    //设置选中cell的背景颜色
+    cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

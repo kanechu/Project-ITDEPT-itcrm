@@ -63,7 +63,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
     [self fn_init_arr];
     [self fn_init_idic_parameter];
     self.skstableview.SKSTableViewDelegate=self;
-    self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW1;
     [self.skstableview fn_expandall];
     [expand_helper setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
@@ -166,7 +165,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
             cell=[[Cell_maintForm1 alloc]init];
         }
         cell.il_remind_label.text=col_label;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
@@ -202,7 +200,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
             cell.ibtn_lookup.tag=TAG1;
             [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"type"];
         }
-        cell.backgroundColor=COLOR_LIGHT_YELLOW1;
         return cell;
     }
     
