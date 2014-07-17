@@ -7,7 +7,7 @@
 //
 
 #import "Cell_maintForm1.h"
-
+#import "Custom_Color.h"
 @implementation Cell_maintForm1
 @synthesize is_enable;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -32,9 +32,16 @@
     [super layoutSubviews];
     if (is_enable==0) {
         _itv_data_textview.editable=NO;
-       
+        _itv_data_textview.layer.borderWidth=0.5;
+        _itv_data_textview.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+        _itv_data_textview.layer.cornerRadius=4;
+        _itv_data_textview.textColor=[UIColor darkGrayColor];
     }else{
         _itv_data_textview.editable=YES;
+        _itv_data_textview.layer.borderColor=[COLOR_LIGHT_YELLOW2 CGColor];
+        _itv_data_textview.layer.borderWidth=0.5;
+        _itv_data_textview.layer.cornerRadius=4;
+        _itv_data_textview.textColor=[UIColor blackColor];
     }
 }
 

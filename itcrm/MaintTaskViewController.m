@@ -186,7 +186,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
         //UITextView 上下左右有8px
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
          [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
-        cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
     if ([col_stye isEqualToString:@"lookup"]) {
@@ -200,7 +199,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
         NSString *str_status=[idic_parameter_value valueForKey:col_code];
         cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        cell.itv_edit_textview.layer.cornerRadius=5;
         cell.itv_edit_textview.delegate=self;
         if ([col_code isEqualToString:@"task_status"]) {
             cell.ibtn_lookup.tag=TAG;

@@ -203,6 +203,7 @@
     NSString *col_stye=[dic valueForKey:@"col_type"];
     //col_code 类型名
     NSString *col_code=[dic valueForKey:@"col_code"];
+    //is_enable 是否可修改
     NSString *is_enable=[dic valueForKey:@"is_enable"];
     NSInteger is_enable_flag=[is_enable integerValue];
     if ([[dic valueForKey:@"is_mandatory"] isEqualToString:@"1"]) {
@@ -220,7 +221,6 @@
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         cell.itv_data_textview.delegate=self;
-        cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
     if ([col_stye isEqualToString:@"checkbox"] ) {
@@ -248,7 +248,6 @@
         cell.il_remind_label.text=col_label;
         NSString *str_status=[idic_modified_value valueForKey:col_code];
         cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
-        cell.itv_edit_textview.layer.cornerRadius=5;
         [idic_lookup setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
         [idic_lookup setObject:col_code forKey:@"key_parameter"];
         

@@ -160,7 +160,6 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         //UITextView 上下左右有8px
         CGFloat height=[_convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
-        cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }
     if ([col_stye isEqualToString:@"local_lookup"]) {
@@ -175,7 +174,6 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         cell.itv_edit_textview.text=[_convert fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        cell.itv_edit_textview.layer.cornerRadius=5;
         cell.itv_edit_textview.delegate=self;
         CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
         [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+14)];

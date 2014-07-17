@@ -29,6 +29,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp_copy;
 @property (nonatomic,strong)Format_conversion *convert;
 @property (nonatomic,strong)passValue_opp pass_value;
+@property (nonatomic,strong)UITextView *textViewCheck;
 @end
 
 @implementation EditOppViewController
@@ -41,6 +42,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @synthesize pass_value;
 @synthesize idic_parameter_opp_copy;
 @synthesize alist_option;
+@synthesize textViewCheck;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -59,6 +61,8 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [expand_helper setExtraCellLineHidden:self.skstableView];
     [self.skstableView fn_expandall];
     convert=[[Format_conversion alloc]init];
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
 }
 
@@ -66,6 +70,19 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+/**
+ *  自定义一个手势，点击空白的地方，隐藏键盘
+ */
+-(void)fn_custom_gesture{
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapgesture.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapgesture];
+}
+-(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    [textViewCheck resignFirstResponder];
 }
 #pragma mark -获取要修改的opp数据
 -(void)fn_get_idic_parameter{
@@ -159,7 +176,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         //UITextView 上下左右有8px
         CGFloat height=[convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
-        cell.itv_data_textview.layer.cornerRadius=5;
         return cell;
     }else{
         static NSString *cellIndentifer=@"Cell_lookup_opp";
@@ -183,7 +199,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         //UITextView 上下左右有8px
         CGFloat height=[convert fn_heightWithString:cell.itv_edit_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
         [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+16)];
-        cell.itv_edit_textview.layer.cornerRadius=5;
         return cell;
     }
     
@@ -218,8 +233,15 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     return height;
 }
 #pragma mark UITextViewDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    textViewCheck=textView;
+}
 - (void)textViewDidEndEditing:(UITextView *)textView{
-    
+    NSMutableDictionary *dic=pass_value(textView.tag);
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    if (textView.text!=nil) {
+        [idic_parameter_opp setObject:textView.text forKey:col_code];
+    }
 }
 - (IBAction)fn_save_modified_data:(id)sender {
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"whether to save the modified data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
