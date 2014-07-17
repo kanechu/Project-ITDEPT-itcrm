@@ -124,6 +124,9 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //is_enable
+    NSString *is_enable=[dic valueForKey:@"is_enable"];
+    NSInteger is_enable_flag=[is_enable integerValue];
     //col_opption
     NSString *col_option=[dic valueForKey:@"col_option"];
     [self fn_get_choice_arr:col_option];
@@ -146,6 +149,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         if (cell==nil) {
             cell=[[Cell_maintForm1 alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
@@ -163,6 +167,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         if (cell==nil) {
             cell=[[Cell_lookup alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         cell.itv_edit_textview.delegate=self;
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;

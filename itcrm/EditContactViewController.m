@@ -137,6 +137,9 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //is_enable
+    NSString *is_enable=[dic valueForKey:@"is_enable"];
+    NSInteger is_enable_flag=[is_enable integerValue];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block EditContactViewController *blockSelf=self;
     passValue=^NSString*(NSInteger tag){
@@ -148,6 +151,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         if (cell==nil) {
             cell=[[Cell_maintForm1 alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
@@ -165,6 +169,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         if (cell==nil) {
             cell=[[Cell_lookup alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         NSString *str_status=[idic_parameter_contact valueForKey:col_code];
         cell.itv_edit_textview.text=[_convert fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
@@ -174,18 +179,9 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         cell.itv_edit_textview.delegate=self;
         CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
         [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+14)];
-        
-       /* if ([col_code isEqualToString:@"task_status"]) {
-            cell.ibtn_lookup.tag=TAG;
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
-        }
-        if ([col_code isEqualToString:@"task_type"]) {
-            cell.ibtn_lookup.tag=TAG1;
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"type"];
-        }*/
+      
         return cell;
     }
-    
     
     // Configure the cell...
     return nil;

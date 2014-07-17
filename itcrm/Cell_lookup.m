@@ -9,7 +9,7 @@
 #import "Cell_lookup.h"
 
 @implementation Cell_lookup
-
+@synthesize is_enable;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -25,5 +25,15 @@
 
     // Configure the view for the selected state
 }
-
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    if (is_enable==0) {
+        _itv_edit_textview.editable=NO;
+        _ibtn_lookup.enabled=NO;
+        
+    }else{
+        _itv_edit_textview.editable=YES;
+        _ibtn_lookup.enabled=YES;
+    }
+}
 @end

@@ -153,6 +153,14 @@ typedef NSString* (^pass_colCode)(NSInteger);
     NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
     NSString *col_stye=[dic valueForKey:@"col_type"];
+    //is_enable
+    NSString *is_enable=[dic valueForKey:@"is_enable"];
+    NSInteger is_enable_flag=[is_enable integerValue];
+    //is_mandatory
+    NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
+    if ([is_mandatory isEqualToString:@"1"]) {
+        col_label=[col_label stringByAppendingString:@"*"];
+    }
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block MaintTaskViewController *blockSelf=self;
     _pass_value=^NSString*(NSInteger tag){
@@ -164,6 +172,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
         if (cell==nil) {
             cell=[[Cell_maintForm1 alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
@@ -186,6 +195,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
         if (cell==nil) {
             cell=[[Cell_lookup alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         NSString *str_status=[idic_parameter_value valueForKey:col_code];
         cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
@@ -225,7 +235,6 @@ typedef NSString* (^pass_colCode)(NSInteger);
     }
     return height;
 }
-
 - (IBAction)fn_save_edit_data:(id)sender {
     UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"Whether to save the modified data" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
     [alertview show];

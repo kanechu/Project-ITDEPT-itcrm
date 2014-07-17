@@ -12,5 +12,5 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *itv_edit_textview;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_lookup;
-
+@property (assign,nonatomic)NSInteger is_enable;
 @end

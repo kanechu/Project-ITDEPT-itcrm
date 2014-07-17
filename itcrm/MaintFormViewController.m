@@ -204,6 +204,7 @@
     //col_code 类型名
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *is_enable=[dic valueForKey:@"is_enable"];
+    NSInteger is_enable_flag=[is_enable integerValue];
     if ([[dic valueForKey:@"is_mandatory"] isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
     }
@@ -213,6 +214,7 @@
         if (cell==nil) {
             cell=[[Cell_maintForm1 alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         cell.itv_data_textview.text=[idic_modified_value valueForKey:col_code];
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
