@@ -8,14 +8,12 @@
 
 #import "Web_updateData.h"
 #import "UploadingContract.h"
-#import "UpdateFormContract.h"
 #import "RespUpdateStatus.h"
 #import "NSDictionary.h"
 #import "DB_Login.h"
 #import "DB_RespLogin.h"
 #import "Web_base.h"
 #import "NSArray.h"
-#import "AppConstants.h"
 
 @implementation Web_updateData
 

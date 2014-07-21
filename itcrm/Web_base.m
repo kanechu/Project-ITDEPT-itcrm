@@ -12,9 +12,7 @@
 #import "RequestContract.h"
 #import "SearchFormContract.h"
 #import "SVProgressHUD.h"
-#import "AppConstants.h"
 #import "UploadingContract.h"
-#import "UpdateFormContract.h"
 #import "NSArray.h"
 @implementation Web_base
 

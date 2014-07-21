@@ -16,7 +16,6 @@
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
-#import "Custom_Color.h"
 #import "Cell_browse.h"
 #import "Cell_lookup.h"
 #import "DB_Region.h"

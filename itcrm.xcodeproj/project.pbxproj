@@ -75,7 +75,6 @@
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
-		B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */; };
 		B2A18D74196A506000045E1C /* RespUpdateStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D73196A506000045E1C /* RespUpdateStatus.m */; };
 		B2A642B01970CE8500CF7B36 /* SearchCrmOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */; };
 		B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */; };
@@ -308,8 +307,6 @@
 		B298627819386FF30097B553 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		B298627D193874140097B553 /* DB_RespLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_RespLogin.h; sourceTree = "<group>"; };
 		B298627E193874140097B553 /* DB_RespLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_RespLogin.m; sourceTree = "<group>"; };
-		B2A18D6C196A3D5200045E1C /* UpdateFormContract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateFormContract.h; sourceTree = "<group>"; };
-		B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateFormContract.m; sourceTree = "<group>"; };
 		B2A18D72196A506000045E1C /* RespUpdateStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespUpdateStatus.h; sourceTree = "<group>"; };
 		B2A18D73196A506000045E1C /* RespUpdateStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespUpdateStatus.m; sourceTree = "<group>"; };
 		B2A642AE1970CE8500CF7B36 /* SearchCrmOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmOppViewController.h; sourceTree = "<group>"; };
@@ -731,8 +728,6 @@
 				B2DA4613196A85FC001FD4F0 /* UploadingContract.m */,
 				B2B0931C19346A52002FE190 /* SearchFormContract.h */,
 				B2B0931D19346A52002FE190 /* SearchFormContract.m */,
-				B2A18D6C196A3D5200045E1C /* UpdateFormContract.h */,
-				B2A18D6D196A3D5200045E1C /* UpdateFormContract.m */,
 				B298626E19385CCB0097B553 /* RespPermit.h */,
 				B298626F19385CCB0097B553 /* RespPermit.m */,
 				B26CBC9C19347CBA00C5287B /* RespLogin.h */,
@@ -1020,7 +1015,6 @@
 				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
 				B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */,
 				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
-				B2A18D6E196A3D5200045E1C /* UpdateFormContract.m in Sources */,
 				B2223C96196FDB4000FFE884 /* EditContactViewController.m in Sources */,
 				B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */,
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,

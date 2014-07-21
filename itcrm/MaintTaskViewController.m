@@ -12,12 +12,11 @@
 #import "DB_MaintForm.h"
 #import "Cell_maintForm1.h"
 #import "Cell_lookup.h"
-#import "Custom_Color.h"
 #import "OptionViewController.h"
 #import "DB_crmtask_browse.h"
-#import "UpdateFormContract.h"
 #import "Web_updateData.h"
 #import "DB_Region.h"
+#import "RespCrmtask_browse.h"
 
 enum LOOKUP_TAG {
     TAG = 1,
@@ -291,10 +290,13 @@ typedef NSString* (^pass_colCode)(NSInteger);
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(250,300) uponView:self];
 }
--(UpdateFormContract*)fn_init_updateform{
-    UpdateFormContract *upd_form=[[UpdateFormContract alloc]init];
+-(Respcrmtask_browse*)fn_init_updateform{
+    NSString *unique_id=[idic_parameter_value valueForKey:@"unique_id"];
+    [idic_parameter_value removeObjectForKey:@"unique_id"];
+    Respcrmtask_browse *upd_form=[[Respcrmtask_browse alloc]init];
     //使用kvc给模型数据赋值
     [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
+    [idic_parameter_value setObject:unique_id forKey:@"unique_id"];
     return upd_form;
 }
 #pragma mark UITextViewDelegate

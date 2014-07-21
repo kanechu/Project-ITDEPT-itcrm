@@ -10,7 +10,6 @@
 #import "DB_Region.h"
 #import "Cell_region.h"
 #import "MZFormSheetController.h"
-#import "Custom_Color.h"
 @interface RegionViewController ()
 @property (nonatomic,strong)DB_Region *db;
 @end

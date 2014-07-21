@@ -18,4 +18,5 @@
     #import"PopViewManager.h"
     #import"expand_helper.h"
     #import"AppConstants.h"
+    #import"Custom_Color.h"
 #endif

@@ -12,7 +12,6 @@
 #import "DB_searchCriteria.h"
 #import "Advance_SearchData.h"
 #import "SKSTableViewCell.h"
-#import "Custom_Color.h"
 
 typedef NSString* (^pass_value_block)(NSInteger);
 enum TEXT_TAG {

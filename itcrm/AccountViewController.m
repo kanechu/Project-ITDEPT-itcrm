@@ -14,7 +14,6 @@
 #import "DB_searchCriteria.h"
 #import "MZFormSheetController.h"
 #import "RegionViewController.h"
-#import "Custom_Color.h"
 #import "Advance_SearchData.h"
 
 typedef NSString* (^pass_colCode)(NSInteger);

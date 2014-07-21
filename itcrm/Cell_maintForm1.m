@@ -7,7 +7,6 @@
 //
 
 #import "Cell_maintForm1.h"
-#import "Custom_Color.h"
 @implementation Cell_maintForm1
 @synthesize is_enable;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

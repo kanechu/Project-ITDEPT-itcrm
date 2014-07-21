@@ -8,7 +8,6 @@
 
 #import "SearchTaskViewController.h"
 #import "Cell_search.h"
-#import "Custom_Color.h"
 #import "Cell_taskSearch.h"
 #import "SKSTableViewCell.h"
 #import "DB_searchCriteria.h"

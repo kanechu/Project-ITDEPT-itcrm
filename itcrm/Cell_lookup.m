@@ -7,7 +7,6 @@
 //
 
 #import "Cell_lookup.h"
-#import "Custom_Color.h"
 @implementation Cell_lookup
 @synthesize is_enable;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

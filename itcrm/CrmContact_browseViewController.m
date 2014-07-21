@@ -12,7 +12,6 @@
 #import "DB_formatlist.h"
 #import "SearchCrmContactViewController.h"
 #import "EditContactViewController.h"
-#import "Custom_Color.h"
 
 @interface CrmContact_browseViewController ()
 @property(nonatomic,strong)Format_conversion *convert;
