@@ -11,6 +11,7 @@
 @interface DB_crmcontact_browse : NSObject
 @property(nonatomic,strong)DBManager *idb;
 -(BOOL)fn_save_crmcontact_browse:(NSMutableArray*)alist_result;
+-(BOOL)fn_update_crmcontact_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id;
 -(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_name select_sql:(NSString *)select_sql;
 -(NSMutableArray*)fn_get_detail_crmcontact_data:(NSMutableArray*)alist_searchData select_sql:(NSString*)select_sql;
 -(NSMutableArray*)fn_get_crmcontact_browse:(NSString*)contact_id;

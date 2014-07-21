@@ -20,7 +20,7 @@
 @implementation Web_updateData
 
 #pragma mark update
-- (void) fn_get_updateStatus_data:(UpdateFormContract*)UpdateForm :(CallBack_data)callback{
+- (void) fn_get_updateStatus_data:(id)UpdateForm path:(NSString*)il_url :(CallBack_data)callback {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
     NSString* base_url=nil;
@@ -34,13 +34,13 @@
     req_form.Auth =auth;
     req_form.UpdateForm = [NSSet setWithObjects:UpdateForm, nil];
     Web_base *web_base=[[Web_base alloc]init];
-    web_base.il_url=STR_CRMTASK_UPDATE_URL;
+    web_base.il_url=il_url;
     web_base.base_url=base_url;
     web_base.iresp_class=[RespUpdateStatus class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUpdateStatus class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         callback(arr_resp_result);
     };
-    [web_base fn_update_data:req_form];
+    [web_base fn_update_data:req_form updateform:UpdateForm];
 }
 @end

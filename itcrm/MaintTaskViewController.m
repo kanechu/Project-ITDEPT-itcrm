@@ -246,7 +246,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     }
     if (buttonIndex==0) {
         Web_updateData *web_update=[[Web_updateData alloc]init];
-        [web_update fn_get_updateStatus_data:[self fn_init_updateform] :^(NSMutableArray *arr){
+        [web_update fn_get_updateStatus_data:[self fn_init_updateform] path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
             _alist_updateStatus=arr;
             DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
             BOOL isSuccess= [db fn_update_crmtask_browse:idic_parameter_value task_id:[idic_parameter_value valueForKey:@"unique_id"]];

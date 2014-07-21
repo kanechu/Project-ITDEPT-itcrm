@@ -111,6 +111,12 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"Segue_editContact" sender:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmcontact_browse) name:@"contact_update" object:nil];
+}
+-(void)fn_update_crmcontact_browse{
+    alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:_is_searchBar.text select_sql:select_sql];
+    [self fn_init_crmcontact_arr:alist_contact_parameter];
+    [self.tableview reloadData];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];

@@ -17,4 +17,5 @@
     #import"Format_conversion.h"
     #import"PopViewManager.h"
     #import"expand_helper.h"
+    #import"AppConstants.h"
 #endif

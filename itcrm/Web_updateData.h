@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 @class UpdateFormContract;
+@class RespCrmcontact_browse;
 typedef void (^CallBack_data)(NSMutableArray *arr_result);
 @interface Web_updateData : NSObject
 
-- (void) fn_get_updateStatus_data:(UpdateFormContract*)UpdateForm :(CallBack_data)callback;
+- (void) fn_get_updateStatus_data:(id)UpdateForm path:(NSString*)il_url :(CallBack_data)callback ;
 
 @end

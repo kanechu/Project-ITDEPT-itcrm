@@ -117,6 +117,7 @@
 		B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F0194693840012A531 /* RespCrmtask_browse.m */; };
 		B2B704F7194699CA0012A531 /* DB_crmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */; };
 		B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704FC1946E0250012A531 /* Format_conversion.m */; };
+		B2C48822197CE14E0087A382 /* QuoWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2C48821197CE14E0087A382 /* QuoWebViewController.m */; };
 		B2CA048919625227005A6F9A /* Cell_Option.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CA048819625227005A6F9A /* Cell_Option.m */; };
 		B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CA048E1962532B005A6F9A /* OptionViewController.m */; };
 		B2CB6E7F193DB0E20061F484 /* DB_searchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E7E193DB0E20061F484 /* DB_searchCriteria.m */; };
@@ -373,6 +374,8 @@
 		B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmtask_browse.m; sourceTree = "<group>"; };
 		B2B704FB1946E0250012A531 /* Format_conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Format_conversion.h; sourceTree = "<group>"; };
 		B2B704FC1946E0250012A531 /* Format_conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Format_conversion.m; sourceTree = "<group>"; };
+		B2C48820197CE14E0087A382 /* QuoWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuoWebViewController.h; sourceTree = "<group>"; };
+		B2C48821197CE14E0087A382 /* QuoWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuoWebViewController.m; sourceTree = "<group>"; };
 		B2CA048719625227005A6F9A /* Cell_Option.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_Option.h; sourceTree = "<group>"; };
 		B2CA048819625227005A6F9A /* Cell_Option.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_Option.m; sourceTree = "<group>"; };
 		B2CA048D1962532B005A6F9A /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionViewController.h; sourceTree = "<group>"; };
@@ -797,6 +800,8 @@
 				B2223C95196FDB4000FFE884 /* EditContactViewController.m */,
 				B2D13E3E196F7A5900E97F81 /* CrmQuo_browseViewController.h */,
 				B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */,
+				B2C48820197CE14E0087A382 /* QuoWebViewController.h */,
+				B2C48821197CE14E0087A382 /* QuoWebViewController.m */,
 				B258B2DA19597B2D00996C12 /* ShipmentHistoryViewController.h */,
 				B258B2DB19597B2D00996C12 /* ShipmentHistoryViewController.m */,
 				B260D98319454C4D0026A1E9 /* OpportunitiesViewController.h */,
@@ -987,6 +992,7 @@
 				B2759998193EF955005CF480 /* DB_formatlist.m in Sources */,
 				B27EDFC219401092007F89A6 /* Cell_search1.m in Sources */,
 				B2B092C819345E74002FE190 /* main.m in Sources */,
+				B2C48822197CE14E0087A382 /* QuoWebViewController.m in Sources */,
 				B275998F193EF22A005CF480 /* Web_resquestData.m in Sources */,
 				B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */,
 				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,

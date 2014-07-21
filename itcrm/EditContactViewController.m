@@ -16,6 +16,8 @@
 #import "DB_crmacct_browse.h"
 #import "MZFormSheetController.h"
 #import "OptionViewController.h"
+#import "RespCrmcontact_browse.h"
+#import "Web_updateData.h"
 enum TEXT_TAG {
     TEXT_TAG = 100
 };
@@ -243,13 +245,29 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
-        NSLog(@"保存数据");
+        Web_updateData *web_update=[[Web_updateData alloc]init];
+        [web_update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMCONTACT_UPDATE_URL :^(NSMutableArray *arr){
+            DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
+            BOOL isSuccess=[db fn_update_crmcontact_browse:idic_parameter_contact unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
+            if (isSuccess) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
+            }
+            
+        }];
     }
     if (buttonIndex==1) {
         NSLog(@"不保存数据");
         idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];
         [self.skstableView reloadData];
     }
+}
+-(RespCrmcontact_browse*)fn_get_updateform{
+    RespCrmcontact_browse *updateform_contact=[[RespCrmcontact_browse alloc]init];
+    NSString *unique_id=[idic_parameter_contact valueForKey:@"unique_id"];
+    [idic_parameter_contact removeObjectForKey:@"unique_id"];
+    [updateform_contact setValuesForKeysWithDictionary:idic_parameter_contact];
+    [idic_parameter_contact setObject:unique_id forKey:@"unique_id"];
+    return updateform_contact;
 }
 
 @end

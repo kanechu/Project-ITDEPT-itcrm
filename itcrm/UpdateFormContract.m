@@ -51,9 +51,11 @@
 @synthesize task_start_date;
 @synthesize task_status;
 @synthesize task_status_desc;
+@synthesize task_status_lang;
 @synthesize task_title;
 @synthesize task_type;
 @synthesize task_type_desc;
+@synthesize task_type_lang;
 @synthesize uid;
 @synthesize voided;
 @synthesize unique_id;

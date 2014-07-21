@@ -32,6 +32,18 @@
     }
     return NO;
 }
+-(BOOL)fn_update_crmcontact_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id{
+    if ([[idb fn_get_db]open]) {
+        NSString *sql=[NSString stringWithFormat:@"update crmcontact_browse set uid=:uid,contact_id=:contact_id,contact_code=:contact_code,contact_type=:contact_type,contact_ref_id=:contact_ref_id,contact_ref_name=:contact_ref_name,contact_ref_code=:contact_ref_code,contact_name=:contact_name,contact_title=:contact_title,contact_dept=:contact_dept,contact_mobile=:contact_mobile,contact_tel=:contact_tel,contact_fax=:contact_fax,contact_email=:contact_email,contact_language=:contact_language,lang_desc=:lang_desc,assign_to=:assign_to,assign_to_name=:assign_to_name,voided=:voided,rec_crt_user=:rec_crt_user,rec_upd_user=:rec_upd_user,rec_crt_date=:rec_crt_date,rec_upd_date=:rec_upd_date,rec_upd_type=:rec_upd_type,rec_savable=:rec_savable,rec_deletable=:rec_deletable where unique_id=%@",unique_id];
+        
+        BOOL ib_updated =[[idb fn_get_db] executeUpdate:sql withParameterDictionary:idic_update];
+        if (!ib_updated)
+            return NO;
+        [[idb fn_get_db] close];
+        return  YES;
+    }
+    return NO;
+}
 -(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_name select_sql:(NSString *)select_sql{
     NSString *sql=[NSString stringWithFormat:@"select %@ from crmcontact_browse where contact_name like ?",select_sql];
     NSMutableArray *arr_crmcontact=[NSMutableArray array];

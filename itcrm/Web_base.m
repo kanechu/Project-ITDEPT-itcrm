@@ -24,11 +24,10 @@
 @synthesize iresp_class;
 @synthesize ilist_resp_mapping;
 
-
-- (void) fn_update_data:(UploadingContract*)ao_form
+- (void) fn_update_data:(UploadingContract*)ao_form updateform:(id)updateform
 {
     RKObjectMapping *lo_updateMapping = [RKObjectMapping requestMapping];
-    [lo_updateMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[UpdateFormContract class]]];
+    [lo_updateMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[updateform class]]];
     RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
     [lo_authMapping addAttributeMappingsFromDictionary:@{ @"user_code": @"user_code",
                                                           @"password": @"password",
