@@ -10,6 +10,7 @@
 #import "DB_crmquo_browse.h"
 #import "DB_formatlist.h"
 #import "Cell_browse.h"
+#import "QuoWebViewController.h"
 
 @interface CrmQuo_browseViewController ()
 @property(nonatomic,strong)Format_conversion *convert;
@@ -93,6 +94,7 @@
     cell.il_show_text.text=body_str;
     CGFloat height=[convert fn_heightWithString:body_str font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 #pragma mark UITableViewDelegate
@@ -102,6 +104,16 @@
     NSString *cellText = [[alist_crmquo objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[convert fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     return height+10+23;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self performSegueWithIdentifier:@"segue_quoweb" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"segue_quoweb"]) {
+        QuoWebViewController *VC=[segue destinationViewController];
+        VC.url=@"http://192.168.1.28:81/itcrm.php/login/login_sub";
+    VC.post=@"usrname=SA&usrpass=BUGFREE07&external=1&sysname=FSI.ITCRM";
+    }
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{

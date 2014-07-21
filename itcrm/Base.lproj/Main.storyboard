@@ -252,11 +252,37 @@
                     <connections>
                         <outlet property="is_searchBar" destination="adU-Qh-e8X" id="c4r-FG-8i5"/>
                         <outlet property="tableview" destination="Zsy-4H-R2N" id="2yI-nc-1li"/>
+                        <segue destination="gSU-Zt-PEv" kind="push" identifier="segue_quoweb" id="BIJ-z7-Unz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DK7-io-MBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1224" y="391"/>
+        </scene>
+        <!--Quo Web View Controller-->
+        <scene sceneID="wM5-bK-qvN">
+            <objects>
+                <viewController storyboardIdentifier="QuoWebViewController" automaticallyAdjustsScrollViewInsets="NO" id="gSU-Zt-PEv" customClass="QuoWebViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gtG-gy-vvO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" id="ABj-fm-rGf">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pn3-XA-nhP"/>
+                    <connections>
+                        <outlet property="webView" destination="ABj-fm-rGf" id="JM5-X6-Ptb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fc8-iS-Ldt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-755" y="394"/>
         </scene>
         <!--Shipment History View Controller - Shipment History -->
         <scene sceneID="6E0-2L-b8z">
