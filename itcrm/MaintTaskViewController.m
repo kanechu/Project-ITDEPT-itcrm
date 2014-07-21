@@ -34,6 +34,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
 @property (nonatomic,strong)NSMutableArray *alist_updateStatus;
 //备份原来要修改的crmtask
 @property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
+@property (nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property (nonatomic,strong)pass_colCode pass_value;
 @end
 
@@ -47,7 +48,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
 @synthesize idic_lookup_type;
 @synthesize is_task_id;
 @synthesize idic_parameter_value_copy;
-
+@synthesize idic_edited_parameter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -87,6 +88,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     }
     //深拷贝，备份一份要修改的crmtask
     idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
+    idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
 }
 #pragma mark -获取定制maint版面的数据
 -(void)fn_init_arr{
@@ -249,7 +251,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
         [web_update fn_get_updateStatus_data:[self fn_init_updateform] path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
             _alist_updateStatus=arr;
             DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
-            BOOL isSuccess= [db fn_update_crmtask_browse:idic_parameter_value task_id:[idic_parameter_value valueForKey:@"unique_id"]];
+            BOOL isSuccess= [db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
             }
@@ -276,9 +278,11 @@ typedef NSString* (^pass_colCode)(NSInteger);
     VC.callback=^(NSMutableDictionary *dic){
         if ([key isEqualToString:@"status"]) {
             [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_status"];
+            [idic_edited_parameter setObject:[dic valueForKey:@"data"] forKey:@"task_status"];
         }
         if ([key isEqualToString:@"type"]) {
             [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_type"];
+            [idic_edited_parameter setObject:[dic valueForKey:@"data"] forKey:@"task_type"];
         }
         
         [self.skstableview reloadData];
@@ -300,6 +304,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
 - (void)textViewDidEndEditing:(UITextView *)textView{
     NSString *parameter_key=_pass_value(textView.tag);
     [idic_parameter_value setObject:textView.text forKey:parameter_key];
+    [idic_edited_parameter setObject:textView.text forKey:parameter_key];
 }
 
 @end

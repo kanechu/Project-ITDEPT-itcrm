@@ -33,10 +33,21 @@
     }
     return NO;
 }
--(BOOL)fn_update_crmtask_browse:(NSMutableDictionary*)idic_update task_id:(NSString*)unique_id{
+-(BOOL)fn_update_crmtask_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id{
+    NSString *sql=[NSString string];
+    NSInteger flag=0;
+    //遍历字典所有的key
+    NSEnumerator *enumerator=[idic_update keyEnumerator];
+    for (NSString *key in enumerator) {
+        if (flag==0) {
+            sql=[sql stringByAppendingFormat:@"update crmtask_browse set %@=:%@",key,key];
+        }else{
+            sql=[sql stringByAppendingFormat:@",%@=:%@",key,key];
+        }
+        flag=1;
+    }
+    sql=[sql stringByAppendingFormat:@" where unique_id=%@",unique_id];
     if ([[idb fn_get_db]open]) {
-        NSString *sql=[NSString stringWithFormat:@"update crmtask_browse set uid=:uid, task_id=:task_id, task_ref_id=:task_ref_id, task_ref_type=:task_ref_type, task_ref_code=:task_ref_code,task_ref_name=:task_ref_name,contact_id=:contact_id, contact_code=:contact_code, contact_name=:contact_name, contact_email=:contact_email, contact_mobile=:contact_mobile, contact_tel=:contact_tel, task_ref_addr=:task_ref_addr,task_ref_addr_01=:task_ref_addr_01,task_ref_addr_02=:task_ref_addr_02,task_ref_addr_03=:task_ref_addr_03,task_ref_addr_04=:task_ref_addr_04,task_title=:task_title,task_desc=:task_desc,task_start_date=:task_start_date,task_end_date=:task_end_date,task_report=:task_report,task_sm_report= :task_sm_report,duration_ttl=:duration_ttl,duration_hr= :duration_hr,duration_min=:duration_min,duration_str=:duration_str,assign_to=:assign_to,assign_to_name=:assign_to_name,voided=:voided,rec_crt_user=:rec_crt_user,rec_upd_user=:rec_upd_user,rec_crt_date=:rec_crt_date,rec_upd_date=:rec_upd_date,rec_upd_type=:rec_upd_type,rec_savable=:rec_savable,rec_deletable=:rec_deletable,task_type=:task_type,task_type_desc=:task_type_desc,task_type_lang=:task_type_lang,task_status=:task_status,task_status_desc=:task_status_desc,task_status_lang=:task_status_lang,quo_uid=:quo_uid,quo_no=:quo_no,task_date_period=:task_date_period,report_mail=:report_mail,report_submit=:report_submit where unique_id=%@",unique_id];
-
         BOOL ib_updated =[[idb fn_get_db] executeUpdate:sql withParameterDictionary:idic_update];
         if (!ib_updated)
             return NO;

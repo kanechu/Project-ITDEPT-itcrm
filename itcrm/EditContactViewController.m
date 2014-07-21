@@ -24,6 +24,7 @@ enum TEXT_TAG {
 typedef NSString* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact;
+@property(nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact_copy;
 @property(nonatomic,strong)NSMutableArray *alist_maintContact;
 //过滤后的数组
@@ -43,6 +44,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 @synthesize idic_parameter_contact;
 @synthesize passValue;
 @synthesize idic_parameter_contact_copy;
+@synthesize idic_edited_parameter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -80,6 +82,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     }
     //深拷贝一份要修改的contact,用于还原
     idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
+    idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
 }
 #pragma mark -获取定制contact maint版面的数据
 -(void)fn_get_maint_crmcontact{
@@ -222,6 +225,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 -(void)textViewDidEndEditing:(UITextView *)textView{
     NSString *col_code=passValue(textView.tag);
     [idic_parameter_contact setObject:textView.text forKey:col_code];
+    [idic_edited_parameter setObject:textView.text forKey:col_code];
 }
 - (IBAction)fn_save_modified_contact:(id)sender {
     UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"whether save the modified data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"cancel", nil];
@@ -237,6 +241,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     VC.flag=1;
     VC.callback=^(NSMutableDictionary *dic){
         [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
+        [idic_edited_parameter setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
         [self.skstableView reloadData];
     };
     PopViewManager *popView=[[PopViewManager alloc]init];
@@ -248,7 +253,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         Web_updateData *web_update=[[Web_updateData alloc]init];
         [web_update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMCONTACT_UPDATE_URL :^(NSMutableArray *arr){
             DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
-            BOOL isSuccess=[db fn_update_crmcontact_browse:idic_parameter_contact unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
+            BOOL isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
             }

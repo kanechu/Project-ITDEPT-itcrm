@@ -33,9 +33,21 @@
     return NO;
 }
 -(BOOL)fn_update_crmcontact_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id{
+    //得到词典中所有key值
+    NSEnumerator *enumeratorkey=[idic_update keyEnumerator];
+    NSString *sql=[NSString string];
+    NSInteger flag=0;
+    //快速枚举遍历所有的key的值
+    for (NSString *key in enumeratorkey) {
+        if (flag==0) {
+            sql=[sql stringByAppendingFormat:@"update crmcontact_browse set %@=:%@",key,key];
+        }else{
+            sql=[sql stringByAppendingFormat:@",%@=:%@",key,key];
+        }
+        flag=1;
+    }
+    sql=[sql stringByAppendingFormat:@" where unique_id=%@",unique_id];
     if ([[idb fn_get_db]open]) {
-        NSString *sql=[NSString stringWithFormat:@"update crmcontact_browse set uid=:uid,contact_id=:contact_id,contact_code=:contact_code,contact_type=:contact_type,contact_ref_id=:contact_ref_id,contact_ref_name=:contact_ref_name,contact_ref_code=:contact_ref_code,contact_name=:contact_name,contact_title=:contact_title,contact_dept=:contact_dept,contact_mobile=:contact_mobile,contact_tel=:contact_tel,contact_fax=:contact_fax,contact_email=:contact_email,contact_language=:contact_language,lang_desc=:lang_desc,assign_to=:assign_to,assign_to_name=:assign_to_name,voided=:voided,rec_crt_user=:rec_crt_user,rec_upd_user=:rec_upd_user,rec_crt_date=:rec_crt_date,rec_upd_date=:rec_upd_date,rec_upd_type=:rec_upd_type,rec_savable=:rec_savable,rec_deletable=:rec_deletable where unique_id=%@",unique_id];
-        
         BOOL ib_updated =[[idb fn_get_db] executeUpdate:sql withParameterDictionary:idic_update];
         if (!ib_updated)
             return NO;
