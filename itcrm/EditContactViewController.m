@@ -163,8 +163,8 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         NSString *text_value=[idic_parameter_contact valueForKey:col_code];
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
-        CGFloat height=[_convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
+        CGFloat height=[_convert fn_heightWithString:text_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+14)];
         return cell;
     }
     if ([col_stye isEqualToString:@"local_lookup"]) {
@@ -201,8 +201,8 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     if ([col_type isEqualToString:@"string"]) {
         static NSString *cellIndetifier=@"Cell_maintForm1_contact";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndetifier];
-        CGFloat height=[_convert fn_heightWithString:str_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-            height=height+16+10;
+        height=[_convert fn_heightWithString:str_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+        height=height+16+10;
     }
     if ([col_type isEqualToString:@"local_lookup"]) {
         static NSString *cellIdentifier=@"Cell_lookup_contact";
