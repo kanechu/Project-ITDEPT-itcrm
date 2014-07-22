@@ -11,6 +11,7 @@
 #import "SKSTableViewCell.h"
 #import "DB_MaintForm.h"
 #import "Cell_maintForm1.h"
+#import "Cell_maintForm2.h"
 #import "Cell_lookup.h"
 #import "OptionViewController.h"
 #import "DB_crmtask_browse.h"
@@ -25,7 +26,7 @@ enum LOOKUP_TAG {
 enum TEXTVIEW_TAG {
     TEXT_TAG = 100
 };
-typedef NSString* (^pass_colCode)(NSInteger);
+typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
 @property (nonatomic,strong)Format_conversion *format;
@@ -35,6 +36,8 @@ typedef NSString* (^pass_colCode)(NSInteger);
 @property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
 @property (nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property (nonatomic,strong)pass_colCode pass_value;
+@property (nonatomic,strong)UIDatePicker *idp_datepicker;
+@property (nonatomic,copy)NSString *select_date;
 @end
 
 @implementation MaintTaskViewController
@@ -48,6 +51,8 @@ typedef NSString* (^pass_colCode)(NSInteger);
 @synthesize is_task_id;
 @synthesize idic_parameter_value_copy;
 @synthesize idic_edited_parameter;
+@synthesize idp_datepicker;
+@synthesize select_date;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -69,6 +74,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     format=[[Format_conversion alloc]init];
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [self fn_create_datepick];
     
 	// Do any additional setup after loading the view.
 }
@@ -97,7 +103,35 @@ typedef NSString* (^pass_colCode)(NSInteger);
     alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
-
+#pragma mark create datePick
+-(void)fn_create_datepick{
+    idp_datepicker=[[UIDatePicker alloc]init];
+    [idp_datepicker setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
+    [idp_datepicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    [idp_datepicker addTarget:self action:@selector(fn_change_date) forControlEvents:UIControlEventValueChanged];
+    
+}
+-(void)fn_change_date{
+    NSDate *id_date=[idp_datepicker date];
+    NSTimeInterval timeInterval=[id_date timeIntervalSince1970];
+    NSTimeInterval milliseconds=timeInterval*1000;
+    select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
+}
+-(UIToolbar*)fn_create_toolbar{
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    [toolbar setBarStyle:UIBarStyleBlackOpaque];
+    [toolbar sizeToFit];
+    [toolbar setTintColor:[UIColor whiteColor]];
+    [toolbar setBarTintColor:COLOR_LIGTH_GREEN];
+    UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fn_Click_done:)];
+    
+    [toolbar setItems:[NSArray arrayWithObjects:buttonflexible,buttonDone, nil]];
+    return toolbar;
+}
+-(void)fn_Click_done:(id)sender{
+    [self.skstableview reloadData];
+}
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -153,7 +187,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
     NSString *col_label=[dic valueForKey:@"col_label"];
     NSString *col_code=[dic valueForKey:@"col_code"];
     //col_stye 类型名
-    NSString *col_stye=[dic valueForKey:@"col_type"];
+    NSString *col_type=[dic valueForKey:@"col_type"];
     //is_enable
     NSString *is_enable=[dic valueForKey:@"is_enable"];
     NSInteger is_enable_flag=[is_enable integerValue];
@@ -164,10 +198,15 @@ typedef NSString* (^pass_colCode)(NSInteger);
     }
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block MaintTaskViewController *blockSelf=self;
-    _pass_value=^NSString*(NSInteger tag){
-        return [blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
+    _pass_value=^NSMutableDictionary*(NSInteger tag){
+        NSMutableDictionary *idic=[NSMutableDictionary dictionary];
+        NSString *col_code=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
+        NSString *col_type=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_type"];
+        [idic setObject:col_code forKey:@"col_code"];
+        [idic setObject:col_type forKey:@"col_type"];
+        return idic;
     };
-    if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"datetime"]) {
+    if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
         Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -178,10 +217,12 @@ typedef NSString* (^pass_colCode)(NSInteger);
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
-        if ([col_stye isEqualToString:@"datetime"]) {
+        if ([col_type isEqualToString:@"datetime"]) {
             NSDateFormatter *dateFormat=[[NSDateFormatter alloc]init];
             [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
             text_value=[dateFormat stringFromDate:[format dateFromUnixTimestamp:text_value]];
+            cell.itv_data_textview.inputView=idp_datepicker;
+            cell.itv_data_textview.inputAccessoryView=[self fn_create_toolbar];
         }
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
@@ -189,7 +230,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
          [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         return cell;
     }
-    if ([col_stye isEqualToString:@"lookup"]||[col_stye isEqualToString:@"checkbox"]) {
+    if ([col_type isEqualToString:@"lookup"]) {
         static NSString *cellIdentifier=@"Cell_lookup1";
         Cell_lookup *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -209,6 +250,16 @@ typedef NSString* (^pass_colCode)(NSInteger);
             cell.ibtn_lookup.tag=TAG1;
             [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"type"];
         }
+        return cell;
+    }
+    if ([col_type isEqualToString:@"checkbox"]) {
+        static NSString *cellIndetifier=@"Cell_maintForm2_task";
+        Cell_maintForm2 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIndetifier];
+        if (!cell) {
+            cell=[[Cell_maintForm2 alloc]init];
+        }
+        cell.il_remind_label.text=col_label;
+        [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
         return cell;
     }
     
@@ -304,9 +355,16 @@ typedef NSString* (^pass_colCode)(NSInteger);
     checkTextView=textView;
 }
 - (void)textViewDidEndEditing:(UITextView *)textView{
-    NSString *parameter_key=_pass_value(textView.tag);
-    [idic_parameter_value setObject:textView.text forKey:parameter_key];
-    [idic_edited_parameter setObject:textView.text forKey:parameter_key];
+    NSMutableDictionary *parameter_dic=_pass_value(textView.tag);
+    NSString *col_code=[parameter_dic valueForKey:@"col_code"];
+    NSString *col_type=[parameter_dic valueForKey:@"col_type"];
+    if ([col_type isEqualToString:@"datetime"]&&[select_date length]!=0) {
+        [idic_parameter_value setObject:select_date forKey:col_code];
+        [idic_edited_parameter setObject:select_date forKey:col_code];
+    }else{
+        [idic_parameter_value setObject:textView.text forKey:col_code];
+        [idic_edited_parameter setObject:textView.text forKey:col_code];
+    }
 }
 
 @end
