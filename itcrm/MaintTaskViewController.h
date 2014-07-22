@@ -19,5 +19,6 @@
 - (IBAction)fn_save_edit_data:(id)sender;
 
 - (IBAction)fn_lookup_data:(id)sender;
+- (IBAction)fn_goBack:(id)sender;
 
 @end

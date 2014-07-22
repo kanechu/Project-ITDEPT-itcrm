@@ -38,6 +38,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @property (nonatomic,strong)pass_colCode pass_value;
 @property (nonatomic,strong)UIDatePicker *idp_datepicker;
 @property (nonatomic,copy)NSString *select_date;
+@property (nonatomic,assign)NSInteger flag;
 @end
 
 @implementation MaintTaskViewController
@@ -53,6 +54,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize idic_edited_parameter;
 @synthesize idp_datepicker;
 @synthesize select_date;
+@synthesize flag;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -75,7 +77,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_create_datepick];
-    
+    flag=0;
 	// Do any additional setup after loading the view.
 }
 
@@ -286,7 +288,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     return height;
 }
 - (IBAction)fn_save_edit_data:(id)sender {
-    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"Whether to save the modified data" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:@"Cancel", nil];
+    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"Whether to save the modified data" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
     [alertview show];
 }
 #pragma mark UIAlertViewDelegate
@@ -306,6 +308,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
             }
         }];
+    }
+    if (flag==1) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 - (IBAction)fn_lookup_data:(id)sender {
@@ -367,4 +372,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }
 }
 
+- (IBAction)fn_goBack:(id)sender {
+    BOOL isSame=[idic_parameter_value isEqualToDictionary:idic_parameter_value_copy];
+    if (!isSame) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"the record has been eidted but not saved,please select discard or save the record" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        flag=1;
+        [alert show];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 @end
