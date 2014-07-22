@@ -479,7 +479,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Task Edit" id="MG2-ij-y8L"/>
+                    <navigationItem key="navigationItem" title="Task Edit" id="MG2-ij-y8L">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="PwQ-OW-hdl">
+                            <connections>
+                                <action selector="fn_goBack:" destination="NEG-fv-6xJ" id="5Fn-R5-ZuA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="skstableview" destination="IwR-Om-nSN" id="qf5-AA-Q8X"/>
                     </connections>
