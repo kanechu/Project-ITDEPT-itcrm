@@ -107,7 +107,7 @@
     range = [string rangeOfString:key];
     int i = 0;
     while (range.length>0&&i<[parameter count]) {
-        if ([dic valueForKey:[parameter objectAtIndex:i]]==nil) {
+        if ([dic valueForKey:[parameter objectAtIndex:i]]==nil || [dic valueForKey:[parameter objectAtIndex:i]]==[NSNull null]) {
             [resultString replaceCharactersInRange:range withString:@""];
         }else{
             [resultString replaceCharactersInRange:range withString:[dic valueForKey:[parameter objectAtIndex:i]]];

@@ -13,6 +13,7 @@
 #import "DB_crmopp_browse.h"
 #import "DB_crmtask_browse.h"
 #import "DB_crmacct_browse.h"
+#import "DB_crmcontact_browse.h"
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
@@ -25,6 +26,7 @@
 @property(nonatomic,strong)NSMutableArray *alist_crmopp;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
 @property (nonatomic,strong)NSMutableArray *alist_crmhbl;
+@property (nonatomic,strong)NSMutableArray *alist_contact;
 @property (nonatomic,strong)Format_conversion *format;
 //标识acct_maint服务器返回的分组数
 @property (nonatomic,assign)NSInteger flag_groupNum;
@@ -42,6 +44,7 @@
 @synthesize alist_crmhbl;
 @synthesize alist_crmopp;
 @synthesize alist_crmtask;
+@synthesize alist_contact;
 @synthesize flag_groupNum;
 @synthesize idic_lookup;
 
@@ -108,16 +111,28 @@
     DB_crmhbl_browse  *db_crmhbl=[[DB_crmhbl_browse alloc]init];
     NSMutableArray *crmhbl_arr=[db_crmhbl fn_get_relate_crmhbl_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_hbl"]];
     alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
+    //获取crmcontact的列表数据
+    DB_crmcontact_browse  *db_crmcontact=[[DB_crmcontact_browse alloc]init];
+    NSMutableArray *crmcontact_arr=[db_crmcontact fn_get_relate_crmcontact_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_contact"]];
+    alist_contact=[self fn_format_convert:crmcontact_arr list_id:@"crmacct_contact"];
+    
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     flag_groupNum=[alist_groupNameAndNum count];
     NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
     NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
     NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
+    NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
+    
     if ([alist_crmtask count]!=0) {
         [crmtask_dic setObject:@"Activity" forKey:@"group_name"];
         [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmtask_dic];
+    }
+    if ([alist_contact count]!=0) {
+        [crmcontact_dic setObject:@"contact" forKey:@"group_name"];
+        [crmcontact_dic setObject:[NSString stringWithFormat:@"%d",[alist_contact count]] forKey:@"COUNT(group_name)"];
+        [alist_groupNameAndNum addObject:crmcontact_dic];
     }
     if ([alist_crmopp count]!=0) {
         [crmopp_dic setObject:@"Opportunity" forKey:@"group_name"];
@@ -129,6 +144,7 @@
         [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmhbl_dic];
     }
+   
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup=[[NSMutableDictionary alloc]initWithCapacity:10];

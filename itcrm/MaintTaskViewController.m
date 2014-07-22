@@ -189,7 +189,7 @@ typedef NSString* (^pass_colCode)(NSInteger);
          [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         return cell;
     }
-    if ([col_stye isEqualToString:@"lookup"]) {
+    if ([col_stye isEqualToString:@"lookup"]||[col_stye isEqualToString:@"checkbox"]) {
         static NSString *cellIdentifier=@"Cell_lookup1";
         Cell_lookup *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
