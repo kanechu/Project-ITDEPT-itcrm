@@ -393,7 +393,7 @@
                                             <outlet property="itv_data_textview" destination="0vO-Sg-Tqu" id="GO9-mK-Sx1"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_lookup1" rowHeight="44" id="iM6-Ac-KyS" customClass="Cell_lookup">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_lookup_taskEdit" rowHeight="44" id="iM6-Ac-KyS" customClass="Cell_lookup">
                                         <rect key="frame" x="0.0" y="62" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iM6-Ac-KyS" id="CSP-uX-JCM">

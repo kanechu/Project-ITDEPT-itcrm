@@ -19,13 +19,7 @@
 #import "DB_Region.h"
 #import "RespCrmtask_browse.h"
 
-enum LOOKUP_TAG {
-    TAG = 1,
-    TAG1 = 2
-};
-enum TEXTVIEW_TAG {
-    TEXT_TAG = 100
-};
+#define TEXT_TAG 100
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
@@ -205,8 +199,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         NSMutableDictionary *idic=[NSMutableDictionary dictionary];
         NSString *col_code=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
         NSString *col_type=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_type"];
+        NSString *col_option=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_option"];
         [idic setObject:col_code forKey:@"col_code"];
         [idic setObject:col_type forKey:@"col_type"];
+        [idic setObject:col_option forKey:@"col_option"];
         return idic;
     };
     if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"]) {
@@ -234,7 +230,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         return cell;
     }
     if ([col_type isEqualToString:@"lookup"]) {
-        static NSString *cellIdentifier=@"Cell_lookup1";
+        static NSString *cellIdentifier=@"Cell_lookup_taskEdit";
         Cell_lookup *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
             cell=[[Cell_lookup alloc]init];
@@ -245,14 +241,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.delegate=self;
-        if ([col_code isEqualToString:@"task_status"]) {
-            cell.ibtn_lookup.tag=TAG;
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
-        }
-        if ([col_code isEqualToString:@"task_type"]) {
-            cell.ibtn_lookup.tag=TAG1;
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"type"];
-        }
+        cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         return cell;
     }
     if ([col_type isEqualToString:@"checkbox"]) {
@@ -316,14 +305,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 - (IBAction)fn_lookup_data:(id)sender {
     UIButton *btn=(UIButton*)sender;
-    if (btn.tag==TAG) {
-        NSString *str_type=[idic_lookup_type valueForKey:@"status"];
-        [self fn_pop_lookup_View:str_type key_flag:@"status" lookup_title:@"select the task_status"];
-    }
-    if (btn.tag==TAG1) {
-       NSString *str_type=[idic_lookup_type valueForKey:@"type"];
-        [self fn_pop_lookup_View:str_type key_flag:@"type" lookup_title:@"select the task_type"];
-    }
+    NSMutableDictionary *dic=_pass_value(btn.tag);
+    NSString *col_option=[dic valueForKey:@"col_option"];
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    [self fn_pop_lookup_View:col_option key_flag:col_code lookup_title:[NSString stringWithFormat:@"select the %@",col_code]];
 }
 -(void)fn_pop_lookup_View:(NSString*)is_type key_flag:(NSString*)key lookup_title:(NSString*)title{
     DB_Region *db=[[DB_Region alloc]init];
@@ -332,17 +317,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     VC.lookup_title=title;
     VC.alist_option=alist_option;
     VC.callback=^(NSMutableDictionary *dic){
-        if ([key isEqualToString:@"status"]) {
-            [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_status"];
-            [idic_edited_parameter setObject:[dic valueForKey:@"data"] forKey:@"task_status"];
-        }
-        if ([key isEqualToString:@"type"]) {
-            [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:@"task_type"];
-            [idic_edited_parameter setObject:[dic valueForKey:@"data"] forKey:@"task_type"];
-        }
-        
+        [idic_parameter_value setObject:[dic valueForKey:@"data"] forKey:key];
+        [idic_edited_parameter setObject:[dic valueForKey:@"data"] forKey:key];
         [self.skstableview reloadData];
-        
     };
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(250,300) uponView:self];
