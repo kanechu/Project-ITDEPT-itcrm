@@ -24,7 +24,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
 @property (nonatomic,strong)Format_conversion *format;
-@property (nonatomic,strong)NSMutableDictionary *idic_lookup_type;
 @property (nonatomic,strong)NSMutableArray *alist_updateStatus;
 //备份原来要修改的crmtask
 @property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
@@ -42,7 +41,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize checkTextView;
 @synthesize idic_parameter_value;
 @synthesize format;
-@synthesize idic_lookup_type;
 @synthesize is_task_id;
 @synthesize idic_parameter_value_copy;
 @synthesize idic_edited_parameter;
@@ -98,7 +96,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
     alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
     alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
-    idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
 }
 #pragma mark create datePick
 -(void)fn_create_datepick{
@@ -196,14 +193,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block MaintTaskViewController *blockSelf=self;
     _pass_value=^NSMutableDictionary*(NSInteger tag){
-        NSMutableDictionary *idic=[NSMutableDictionary dictionary];
-        NSString *col_code=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
-        NSString *col_type=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_type"];
-        NSString *col_option=[blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_option"];
-        [idic setObject:col_code forKey:@"col_code"];
-        [idic setObject:col_type forKey:@"col_type"];
-        [idic setObject:col_option forKey:@"col_option"];
-        return idic;
+        return blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
     };
     if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
@@ -226,7 +216,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
+        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         return cell;
     }
     if ([col_type isEqualToString:@"lookup"]) {
@@ -254,7 +244,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
         return cell;
     }
-    
     
     // Configure the cell...
     return nil;
@@ -287,6 +276,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         //还原数据
         idic_parameter_value=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value_copy];
         [self.skstableview reloadData];
+        if (flag==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     if (buttonIndex==0) {
         Web_updateData *web_update=[[Web_updateData alloc]init];
@@ -297,10 +289,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
             }
+            if (flag==1) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }];
-    }
-    if (flag==1) {
-        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 - (IBAction)fn_lookup_data:(id)sender {

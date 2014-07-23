@@ -149,16 +149,8 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [self fn_get_choice_arr:col_option];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
      __block EditOppViewController *blockSelf=self;
-    NSMutableDictionary *idic=[NSMutableDictionary dictionary];
      pass_value=^NSMutableDictionary*(NSInteger tag){
-         NSMutableDictionary *dic_opp=blockSelf-> alist_filtered_oppdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
-         NSString *col_code=[dic_opp valueForKey:@"col_code"];
-         NSString *col_type=[dic_opp valueForKey:@"col_type"];
-         NSString *col_option=[dic_opp valueForKey:@"col_option"];
-         [idic setObject:col_code forKey:@"col_code"];
-         [idic setObject:col_type forKey:@"col_type"];
-         [idic setObject:col_option forKey:@"col_option"];
-         return idic;
+         return blockSelf-> alist_filtered_oppdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
      };
     if ([col_stye isEqualToString:@"int"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1_opp";

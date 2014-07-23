@@ -116,17 +116,10 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *col_option=[dic valueForKey:@"col_option"];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
-     __block SearchCrmOppViewController *blockSelf=self;
-     pass_value=^NSMutableDictionary*(NSInteger tag){
-         NSMutableDictionary *idic=[NSMutableDictionary dictionary];
-         NSString *col_code=[blockSelf-> alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100]
-                             valueForKey:@"col_code"];
-         NSString *col_option=[blockSelf-> alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100]
-                               valueForKey:@"col_option"];
-         [idic setObject:col_code forKey:@"col_code"];
-         [idic setObject:col_option forKey:@"col_option"];
-         return idic;
-     };
+    __block SearchCrmOppViewController *blockSelf=self;
+    pass_value=^NSMutableDictionary*(NSInteger tag){
+        return blockSelf-> alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100];
+    };
     
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
@@ -144,7 +137,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     NSString *str_display=[convert fn_convert_display_status:str_data col_option:col_option];
     cell.ibtn_lookup_label.label.text=str_display;
     return cell;
-
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;

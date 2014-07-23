@@ -17,9 +17,8 @@
 #import "OptionViewController.h"
 #import "RespCrmcontact_browse.h"
 #import "Web_updateData.h"
-enum TEXT_TAG {
-    TEXT_TAG = 100
-};
+
+#define TEXT_TAG 100
 typedef NSString* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact;
@@ -269,15 +268,18 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
             }
+            if (flag==1) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
             
         }];
     }
     if (buttonIndex==1) {
         idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];
         [self.skstableView reloadData];
-    }
-    if (flag==1) {
-        [self.navigationController popViewControllerAnimated:YES];
+        if (flag==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 -(RespCrmcontact_browse*)fn_get_updateform{
