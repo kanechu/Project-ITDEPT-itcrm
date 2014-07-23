@@ -33,6 +33,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 @property (nonatomic,strong)Format_conversion *convert;
 @property (nonatomic,strong)passValue_contact passValue;
 @property (nonatomic,strong)UITextView *checkText;
+@property (nonatomic,assign)NSInteger flag;
 @end
 
 @implementation EditContactViewController
@@ -44,6 +45,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 @synthesize passValue;
 @synthesize idic_parameter_contact_copy;
 @synthesize idic_edited_parameter;
+@synthesize flag;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -64,6 +66,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     [expand_helper setExtraCellLineHidden:self.skstableView];
     _convert=[[Format_conversion alloc]init];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    flag=0;
 	// Do any additional setup after loading the view.
 }
 
@@ -210,8 +213,6 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         height=height+16+28;
         
     }
-   
-   
     if (height<44) {
         height=44;
     }
@@ -227,8 +228,19 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     [idic_edited_parameter setObject:textView.text forKey:col_code];
 }
 - (IBAction)fn_save_modified_contact:(id)sender {
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"whether save the modified data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"cancel", nil];
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"whether save the modified data" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
     [alertView show];
+}
+
+- (IBAction)fn_cancel_edited_data:(id)sender {
+    BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
+    if (!isSame) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"the record has been eidted but not saved,please select discard or save the record" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        flag=1;
+        [alert show];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (IBAction)fn_lookup_data:(id)sender {
@@ -260,9 +272,11 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         }];
     }
     if (buttonIndex==1) {
-        NSLog(@"不保存数据");
         idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];
         [self.skstableView reloadData];
+    }
+    if (flag==1) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 -(RespCrmcontact_browse*)fn_get_updateform{
