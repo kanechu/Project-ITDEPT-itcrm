@@ -16,37 +16,21 @@
 #import "RegionViewController.h"
 #import "Advance_SearchData.h"
 
-typedef NSString* (^pass_colCode)(NSInteger);
+typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface AccountViewController ()
-//用来记录选择的countryname
-@property (strong,nonatomic)NSMutableDictionary *idic_countryname;
-//用来记录选择的regionname
-@property (strong,nonatomic)NSMutableDictionary *idic_regionname;
-//用来记录选择的territoryname
-@property (strong,nonatomic)NSMutableDictionary *idic_territoryname;
-@property (nonatomic,strong)NSMutableDictionary *idic_lookup_type;
 @property (nonatomic,strong)pass_colCode pass_value;
 @property (nonatomic,strong)NSMutableArray *alist_searchData;
 @end
-enum TEXTFIELDTAG {
-    TAG = 1,
-    TAG1,TAG2
-};
-enum TEXTFIELD_TAG {
-    TEXT_TAG=100,
-};
+
+#define TEXT_TAG 100
 @implementation AccountViewController
 
 @synthesize alist_groupNameAndNum;
 @synthesize alist_searchCriteria;
 @synthesize alist_filtered_data;
-@synthesize idic_countryname;
-@synthesize idic_regionname;
-@synthesize idic_territoryname;
 @synthesize checkText;
 @synthesize idic_search_value;
 @synthesize idic_parameter;
-@synthesize idic_lookup_type;
 @synthesize alist_searchData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -95,10 +79,9 @@ enum TEXTFIELD_TAG {
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
-    idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:10];
-    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
-    idic_lookup_type=[[NSMutableDictionary alloc]initWithCapacity:10];
-    alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
+    idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:1];
+    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
 }
 
 #pragma mark - UITableViewDataSource
@@ -153,11 +136,9 @@ enum TEXTFIELD_TAG {
         col_label=[col_label stringByAppendingString:@"*"];
     }
     __block AccountViewController *blockSelf=self;
-    _pass_value=^NSString*(NSInteger tag){
-        return [blockSelf-> alist_filtered_data [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100]
-                valueForKey:@"col_code"];
+    _pass_value=^NSMutableDictionary*(NSInteger tag){
+        return blockSelf-> alist_filtered_data [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
     };
-    
     if ([col_stye isEqualToString:@"string"]) {
         static NSString *cellIdentifier=@"Cell_search1";
         Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -180,41 +161,17 @@ enum TEXTFIELD_TAG {
         }
         cell.il_prompt_label.text=col_label;
         cell.itf_input_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
-        if ([col_label isEqualToString:@"Country"]) {
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"country_type"];
-            cell.ibtn_skip.tag=TAG;
-            cell.itf_input_searchData.text=[idic_countryname valueForKey:@"display"];
-            if ([cell.itf_input_searchData.text length]!=0) {
-                [idic_search_value setObject:[idic_countryname valueForKey:@"data"] forKey:@"country"];
-                [idic_parameter setObject:col_code forKey:@"country"];
-            }
-            
-        }
-        if ([col_label isEqualToString:@"Region"]) {
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"region_type"];
-            cell.ibtn_skip.tag=TAG1;
-            cell.itf_input_searchData.text=[idic_regionname valueForKey:@"display"];
-            if ([cell.itf_input_searchData.text length]!=0) {
-                [idic_search_value setObject:[idic_regionname valueForKey:@"data"] forKey:@"region"];
-                [idic_parameter setObject:col_code forKey:@"region"];
-            }
-        }
-        if ([col_label isEqualToString:@"Territory"]) {
-            [idic_lookup_type setObject:[dic valueForKey:@"col_option"] forKey:@"territory_type"];
-            cell.ibtn_skip.tag=TAG2;
-            cell.itf_input_searchData.text=[idic_territoryname  valueForKey:@"display"];
-            if ([cell.itf_input_searchData.text length]!=0) {
-                [idic_search_value setObject:[idic_territoryname valueForKey:@"data"] forKey:@"territory"];
-                [idic_parameter setObject:col_code forKey:@"territory"];
-            }
-        }
+        cell.ibtn_skip.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_YELLOW;
-        
+        Format_conversion *convert=[[Format_conversion alloc]init];
+        NSString *textValue=[idic_search_value valueForKey:col_code];
+        NSString *col_option=[dic valueForKey:@"col_option"];
+        cell.itf_input_searchData.text=[convert fn_convert_display_status:textValue col_option:col_option];
         return cell;
     }
-
+    
     // Configure the cell...
     return nil;
 }
@@ -224,9 +181,6 @@ enum TEXTFIELD_TAG {
 }
 
 - (IBAction)fn_search_account:(id)sender {
-    [alist_searchData addObject:[expand_helper fn_get_searchData:@"country" idic_value:idic_search_value idic_parameter:idic_parameter]];
-    [alist_searchData addObject:[expand_helper fn_get_searchData:@"region" idic_value:idic_search_value idic_parameter:idic_parameter]];
-    [alist_searchData addObject:[expand_helper fn_get_searchData:@"territory" idic_value:idic_search_value idic_parameter:idic_parameter]];
     if ([[idic_search_value valueForKey:@"acct_code"] length]!=0) {
         if (_callback_acct) {
             _callback_acct(alist_searchData);
@@ -245,35 +199,27 @@ enum TEXTFIELD_TAG {
 
 - (IBAction)fn_skip_region:(id)sender {
     UIButton *btn=(UIButton*)sender;
-    if (btn.tag==TAG) {
-        NSString *str_type=[idic_lookup_type valueForKey:@"country_type"];
-        [self fn_pop_regionView:@"Please fill in Country" type:str_type key_flag:@"country"];
-    }
-    if (btn.tag==TAG1) {
-         NSString *str_type=[idic_lookup_type valueForKey:@"region_type"];
-        [self fn_pop_regionView:@"Please fill in Region" type:str_type key_flag:@"region"];
-    }
-    if (btn.tag==TAG2) {
-         NSString *str_type=[idic_lookup_type valueForKey:@"territory_type"];
-        [self fn_pop_regionView:@"Please fill in Territory" type:str_type key_flag:@"territory"];
-    }
+    NSMutableDictionary *idic=_pass_value(btn.tag);
+    NSString *col_option=[idic valueForKey:@"col_option"];
+    NSString *col_label=[idic valueForKey:@"col_label"];
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    [self fn_pop_regionView:[NSString stringWithFormat:@"Please fill in %@",col_label] type:col_option key_flag:col_code];
 }
 -(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
     RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
     VC.is_placeholder=placeholder;
     VC.type=is_type;
     VC.callback_region=^(NSMutableDictionary *dic){
-        if ([key isEqualToString:@"country"]) {
-            idic_countryname=dic;
+        NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
+        for (Advance_SearchData *searchData in alist_searchData_copy) {
+            if ([searchData.is_parameter isEqualToString:key]) {
+                [alist_searchData removeObject:searchData];
+            }
         }
-        if ([key isEqualToString:@"region"]) {
-            idic_regionname=dic;
-        }
-        if ([key isEqualToString:@"territory"]) {
-            idic_territoryname=dic;
-        }
+        [idic_search_value setObject:[dic valueForKey:@"data"] forKey:key];
+        [idic_parameter setObject:key forKey:key];
+        [alist_searchData addObject:[expand_helper fn_get_searchData:key idic_value:idic_search_value idic_parameter:idic_parameter]];
         [self.skstableView reloadData];
-    
     };
     PopViewManager *pop=[[PopViewManager alloc]init];
     [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
@@ -292,7 +238,7 @@ enum TEXTFIELD_TAG {
 
 - (IBAction)fn_textfield_endEdit:(id)sender {
     UITextField *textfield=(UITextField*)sender;
-    NSString *col_code=_pass_value(textfield.tag);
+    NSString *col_code=[_pass_value(textfield.tag) valueForKey:@"col_code"];
     NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
     for (Advance_SearchData *searchData in alist_searchData_copy) {
         if ([searchData.is_parameter isEqualToString:col_code]) {
