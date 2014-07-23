@@ -20,6 +20,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface AccountViewController ()
 @property (nonatomic,strong)pass_colCode pass_value;
 @property (nonatomic,strong)NSMutableArray *alist_searchData;
+//存储搜索条件的数据
+@property(nonatomic,strong)NSMutableDictionary *idic_search_value;
+//存储搜索条件的参数
+@property(nonatomic,strong)NSMutableDictionary *idic_parameter;
+@property(nonatomic,strong)NSMutableArray *alist_code;
 @end
 
 #define TEXT_TAG 100
@@ -32,6 +37,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize idic_search_value;
 @synthesize idic_parameter;
 @synthesize alist_searchData;
+@synthesize alist_code;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -82,6 +88,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:1];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
+    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
 }
 
 #pragma mark - UITableViewDataSource
@@ -134,6 +141,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     NSString *col_code=[dic valueForKey:@"col_code"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
+        [self fn_isExist:col_code];
     }
     __block AccountViewController *blockSelf=self;
     _pass_value=^NSMutableDictionary*(NSInteger tag){
@@ -179,9 +187,25 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
+#pragma mark 是否已经存在必填项的col_code
+-(void)fn_isExist:(NSString*)col_code{
+    NSMutableArray *alist_code_copy=[NSMutableArray arrayWithArray:alist_code];
+    for (NSString *str in alist_code_copy) {
+        if ([str isEqualToString:col_code]) {
+            [alist_code removeObject:str];
+        }
+    }
+    [alist_code addObject:col_code];
+}
 
 - (IBAction)fn_search_account:(id)sender {
-    if ([[idic_search_value valueForKey:@"acct_code"] length]!=0) {
+    BOOL isfilled=YES;
+    for (NSString *col_code in alist_code) {
+        if ([[idic_search_value valueForKey:col_code] length]==0) {
+            isfilled=NO;
+        }
+    }
+    if (isfilled) {
         if (_callback_acct) {
             _callback_acct(alist_searchData);
         }

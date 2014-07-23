@@ -19,10 +19,6 @@ typedef void (^CallBack_acct)(NSMutableArray * arr);
 @property(nonatomic,strong)NSMutableArray *alist_filtered_data;
 //存储搜索标准的组名和该组的行数
 @property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
-//存储搜索条件的数据
-@property(nonatomic,strong)NSMutableDictionary *idic_search_value;
-//存储搜索条件的参数
-@property(nonatomic,strong)NSMutableDictionary *idic_parameter;
 //用来标识点击哪个uitextfield
 @property (nonatomic,weak)UITextField *checkText;
 

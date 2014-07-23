@@ -17,8 +17,14 @@
 #define TEXTFIELD_TAG 100
 typedef NSString* (^passValue_task)(NSInteger tag);
 @interface SearchTaskViewController ()
+
 @property(nonatomic,strong)passValue_task pass_Value;
 @property(nonatomic,strong)NSMutableArray *alist_searchData;
+@property(nonatomic,strong)NSMutableDictionary *idic_value;
+@property(nonatomic,strong)NSMutableDictionary *idic_parameter;
+#pragma mark 存储必填项的col_code
+@property(nonatomic,strong)NSMutableArray *alist_code;
+
 @end
 
 @implementation SearchTaskViewController
@@ -30,6 +36,7 @@ typedef NSString* (^passValue_task)(NSInteger tag);
 @synthesize checkText;
 @synthesize pass_Value;
 @synthesize alist_searchData;
+@synthesize alist_code;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -74,10 +81,11 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmtask"];
-    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
-    idic_value=[[NSMutableDictionary alloc]initWithCapacity:10];
-    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
-    alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
+    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:1];
+    idic_value=[[NSMutableDictionary alloc]initWithCapacity:1];
+    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
+    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
 }
 
 -(void)fn_custom_gesture{
@@ -138,6 +146,7 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
+        [self fn_isExist:col_code];
     }
     __block SearchTaskViewController *blockSelf=self;
     pass_Value=^NSString*(NSInteger tag){
@@ -208,10 +217,25 @@ typedef NSString* (^passValue_task)(NSInteger tag);
         return 80;
     }
 }
+-(void)fn_isExist:(NSString*)col_code{
+    NSMutableArray *alist_code_copy=[NSMutableArray arrayWithArray:alist_code];
+    for (NSString *str in alist_code_copy) {
+        if ([str isEqualToString:col_code]) {
+            [alist_code removeObject:str];
+        }
+    }
+    [alist_code addObject:col_code];
+}
 
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
-    if ([[idic_value valueForKey:@"task_title"]length]!=0) {
+    BOOL isfill=YES;
+    for (NSString *col_code in alist_code) {
+        if ([[idic_value valueForKey:col_code]length]==0) {
+            isfill=NO;
+        }
+    }
+    if (isfill) {
         if (_callback_task) {
             _callback_task(alist_searchData);
         }
