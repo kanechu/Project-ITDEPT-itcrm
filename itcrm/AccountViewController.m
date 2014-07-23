@@ -66,6 +66,7 @@ enum TEXTFIELD_TAG {
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
     [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
     [self fn_custom_gesture];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;

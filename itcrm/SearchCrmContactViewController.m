@@ -52,6 +52,7 @@ enum TEXT_TAG {
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
     self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
+    self.skstableView.showsVerticalScrollIndicator=NO;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     [self fn_custom_gesture];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];

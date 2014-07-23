@@ -71,6 +71,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self fn_init_idic_parameter];
     self.skstableview.SKSTableViewDelegate=self;
     [self.skstableview fn_expandall];
+    self.skstableview.showsVerticalScrollIndicator=NO;
     [expand_helper setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     format=[[Format_conversion alloc]init];

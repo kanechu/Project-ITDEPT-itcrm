@@ -51,11 +51,14 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 {
     [super viewDidLoad];
     [self fn_init_arr];
-   // [self fn_custom_gesture];
     self.skstableView.SKSTableViewDelegate=self;
     //将额外的cell的线隐藏
     [expand_helper setExtraCellLineHidden:self.skstableView];
     [self.skstableView fn_expandall];
+    /**
+     *  隐藏表格的滚动条
+     */
+    self.skstableView.showsVerticalScrollIndicator=NO;
     [_inav_bar setBarTintColor:COLOR_LIGHT_YELLOW];
 	// Do any additional setup after loading the view.
 }

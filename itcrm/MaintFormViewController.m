@@ -66,6 +66,7 @@
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开第一个expandable
     [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];

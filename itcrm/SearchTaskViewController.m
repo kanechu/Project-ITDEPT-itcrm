@@ -47,6 +47,7 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     [self fn_init_arr];
     //loadview的时候，打开所有expandable
     [self.skstableview fn_expandall];
+    self.skstableview.showsVerticalScrollIndicator=NO;
     self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW;
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     [_inav_navigationbar setBarTintColor:COLOR_LIGHT_YELLOW];

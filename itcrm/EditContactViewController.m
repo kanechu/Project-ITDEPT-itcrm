@@ -62,6 +62,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     [self fn_get_idic_parameter];
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
     [self fn_custom_gesture];
     [expand_helper setExtraCellLineHidden:self.skstableView];
     _convert=[[Format_conversion alloc]init];

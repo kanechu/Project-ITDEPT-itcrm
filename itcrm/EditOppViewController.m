@@ -59,6 +59,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     self.skstableView.SKSTableViewDelegate=self;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
     convert=[[Format_conversion alloc]init];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
