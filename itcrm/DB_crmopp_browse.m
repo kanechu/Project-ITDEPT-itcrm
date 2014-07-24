@@ -31,6 +31,31 @@
     }
     return NO;
 }
+-(BOOL)fn_update_crmopp_data:(NSMutableDictionary*)idic_opp unique_id:(NSString*)unique_id{
+    NSEnumerator *enumerator=[idic_opp keyEnumerator];
+    NSString *sql=[NSString string];
+    NSInteger flag=0;
+    for (NSString *key in enumerator) {
+        if (flag==0) {
+            sql=[sql stringByAppendingFormat:@"update crmopp_browse set %@=:%@",key,key];
+        }else{
+            sql=[sql stringByAppendingFormat:@", %@=:%@",key,key];
+        }
+        flag=1;
+    }
+    if (flag==1) {
+        sql=[sql stringByAppendingFormat:@" where unique_id=%@",unique_id];
+    }
+    if ([[idb fn_get_db]open] && [sql length]!=0) {
+        BOOL isSuccess=[[idb fn_get_db]executeUpdate:sql withParameterDictionary:idic_opp];
+        if (!isSuccess) {
+            return NO;
+        }
+        [[idb fn_get_db]close];
+        return YES;
+    }
+    return NO;
+}
 -(NSMutableArray*)fn_get_crmopp_data:(NSString*)opp_name select_sql:(NSString*)select_sql{
     NSString *sql=[NSString stringWithFormat:@"SELECT %@ FROM crmopp_browse where opp_name like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];

@@ -116,6 +116,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"segue_editopp" sender:self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmopp_browse) name:@"update" object:nil];
+}
+-(void)fn_update_crmopp_browse{
+    alist_opp_parameter=[db_crmopp fn_get_crmopp_data:_is_searchBar.text select_sql:select_sql];
+    [self fn_init_crmopp_browse_arr:alist_opp_parameter];
+    [self.tableview reloadData];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];

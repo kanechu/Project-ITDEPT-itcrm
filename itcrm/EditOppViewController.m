@@ -15,17 +15,20 @@
 #import "DB_crmacct_browse.h"
 #import "OptionViewController.h"
 #import "RegionViewController.h"
+#import "RespCrmopp_browse.h"
+#import "Web_updateData.h"
 enum TEXT_TAG{
     TEXT_TAG=100
 };
 typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @interface EditOppViewController ()
-@property(nonatomic,strong)NSMutableArray *alist_maintOpp;
+@property (nonatomic,strong)NSMutableArray *alist_maintOpp;
 @property (nonatomic,strong)NSMutableArray *alist_filtered_oppdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSMutableArray *alist_option;
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp;
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp_copy;
+@property (nonatomic,strong)NSMutableDictionary *idic_edited_opp;
 @property (nonatomic,strong)Format_conversion *convert;
 @property (nonatomic,strong)passValue_opp pass_value;
 @property (nonatomic,strong)UITextView *textViewCheck;
@@ -42,6 +45,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @synthesize idic_parameter_opp_copy;
 @synthesize alist_option;
 @synthesize textViewCheck;
+@synthesize idic_edited_opp;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -92,6 +96,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         idic_parameter_opp=[arr_crmcontact objectAtIndex:0];
     }
     idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
+    idic_edited_opp=[[NSMutableDictionary alloc]initWithCapacity:1];
 }
 #pragma mark -获取定制opp maint版面的数据
 -(void)fn_get_maint_crmopp{
@@ -150,7 +155,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
      __block EditOppViewController *blockSelf=self;
      pass_value=^NSMutableDictionary*(NSInteger tag){
-         return blockSelf-> alist_filtered_oppdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
+         return blockSelf-> alist_filtered_oppdata [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
      };
     if ([col_stye isEqualToString:@"int"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1_opp";
@@ -233,24 +238,40 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     if (textView.text!=nil) {
         [idic_parameter_opp setObject:textView.text forKey:col_code];
+        [idic_edited_opp setObject:textView.text forKey:col_code];
     }
 }
 - (IBAction)fn_save_modified_data:(id)sender {
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"whether to save the modified data" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"whether to save the modified data" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
     [alert show];
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
-        NSLog(@"保存数据");
+        Web_updateData *update=[[Web_updateData alloc]init];
+        [update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMOPP_UPDATE_URL :^(NSMutableArray *alist_result){
+            DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
+            BOOL isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
+            if (isSuccess) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+            }
+        } ];
     }
     if (buttonIndex==1) {
-        NSLog(@"不保存数据");
         idic_parameter_opp=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp_copy];
         [self.skstableView reloadData];
     }
     
 }
+-(RespCrmopp_browse*)fn_get_updateform{
+    RespCrmopp_browse *updateform_contact=[[RespCrmopp_browse alloc]init];
+    NSString *unique_id=[idic_parameter_opp valueForKey:@"unique_id"];
+    [idic_parameter_opp removeObjectForKey:@"unique_id"];
+    [updateform_contact setValuesForKeysWithDictionary:idic_parameter_opp];
+    [idic_parameter_opp setObject:unique_id forKey:@"unique_id"];
+    return updateform_contact;
+}
+
 - (IBAction)fn_lookup_data:(id)sender {
     UIButton *ibtn=(UIButton*)sender;
     NSMutableDictionary *idic=pass_value(ibtn.tag);
@@ -267,6 +288,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             VC.lookup_title=[NSString stringWithFormat:@"select the %@",col_code];
             VC.callback=^(NSMutableDictionary *dic){
                 [idic_parameter_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
+                [idic_edited_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
                 [self.skstableView reloadData];
             };
             
@@ -276,6 +298,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             VC.flag=1;
             VC.callback=^(NSMutableDictionary *dic){
                 [idic_parameter_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                [idic_edited_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
                 [self.skstableView reloadData];
             };
         }
