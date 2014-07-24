@@ -17,9 +17,7 @@
 #import "RegionViewController.h"
 #import "RespCrmopp_browse.h"
 #import "Web_updateData.h"
-enum TEXT_TAG{
-    TEXT_TAG=100
-};
+#define TEXT_TAG 100
 typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @interface EditOppViewController ()
 @property (nonatomic,strong)NSMutableArray *alist_maintOpp;
@@ -32,6 +30,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @property (nonatomic,strong)Format_conversion *convert;
 @property (nonatomic,strong)passValue_opp pass_value;
 @property (nonatomic,strong)UITextView *textViewCheck;
+@property (nonatomic,assign)NSInteger flag_cancel;
 @end
 
 @implementation EditOppViewController
@@ -46,6 +45,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @synthesize alist_option;
 @synthesize textViewCheck;
 @synthesize idic_edited_opp;
+@synthesize flag_cancel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -67,6 +67,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     convert=[[Format_conversion alloc]init];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
+    flag_cancel=0;
 	// Do any additional setup after loading the view.
 }
 
@@ -255,11 +256,17 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
             }
+            if (flag_cancel==1) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         } ];
     }
     if (buttonIndex==1) {
         idic_parameter_opp=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp_copy];
         [self.skstableView reloadData];
+        if (flag_cancel==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     
 }
@@ -306,6 +313,17 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
     }else{
         [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
+    }
+}
+
+- (IBAction)fn_cancel_edited_data:(id)sender {
+    BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
+    if (!isSame) {
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"the record has been eidted but not saved,please select discard or save the record" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        [alertview show];
+        flag_cancel=1;
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 -(void)fn_get_choice_arr:(NSString*)col_option{
