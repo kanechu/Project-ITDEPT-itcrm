@@ -18,6 +18,7 @@
 #import "Web_updateData.h"
 #import "DB_Region.h"
 #import "RespCrmtask_browse.h"
+#import "Custom_datePicker.h"
 
 #define TEXT_TAG 100
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
@@ -29,9 +30,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
 @property (nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property (nonatomic,strong)pass_colCode pass_value;
-@property (nonatomic,strong)UIDatePicker *idp_datepicker;
+@property (nonatomic,strong)Custom_datePicker *datePicker;
 @property (nonatomic,copy)NSString *select_date;
 @property (nonatomic,assign)NSInteger flag;
+@property (nonatomic,strong)NSDateFormatter *dateformatter;
 @end
 
 @implementation MaintTaskViewController
@@ -44,9 +46,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize is_task_id;
 @synthesize idic_parameter_value_copy;
 @synthesize idic_edited_parameter;
-@synthesize idp_datepicker;
 @synthesize select_date;
 @synthesize flag;
+@synthesize datePicker;
+@synthesize dateformatter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -71,6 +74,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_create_datepick];
     flag=0;
+    [self fn_set_datetime_formatter];
 	// Do any additional setup after loading the view.
 }
 
@@ -78,6 +82,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark 设置日期的格式
+-(void)fn_set_datetime_formatter{
+    dateformatter=[[NSDateFormatter alloc]init];
+    [dateformatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateformatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
+    [dateformatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"]];
+    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 }
 #pragma mark 获取要修改的crmtask
 -(void)fn_init_idic_parameter{
@@ -99,17 +111,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 #pragma mark create datePick
 -(void)fn_create_datepick{
-    idp_datepicker=[[UIDatePicker alloc]init];
-    [idp_datepicker setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
-    [idp_datepicker setDatePickerMode:UIDatePickerModeDateAndTime];
-    [idp_datepicker addTarget:self action:@selector(fn_change_date) forControlEvents:UIControlEventValueChanged];
-    
-}
--(void)fn_change_date{
-    NSDate *id_date=[idp_datepicker date];
-    NSTimeInterval timeInterval=[id_date timeIntervalSince1970];
-    NSTimeInterval milliseconds=timeInterval*1000;
-    select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
+    datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+    __block MaintTaskViewController *objectSelf=self;
+    datePicker.selectDate=^(NSString *str_date){
+        NSDate *date=[objectSelf->dateformatter dateFromString:str_date];
+        NSTimeInterval timeInterval=[date timeIntervalSince1970];
+        NSTimeInterval milliseconds=timeInterval*1000;
+        objectSelf->select_date=[NSString stringWithFormat:@"%lf",milliseconds];
+    };
 }
 -(UIToolbar*)fn_create_toolbar{
     UIToolbar *toolbar = [[UIToolbar alloc] init];
@@ -207,10 +216,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
         if ([col_type isEqualToString:@"datetime"]) {
-            NSDateFormatter *dateFormat=[[NSDateFormatter alloc]init];
-            [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-            text_value=[dateFormat stringFromDate:[format dateFromUnixTimestamp:text_value]];
-            cell.itv_data_textview.inputView=idp_datepicker;
+            text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
+            cell.itv_data_textview.inputView=datePicker;
             cell.itv_data_textview.inputAccessoryView=[self fn_create_toolbar];
         }
         cell.itv_data_textview.text=text_value;
