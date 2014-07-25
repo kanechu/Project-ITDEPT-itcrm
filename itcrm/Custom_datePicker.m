@@ -23,18 +23,46 @@
     int selectedDayRow;
     BOOL firstTimeLoad;
 }
-
+@synthesize delegate;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self fn_create_toolbar];
         [self fn_get_dataSource];
     }
     return self;
 }
+-(void)fn_create_toolbar{
+    UIToolbar *toobar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
+    [toobar setBarStyle:UIBarStyleBlackTranslucent];
+    [toobar setBarTintColor:COLOR_LIGTH_GREEN];
+    [toobar setTintColor:[UIColor whiteColor]];
+    UIBarButtonItem *buttonCancel=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(fn_Click_Cancel:)];
+    UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fn_Click_done:)];
+    
+    [toobar setItems:[NSArray arrayWithObjects:buttonCancel,buttonflexible,buttonDone, nil]];
+    
+    [self addSubview:toobar];
+}
+-(void)fn_Click_done:(id)sender{
+    NSString *str=[NSString stringWithFormat:@"%@-%@-%@ %@:%@:%@ ",[alist_years objectAtIndex:[customDatePicker selectedRowInComponent:0]],[alist_months objectAtIndex:[customDatePicker selectedRowInComponent:1]],[alist_days objectAtIndex:[customDatePicker selectedRowInComponent:2]],[alist_hours objectAtIndex:[customDatePicker selectedRowInComponent:3]],[alist_minutes objectAtIndex:[customDatePicker selectedRowInComponent:4]],[alist_seconds objectAtIndex:[customDatePicker selectedRowInComponent:5]]];
+    
+    if ([delegate respondsToSelector:@selector(fn_Clicked_done:)]) {
+        [delegate fn_Clicked_done:str];
+    }
+    
+}
+-(void)fn_Click_Cancel:(id)sender{
+    NSString *str=@"";
+    if ([delegate respondsToSelector:@selector(fn_Clicked_cancel:)]) {
+        [delegate fn_Clicked_cancel:str];
+    }
+}
 - (void)fn_get_dataSource{
-    customDatePicker=[[UIPickerView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    customDatePicker=[[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, self.frame.size.width, self.frame.size.height)];
     customDatePicker.delegate=self;
     customDatePicker.dataSource=self;
     [self addSubview:customDatePicker];
@@ -142,13 +170,8 @@
         
         [pickerView
          reloadAllComponents];
-        
     }
-    NSString *str=[NSString stringWithFormat:@"%@-%@-%@ %@:%@:%@ ",[alist_years objectAtIndex:[customDatePicker selectedRowInComponent:0]],[alist_months objectAtIndex:[customDatePicker selectedRowInComponent:1]],[alist_days objectAtIndex:[customDatePicker selectedRowInComponent:2]],[alist_hours objectAtIndex:[customDatePicker selectedRowInComponent:3]],[alist_minutes objectAtIndex:[customDatePicker selectedRowInComponent:4]],[alist_seconds objectAtIndex:[customDatePicker selectedRowInComponent:5]]];
-    self.selectDate(str);
-   
 }
-
 
 #pragma mark - UIPickerViewDataSource
 

@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-typedef void (^callBack_selectDate)(NSString *);
+@protocol DatepickerDelegate;
 @interface Custom_datePicker : UIView<UIPickerViewDataSource,UIPickerViewDelegate>
-@property(nonatomic,strong)callBack_selectDate selectDate;
+@property(nonatomic,assign)id<DatepickerDelegate> delegate;
+
+@end
+@protocol DatepickerDelegate <NSObject>
+
+-(void)fn_Clicked_done:(NSString*)str;
+-(void)fn_Clicked_cancel:(NSString *)str;
 
 @end

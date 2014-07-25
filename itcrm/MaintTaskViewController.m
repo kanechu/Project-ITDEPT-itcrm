@@ -34,6 +34,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @property (nonatomic,copy)NSString *select_date;
 @property (nonatomic,assign)NSInteger flag;
 @property (nonatomic,strong)NSDateFormatter *dateformatter;
+@property (nonatomic,assign)NSInteger flag_cancel;
 @end
 
 @implementation MaintTaskViewController
@@ -50,6 +51,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize flag;
 @synthesize datePicker;
 @synthesize dateformatter;
+@synthesize flag_cancel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -111,33 +113,28 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 #pragma mark create datePick
 -(void)fn_create_datepick{
-    datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
-    __block MaintTaskViewController *blockSelf=self;
-    datePicker.selectDate=^(NSString *str_date){
-        NSDate *date=[blockSelf->dateformatter dateFromString:str_date];
-        NSTimeInterval timeInterval=[date timeIntervalSince1970];
-        NSTimeInterval milliseconds=timeInterval*1000.0f;
-        /**
-         *  select_date 不能带有小数点，不然上传服务器中会失败
-         */
-        blockSelf->select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
-    };
+    datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, 320, 230)];
+    datePicker.delegate=self;
 }
--(UIToolbar*)fn_create_toolbar{
-    UIToolbar *toolbar = [[UIToolbar alloc] init];
-    [toolbar setBarStyle:UIBarStyleBlackOpaque];
-    [toolbar sizeToFit];
-    [toolbar setTintColor:[UIColor whiteColor]];
-    [toolbar setBarTintColor:COLOR_LIGTH_GREEN];
-    UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fn_Click_done:)];
-    
-    [toolbar setItems:[NSArray arrayWithObjects:buttonflexible,buttonDone, nil]];
-    return toolbar;
-}
--(void)fn_Click_done:(id)sender{
+#pragma mark DatepickerDelegate
+-(void)fn_Clicked_done:(NSString*)str{
+    NSDate *date=[dateformatter dateFromString:str];
+    NSTimeInterval timeInterval=[date timeIntervalSince1970];
+    NSTimeInterval milliseconds=timeInterval*1000.0f;
+    /**
+     *  select_date 不能带有小数点，不然上传服务器中会失败
+     */
+    select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
     [self.skstableview reloadData];
+    
 }
+-(void)fn_Clicked_cancel:(NSString *)str{
+    select_date=@"";
+    flag_cancel=1;
+    [checkTextView resignFirstResponder];
+    
+}
+
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -146,6 +143,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self.view addGestureRecognizer:tapgesture];
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    flag_cancel=1;
     [checkTextView resignFirstResponder];
 }
 
@@ -221,7 +219,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         if ([col_type isEqualToString:@"datetime"]) {
             text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
             cell.itv_data_textview.inputView=datePicker;
-            cell.itv_data_textview.inputAccessoryView=[self fn_create_toolbar];
         }
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
@@ -343,10 +340,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     NSMutableDictionary *parameter_dic=_pass_value(textView.tag);
     NSString *col_code=[parameter_dic valueForKey:@"col_code"];
     NSString *col_type=[parameter_dic valueForKey:@"col_type"];
+    if (flag_cancel==1) {
+        flag_cancel=0;
+        return;
+    }
     if ([col_type isEqualToString:@"datetime"]&&[select_date length]!=0) {
         [idic_parameter_value setObject:select_date forKey:col_code];
         [idic_edited_parameter setObject:select_date forKey:col_code];
-    }else{
+    }else {
         [idic_parameter_value setObject:textView.text forKey:col_code];
         [idic_edited_parameter setObject:textView.text forKey:col_code];
     }

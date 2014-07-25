@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface MaintTaskViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate,UIAlertViewDelegate>
+#import "Custom_datePicker.h"
+@interface MaintTaskViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate,UIAlertViewDelegate,DatepickerDelegate>
 @property (nonatomic,strong)NSMutableArray *alist_miantTask;
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
