@@ -112,12 +112,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 #pragma mark create datePick
 -(void)fn_create_datepick{
     datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
-    __block MaintTaskViewController *objectSelf=self;
+    __block MaintTaskViewController *blockSelf=self;
     datePicker.selectDate=^(NSString *str_date){
-        NSDate *date=[objectSelf->dateformatter dateFromString:str_date];
+        NSDate *date=[blockSelf->dateformatter dateFromString:str_date];
         NSTimeInterval timeInterval=[date timeIntervalSince1970];
-        NSTimeInterval milliseconds=timeInterval*1000;
-        objectSelf->select_date=[NSString stringWithFormat:@"%lf",milliseconds];
+        NSTimeInterval milliseconds=timeInterval*1000.0f;
+        blockSelf->select_date=[NSString stringWithFormat:@"%lf",milliseconds];
     };
 }
 -(UIToolbar*)fn_create_toolbar{

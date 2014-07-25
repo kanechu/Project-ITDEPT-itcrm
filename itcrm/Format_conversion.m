@@ -168,7 +168,7 @@
 }
 #pragma mark 毫秒转换为日期格式
 -(NSDate*)dateFromUnixTimestamp:(NSString*)millisecond{
-    float millisecond_value=[millisecond floatValue];
+    double millisecond_value=[millisecond doubleValue];
     NSTimeInterval timeinterval=millisecond_value/1000.0f;
     return [NSDate dateWithTimeIntervalSince1970:timeinterval];
 }
