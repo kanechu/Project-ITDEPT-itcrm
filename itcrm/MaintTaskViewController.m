@@ -34,7 +34,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @property (nonatomic,copy)NSString *select_date;
 @property (nonatomic,assign)NSInteger flag;
 @property (nonatomic,strong)NSDateFormatter *dateformatter;
-@property (nonatomic,assign)NSInteger flag_cancel;
 @end
 
 @implementation MaintTaskViewController
@@ -51,7 +50,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize flag;
 @synthesize datePicker;
 @synthesize dateformatter;
-@synthesize flag_cancel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -128,9 +126,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self.skstableview reloadData];
     
 }
--(void)fn_Clicked_cancel:(NSString *)str{
+-(void)fn_Clicked_cancel{
     select_date=@"";
-    flag_cancel=1;
     [checkTextView resignFirstResponder];
     
 }
@@ -143,7 +140,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self.view addGestureRecognizer:tapgesture];
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
-    flag_cancel=1;
+    select_date=@"";
     [checkTextView resignFirstResponder];
 }
 
@@ -335,19 +332,20 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 #pragma mark UITextViewDelegate
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
+    NSDate *date=[NSDate date];
+    [datePicker fn_get_current_datetime:date];
 }
+
 - (void)textViewDidEndEditing:(UITextView *)textView{
     NSMutableDictionary *parameter_dic=_pass_value(textView.tag);
     NSString *col_code=[parameter_dic valueForKey:@"col_code"];
     NSString *col_type=[parameter_dic valueForKey:@"col_type"];
-    if (flag_cancel==1) {
-        flag_cancel=0;
-        return;
-    }
     if ([col_type isEqualToString:@"datetime"]&&[select_date length]!=0) {
         [idic_parameter_value setObject:select_date forKey:col_code];
         [idic_edited_parameter setObject:select_date forKey:col_code];
-    }else {
+    }else if([col_type isEqualToString:@"datetime"]&&[select_date length]==0){
+        return;
+    }else{
         [idic_parameter_value setObject:textView.text forKey:col_code];
         [idic_edited_parameter setObject:textView.text forKey:col_code];
     }

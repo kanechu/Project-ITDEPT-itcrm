@@ -8,13 +8,16 @@
 
 #import <UIKit/UIKit.h>
 @protocol DatepickerDelegate;
+
 @interface Custom_datePicker : UIView<UIPickerViewDataSource,UIPickerViewDelegate>
 @property(nonatomic,assign)id<DatepickerDelegate> delegate;
+-(void)fn_get_current_datetime:(NSDate*)date;
 
 @end
+
 @protocol DatepickerDelegate <NSObject>
 
 -(void)fn_Clicked_done:(NSString*)str;
--(void)fn_Clicked_cancel:(NSString *)str;
+-(void)fn_Clicked_cancel;
 
 @end

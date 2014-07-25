@@ -29,17 +29,26 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self fn_create_pickerView];
         [self fn_create_toolbar];
         [self fn_get_dataSource];
+        NSDate *date=[NSDate date];
+        [self fn_get_current_datetime:date];
     }
     return self;
+}
+-(void)fn_create_pickerView{
+    customDatePicker=[[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, self.frame.size.width, self.frame.size.height)];
+    customDatePicker.delegate=self;
+    customDatePicker.dataSource=self;
+    [self addSubview:customDatePicker];
 }
 -(void)fn_create_toolbar{
     UIToolbar *toobar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
     [toobar setBarStyle:UIBarStyleBlackTranslucent];
     [toobar setBarTintColor:COLOR_LIGTH_GREEN];
     [toobar setTintColor:[UIColor whiteColor]];
-    UIBarButtonItem *buttonCancel=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(fn_Click_Cancel:)];
+    UIBarButtonItem *buttonCancel=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(fn_Click_Cancel)];
     UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fn_Click_done:)];
     
@@ -55,49 +64,13 @@
     }
     
 }
--(void)fn_Click_Cancel:(id)sender{
-    NSString *str=@"";
-    if ([delegate respondsToSelector:@selector(fn_Clicked_cancel:)]) {
-        [delegate fn_Clicked_cancel:str];
+-(void)fn_Click_Cancel{
+    if ([delegate respondsToSelector:@selector(fn_Clicked_cancel)]) {
+        [delegate fn_Clicked_cancel];
     }
 }
 - (void)fn_get_dataSource{
-    customDatePicker=[[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, self.frame.size.width, self.frame.size.height)];
-    customDatePicker.delegate=self;
-    customDatePicker.dataSource=self;
-    [self addSubview:customDatePicker];
-    
-    firstTimeLoad=YES;
-    NSDate *date=[NSDate date];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
-    //Get Current year
-    [formatter setDateFormat:@"yyyy"];
-    NSString *is_currentyear = [NSString stringWithFormat:@"%@",
-                                   [formatter stringFromDate:date]];
-    
-    // Get Current  Month
-    [formatter setDateFormat:@"MM"];
-    is_currentMonth = [NSString stringWithFormat:@"%d",[[formatter stringFromDate:date]integerValue]];
-    
-    
-    // Get Current  Date
-    [formatter setDateFormat:@"dd"];
-    NSString *is_currentDay = [NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
-    
-    /**
-     *Get Current  Hour hh表示12小时制 HH表示24小时制
-     */ 
-    [formatter setDateFormat:@"HH"];
-    NSString *is_currentHour = [NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
-    
-    // Get Current  Minutes
-    [formatter setDateFormat:@"mm"];
-    NSString *is_currentMinute = [NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
-    
-    //Get current Seconds
-    [formatter setDateFormat:@"ss"];
-    NSString *is_currentSecond=[NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
-    
+
     // PickerView -  Years data
     alist_years=[[NSMutableArray alloc]init];
     for (int i=1970; i<=2050;i++) {
@@ -134,6 +107,39 @@
     {
         [alist_days addObject:[NSString stringWithFormat:@"%d",i]];
     }
+    
+   
+}
+-(void)fn_get_current_datetime:(NSDate*)date{
+    firstTimeLoad=YES;
+    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
+    //Get Current year
+    [formatter setDateFormat:@"yyyy"];
+    NSString *is_currentyear = [NSString stringWithFormat:@"%@",
+                                [formatter stringFromDate:date]];
+    
+    // Get Current  Month
+    [formatter setDateFormat:@"MM"];
+    is_currentMonth = [NSString stringWithFormat:@"%d",[[formatter stringFromDate:date]integerValue]];
+    
+    
+    // Get Current  Date
+    [formatter setDateFormat:@"dd"];
+    NSString *is_currentDay = [NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
+    
+    /**
+     *Get Current  Hour hh表示12小时制 HH表示24小时制
+     */
+    [formatter setDateFormat:@"HH"];
+    NSString *is_currentHour = [NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
+    
+    // Get Current  Minutes
+    [formatter setDateFormat:@"mm"];
+    NSString *is_currentMinute = [NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
+    
+    //Get current Seconds
+    [formatter setDateFormat:@"ss"];
+    NSString *is_currentSecond=[NSString stringWithFormat:@"%@",[formatter stringFromDate:date]];
     
     // PickerView - Default Selection as per current Date
     
