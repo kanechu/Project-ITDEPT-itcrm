@@ -70,7 +70,7 @@
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
-    _ibtn_save.layer.cornerRadius=5;
+    _ibtn_save.layer.cornerRadius=3;
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
     idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];;
 	// Do any additional setup after loading the view.
@@ -145,7 +145,6 @@
         [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmhbl_dic];
     }
-   
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup=[[NSMutableDictionary alloc]initWithCapacity:10];
@@ -199,6 +198,9 @@
     }else{
         if ([str isEqualToString:@"Activity"]) {
             [alist_filtered_data addObject:alist_crmtask];
+        }
+        if ([str isEqualToString:@"contact"]) {
+            [alist_filtered_data addObject:alist_contact];
         }
         if ([str isEqualToString:@"Opportunity"]) {
             [alist_filtered_data addObject:alist_crmopp];

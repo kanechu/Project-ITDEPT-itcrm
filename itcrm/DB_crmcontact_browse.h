@@ -15,6 +15,6 @@
 -(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_name select_sql:(NSString *)select_sql;
 -(NSMutableArray*)fn_get_detail_crmcontact_data:(NSMutableArray*)alist_searchData select_sql:(NSString*)select_sql;
 -(NSMutableArray*)fn_get_crmcontact_browse:(NSString*)contact_id;
--(NSMutableArray*)fn_get_relate_crmcontact_data:(NSString *)contact_id select_sql:(NSString *)select_sql;
+-(NSMutableArray*)fn_get_relate_crmcontact_data:(NSString *)contact_ref_id select_sql:(NSString *)select_sql;
 -(BOOL)fn_delete_all_crmcontact_data;
 @end

@@ -64,7 +64,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     //避免键盘挡住UItextfield
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [_inav_navBar setBarTintColor:COLOR_LIGHT_YELLOW];
-    _ibtn_clear.layer.cornerRadius=8;
+    _ibtn_clear.layer.cornerRadius=3;
     // Do any additional setup after loading the view.
 }
 
@@ -209,7 +209,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         if (_callback_acct) {
             _callback_acct(alist_searchData);
         }
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
     }else{
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
@@ -279,6 +279,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (IBAction)fn_clear_input_data:(id)sender {
     idic_search_value=nil;
     idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [alist_searchData removeAllObjects];
     [self.skstableView reloadData];
 }
 

@@ -62,7 +62,7 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     [self fn_custom_gesture];
     //避免键盘挡住UITextField
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    _ibtn_clear.layer.cornerRadius=8;
+    _ibtn_clear.layer.cornerRadius=3;
 	// Do any additional setup after loading the view.
 }
 
@@ -291,6 +291,7 @@ typedef NSString* (^passValue_task)(NSInteger tag);
 - (IBAction)fn_clear_input_data:(id)sender {
     idic_value=nil;
     idic_value=[[NSMutableDictionary alloc]init];
+    [alist_searchData removeAllObjects];
     [self.skstableview reloadData];
 }
 @end

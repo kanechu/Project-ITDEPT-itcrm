@@ -106,11 +106,11 @@
     }
     return arr;
 }
--(NSMutableArray*)fn_get_relate_crmcontact_data:(NSString *)contact_id select_sql:(NSString *)select_sql{
-    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmcontact where contact_id like ?",select_sql];
+-(NSMutableArray*)fn_get_relate_crmcontact_data:(NSString *)contact_ref_id select_sql:(NSString *)select_sql{
+    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmcontact where contact_ref_id like ?",select_sql];
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
-        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%@",contact_id]];
+        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%@",contact_ref_id]];
         while ([fmdb_result next]) {
             [arr addObject:[fmdb_result resultDictionary]];
         }
