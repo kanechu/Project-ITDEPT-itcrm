@@ -117,7 +117,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         NSDate *date=[blockSelf->dateformatter dateFromString:str_date];
         NSTimeInterval timeInterval=[date timeIntervalSince1970];
         NSTimeInterval milliseconds=timeInterval*1000.0f;
-        blockSelf->select_date=[NSString stringWithFormat:@"%lf",milliseconds];
+        /**
+         *  select_date 不能带有小数点，不然上传服务器中会失败
+         */
+        blockSelf->select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
     };
 }
 -(UIToolbar*)fn_create_toolbar{
