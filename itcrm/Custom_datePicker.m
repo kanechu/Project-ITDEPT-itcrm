@@ -29,16 +29,24 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self fn_create_pickerView];
         [self fn_create_toolbar];
+        [self fn_create_titleLabel];
+        [self fn_create_pickerView];
         [self fn_get_dataSource];
         NSDate *date=[NSDate date];
         [self fn_get_current_datetime:date];
     }
     return self;
 }
+-(void)fn_create_titleLabel{
+    UILabel *title=[[UILabel alloc]initWithFrame:CGRectMake(0, 40, self.frame.size.width,21)];
+    title.text=@"  year    month    day    hour   minute   second";
+    title.font=[UIFont systemFontOfSize:15.0f];
+    title.textColor=COLOR_LIGTH_GREEN;
+    [self addSubview:title];
+}
 -(void)fn_create_pickerView{
-    customDatePicker=[[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, self.frame.size.width, self.frame.size.height)];
+    customDatePicker=[[UIPickerView alloc]initWithFrame:CGRectMake(0, 50, self.frame.size.width, self.frame.size.height)];
     customDatePicker.delegate=self;
     customDatePicker.dataSource=self;
     [self addSubview:customDatePicker];
