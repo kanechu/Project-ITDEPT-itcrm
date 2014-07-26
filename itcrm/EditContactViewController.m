@@ -67,6 +67,8 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     _convert=[[Format_conversion alloc]init];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     flag=0;
+    //注册通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 	// Do any additional setup after loading the view.
 }
 
@@ -75,6 +77,10 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)fn_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
+}
+
 #pragma mark 获取要修改的crmcontact
 -(void)fn_get_idic_parameter{
     DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];

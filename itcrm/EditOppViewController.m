@@ -68,9 +68,12 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
     flag_cancel=0;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 	// Do any additional setup after loading the view.
 }
-
+-(void)fn_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

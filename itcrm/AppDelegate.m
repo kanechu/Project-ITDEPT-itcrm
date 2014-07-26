@@ -8,7 +8,16 @@
 
 #import "AppDelegate.h"
 @implementation AppDelegate
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location=[[[event allTouches]anyObject]locationInView:[self window]];
+    if (location.y>0&&location.y<20) {
+        [self fn_touchStatusBar];
+    }
+}
+-(void)fn_touchStatusBar{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"touchStatusBar" object:nil];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.

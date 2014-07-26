@@ -75,6 +75,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self fn_create_datepick];
     flag=0;
     [self fn_set_datetime_formatter];
+    /**
+     *  给点击状态栏的操作添加观察着
+     *
+     *  @param fn_tableView_scrollTop 点击状态栏触发的方法
+     *
+     *  @return nil
+     */
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 	// Do any additional setup after loading the view.
 }
 
@@ -83,6 +91,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark 点击状态栏,Tableview回滚至top
+-(void)fn_tableView_scrollTop{
+    [self.skstableview setContentOffset:CGPointZero animated:YES];
+}
+
 #pragma mark 设置日期的格式
 -(void)fn_set_datetime_formatter{
     dateformatter=[[NSDateFormatter alloc]init];

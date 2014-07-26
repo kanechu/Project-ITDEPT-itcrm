@@ -73,6 +73,7 @@
     _ibtn_save.layer.cornerRadius=3;
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
     idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 	// Do any additional setup after loading the view.
 }
 
@@ -81,7 +82,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark 点击状态栏Tableview回滚top
+-(void)fn_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
+}
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -335,5 +339,6 @@
    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
 - (IBAction)fn_save_modified_data:(id)sender {
+    
 }
 @end
