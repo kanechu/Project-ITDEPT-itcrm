@@ -35,6 +35,13 @@
 @property (nonatomic,assign)NSInteger flag_groupNum;
 @property (nonatomic,strong)NSMutableDictionary *idic_lookup;
 @property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
+@property (nonatomic,strong)EditContactViewController *editContactVC;
+@property (nonatomic,strong)EditOppViewController *editOppVC;
+@property (nonatomic,strong)MaintTaskViewController *maintTaskVC;
+#pragma mark 根据相关id,取得的特定参数值
+@property (nonatomic,strong)NSMutableArray *alist_crmtask_value;
+@property (nonatomic,strong)NSMutableArray *alist_crmopp_value;
+@property (nonatomic,strong)NSMutableArray *alist_crmcontact_value;
 @end
 
 @implementation MaintFormViewController
@@ -50,7 +57,12 @@
 @synthesize alist_contact;
 @synthesize flag_groupNum;
 @synthesize idic_lookup;
-
+@synthesize editContactVC;
+@synthesize editOppVC;
+@synthesize maintTaskVC;
+@synthesize alist_crmcontact_value;
+@synthesize alist_crmopp_value;
+@synthesize alist_crmtask_value;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -108,12 +120,12 @@
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     //获取crmtask的列表数据
     DB_crmtask_browse  *db_crmtask=[[DB_crmtask_browse alloc]init];
-    NSMutableArray *crmtask_arr=[db_crmtask fn_get_relate_crmtask_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_task"]];
-    alist_crmtask=[self fn_format_convert:crmtask_arr list_id:@"crmacct_task"];
+    alist_crmtask_value=[db_crmtask fn_get_relate_crmtask_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_task"]];
+    alist_crmtask=[self fn_format_convert:alist_crmtask_value list_id:@"crmacct_task"];
     //获取crmopp的列表数据
     DB_crmopp_browse  *db_crmopp=[[DB_crmopp_browse alloc]init];
-    NSMutableArray *crmopp_arr=[db_crmopp fn_get_relate_crmopp_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_opp"]];
-    alist_crmopp=[self fn_format_convert:crmopp_arr list_id:@"crmacct_opp"];
+    alist_crmopp_value=[db_crmopp fn_get_relate_crmopp_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_opp"]];
+    alist_crmopp=[self fn_format_convert:alist_crmopp_value list_id:@"crmacct_opp"];
     
     //获取crmhbl的列表数据
     DB_crmhbl_browse  *db_crmhbl=[[DB_crmhbl_browse alloc]init];
@@ -121,8 +133,8 @@
     alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
     //获取crmcontact的列表数据
     DB_crmcontact_browse  *db_crmcontact=[[DB_crmcontact_browse alloc]init];
-    NSMutableArray *crmcontact_arr=[db_crmcontact fn_get_relate_crmcontact_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_contact"]];
-    alist_contact=[self fn_format_convert:crmcontact_arr list_id:@"crmacct_contact"];
+    alist_crmcontact_value=[db_crmcontact fn_get_relate_crmcontact_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_contact"]];
+    alist_contact=[self fn_format_convert:alist_crmcontact_value list_id:@"crmacct_contact"];
     
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
@@ -333,30 +345,30 @@
 #pragma mark tableView: didSelectSubRowAtIndexPath:
 -(void)tableView:(SKSTableView *)tableView didSelectSubRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *groupName=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
+    NSInteger selectRow=indexPath.subRow-1;
     if ([groupName isEqualToString:@"contact"]) {
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
+        editContactVC.is_contact_id=[[alist_crmcontact_value objectAtIndex:selectRow]valueForKey:@"contact_id"];
     }
     if ([groupName isEqualToString:@"Activity"]) {
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
+        maintTaskVC.is_task_id=[[alist_crmtask_value objectAtIndex:selectRow]valueForKey:@"task_id"];
     }
     if ([groupName isEqualToString:@"Opportunity"]) {
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
+        editOppVC.opp_id=[[alist_crmopp_value objectAtIndex:selectRow]valueForKey:@"opp_id"];
     }
 }
 #pragma mark respond prepareForSegue: sender:
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-     NSIndexPath *selectedRowIndex=[self.skstableView indexPathForSelectedRow];
     if ([[segue identifier]isEqualToString:@"segue_acct_contactEdit"]) {
-        EditContactViewController *VC=[segue destinationViewController];
-        
+        editContactVC=[segue destinationViewController];
     }
     if ([[segue identifier]isEqualToString:@"segue_acct_taskEdit"]) {
-        MaintTaskViewController *VC=[segue destinationViewController];
-        
+        maintTaskVC=[segue destinationViewController];
     }
-    if ([[segue identifier]isEqualToString:@"segue_acct_oppEdit"]) {
-        EditOppViewController *VC=[segue destinationViewController];
-        
+    if ([[segue identifier]isEqualToString:@" segue_acct_oppEdit"]) {
+        editOppVC=[segue destinationViewController];
     }
 }
 
