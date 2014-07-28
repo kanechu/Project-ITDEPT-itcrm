@@ -172,6 +172,9 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
         CGFloat height=[_convert fn_heightWithString:text_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+        if (height<35) {
+            height=20;
+        }
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+14)];
         return cell;
     }
@@ -189,6 +192,9 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.delegate=self;
         CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
+        if (height<35) {
+            height=20;
+        }
         [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+14)];
       
         return cell;
@@ -216,8 +222,10 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         static NSString *cellIdentifier=@"Cell_lookup_contact";
         Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         height=[_convert fn_heightWithString:str_value font:cell.itv_edit_textview.font  constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
+        if (height<5) {
+            height=20;
+        }
         height=height+16+28;
-        
     }
     if (height<44) {
         height=44;

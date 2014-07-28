@@ -462,31 +462,7 @@ CGFloat const kDefaultCellHeight = 60.0f;
                         [cell accessoryViewAnimation];
                     }
                 }
-                
-                if ([_SKSTableViewDelegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)])
-                {
-                    NSIndexPath *correspondingIndexPath = [self correspondingIndexPathForRowAtIndexPath:indexPath];
-                    
-                    if (correspondingIndexPath.subRow == 0)
-                    {
-                        [_SKSTableViewDelegate tableView:self didSelectRowAtIndexPath:correspondingIndexPath];
-                    }
-                    else
-                    {
-                        [_SKSTableViewDelegate tableView:self didSelectSubRowAtIndexPath:correspondingIndexPath];
-                    }
-                }
             }
-            else
-            {
-                if ([_SKSTableViewDelegate respondsToSelector:@selector(tableView:didSelectSubRowAtIndexPath:)])
-                {
-                    NSIndexPath *correspondingIndexPath = [self correspondingIndexPathForRowAtIndexPath:indexPath];
-                    
-                    [_SKSTableViewDelegate tableView:self didSelectSubRowAtIndexPath:correspondingIndexPath];
-                }
-            }
-            
         }
     }
 }

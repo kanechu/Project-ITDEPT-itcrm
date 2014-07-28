@@ -1246,6 +1246,9 @@
                     <connections>
                         <outlet property="ibtn_save" destination="27w-3Q-sjC" id="mPA-ND-Lp0"/>
                         <outlet property="skstableView" destination="i0F-TE-qRT" id="yBF-Vv-ZLz"/>
+                        <segue destination="NEG-fv-6xJ" kind="push" identifier="segue_acct_taskEdit" id="vTW-Ye-vvC"/>
+                        <segue destination="DNb-w7-p0C" kind="push" identifier="segue_acct_contactEdit" id="Dfc-YT-f1N"/>
+                        <segue destination="pdh-N5-vfb" kind="push" identifier=" segue_acct_oppEdit" id="KeJ-f2-xSo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UYD-mS-YtU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1836,4 +1839,9 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="KeJ-f2-xSo"/>
+        <segue reference="vTW-Ye-vvC"/>
+        <segue reference="Dfc-YT-f1N"/>
+    </inferredMetricsTieBreakers>
 </document>

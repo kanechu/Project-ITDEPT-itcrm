@@ -21,6 +21,9 @@
 #import "Cell_lookup.h"
 #import "DB_Region.h"
 #import "OptionViewController.h"
+#import "EditContactViewController.h"
+#import "EditOppViewController.h"
+#import "MaintTaskViewController.h"
 
 @interface MaintFormViewController ()
 @property(nonatomic,strong)NSMutableArray *alist_crmopp;
@@ -290,6 +293,9 @@
         cell.il_show_text.text=[dic valueForKey:@"body"];
         CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
         [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
+        if ([[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"]isEqualToString:@"Shipment History"]==NO) {
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        }
         return cell;
     }
     
@@ -323,6 +329,35 @@
         height=44;
     }
     return height;
+}
+#pragma mark tableView: didSelectSubRowAtIndexPath:
+-(void)tableView:(SKSTableView *)tableView didSelectSubRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString *groupName=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
+    if ([groupName isEqualToString:@"contact"]) {
+        [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
+    }
+    if ([groupName isEqualToString:@"Activity"]) {
+        [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
+    }
+    if ([groupName isEqualToString:@"Opportunity"]) {
+        [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
+    }
+}
+#pragma mark respond prepareForSegue: sender:
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+     NSIndexPath *selectedRowIndex=[self.skstableView indexPathForSelectedRow];
+    if ([[segue identifier]isEqualToString:@"segue_acct_contactEdit"]) {
+        EditContactViewController *VC=[segue destinationViewController];
+        
+    }
+    if ([[segue identifier]isEqualToString:@"segue_acct_taskEdit"]) {
+        MaintTaskViewController *VC=[segue destinationViewController];
+        
+    }
+    if ([[segue identifier]isEqualToString:@"segue_acct_oppEdit"]) {
+        EditOppViewController *VC=[segue destinationViewController];
+        
+    }
 }
 
 - (IBAction)fn_lookup_data:(id)sender {
