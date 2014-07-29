@@ -453,6 +453,9 @@
                                                     <state key="normal">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="fn_click_checkBox:" destination="NEG-fv-6xJ" eventType="touchUpInside" id="hWL-9I-veU"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>

@@ -11,5 +11,5 @@
 @interface Cell_maintForm2 : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *il_remind_label;
 @property (weak, nonatomic) IBOutlet UIButton *ibt_select;
-
+@property (assign,nonatomic)NSInteger is_enable;
 @end

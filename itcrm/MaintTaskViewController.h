@@ -21,5 +21,6 @@
 
 - (IBAction)fn_lookup_data:(id)sender;
 - (IBAction)fn_goBack:(id)sender;
+- (IBAction)fn_click_checkBox:(id)sender;
 
 @end

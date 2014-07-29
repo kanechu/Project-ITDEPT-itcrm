@@ -257,8 +257,18 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         if (!cell) {
             cell=[[Cell_maintForm2 alloc]init];
         }
+        cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
-        [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
+        NSString *is_submit=[idic_parameter_value valueForKey:col_code];
+        if ([is_submit isEqualToString:@"0"]) {
+            [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateNormal];
+            [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateSelected];
+        }
+        if ([is_submit isEqualToString:@"1"]) {
+            [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
+            [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateSelected];
+        }
+        cell.ibt_select.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         return cell;
     }
     
@@ -373,5 +383,30 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }else{
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (IBAction)fn_click_checkBox:(id)sender {
+    UIButton *ibtn=(UIButton*)sender;
+    NSMutableDictionary *idic=_pass_value(ibtn.tag);
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    NSString *is_submit=[idic_parameter_value valueForKey:col_code];
+    BOOL submited=[is_submit isEqualToString:@"1"];
+    ibtn.selected=!ibtn.selected;
+    NSString *submite_value=nil;
+    if (ibtn.selected) {
+        if (submited) {
+            submite_value=@"0";
+        }else{
+            submite_value=@"1";
+        }
+    }else{
+        if (submited) {
+            submite_value=@"0";
+        }else{
+            submite_value=@"1";
+        }
+    }
+    [idic_parameter_value setObject:submite_value forKey:col_code];
+    [idic_edited_parameter setObject:submite_value forKey:col_code];
 }
 @end
