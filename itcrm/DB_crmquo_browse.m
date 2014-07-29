@@ -10,7 +10,7 @@
 #import "FMDatabaseAdditions.h"
 #import "DBManager.h"
 #import "RespCrmquo_browse.h"
-#import "NSDictionary.h"
+
 @implementation DB_crmquo_browse
 @synthesize idb;
 -(id)init{

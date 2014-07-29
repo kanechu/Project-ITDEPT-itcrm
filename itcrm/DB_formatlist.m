@@ -10,7 +10,6 @@
 #import "DBManager.h"
 #import "FMDatabaseAdditions.h"
 #import "RespFormatlist.h"
-#import "NSDictionary.h"
 @implementation DB_formatlist
 @synthesize idb;
 

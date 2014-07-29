@@ -10,7 +10,7 @@
 #import "RespSearchCriteria.h"
 #import "FMDatabaseAdditions.h"
 #import "DBManager.h"
-#import "NSDictionary.h"
+
 @implementation DB_searchCriteria
 @synthesize idb;
 -(id)init{

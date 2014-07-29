@@ -10,7 +10,7 @@
 #import "DBManager.h"
 #import "FMDatabaseAdditions.h"
 #import "RespLogin.h"
-#import "NSDictionary.h"
+
 @implementation DB_RespLogin
 @synthesize idb;
 

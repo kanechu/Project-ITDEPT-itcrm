@@ -10,7 +10,6 @@
 #import "DBManager.h"
 #import "FMDatabaseAdditions.h"
 #import "RespSystemIcon.h"
-#import "NSDictionary.h"
 @implementation DB_systemIcon
 @synthesize idb;
 -(id)init{

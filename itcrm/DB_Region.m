@@ -10,7 +10,6 @@
 #import "DBManager.h"
 #import "FMDatabaseAdditions.h"
 #import "RespRegion.h"
-#import "NSDictionary.h"
 @implementation DB_Region
 @synthesize idb;
 -(id)init{
