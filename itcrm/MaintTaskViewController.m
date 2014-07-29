@@ -23,9 +23,12 @@
 #define TEXT_TAG 100
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
-@property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
+
+@property (nonatomic,strong)NSMutableArray *alist_miantTask;
+//过滤后的数组
+@property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
+@property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)Format_conversion *format;
-@property (nonatomic,strong)NSMutableArray *alist_updateStatus;
 //备份原来要修改的crmtask
 @property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
 @property (nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
@@ -43,7 +46,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize checkTextView;
 @synthesize idic_parameter_value;
 @synthesize format;
-@synthesize is_task_id;
 @synthesize idic_parameter_value_copy;
 @synthesize idic_edited_parameter;
 @synthesize select_date;
@@ -104,13 +106,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [dateformatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"]];
     [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 }
-#pragma mark 获取要修改的crmtask
+#pragma mark 备份要修改的crmtask
 -(void)fn_init_idic_parameter{
-    DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
-    NSMutableArray *arr_crmtask=[db_crmtask fn_get_crmtask_data_from_id:is_task_id];
-    if ([arr_crmtask count]!=0) {
-        idic_parameter_value=[arr_crmtask objectAtIndex:0];
-    }
     //深拷贝，备份一份要修改的crmtask
     idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
     idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
@@ -260,6 +257,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         NSString *is_submit=[idic_parameter_value valueForKey:col_code];
+        if ([is_submit length]==0) {
+            is_submit=@"0";
+        }
         if ([is_submit isEqualToString:@"0"]) {
             [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateNormal];
             [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateSelected];
@@ -294,7 +294,13 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     return height;
 }
 - (IBAction)fn_save_edit_data:(id)sender {
-    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"Whether to save the modified data" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+    NSString *str=nil;
+    if (_add_flag==1) {
+        str=@"Whether to save the added data";
+    }else{
+        str=@"Whether to save the modified data";
+    }
+    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
     [alertview show];
 }
 #pragma mark UIAlertViewDelegate
@@ -310,13 +316,22 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     if (buttonIndex==0) {
         Web_updateData *web_update=[[Web_updateData alloc]init];
         [web_update fn_get_updateStatus_data:[self fn_init_updateform] path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
-            _alist_updateStatus=arr;
-            DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
-            BOOL isSuccess= [db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
+             DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+            NSString *status=nil;
+            if ([arr count]!=0) {
+                status=[[arr objectAtIndex:0]valueForKey:@"status"];
+            }
+            BOOL isSuccess=0;
+            if (_add_flag==1 && [status isEqualToString:@"2"]) {
+                NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
+                isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
+            }else if([status isEqualToString:@"1"]){
+                isSuccess= [db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
+            }
             if (isSuccess) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
             }
-            if (flag==1) {
+            if (flag==1 || _add_flag==1) {
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }];
@@ -349,7 +364,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     Respcrmtask_browse *upd_form=[[Respcrmtask_browse alloc]init];
     //使用kvc给模型数据赋值
     [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
-    [idic_parameter_value setObject:unique_id forKey:@"unique_id"];
+    if (_add_flag==1) {
+        idic_parameter_value=[[NSDictionary dictionaryWithPropertiesOfObject:upd_form]mutableCopy];
+        [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
+    }else{
+        [idic_parameter_value setObject:unique_id forKey:@"unique_id"];
+    }
     return upd_form;
 }
 #pragma mark UITextViewDelegate
@@ -376,8 +396,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 
 - (IBAction)fn_goBack:(id)sender {
     BOOL isSame=[idic_parameter_value isEqualToDictionary:idic_parameter_value_copy];
+    NSString *str=nil;
+    if (_add_flag==1) {
+        str=@"Added a record but not saved,please select discard or save the record";
+    }else{
+        str=@"the record has been eidted but not saved,please select discard or save the record";
+    }
     if (!isSame) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"the record has been eidted but not saved,please select discard or save the record" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
         flag=1;
         [alert show];
     }else{

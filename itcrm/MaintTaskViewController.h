@@ -10,15 +10,13 @@
 #import "SKSTableView.h"
 #import "Custom_datePicker.h"
 @interface MaintTaskViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate,UIAlertViewDelegate,DatepickerDelegate>
-@property (nonatomic,strong)NSMutableArray *alist_miantTask;
-//过滤后的数组
-@property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
-@property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
+//标识该版面是用于修改还是添加
+@property (nonatomic,assign)NSInteger add_flag;
+@property (nonatomic,strong)NSMutableDictionary *idic_parameter_value;
 @property (nonatomic,strong)UITextView *checkTextView;
-@property (nonatomic,copy) NSString* is_task_id;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
-- (IBAction)fn_save_edit_data:(id)sender;
 
+- (IBAction)fn_save_edit_data:(id)sender;
 - (IBAction)fn_lookup_data:(id)sender;
 - (IBAction)fn_goBack:(id)sender;
 - (IBAction)fn_click_checkBox:(id)sender;

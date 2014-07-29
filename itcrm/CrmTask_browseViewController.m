@@ -151,10 +151,13 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
+    NSString *is_task_id=[[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row]valueForKey:@"task_id"];
+    NSMutableArray *arr_crmtask=[db_crmtask fn_get_crmtask_data_from_id:is_task_id];
     if([[segue identifier] isEqualToString:@"segue_maintTask"]){
         MaintTaskViewController *taskVC=[segue destinationViewController];
-        taskVC.is_task_id=[[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row]valueForKey:@"task_id"];
-        
+        if ([arr_crmtask count]!=0) {
+            taskVC.idic_parameter_value=[arr_crmtask objectAtIndex:0];
+        }
     }
 }
 - (IBAction)fn_advance_search_task:(id)sender {

@@ -352,7 +352,12 @@
     }
     if ([groupName isEqualToString:@"Activity"]) {
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
-        maintTaskVC.is_task_id=[[alist_crmtask_value objectAtIndex:selectRow]valueForKey:@"task_id"];
+        NSString *is_task_id=[[alist_crmtask_value objectAtIndex:selectRow]valueForKey:@"task_id"];
+        DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+        NSMutableArray *crmtask_arr=[db_crmtask fn_get_crmtask_data_from_id:is_task_id];
+        if ([crmtask_arr count]!=0) {
+            maintTaskVC.idic_parameter_value=[crmtask_arr objectAtIndex:0];
+        }
     }
     if ([groupName isEqualToString:@"Opportunity"]) {
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
@@ -386,6 +391,13 @@
    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
 - (IBAction)fn_save_modified_data:(id)sender {
-    
+    [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
+    NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
+    NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
+    [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
+    [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
+    [idic_parameter setObject:@"#1" forKey:@"task_id"];
+    maintTaskVC.idic_parameter_value=idic_parameter;
+    maintTaskVC.add_flag=1;
 }
 @end
