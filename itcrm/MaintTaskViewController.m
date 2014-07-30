@@ -78,13 +78,16 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     flag=0;
     [self fn_set_datetime_formatter];
     /**
-     *  给点击状态栏的操作添加观察着
+     *  给点击状态栏的操作添加观察者
      *
      *  @param fn_tableView_scrollTop 点击状态栏触发的方法
      *
      *  @return nil
      */
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+    if (_add_flag==1) {
+        self.title=@"Add Task";
+    }
 	// Do any additional setup after loading the view.
 }
 
