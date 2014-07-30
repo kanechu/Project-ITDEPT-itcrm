@@ -192,7 +192,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.delegate=self;
         CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
-        if (height<35) {
+        if (height<5) {
             height=20;
         }
         [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+14)];
@@ -225,7 +225,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         if (height<5) {
             height=20;
         }
-        height=height+16+28;
+        height=height+16+10;
     }
     if (height<44) {
         height=44;
