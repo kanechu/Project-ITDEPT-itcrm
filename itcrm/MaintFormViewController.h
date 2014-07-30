@@ -15,9 +15,6 @@
 @property (nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSString *is_acct_id;
-@property (nonatomic,strong)UITextView *checkTextView;
-@property (weak, nonatomic) IBOutlet UIButton *ibtn_save;
-- (IBAction)fn_lookup_data:(id)sender;
 
-- (IBAction)fn_save_modified_data:(id)sender;
+- (IBAction)fn_lookup_data:(id)sender;
 @end

@@ -42,6 +42,7 @@
 @property (nonatomic,strong)NSMutableArray *alist_crmtask_value;
 @property (nonatomic,strong)NSMutableArray *alist_crmopp_value;
 @property (nonatomic,strong)NSMutableArray *alist_crmcontact_value;
+@property (nonatomic,strong)UITextView *checkTextView;
 @end
 
 @implementation MaintFormViewController
@@ -77,18 +78,21 @@
     [super viewDidLoad];
     format=[[Format_conversion alloc]init];
     [self fn_init_arr];
+    [self fn_set_rightButtonItem];
     //设置表的代理
     self.skstableView.SKSTableViewDelegate=self;
-    //loadview的时候，打开第一个expandable
+    //loadview的时候，打开expandable
     [self.skstableView fn_expandall];
     self.skstableView.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableView];
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
-    _ibtn_save.layer.cornerRadius=3;
-    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];;
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+    //获取将要修改的值
+    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+    idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];
 	// Do any additional setup after loading the view.
 }
 
@@ -96,6 +100,26 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark set rightButtonItem and action
+-(void)fn_set_rightButtonItem{
+    UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_add_activity)];
+    UIBarButtonItem *ibtn_save=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
+    NSArray *arr_item=[[NSArray alloc]initWithObjects:ibtn_save,ibtn_add, nil];
+    self.navigationItem.rightBarButtonItems=arr_item;
+}
+-(void)fn_add_activity{
+    [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
+    NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
+    NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
+    [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
+    [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
+    [idic_parameter setObject:@"#1" forKey:@"task_id"];
+    maintTaskVC.idic_parameter_value=idic_parameter;
+    maintTaskVC.add_flag=1;
+}
+- (void)fn_save_modified_data:(id)sender {
+    
 }
 #pragma mark 点击状态栏Tableview回滚top
 -(void)fn_tableView_scrollTop{
@@ -111,12 +135,14 @@
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkTextView resignFirstResponder];
 }
+#pragma mark UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
 }
 
 #pragma mark -初始化数组
 -(void)fn_init_arr{
+    
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     //获取crmtask的列表数据
     DB_crmtask_browse  *db_crmtask=[[DB_crmtask_browse alloc]init];
@@ -139,27 +165,27 @@
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     flag_groupNum=[alist_groupNameAndNum count];
-    NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
-    NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
-    NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
-    NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
     
     if ([alist_crmtask count]!=0) {
+        NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
         [crmtask_dic setObject:@"Activity" forKey:@"group_name"];
         [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmtask_dic];
     }
     if ([alist_contact count]!=0) {
+        NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
         [crmcontact_dic setObject:@"contact" forKey:@"group_name"];
         [crmcontact_dic setObject:[NSString stringWithFormat:@"%d",[alist_contact count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmcontact_dic];
     }
     if ([alist_crmopp count]!=0) {
+         NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
         [crmopp_dic setObject:@"Opportunity" forKey:@"group_name"];
         [crmopp_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmopp count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmopp_dic];
     }
     if ([alist_crmhbl count]!=0) {
+         NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
         [crmhbl_dic setObject:@"Shipment History" forKey:@"group_name"];
         [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmhbl_dic];
@@ -205,26 +231,25 @@
     if (!cell)
     { cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    NSString *str_groupName=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    cell.textLabel.text=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
+    cell.textLabel.text=str_groupName;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    
-    NSString *str=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str arr:alist_maintForm];
+    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_groupName arr:alist_maintForm];
     if (arr!=nil && [arr count]!=0) {
         [alist_filtered_data addObject:arr];
     }else{
-        if ([str isEqualToString:@"Activity"]) {
+        if ([str_groupName isEqualToString:@"Activity"]) {
             [alist_filtered_data addObject:alist_crmtask];
         }
-        if ([str isEqualToString:@"contact"]) {
+        if ([str_groupName isEqualToString:@"contact"]) {
             [alist_filtered_data addObject:alist_contact];
         }
-        if ([str isEqualToString:@"Opportunity"]) {
+        if ([str_groupName isEqualToString:@"Opportunity"]) {
             [alist_filtered_data addObject:alist_crmopp];
         }
-        if ([str isEqualToString:@"Shipment History"]) {
+        if ([str_groupName isEqualToString:@"Shipment History"]) {
             [alist_filtered_data addObject:alist_crmhbl];
         }
     }
@@ -307,6 +332,8 @@
         [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
         if ([[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"]isEqualToString:@"Shipment History"]==NO) {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        }else{
+            cell.accessoryType=UITableViewCellAccessoryNone;
         }
         return cell;
     }
@@ -390,14 +417,5 @@
     PopViewManager *popView=[[PopViewManager alloc]init];
    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
-- (IBAction)fn_save_modified_data:(id)sender {
-    [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
-    NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
-    NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
-    [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
-    [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
-    [idic_parameter setObject:@"#1" forKey:@"task_id"];
-    maintTaskVC.idic_parameter_value=idic_parameter;
-    maintTaskVC.add_flag=1;
-}
+
 @end
