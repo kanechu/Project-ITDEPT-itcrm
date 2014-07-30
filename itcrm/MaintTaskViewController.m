@@ -49,7 +49,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize idic_parameter_value_copy;
 @synthesize idic_edited_parameter;
 @synthesize select_date;
-@synthesize flag;
+@synthesize flag;//用于标识点击cancel
 @synthesize datePicker;
 @synthesize dateformatter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -232,7 +232,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         }
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
-        CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+        CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
         return cell;
     }

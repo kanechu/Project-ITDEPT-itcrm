@@ -596,14 +596,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kg9-kP-OSg">
-                                                    <rect key="frame" x="5" y="5" width="145" height="21"/>
+                                                    <rect key="frame" x="5" y="7" width="145" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="1YX-0y-G1p">
-                                                    <rect key="frame" x="150" y="5" width="160" height="30"/>
+                                                    <rect key="frame" x="150" y="7" width="160" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -616,46 +616,6 @@
                                         <connections>
                                             <outlet property="il_prompt_label" destination="Kg9-kP-OSg" id="zTv-sa-8Ws"/>
                                             <outlet property="itf_searchData" destination="1YX-0y-G1p" id="2bM-DS-aCo"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_taskSearch" rowHeight="78" id="Jgx-vQ-JZ3" customClass="Cell_taskSearch">
-                                        <rect key="frame" x="0.0" y="66" width="320" height="78"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jgx-vQ-JZ3" id="d1C-Ot-rXy">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="77"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3xn-WW-dAR">
-                                                    <rect key="frame" x="5" y="5" width="145" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="qYF-qU-FpX">
-                                                    <rect key="frame" x="150" y="5" width="160" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <action selector="fn_startDate_endEdit:" destination="8dQ-IT-1nN" eventType="editingDidEnd" id="1Li-HE-dNz"/>
-                                                    </connections>
-                                                </textField>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="kVO-hI-FG9">
-                                                    <rect key="frame" x="150" y="42" width="160" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <action selector="fn_endDate_endEdit:" destination="8dQ-IT-1nN" eventType="editingDidEnd" id="IUg-mn-x6c"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="il_prompt_label" destination="3xn-WW-dAR" id="ZYQ-Tc-kW2"/>
-                                            <outlet property="itf_input_endDate" destination="kVO-hI-FG9" id="0Xi-0s-WzN"/>
-                                            <outlet property="itf_input_startDate" destination="qYF-qU-FpX" id="1uK-aN-1hO"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
