@@ -42,14 +42,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_get_formatlist];
-    db_crmquo=[[DB_crmquo_browse alloc]init];
-    convert=[[Format_conversion alloc]init];
-    alist_crmquo_parameter=[db_crmquo fn_get_crmquo_browse_data:_is_searchBar.text select_sql:select_sql];
-    [self fn_init_crmquo_arr:alist_crmquo_parameter];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
+    
+    db_crmquo=[[DB_crmquo_browse alloc]init];
+    convert=[[Format_conversion alloc]init];
+    [self fn_get_formatlist];
+    
+    alist_crmquo_parameter=[db_crmquo fn_get_crmquo_browse_data:_is_searchBar.text select_sql:select_sql];
+    [self fn_init_crmquo_arr:alist_crmquo_parameter];
 	// Do any additional setup after loading the view.
 }
 
@@ -65,6 +67,9 @@
     alist_format=[db_format fn_get_list_data:@"crmquo"];
     if ([alist_format count]!=0) {
         select_sql=[[alist_format objectAtIndex:0]valueForKey:@"select_sql"];
+        NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[convert fn_get_binaryData:iconName];
+        crmquo_icon=[convert fn_binaryData_convert_image:binary_str];
     }
 }
 -(void)fn_init_crmquo_arr:(NSMutableArray*)arr_crmquo{
@@ -72,9 +77,6 @@
     if ([alist_format count]!=0) {
         //转换格式
         alist_crmquo=[convert fn_format_conersion:alist_format browse:arr_crmquo];
-        NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
-        NSString *binary_str=[convert fn_get_binaryData:iconName];
-        crmquo_icon=[convert fn_binaryData_convert_image:binary_str];
     }
 }
 
@@ -88,6 +90,7 @@
     if (!cell) {
         cell=[[Cell_browse alloc]init];
     }
+    cell.ii_image.image=crmquo_icon;
     cell.il_title.text=[[alist_crmquo objectAtIndex:indexPath.row]valueForKey:@"title"];
     cell.il_show_text.lineBreakMode=NSLineBreakByWordWrapping;
     NSString *body_str=[[alist_crmquo objectAtIndex:indexPath.row]valueForKey:@"body"];

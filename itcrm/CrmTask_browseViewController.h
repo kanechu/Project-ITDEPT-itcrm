@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 @interface CrmTask_browseViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
-@property(nonatomic,strong)NSMutableArray *alist_crmtask;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchbar;
 - (IBAction)fn_advance_search_task:(id)sender;

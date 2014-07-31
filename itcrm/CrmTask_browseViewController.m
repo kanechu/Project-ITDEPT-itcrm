@@ -18,6 +18,7 @@
 @property(nonatomic,strong)DB_crmtask_browse *db_crmtask;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask_parameter;
 @property(nonatomic,strong)NSMutableArray *alist_format;
+@property(nonatomic,strong)NSMutableArray *alist_crmtask;
 @property(nonatomic,strong)UIImage *task_icon;
 @property(nonatomic,copy) NSString *select_sql;
 
@@ -39,7 +40,6 @@
     }
     return self;
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,11 +49,12 @@
     _is_searchbar.delegate=self;
     self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
+    
+    format=[[Format_conversion alloc]init];
+    db_crmtask=[[DB_crmtask_browse alloc]init];
     [self fn_get_formatlist];
     //获取crmtask的参数
-    db_crmtask=[[DB_crmtask_browse alloc]init];
     alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
-    format=[[Format_conversion alloc]init];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     
 	// Do any additional setup after loading the view.
@@ -70,15 +71,15 @@
     alist_format=[db_format fn_get_list_data:@"crmtask"];
     if ([alist_format count]!=0) {
         select_sql=[db_format fn_get_select_sql:@"crmtask"];
+        NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[format fn_get_binaryData:iconName];
+        task_icon=[format fn_binaryData_convert_image:binary_str];
     }
 }
 -(void)fn_init_crmtask_arr:(NSMutableArray*)arr_crmtask{
     if ([alist_format count]!=0) {
         //转换格式
         alist_crmtask=[format fn_format_conersion:alist_format browse:arr_crmtask];
-        NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
-        NSString *binary_str=[format fn_get_binaryData:iconName];
-        task_icon=[format fn_binaryData_convert_image:binary_str];
     }
 }
 
@@ -97,14 +98,11 @@
         cell=[[Cell_browse alloc]init];
     }
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
-    UIFont *font = [UIFont systemFontOfSize:15.0];
-    cell.il_title.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"title"];
-    cell.il_title.font=font;
-    cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
-    cell.il_show_text.font=font;
-    cell.il_show_text.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"body"];
     cell.ii_image.image=task_icon;
-    CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
+    cell.il_title.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"title"];
+    cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
+    cell.il_show_text.text=[[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"body"];
+    CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     // Configure the cell...
     //设置选中cell的背景颜色
@@ -119,7 +117,7 @@
     static NSString *CellIdentifier = @"Cell_browse";
     Cell_browse *cell=[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     NSString *cellText = [[alist_crmtask objectAtIndex:indexPath.row]valueForKey:@"body"];
-    CGFloat height=[format fn_heightWithString:cellText font:[UIFont systemFontOfSize:15.0] constrainedToWidth:cell.il_show_text.frame.size.width];
+    CGFloat height=[format fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     
     return height+10+25;
 }
@@ -128,7 +126,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmtask_browse) name:@"update" object:nil];
 }
 -(void)fn_update_crmtask_browse{
-    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:@"" select_sql:select_sql];
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     [self.tableview reloadData];
 }

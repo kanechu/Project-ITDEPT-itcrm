@@ -14,12 +14,15 @@
 #import "EditOppViewController.h"
 #import "DB_formatlist.h"
 @interface OpportunitiesViewController ()
+
 @property (nonatomic,strong)DB_crmopp_browse *db_crmopp;
 @property(nonatomic,strong)Format_conversion *format;
-@property (nonatomic,strong) UIImage *opp_image;
 @property (nonatomic,strong) NSMutableArray *alist_opp_parameter;
-@property (nonatomic,copy)  NSString *select_sql;
+@property (nonatomic,strong)NSMutableArray *alist_crmopp_browse;
 @property (nonatomic,strong) NSMutableArray *arr_format;
+@property (nonatomic,copy)  NSString *select_sql;
+@property (nonatomic,strong) UIImage *opp_image;
+
 @end
 
 @implementation OpportunitiesViewController
@@ -67,16 +70,15 @@
     arr_format=[db_format fn_get_list_data:@"crmopp"];
     if ([arr_format count]!=0) {
         select_sql=[[arr_format objectAtIndex:0]valueForKey:@"select_sql"];
+        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[format fn_get_binaryData:iconName];
+        opp_image=[format fn_binaryData_convert_image:binary_str];
     }
 }
-
 
 -(void)fn_init_crmopp_browse_arr:(NSMutableArray*)arr_crmopp{
     if ([arr_format count]!=0) {
         alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
-        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-        NSString *binary_str=[format fn_get_binaryData:iconName];
-        opp_image=[format fn_binaryData_convert_image:binary_str];
     }
 }
 
@@ -91,14 +93,12 @@
         cell=[[Cell_browse alloc]init];
     }
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
-    UIFont *font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    cell.ii_image.image=opp_image;
     cell.il_title.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"title"];
-    cell.il_title.font=font;
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
     cell.il_show_text.numberOfLines=0;
-    cell.il_show_text.font=font;
     cell.il_show_text.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"body"];
-    CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
+    CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     cell.il_show_text.frame=CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height);
     //设置选中cell的背景颜色
     cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
@@ -108,9 +108,10 @@
 }
 #pragma mark UITableViewDelegate
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *cellIndentifier=@"Cell_browse";
+    Cell_browse *cell=[self.tableview dequeueReusableCellWithIdentifier:cellIndentifier];
     NSString *cellText = [[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"body"];
-    UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:15.0];
-    CGFloat height=[format fn_heightWithString:cellText font:cellFont constrainedToWidth:260.0f];
+    CGFloat height=[format fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     return height+10+23;
 }
 

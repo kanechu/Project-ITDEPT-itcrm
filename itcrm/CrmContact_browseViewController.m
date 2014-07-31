@@ -43,12 +43,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_get_formatlist];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
     convert=[[Format_conversion alloc]init];
     db_crmcontact=[[DB_crmcontact_browse alloc]init];
+    [self fn_get_formatlist];
     alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:_is_searchBar.text select_sql:select_sql];
     [self fn_init_crmcontact_arr:alist_contact_parameter];
 	// Do any additional setup after loading the view.
@@ -65,6 +65,9 @@
     arr_format=[db_format fn_get_list_data:@"crmcontact"];
     if ([arr_format count]!=0) {
          select_sql=[[arr_format objectAtIndex:0]valueForKey:@"select_sql"];
+        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
+        NSString *binary_str=[convert fn_get_binaryData:iconName];
+        contact_icon=[convert fn_binaryData_convert_image:binary_str];
     }
 }
 -(void)fn_init_crmcontact_arr:(NSMutableArray*)arr_crmcontact{
@@ -72,9 +75,6 @@
     if ([arr_format count]!=0) {
         //转换格式
         alist_crmcontact=[convert fn_format_conersion:arr_format browse:arr_crmcontact];
-        NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
-        NSString *binary_str=[convert fn_get_binaryData:iconName];
-        contact_icon=[convert fn_binaryData_convert_image:binary_str];
     }
 }
 
@@ -88,10 +88,11 @@
     if (!cell) {
         cell=[[Cell_browse alloc]init];
     }
+    cell.ii_image.image=contact_icon;
     cell.il_title.text=[[alist_crmcontact objectAtIndex:indexPath.row]valueForKey:@"title"];
     cell.il_show_text.lineBreakMode=NSLineBreakByWordWrapping;
-    cell.il_show_text.text=[[alist_crmcontact objectAtIndex:indexPath.row]valueForKey:@"body"];
     NSString *str_body=[[alist_crmcontact objectAtIndex:indexPath.row]valueForKey:@"body"];
+    cell.il_show_text.text=str_body;
     CGFloat height=[convert fn_heightWithString:str_body font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x,cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     //设置选中cell的背景颜色
