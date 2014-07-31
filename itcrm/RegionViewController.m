@@ -11,7 +11,10 @@
 #import "Cell_region.h"
 #import "MZFormSheetController.h"
 @interface RegionViewController ()
+
 @property (nonatomic,strong)DB_Region *db;
+@property (nonatomic,strong)NSMutableArray *ilist_region;
+
 @end
 
 @implementation RegionViewController
@@ -34,6 +37,7 @@
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
+
     _is_searchBar.placeholder=is_placeholder;
     db=[[DB_Region alloc]init];
     ilist_region=[db fn_get_region_data:type];
@@ -52,7 +56,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
     return [ilist_region count];
 }
 
@@ -66,7 +69,8 @@
     }
     cell.il_display.text=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"display"];
     cell.il_data.text=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"data"];
-    //  cell.image.image=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"image"];
+    NSString *image_name=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"image"];
+    cell.image.image=[self fn_convert_image:image_name];
     // Configure the cell...
     cell.backgroundColor=COLOR_LIGHT_YELLOW;
     return cell;
@@ -80,10 +84,14 @@
     }
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
 }
+-(UIImage*)fn_convert_image:(NSString*)image_name{
+    Format_conversion *format_convert=[[Format_conversion alloc]init];
+    NSString *binary_str=[format_convert fn_get_binaryData:image_name];
+    return [format_convert fn_binaryData_convert_image:binary_str];
+}
 #pragma mark UISearchBarDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
     ilist_region=[db fn_get_lookup_data:searchText type:type];
-    
     [_tableview reloadData];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar{
