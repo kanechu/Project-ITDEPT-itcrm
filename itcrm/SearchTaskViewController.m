@@ -14,17 +14,25 @@
 #import "MZFormSheetController.h"
 #import "Advance_SearchData.h"
 
-#define TEXTFIELD_TAG 100
-typedef NSString* (^passValue_task)(NSInteger tag);
-@interface SearchTaskViewController ()
 
+#define TEXTFIELD_TAG 100
+typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
+@interface SearchTaskViewController ()
+//获取task搜索标准数据
+@property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
+//按组名过滤后的搜索标准数据
+@property(nonatomic,strong)NSMutableArray *alist_filtered_data;
+//存储task搜索标准的组名和该组的行数
+@property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property(nonatomic,strong)passValue_task pass_Value;
 @property(nonatomic,strong)NSMutableArray *alist_searchData;
 @property(nonatomic,strong)NSMutableDictionary *idic_value;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
 #pragma mark 存储必填项的col_code
 @property(nonatomic,strong)NSMutableArray *alist_code;
-
+@property(nonatomic,copy) NSString *select_date;
+@property(nonatomic,strong) Custom_datePicker *datePicker;
+@property(nonatomic,strong)NSDateFormatter *dateformatter;
 @end
 
 @implementation SearchTaskViewController
@@ -37,6 +45,9 @@ typedef NSString* (^passValue_task)(NSInteger tag);
 @synthesize pass_Value;
 @synthesize alist_searchData;
 @synthesize alist_code;
+@synthesize select_date;
+@synthesize datePicker;
+@synthesize dateformatter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -63,6 +74,8 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     //避免键盘挡住UITextField
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     _ibtn_clear.layer.cornerRadius=3;
+    [self fn_create_datepickerview];
+    [self fn_set_datetime_formatter];
 	// Do any additional setup after loading the view.
 }
 
@@ -71,10 +84,42 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)fn_create_datepickerview{
+    datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 250)];
+    datePicker.delegate=self;
+}
+#pragma mark DatepickerDelegate
+-(void)fn_Clicked_done:(NSString*)str{
+    NSDate *date=[dateformatter dateFromString:str];
+    NSTimeInterval timeInterval=[date timeIntervalSince1970];
+    NSTimeInterval milliseconds=timeInterval*1000.0f;
+    if (date!=nil) {
+        select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
+    }else{
+        select_date=@"";
+    }
+    
+    [self.skstableview reloadData];
+    
+}
+-(void)fn_Clicked_cancel{
+    select_date=@"";
+    [checkText resignFirstResponder];
+}
+#pragma mark 设置日期的格式
+-(void)fn_set_datetime_formatter{
+    dateformatter=[[NSDateFormatter alloc]init];
+    [dateformatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [dateformatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
+    [dateformatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"]];
+    [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+}
 
 #pragma mark UItextfieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
+    NSDate *date=[NSDate date];
+    [datePicker fn_get_current_datetime:date];
 }
 
 -(void)fn_init_arr{
@@ -96,6 +141,7 @@ typedef NSString* (^passValue_task)(NSInteger tag);
     [self.view addGestureRecognizer:tapgesture];
 }
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    select_date=@"";
     [checkText resignFirstResponder];
 }
 #pragma mark - UITableViewDataSource
@@ -149,10 +195,10 @@ typedef NSString* (^passValue_task)(NSInteger tag);
         [self fn_isExist:col_code];
     }
     __block SearchTaskViewController *blockSelf=self;
-    pass_Value=^NSString*(NSInteger tag){
-        return [blockSelf->alist_filtered_data[indexPath.section][tag-TEXTFIELD_TAG-indexPath.section*100]valueForKey:@"col_code"];
+    pass_Value=^NSMutableDictionary*(NSInteger tag){
+        return blockSelf->alist_filtered_data[indexPath.section][tag-TEXTFIELD_TAG-indexPath.section*100];
     };
-    if ([col_stye isEqualToString:@"string"]) {
+    if ([col_stye isEqualToString:@"string"]||[col_stye isEqualToString:@"date"]) {
         static NSString *cellIdentifier=@"Cell_search";
         Cell_search *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -163,59 +209,24 @@ typedef NSString* (^passValue_task)(NSInteger tag);
         cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.itf_searchData.delegate=self;
         cell.itf_searchData.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
-        if ([col_code isEqualToString:@"task_title"]) {
-            cell.itf_searchData.tag=100;
-            cell.itf_searchData.text=[idic_value valueForKey:@"title_value"];
-            [idic_parameter setObject:col_code forKey:@"task_title"];
-        }
-        if ([col_label isEqualToString:@"Task Description"]) {
-            cell.itf_searchData.tag=101;
-            cell.itf_searchData.text=[idic_value valueForKey:@"desc_value"];
-            [idic_parameter setObject:col_code forKey:@"task_desc"];
-        }
+        NSString *str_value=[idic_value valueForKey:col_code];
         
+        if ([col_stye isEqualToString:@"date"]) {
+            cell.itf_searchData.inputView=datePicker;
+            Format_conversion *convert=[[Format_conversion alloc]init];
+            NSDate *date=[convert dateFromUnixTimestamp:str_value];
+            if ([str_value length]!=0) {
+                str_value=[dateformatter stringFromDate:date];
+            }
+        }
+        cell.itf_searchData.text=str_value;
         return cell;
-    }
-    if ([col_stye isEqualToString:@"datetimerange"]) {
-        static NSString *cellIndetifier=@"Cell_taskSearch";
-        Cell_taskSearch *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIndetifier];
-        if (cell==nil) {
-            cell=[[Cell_taskSearch alloc]init];
-        }
-        cell.itf_input_endDate.delegate=self;
-        cell.itf_input_startDate.delegate=self;
-        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW;
-        cell.il_prompt_label.text=col_label;
-        cell.itf_input_endDate.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
-        cell.itf_input_startDate.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
-        NSArray *arr=[col_code componentsSeparatedByString:@","];
-        if ([[arr objectAtIndex:0] isEqualToString:@"task_start_date"]) {
-            cell.itf_input_startDate.text=[idic_value valueForKey:@"start_date_value"];
-            [idic_parameter setObject:[arr objectAtIndex:0] forKey:@"task_start_date"];
-        }
-        if ([[arr objectAtIndex:1] isEqualToString:@"task_end_date"]) {
-            cell.itf_input_endDate.text=[idic_value valueForKey:@"end_date_value"];
-            [idic_parameter setObject:[arr objectAtIndex:1] forKey:@"task_end_date"];
-        }        return cell;
     }
        // Configure the cell...
     return nil;
 }
-
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
-}
--(float)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
-    //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
-    //col_stye 类型名
-    NSString *col_stye=[dic valueForKey:@"col_type"];
-    if ([col_stye isEqualToString:@"string"]) {
-        return 44;
-    }else{
-        return 80;
-    }
 }
 -(void)fn_isExist:(NSString*)col_code{
     NSMutableArray *alist_code_copy=[NSMutableArray arrayWithArray:alist_code];
@@ -253,41 +264,29 @@ typedef NSString* (^passValue_task)(NSInteger tag);
 
 - (IBAction)fn_textfield_endEdit:(id)sender {
     UITextField *textfield=(UITextField*)sender;
-    NSString *col_code=pass_Value(textfield.tag);
-    [self fn_save_searchData:col_code text_value:textfield.text];
+    NSMutableDictionary *dic=pass_Value(textfield.tag);
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *col_type=[dic valueForKey:@"col_type"];
+    [self fn_save_searchData:col_code text_value:textfield.text col_type:col_type];
 }
--(void)fn_save_searchData:(NSString*)col_code text_value:(NSString*)text_value{
+-(void)fn_save_searchData:(NSString*)col_code text_value:(NSString*)text_value col_type:(NSString*)col_type{
     NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
     for (Advance_SearchData *searchData in alist_searchData_copy) {
         if ([searchData.is_parameter isEqualToString:col_code]) {
             [alist_searchData removeObject:searchData];
         }
     }
-    if (text_value!=0) {
+    if (text_value!=0 && [col_type isEqualToString:@"date"]==NO) {
         [idic_value setObject:text_value forKey:col_code];
-        [idic_parameter setObject:col_code forKey:col_code];
-        [alist_searchData addObject:[expand_helper fn_get_searchData:col_code idic_value:idic_value idic_parameter:idic_parameter]];
+    }else if([select_date length]==0){
+        return;
+    }else{
+        [idic_value setObject:select_date forKey:col_code];
     }
+    [idic_parameter setObject:col_code forKey:col_code];
+    [alist_searchData addObject:[expand_helper fn_get_searchData:col_code idic_value:idic_value idic_parameter:idic_parameter]];
 }
 
-- (IBAction)fn_startDate_endEdit:(id)sender {
-    UITextField *textfield=(UITextField*)sender;
-    NSString *col_code=pass_Value(textfield.tag);
-    NSString *col_code_start=[self fn_separate_code:col_code index:0];
-    [self fn_save_searchData:col_code_start text_value:textfield.text];
-}
-
-- (IBAction)fn_endDate_endEdit:(id)sender {
-    UITextField *textfield=(UITextField*)sender;
-    NSString *col_code=pass_Value(textfield.tag);
-    NSString *col_code_end=[self fn_separate_code:col_code index:1];
-    [self fn_save_searchData:col_code_end text_value:textfield.text];
-}
--(NSString*)fn_separate_code:(NSString*)col_code index:(NSInteger)index{
-    NSArray *arr=[col_code componentsSeparatedByString:@","];
-    return [arr objectAtIndex:index];
-    
-}
 - (IBAction)fn_clear_input_data:(id)sender {
     idic_value=nil;
     idic_value=[[NSMutableDictionary alloc]init];

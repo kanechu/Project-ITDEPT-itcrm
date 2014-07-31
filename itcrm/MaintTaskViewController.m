@@ -135,7 +135,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     /**
      *  select_date 不能带有小数点，不然上传服务器中会失败
      */
-    select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
+    if (date!=nil) {
+        select_date=[NSString stringWithFormat:@"%0.0lf",milliseconds];
+    }else{
+        select_date=@"";
+    }
     [self.skstableview reloadData];
     
 }
@@ -144,7 +148,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [checkTextView resignFirstResponder];
     
 }
-
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -227,7 +230,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
         if ([col_type isEqualToString:@"datetime"]) {
-            text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
+            if ([text_value length]!=0) {
+                text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
+            }
             cell.itv_data_textview.inputView=datePicker;
         }
         cell.itv_data_textview.text=text_value;
