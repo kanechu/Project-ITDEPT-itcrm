@@ -350,13 +350,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     NSMutableDictionary *dic=_pass_value(btn.tag);
     NSString *col_option=[dic valueForKey:@"col_option"];
     NSString *col_code=[dic valueForKey:@"col_code"];
-    [self fn_pop_lookup_View:col_option key_flag:col_code lookup_title:[NSString stringWithFormat:@"select the %@",col_code]];
+    [self fn_pop_lookup_View:col_option key_flag:col_code];
 }
--(void)fn_pop_lookup_View:(NSString*)is_type key_flag:(NSString*)key lookup_title:(NSString*)title{
+-(void)fn_pop_lookup_View:(NSString*)is_type key_flag:(NSString*)key{
     DB_Region *db=[[DB_Region alloc]init];
     NSMutableArray* alist_option=[db fn_get_region_data:is_type];
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
-    VC.lookup_title=title;
     VC.alist_option=alist_option;
     VC.callback=^(NSMutableDictionary *dic){
         [idic_parameter_value setObject:[dic valueForKey:@"data"] forKey:key];

@@ -25,5 +25,7 @@
 
     // Configure the view for the selected state
 }
-
+-(void)layoutSubviews{
+    _itf_input_searchData.enabled=NO;
+}
 @end

@@ -295,7 +295,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         if ([col_type isEqualToString:@"choice"]) {
             [self fn_get_choice_arr:col_option];
             VC.alist_option=alist_option;
-            VC.lookup_title=[NSString stringWithFormat:@"select the %@",col_code];
             VC.callback=^(NSMutableDictionary *dic){
                 [idic_parameter_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
                 [idic_edited_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
@@ -304,7 +303,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             
         }else{
             VC.alist_option=[db fn_get_data:@"" select_sql:@"acct_name"];
-            VC.lookup_title=@"select the account name";
             VC.flag=1;
             VC.callback=^(NSMutableDictionary *dic){
                 [idic_parameter_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];

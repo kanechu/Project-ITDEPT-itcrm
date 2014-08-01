@@ -262,7 +262,6 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
     DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
     VC.alist_option=[db fn_get_data:@"" select_sql:@"acct_name"];
-    VC.lookup_title=@"select the account name";
     VC.flag=1;
     VC.callback=^(NSMutableDictionary *dic){
         [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];

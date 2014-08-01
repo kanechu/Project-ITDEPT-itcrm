@@ -40,7 +40,7 @@
 }
 -(void)fn_create_titleLabel{
     UILabel *title=[[UILabel alloc]initWithFrame:CGRectMake(0, 40, self.frame.size.width,21)];
-    title.text=@"  year    month    day    hour   minute   second";
+    title.text=@"  Year    Month    Day    Hour   Minute   Second";
     title.font=[UIFont systemFontOfSize:15.0f];
     title.textColor=COLOR_LIGTH_GREEN;
     [self addSubview:title];

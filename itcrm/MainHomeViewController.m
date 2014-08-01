@@ -68,12 +68,12 @@
 - (void) fn_refresh_menu;
 {
     ilist_menu = [[NSMutableArray alloc] init];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_menu1"segue:@"segue_account"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_menu2" segue:@"segue_activity"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_menu3" segue:@"segue_crmcontact_browse"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_menu3" segue:@"segue_crmquo_browse"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Shipment" image:@"ic_menu3" segue:@"segue_ShipmentHistory"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Opportunity" image:@"ic_menu3" segue:@"segue_opportunities"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_acct"segue:@"segue_account"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_task" segue:@"segue_activity"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_contact" segue:@"segue_crmcontact_browse"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_quo" segue:@"segue_crmquo_browse"]];
+   // [ilist_menu addObject:[Menu_home fn_create_item:@"Shipment" image:@"ic_menu3" segue:@"segue_ShipmentHistory"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:@"Opportunity" image:@"ic_opp" segue:@"segue_opportunities"]];
     self.iui_collectionview.delegate = self;
     
     self.iui_collectionview.dataSource = self;

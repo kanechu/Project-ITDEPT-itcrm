@@ -71,7 +71,7 @@
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *CellIdentifier = @"Cell_Option_title";
     Cell_Option *headerView = [self.tableview dequeueReusableCellWithIdentifier:CellIdentifier];
-    headerView.il_option_label.text=_lookup_title;
+    headerView.il_option_label.text=@"Please Select";
     if (headerView == nil){
         [NSException raise:@"headerView == nil.." format:@"No cells with matching CellIdentifier loaded from your storyboard"];
     }

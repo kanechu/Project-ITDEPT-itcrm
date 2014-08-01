@@ -104,9 +104,9 @@
 #pragma mark set rightButtonItem and action
 -(void)fn_set_rightButtonItem{
     UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_show_actionSheet)];
-    UIBarButtonItem *ibtn_save=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
-    NSArray *arr_item=[[NSArray alloc]initWithObjects:ibtn_save,ibtn_add, nil];
-    self.navigationItem.rightBarButtonItems=arr_item;
+   // UIBarButtonItem *ibtn_save=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
+   // NSArray *arr_item=[[NSArray alloc]initWithObjects:ibtn_save,ibtn_add, nil];
+    self.navigationItem.rightBarButtonItem=ibtn_add;
 }
 -(void)fn_show_actionSheet{
     UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancle" destructiveButtonTitle:nil otherButtonTitles:@"Add activity",@"Add contact",@"Add opportunity", nil];
@@ -187,7 +187,7 @@
     }
     if ([alist_contact count]!=0) {
         NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
-        [crmcontact_dic setObject:@"contact" forKey:@"group_name"];
+        [crmcontact_dic setObject:@"Contact" forKey:@"group_name"];
         [crmcontact_dic setObject:[NSString stringWithFormat:@"%d",[alist_contact count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmcontact_dic];
     }
@@ -256,7 +256,7 @@
         if ([str_groupName isEqualToString:@"Activity"]) {
             [alist_filtered_data addObject:alist_crmtask];
         }
-        if ([str_groupName isEqualToString:@"contact"]) {
+        if ([str_groupName isEqualToString:@"Contact"]) {
             [alist_filtered_data addObject:alist_contact];
         }
         if ([str_groupName isEqualToString:@"Opportunity"]) {
@@ -386,7 +386,7 @@
 -(void)tableView:(SKSTableView *)tableView didSelectSubRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *groupName=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
     NSInteger selectRow=indexPath.subRow-1;
-    if ([groupName isEqualToString:@"contact"]) {
+    if ([groupName isEqualToString:@"Contact"]) {
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
         editContactVC.is_contact_id=[[alist_crmcontact_value objectAtIndex:selectRow]valueForKey:@"contact_id"];
     }
@@ -423,7 +423,6 @@
     DB_Region *db=[[DB_Region alloc]init];
     NSString *str_type=[idic_lookup valueForKey:@"status"];
     VC.alist_option=[db fn_get_region_data:str_type];
-    VC.lookup_title=@"select the status";
     VC.callback=^(NSMutableDictionary *dic){
         [idic_modified_value setObject:[dic valueForKey:@"display"] forKey:[idic_lookup valueForKey:@"key_parameter"]];
         [self.skstableView reloadData];
