@@ -10,9 +10,6 @@
 
 @interface Crmacct_browseViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
-@property (nonatomic,strong) NSMutableArray *ilist_account;
-@property (nonatomic,strong) UIImage *acct_icon;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView_acct;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
