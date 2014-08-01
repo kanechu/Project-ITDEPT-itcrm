@@ -78,6 +78,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
 }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [checkText resignFirstResponder];
+    return YES;
+}
 
 #pragma mark -初始化数组
 -(void)fn_init_arr{

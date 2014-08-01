@@ -121,7 +121,10 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     NSDate *date=[NSDate date];
     [datePicker fn_get_current_datetime:date];
 }
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [checkText resignFirstResponder];
+    return YES;
+}
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];

@@ -136,7 +136,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <state key="normal" image="ic_menu1">
+                                                    <state key="normal" image="ic_acct">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -1778,7 +1778,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_menu1" width="225" height="225"/>
+        <image name="ic_acct" width="350" height="350"/>
         <image name="itcrm_head" width="723" height="467"/>
         <image name="logo" width="72" height="72"/>
     </resources>

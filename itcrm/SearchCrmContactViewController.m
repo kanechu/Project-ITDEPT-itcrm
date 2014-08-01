@@ -79,6 +79,10 @@ enum TEXT_TAG {
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText=textField;
 }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [checkText resignFirstResponder];
+    return YES;
+}
 
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
