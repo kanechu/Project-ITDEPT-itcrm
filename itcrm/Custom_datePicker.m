@@ -113,7 +113,7 @@
     alist_days = [[NSMutableArray alloc]init];
     for (int i = 1; i <= 31; i++)
     {
-        [alist_days addObject:[NSString stringWithFormat:@"%d",i]];
+        [alist_days addObject:[NSString stringWithFormat:@"%02d",i]];
     }
     
    
