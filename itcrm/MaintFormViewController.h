@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SKSTableView.h"
-@interface MaintFormViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate>
+@interface MaintFormViewController : UIViewController<SKSTableViewDelegate,UITextViewDelegate,UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 @property (nonatomic,strong)NSMutableArray *alist_maintForm;
 //过滤后的数组

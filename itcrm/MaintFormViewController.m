@@ -14,12 +14,12 @@
 #import "DB_crmtask_browse.h"
 #import "DB_crmacct_browse.h"
 #import "DB_crmcontact_browse.h"
+#import "DB_Region.h"
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
 #import "Cell_browse.h"
 #import "Cell_lookup.h"
-#import "DB_Region.h"
 #import "OptionViewController.h"
 #import "EditContactViewController.h"
 #import "EditOppViewController.h"
@@ -103,23 +103,36 @@
 }
 #pragma mark set rightButtonItem and action
 -(void)fn_set_rightButtonItem{
-    UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_add_activity)];
+    UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_show_actionSheet)];
     UIBarButtonItem *ibtn_save=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
     NSArray *arr_item=[[NSArray alloc]initWithObjects:ibtn_save,ibtn_add, nil];
     self.navigationItem.rightBarButtonItems=arr_item;
 }
--(void)fn_add_activity{
-    [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
-    NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
-    NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
-    [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
-    [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
-    [idic_parameter setObject:@"#1" forKey:@"task_id"];
-    maintTaskVC.idic_parameter_value=idic_parameter;
-    maintTaskVC.add_flag=1;
+-(void)fn_show_actionSheet{
+    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancle" destructiveButtonTitle:nil otherButtonTitles:@"Add activity",@"Add contact",@"Add opportunity", nil];
+    [actionsheet showFromRect:self.view.bounds inView:self.view animated:YES];
 }
 - (void)fn_save_modified_data:(id)sender {
     
+}
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==0) {
+        [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
+        NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
+        NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
+        [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
+        [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
+        [idic_parameter setObject:@"#1" forKey:@"task_id"];
+        maintTaskVC.idic_parameter_value=idic_parameter;
+        maintTaskVC.add_flag=1;
+    }
+    if (buttonIndex==1) {
+    }
+    if (buttonIndex==2) {
+    }
+    if (buttonIndex==3) {
+    }
 }
 #pragma mark 点击状态栏Tableview回滚top
 -(void)fn_tableView_scrollTop{
@@ -391,6 +404,7 @@
         editOppVC.opp_id=[[alist_crmopp_value objectAtIndex:selectRow]valueForKey:@"opp_id"];
     }
 }
+
 #pragma mark respond prepareForSegue: sender:
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier]isEqualToString:@"segue_acct_contactEdit"]) {
