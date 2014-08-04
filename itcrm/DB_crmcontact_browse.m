@@ -21,7 +21,8 @@
     if ([[idb fn_get_db]open]) {
         for (RespCrmcontact_browse *lmap_data in alist_result) {
             NSMutableDictionary *idic_contact=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into crmcontact (uid,contact_id,contact_code,contact_type,contact_ref_id,contact_ref_name,contact_ref_code,contact_name,contact_title,contact_dept,contact_mobile,contact_tel,contact_fax,contact_email,contact_language,lang_desc,assign_to,assign_to_name,voided,rec_crt_user,rec_upd_user,rec_crt_date,rec_upd_date,rec_upd_type,rec_savable,rec_deletable) values (:uid,:contact_id,:contact_code,:contact_type,:contact_ref_id,:contact_ref_name,:contact_ref_code,:contact_name,:contact_title,:contact_dept,:contact_mobile,:contact_tel,:contact_fax,:contact_email,:contact_language,:lang_desc,:assign_to,:assign_to_name,:voided,:rec_crt_user,:rec_upd_user,:rec_crt_date,:rec_upd_date,:rec_upd_type,:rec_savable,:rec_deletable)" withParameterDictionary:idic_contact];
+            [idic_contact setObject:@"0" forKey:@"is_modified"];
+            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into crmcontact (uid,contact_id,contact_code,contact_type,contact_ref_id,contact_ref_name,contact_ref_code,contact_name,contact_title,contact_dept,contact_mobile,contact_tel,contact_fax,contact_email,contact_language,lang_desc,assign_to,assign_to_name,voided,rec_crt_user,rec_upd_user,rec_crt_date,rec_upd_date,rec_upd_type,rec_savable,rec_deletable,is_modified) values (:uid,:contact_id,:contact_code,:contact_type,:contact_ref_id,:contact_ref_name,:contact_ref_code,:contact_name,:contact_title,:contact_dept,:contact_mobile,:contact_tel,:contact_fax,:contact_email,:contact_language,:lang_desc,:assign_to,:assign_to_name,:voided,:rec_crt_user,:rec_upd_user,:rec_crt_date,:rec_upd_date,:rec_upd_type,:rec_savable,:rec_deletable,:is_modified)" withParameterDictionary:idic_contact];
             if (!ib_updated) {
                 return NO;
             }
@@ -48,6 +49,16 @@
     sql=[sql stringByAppendingFormat:@" where unique_id=%@",unique_id];
     if ([[idb fn_get_db]open]) {
         BOOL ib_updated =[[idb fn_get_db] executeUpdate:sql withParameterDictionary:idic_update];
+        if (!ib_updated)
+            return NO;
+        [[idb fn_get_db] close];
+        return  YES;
+    }
+    return NO;
+}
+-(BOOL)fn_update_crmcontact_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id{
+    if ([[idb fn_get_db]open]) {
+        BOOL ib_updated =[[idb fn_get_db]executeUpdate:@"update crmcontact set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
         if (!ib_updated)
             return NO;
         [[idb fn_get_db] close];
@@ -117,6 +128,17 @@
         [[idb fn_get_db]close];
     }
     return arr;
+}
+-(NSMutableArray*)fn_get_all_crmcontact_data{
+    NSMutableArray *arr_result=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmcontact"];
+        while ([lfmdb_result next]) {
+            [arr_result addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr_result;
 }
 
 -(BOOL)fn_delete_all_crmcontact_data{

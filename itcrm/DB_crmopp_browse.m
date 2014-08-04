@@ -21,7 +21,8 @@
     if ([[idb fn_get_db] open]) {
         for (RespCrmopp_browse *lmap_data in alist_result) {
             NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into crmopp_browse (uid,opp_id,opp_code,opp_ref_type,opp_ref_id,opp_ref_code,opp_ref_name,opp_ref_addr,opp_ref_addr_01,opp_ref_addr_02,opp_ref_addr_03,opp_ref_addr_04,opp_name,contact_id,contact_code,contact_name,contact_tel,contact_email,contact_mobile,opp_stage,opp_stage_desc,opp_stage_lang,exp_close_date,opp_remark,opp_probability,assign_to,assign_to_name,campaign_id,campaign_name,op_type,load_main_region_code,load_main_region_name,load_main_region_lang,load_sub_region_code,load_sub_region_name,load_sub_region_lang,load_region_code,load_region_name,load_code,load_name,dish_main_region_code,dish_main_region_name,dish_main_region_lang,dish_sub_region_code,dish_sub_region_name,dish_sub_region_lang,dish_region_code,dish_region_name,dish_code,dish_name,dest_code,dest_name,srvc_code,srvc_desc,movement_code,movement_desc,inco_term,inco_term_desc,inco_term_lang,brand,competitor_rmk,volume,cbm_annual,teu_annual,kgs_annual,fcl_lcl,voided,rec_crt_user,rec_upd_user,rec_crt_date,rec_upd_date,rec_upd_type,rec_savable,rec_deletable) values (:uid,:opp_id,:opp_code,:opp_ref_type,:opp_ref_id,:opp_ref_code,:opp_ref_name,:opp_ref_addr,:opp_ref_addr_01,:opp_ref_addr_02,:opp_ref_addr_03,:opp_ref_addr_04,:opp_name,:contact_id,:contact_code,:contact_name,:contact_tel,:contact_email,:contact_mobile,:opp_stage,:opp_stage_desc,:opp_stage_lang,:exp_close_date,:opp_remark,:opp_probability,:assign_to,:assign_to_name,:campaign_id,:campaign_name,:op_type,:load_main_region_code,:load_main_region_name,:load_main_region_lang,:load_sub_region_code,:load_sub_region_name,:load_sub_region_lang,:load_region_code,:load_region_name,:load_code,:load_name,:dish_main_region_code,:dish_main_region_name,:dish_main_region_lang,:dish_sub_region_code,:dish_sub_region_name,:dish_sub_region_lang,:dish_region_code,:dish_region_name,:dish_code,:dish_name,:dest_code,:dest_name,:srvc_code,:srvc_desc,:movement_code,:movement_desc,:inco_term,:inco_term_desc,:inco_term_lang,:brand,:competitor_rmk,:volume,:cbm_annual,:teu_annual,:kgs_annual,:fcl_lcl,:voided,:rec_crt_user,:rec_upd_user,:rec_crt_date,:rec_upd_date,:rec_upd_type,:rec_savable,:rec_deletable)" withParameterDictionary:ldict_row];
+            [ldict_row setObject:@"0" forKey:@"is_modified"];
+            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into crmopp_browse (uid,opp_id,opp_code,opp_ref_type,opp_ref_id,opp_ref_code,opp_ref_name,opp_ref_addr,opp_ref_addr_01,opp_ref_addr_02,opp_ref_addr_03,opp_ref_addr_04,opp_name,contact_id,contact_code,contact_name,contact_tel,contact_email,contact_mobile,opp_stage,opp_stage_desc,opp_stage_lang,exp_close_date,opp_remark,opp_probability,assign_to,assign_to_name,campaign_id,campaign_name,op_type,load_main_region_code,load_main_region_name,load_main_region_lang,load_sub_region_code,load_sub_region_name,load_sub_region_lang,load_region_code,load_region_name,load_code,load_name,dish_main_region_code,dish_main_region_name,dish_main_region_lang,dish_sub_region_code,dish_sub_region_name,dish_sub_region_lang,dish_region_code,dish_region_name,dish_code,dish_name,dest_code,dest_name,srvc_code,srvc_desc,movement_code,movement_desc,inco_term,inco_term_desc,inco_term_lang,brand,competitor_rmk,volume,cbm_annual,teu_annual,kgs_annual,fcl_lcl,voided,rec_crt_user,rec_upd_user,rec_crt_date,rec_upd_date,rec_upd_type,rec_savable,rec_deletable,is_modified) values (:uid,:opp_id,:opp_code,:opp_ref_type,:opp_ref_id,:opp_ref_code,:opp_ref_name,:opp_ref_addr,:opp_ref_addr_01,:opp_ref_addr_02,:opp_ref_addr_03,:opp_ref_addr_04,:opp_name,:contact_id,:contact_code,:contact_name,:contact_tel,:contact_email,:contact_mobile,:opp_stage,:opp_stage_desc,:opp_stage_lang,:exp_close_date,:opp_remark,:opp_probability,:assign_to,:assign_to_name,:campaign_id,:campaign_name,:op_type,:load_main_region_code,:load_main_region_name,:load_main_region_lang,:load_sub_region_code,:load_sub_region_name,:load_sub_region_lang,:load_region_code,:load_region_name,:load_code,:load_name,:dish_main_region_code,:dish_main_region_name,:dish_main_region_lang,:dish_sub_region_code,:dish_sub_region_name,:dish_sub_region_lang,:dish_region_code,:dish_region_name,:dish_code,:dish_name,:dest_code,:dest_name,:srvc_code,:srvc_desc,:movement_code,:movement_desc,:inco_term,:inco_term_desc,:inco_term_lang,:brand,:competitor_rmk,:volume,:cbm_annual,:teu_annual,:kgs_annual,:fcl_lcl,:voided,:rec_crt_user,:rec_upd_user,:rec_crt_date,:rec_upd_date,:rec_upd_type,:rec_savable,:rec_deletable,:is_modified)" withParameterDictionary:ldict_row];
             if (! ib_updated)
                 return NO;
         }
@@ -52,6 +53,16 @@
         }
         [[idb fn_get_db]close];
         return YES;
+    }
+    return NO;
+}
+-(BOOL)fn_update_crmopp_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id{
+    if ([[idb fn_get_db]open]) {
+        BOOL ib_updated =[[idb fn_get_db]executeUpdate:@"update crmopp_browse set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
+        if (!ib_updated)
+            return NO;
+        [[idb fn_get_db] close];
+        return  YES;
     }
     return NO;
 }
@@ -119,6 +130,18 @@
     }
     return arr;
 }
+-(NSMutableArray*)fn_get_all_crmopp_data{
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmopp_browse"];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db]close];
+    }
+    return arr;
+}
+
 -(BOOL)fn_delete_all_data{
     if ([[idb fn_get_db]open]) {
         BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from crmopp_browse"];

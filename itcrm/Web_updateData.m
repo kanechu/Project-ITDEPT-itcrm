@@ -13,13 +13,11 @@
 #import "DB_RespLogin.h"
 #import "Web_base.h"
 #import "NSArray.h"
-#import "SVProgressHUD.h"
 
 @implementation Web_updateData
 
 #pragma mark update
 - (void) fn_get_updateStatus_data:(id)UpdateForm path:(NSString*)il_url :(CallBack_data)callback {
-    [SVProgressHUD showWithStatus:@"Saving"];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
     NSString* base_url=nil;
@@ -39,7 +37,6 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUpdateStatus class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         callback(arr_resp_result);
-        [SVProgressHUD dismissWithSuccess:@"Successfully saved"];
     };
     [web_base fn_update_data:req_form updateform:UpdateForm];
 }

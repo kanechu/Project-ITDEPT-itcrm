@@ -79,9 +79,7 @@
             
                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                     RKLogError(@"Operation failed with error: %@", error);
-                    [SVProgressHUD dismissWithError:@"Save failed"];
                 }];
-    
 }
 
 - (void) fn_get_data:(RequestContract*)ao_form
