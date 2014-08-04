@@ -322,25 +322,29 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         }
     }
     if (buttonIndex==0) {
+        BOOL isSuccess=0;
+        DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+        if (_add_flag==1) {
+            NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
+            isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
+        }else{
+            [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
+            isSuccess=[db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
+        }
+        if (isSuccess) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+        }
+        if (flag==1 || _add_flag==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
         Web_updateData *web_update=[[Web_updateData alloc]init];
         [web_update fn_get_updateStatus_data:[self fn_init_updateform] path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
-             DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
             NSString *status=nil;
             if ([arr count]!=0) {
                 status=[[arr objectAtIndex:0]valueForKey:@"status"];
             }
-            BOOL isSuccess=0;
-            if (_add_flag==1 && [status isEqualToString:@"2"]) {
-                NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
-                isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
-            }else if([status isEqualToString:@"1"]){
-                isSuccess= [db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
-            }
-            if (isSuccess) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
-            }
-            if (flag==1 || _add_flag==1) {
-                [self.navigationController popViewControllerAnimated:YES];
+            if ([status isEqualToString:@"1"]) {
+                [db fn_update_crmtask_ismodified:@"0" unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
             }
         }];
     }
@@ -368,6 +372,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 -(Respcrmtask_browse*)fn_init_updateform{
     NSString *unique_id=[idic_parameter_value valueForKey:@"unique_id"];
     [idic_parameter_value removeObjectForKey:@"unique_id"];
+    [idic_parameter_value removeObjectForKey:@"is_modified"];
     Respcrmtask_browse *upd_form=[[Respcrmtask_browse alloc]init];
     //使用kvc给模型数据赋值
     [upd_form setValuesForKeysWithDictionary:idic_parameter_value];

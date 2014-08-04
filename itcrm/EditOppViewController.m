@@ -252,17 +252,25 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
+        DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
+        [idic_edited_opp setObject:@"1" forKey:@"is_modified"];
+        BOOL isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
+        if (isSuccess) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+        }
         Web_updateData *update=[[Web_updateData alloc]init];
         [update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMOPP_UPDATE_URL :^(NSMutableArray *alist_result){
-            DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
-            BOOL isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
-            if (isSuccess) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+            NSString *status=nil;
+            if ([alist_result count]!=0) {
+                status=[[alist_result objectAtIndex:0]valueForKey:@"status"];
             }
-            if (flag_cancel==1) {
-                [self.navigationController popViewControllerAnimated:YES];
+            if ([status isEqualToString:@"1"]) {
+                [db_crmopp fn_update_crmopp_ismodified:@"0" unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
             }
         } ];
+        if (flag_cancel==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     if (buttonIndex==1) {
         idic_parameter_opp=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp_copy];
@@ -277,6 +285,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     RespCrmopp_browse *updateform_contact=[[RespCrmopp_browse alloc]init];
     NSString *unique_id=[idic_parameter_opp valueForKey:@"unique_id"];
     [idic_parameter_opp removeObjectForKey:@"unique_id"];
+    [idic_parameter_opp removeObjectForKey:@"is_modified"];
     [updateform_contact setValuesForKeysWithDictionary:idic_parameter_opp];
     [idic_parameter_opp setObject:unique_id forKey:@"unique_id"];
     return updateform_contact;

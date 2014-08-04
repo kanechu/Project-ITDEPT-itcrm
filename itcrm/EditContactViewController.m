@@ -274,18 +274,26 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==0) {
+        DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
+        [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
+        BOOL isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
+        if (isSuccess) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
+        }
         Web_updateData *web_update=[[Web_updateData alloc]init];
         [web_update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMCONTACT_UPDATE_URL :^(NSMutableArray *arr){
-            DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
-            BOOL isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
-            if (isSuccess) {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
+            NSString *status=nil;
+            if ([arr count]!=0) {
+                status=[[arr objectAtIndex:0]valueForKey:@"status"];
             }
-            if (flag==1) {
-                [self.navigationController popViewControllerAnimated:YES];
+            if ([status isEqualToString:@"1"]) {
+                [db fn_update_crmcontact_ismodified:@"0" unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
             }
             
         }];
+        if (flag==1) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
     if (buttonIndex==1) {
         idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];
@@ -299,6 +307,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     RespCrmcontact_browse *updateform_contact=[[RespCrmcontact_browse alloc]init];
     NSString *unique_id=[idic_parameter_contact valueForKey:@"unique_id"];
     [idic_parameter_contact removeObjectForKey:@"unique_id"];
+    [idic_parameter_contact removeObjectForKey:@"is_modified"];
     [updateform_contact setValuesForKeysWithDictionary:idic_parameter_contact];
     [idic_parameter_contact setObject:unique_id forKey:@"unique_id"];
     return updateform_contact;
