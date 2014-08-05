@@ -25,6 +25,7 @@ NSString* const STR_CRMOOP_BROWSE_URL=@"api/Crm/crmopp_browse";
 NSString* const STR_MAINTFORM_URL=@"api/Maint/maintform";
 NSString* const STR_CRMTASK_BROWSE_URL=@"api/crm/crmtask_browse";
 NSString* const STR_CRMHBL_BROWSE_URL=@"api/crm/crmhbl_browse";
+NSString* const STR_USERSLOGIN_URL=@"api/users/login";
 NSString* const STR_CRMCONTACT_BROWSE_URL=@"/kie_web_api/api/crm/crmcontact_browse";
 NSString* const STR_CRMQUO_BROWSE_URL=@"/kie_web_api/api/crm/crmquo_browse";
 NSString* const STR_CRMTASK_UPDATE_URL=@"/kie_web_api/api/crm/crmtask_update";

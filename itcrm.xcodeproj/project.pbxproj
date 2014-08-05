@@ -126,6 +126,7 @@
 		B2CB6E85193DB1080061F484 /* RespSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB6E84193DB1080061F484 /* RespSearchCriteria.m */; };
 		B2D13E40196F7A5900E97F81 /* CrmQuo_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */; };
 		B2DA4614196A85FC001FD4F0 /* UploadingContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2DA4613196A85FC001FD4F0 /* UploadingContract.m */; };
+		B2F1D39A1990E2190090C1EB /* RespUsersLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F1D3991990E2190090C1EB /* RespUsersLogin.m */; };
 		B2F6CCFC1948401500081059 /* Custom_Color.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F6CCFB1948401500081059 /* Custom_Color.m */; };
 /* End PBXBuildFile section */
 
@@ -394,6 +395,8 @@
 		B2D13E3F196F7A5900E97F81 /* CrmQuo_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmQuo_browseViewController.m; sourceTree = "<group>"; };
 		B2DA4612196A85FC001FD4F0 /* UploadingContract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadingContract.h; sourceTree = "<group>"; };
 		B2DA4613196A85FC001FD4F0 /* UploadingContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadingContract.m; sourceTree = "<group>"; };
+		B2F1D3981990E2190090C1EB /* RespUsersLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespUsersLogin.h; sourceTree = "<group>"; };
+		B2F1D3991990E2190090C1EB /* RespUsersLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespUsersLogin.m; sourceTree = "<group>"; };
 		B2F6CCFA1948401500081059 /* Custom_Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_Color.h; sourceTree = "<group>"; };
 		B2F6CCFB1948401500081059 /* Custom_Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_Color.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -763,6 +766,8 @@
 				B298626F19385CCB0097B553 /* RespPermit.m */,
 				B26CBC9C19347CBA00C5287B /* RespLogin.h */,
 				B26CBC9D19347CBA00C5287B /* RespLogin.m */,
+				B2F1D3981990E2190090C1EB /* RespUsersLogin.h */,
+				B2F1D3991990E2190090C1EB /* RespUsersLogin.m */,
 				B2759993193EF750005CF480 /* RespFormatlist.h */,
 				B2759994193EF750005CF480 /* RespFormatlist.m */,
 				B2CB6E83193DB1080061F484 /* RespSearchCriteria.h */,
@@ -1029,6 +1034,7 @@
 				B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
+				B2F1D39A1990E2190090C1EB /* RespUsersLogin.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
 				B28F1E68194EDF7800B7C5D7 /* Advance_SearchData.m in Sources */,
