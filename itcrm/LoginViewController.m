@@ -12,7 +12,7 @@
 #import "RequestContract.h"
 #import "SearchFormContract.h"
 #import "RespLogin.h"
-#import "RespSystemIcon.h"
+#import "RespUsersLogin.h"
 #import "Web_base.h"
 #import "NSArray.h"
 #import "SVProgressHUD.h"
@@ -20,8 +20,15 @@
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
 #import "Web_resquestData.h"
-#import "MZFormSheetController.h"
 @interface LoginViewController ()
+
+//用来标识点击的textfiled
+@property(nonatomic)UITextField *checkText;
+@property (nonatomic,strong)NSArray *ilist_imageName;
+@property (nonatomic,strong)NSArray *ilist_textfield;
+@property (nonatomic , copy)NSString *is_user;
+@property (nonatomic , copy)NSString *is_pass;
+@property (nonatomic , copy)NSString *is_systemCode;
 
 @end
 enum TEXTFIELD_TAG {
@@ -47,14 +54,11 @@ enum TEXTFIELD_TAG {
     self.view.backgroundColor=COLOR_LIGHT_YELLOW1;
    	// Do any additional setup after loading the view, typically from a nib.
 }
--(id)initWithCoder:(NSCoder *)aDecoder{
-    self=[super initWithCoder:aDecoder];
-    if (self) {
-        [self fn_get_Web_addr_data];
-    }
-    return self;
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-
 -(void)viewDidDisappear:(BOOL)animated{
     [self fn_removeKeyBoarNotificaton];
 }
@@ -69,32 +73,31 @@ enum TEXTFIELD_TAG {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)fn_custom_style{
-    _tableview_form.layer.cornerRadius=9;
+    _tableview_form.layer.cornerRadius=6;
+    _tableview_form.layer.borderWidth=0.5;
+    _tableview_form.layer.borderColor=[UIColor lightGrayColor].CGColor;
     _tableview_form.delegate=self;
     _tableview_form.dataSource=self;
     
-    _ibt_loginButton.layer.cornerRadius=7;
+    _ibt_loginButton.layer.cornerRadius=6;
     _ibt_loginButton.layer.borderWidth=1;
     _ibt_loginButton.layer.borderColor=[UIColor whiteColor].CGColor;
 }
-
+#pragma mark UITextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField*)textField{
-    
     checkText = textField;//设置被点击的对象
     checkText.delegate=self;
     
 }
-
-#pragma mark -键盘弹出时调用的方法
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [checkText resignFirstResponder];
+    return YES;
+}
 #pragma mark Responding to keyboard events
-
 - (void)keyboardWillShow:(NSNotification*)notification {
     
     if (nil == checkText) {
-        
         return;
-        
     }
     NSDictionary *userInfo = [notification userInfo];
 
@@ -160,13 +163,9 @@ enum TEXTFIELD_TAG {
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkText resignFirstResponder];
 }
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 - (void) fn_get_Web_addr_data
 {
+    [SVProgressHUD showWithStatus:@"Verifying,please wait!"];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -178,7 +177,7 @@ enum TEXTFIELD_TAG {
     auth.com_sys_code=@"WTRANS/UAT";
     auth.app_code=@"ITCRM";
     req_form.Auth =auth;
-
+    
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_LOGIN_URL;
     web_base.base_url=STR_BASE_URL;
@@ -187,24 +186,47 @@ enum TEXTFIELD_TAG {
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_RespLogin *db=[[DB_RespLogin alloc]init];
         [db fn_save_data:arr_resp_result];
+        NSString* base_url=nil;
+        if (arr_resp_result!=nil && [arr_resp_result count]!=0) {
+            base_url=[[arr_resp_result objectAtIndex:0] valueForKey:@"web_addr"];
+        }
+        [self fn_get_RespusersLogin_data:base_url];
     };
     [web_base fn_get_data:req_form];
     
 }
-
+- (void) fn_get_RespusersLogin_data:(NSString*)base_url{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    AuthContract *auth=[[AuthContract alloc]init];
+    auth.user_code=is_user;
+    auth.password=is_pass;
+    auth.system =@"ITCRM";
+    auth.version=@"1.2";
+    req_form.Auth =auth;
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_USERSLOGIN_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[RespUsersLogin class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUsersLogin class]];
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        if ([[[arr_resp_result objectAtIndex:0]valueForKey:@"pass"]isEqualToString:@"true"]) {
+            [SVProgressHUD dismissWithSuccess:@"Successful landing!"];
+            NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
+            DB_Login *dbLogin=[[DB_Login alloc]init];
+            NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
+            [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode user_logo:user_logo];
+            [user_isLogin setInteger:1 forKey:@"isLogin"];
+            [user_isLogin synchronize];
+            [self dismissViewControllerAnimated:YES completion:^{}];
+            if (_callback) {
+                _callback();
+            }
+        }
+    };
+    [web_base fn_get_data:req_form];
+}
 - (IBAction)fn_login_app:(id)sender {
-    [SVProgressHUD showWithStatus:@"Loading, please wait!"];
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
-    if ([[db fn_get_all_data] count]!=0) {
-       [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
-        DB_Login *dbLogin=[[DB_Login alloc]init];
-        [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode];
-        [self fn_resquestAndsave_data];
-       
-        [user_isLogin setInteger:1 forKey:@"isLogin"];
-        [user_isLogin synchronize];
-    }
+    [self fn_get_Web_addr_data];
 }
 
 - (IBAction)fn_end_inputData:(id)sender {
@@ -255,28 +277,4 @@ enum TEXTFIELD_TAG {
 -(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
     return NO;
 }
-
-#pragma mark 请求全部的数据
--(void)fn_resquestAndsave_data{
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    NSMutableArray *arr=[db fn_get_all_data];
-    NSString* base_url=nil;
-    if (arr!=nil && [arr count]!=0) {
-        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
-    }
-    Web_resquestData *data=[[Web_resquestData alloc]init];
-    [data fn_get_search_data:base_url];
-    [data fn_get_formatlist_data:base_url];
-    [data fn_get_crmacct_browse_data:base_url];
-    [data fn_get_mslookup_data:base_url];
-    [data fn_get_crmopp_browse_data:base_url];
-    [data fn_get_maintForm_data:base_url];
-    [data fn_get_crmtask_browse_data:base_url];
-    [data fn_get_systemIcon_data:base_url os_value:@"1400231924493"];
-    [data fn_get_crmhbl_browse_data:base_url];
-    [data fn_get_crmcontact_browse_data:base_url];
-    [data fn_get_crmquo_browse_data:base_url];
-    
-}
-
 @end

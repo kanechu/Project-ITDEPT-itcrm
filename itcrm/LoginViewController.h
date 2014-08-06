@@ -7,15 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void (^callBack_login)(void);
 @interface LoginViewController : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
-//用来标识点击的textfiled
-@property(nonatomic)UITextField *checkText;
-@property (nonatomic,strong)NSArray *ilist_imageName;
-@property (nonatomic,strong)NSArray *ilist_textfield;
-@property (nonatomic , copy)NSString *is_user;
-@property (nonatomic , copy)NSString *is_pass;
-@property (nonatomic , copy)NSString *is_systemCode;
-
+@property (strong,nonatomic)callBack_login callback;
 @property (weak, nonatomic) IBOutlet UITableView *tableview_form;
 @property (weak, nonatomic) IBOutlet UIButton *ibt_loginButton;
 

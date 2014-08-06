@@ -20,19 +20,21 @@
 #import "DB_formatlist.h"
 #import "DB_searchCriteria.h"
 #import "DB_systemIcon.h"
+#import "DB_MaintForm.h"
 #import "DB_crmtask_browse.h"
 #import "DB_crmopp_browse.h"
-#import "DB_MaintForm.h"
+#import "DB_crmcontact_browse.h"
 #import "DB_crmhbl_browse.h"
 #import "DB_crmquo_browse.h"
+#import "DB_Region.h"
 @interface MainHomeViewController ()
-@property(nonatomic,assign)NSInteger flag;
+@property(nonatomic,assign)NSInteger flag_isUpdate;
 @end
 
 @implementation MainHomeViewController
 @synthesize menu_item;
 @synthesize ilist_menu;
-@synthesize flag;
+@synthesize flag_isUpdate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -47,8 +49,7 @@
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
     [self fn_open_new_thread];
-    flag=0;
-    
+    flag_isUpdate=0;
 	// Do any additional setup after loading the view.
 }
 
@@ -75,8 +76,10 @@
     NSInteger flag_isLogin=[user_isLogin integerForKey:@"isLogin"];
     if (flag_isLogin==0) {
         LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        PopViewManager *popV=[[PopViewManager alloc]init];
-        [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+        [self presentViewController:VC animated:NO completion:^{}];
+        VC.callback=^(){
+            [self fn_resquestAndsave_data];
+        };
     }
 }
 
@@ -134,8 +137,10 @@
 
 - (IBAction)fn_Logout_crm:(id)sender {
     LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    PopViewManager *popV=[[PopViewManager alloc]init];
-    [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    [self presentViewController:VC animated:YES completion:^{}];
+    VC.callback=^(){
+        [self fn_resquestAndsave_data];
+    };
     [self fn_delete_all_data];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
@@ -144,10 +149,9 @@
     NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
     [user_isLogin setInteger:0 forKey:@"isLogin"];
     [user_isLogin synchronize];
-    flag=0;
 }
 -(void)fn_delete_all_data{
-   
+    
     DB_searchCriteria *db_search=[[DB_searchCriteria alloc]init];
     [db_search fn_delete_all_data];
     
@@ -160,6 +164,9 @@
     DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
     [db_crmopp fn_delete_all_data];
     
+    DB_crmcontact_browse *db_crmcontact=[[DB_crmcontact_browse alloc]init];
+    [db_crmcontact fn_delete_all_crmcontact_data];
+    
     DB_crmhbl_browse *db_crmhbl=[[DB_crmhbl_browse alloc]init];
     [db_crmhbl fn_delete_all_data];
     
@@ -171,10 +178,18 @@
     
     DB_crmquo_browse *db_crmquo=[[DB_crmquo_browse alloc]init];
     [db_crmquo fn_delete_all_crmquo_data];
+    
+    DB_Region *db_mslookup=[[DB_Region alloc]init];
+    [db_mslookup fn_delete_region_data];
 }
 
 - (IBAction)fn_Refresh_data:(id)sender {
     [self fn_delete_all_data];
+    flag_isUpdate=1;
+    [self fn_resquestAndsave_data];
+}
+#pragma mark 请求全部的数据
+-(void)fn_resquestAndsave_data{
     [SVProgressHUD showWithStatus:@"Loading, please wait!"];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
@@ -191,14 +206,20 @@
     [data fn_get_maintForm_data:base_url];
     [data fn_get_crmtask_browse_data:base_url];
     [data fn_get_crmhbl_browse_data:base_url];
-    DB_systemIcon *db_systemIcon=[[DB_systemIcon alloc]init];
-    NSString *recentDate=nil;
-    if ([[db_systemIcon fn_get_last_update_time] count]!=0) {
-        recentDate=[[[db_systemIcon fn_get_last_update_time]objectAtIndex:0]valueForKey:@"recent_date"];
+    [data fn_get_crmcontact_browse_data:base_url];
+    [data fn_get_crmquo_browse_data:base_url];
+    if (flag_isUpdate==1) {
+        DB_systemIcon *db_systemIcon=[[DB_systemIcon alloc]init];
+        NSString *recentDate=nil;
+        if ([[db_systemIcon fn_get_last_update_time] count]!=0) {
+            recentDate=[[[db_systemIcon fn_get_last_update_time]objectAtIndex:0]valueForKey:@"recent_date"];
+        }
+        [data fn_get_systemIcon_data:base_url os_value:recentDate isUpdate:1];
+        flag_isUpdate=0;
+    }else{
+        
+        [data fn_get_systemIcon_data:base_url os_value:@"1400231924493" isUpdate:0];
     }
     
-    [data fn_get_systemIcon_data:base_url os_value:recentDate];
-    flag=0;
 }
-
 @end
