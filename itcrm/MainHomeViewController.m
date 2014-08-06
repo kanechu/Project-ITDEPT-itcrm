@@ -46,6 +46,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //[self fn_show_userLogo];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
     [self fn_open_new_thread];
@@ -57,6 +58,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)fn_show_userLogo{
+    DB_Login *db_login=[[DB_Login alloc]init];
+    NSMutableArray *arr_loginInfo=[db_login fn_get_allData];
+    if ([arr_loginInfo count]!=0 && arr_loginInfo!=0) {
+        NSString *userlogo=[[arr_loginInfo objectAtIndex:0]valueForKey:@"user_logo"];
+        Format_conversion *convert=[[Format_conversion alloc]init];
+        _user_logo.image=[convert fn_binaryData_convert_image:userlogo];
+    }
 }
 -(void)fn_open_new_thread{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -207,7 +217,6 @@
     [data fn_get_crmtask_browse_data:base_url];
     [data fn_get_crmhbl_browse_data:base_url];
     [data fn_get_crmcontact_browse_data:base_url];
-    [data fn_get_crmquo_browse_data:base_url];
     if (flag_isUpdate==1) {
         DB_systemIcon *db_systemIcon=[[DB_systemIcon alloc]init];
         NSString *recentDate=nil;
@@ -220,6 +229,6 @@
         
         [data fn_get_systemIcon_data:base_url os_value:@"1400231924493" isUpdate:0];
     }
-    
+    [data fn_get_crmquo_browse_data:base_url];
 }
 @end

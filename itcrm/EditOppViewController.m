@@ -311,12 +311,14 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             };
             
         }else{
-            VC.alist_option=[db fn_get_data:@"" select_sql:@"acct_name"];
+            VC.alist_option=[db fn_get_acct_nameAndid];
             VC.flag=1;
             VC.callback=^(NSMutableDictionary *dic){
-                [idic_parameter_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
-                [idic_edited_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
-                [self.skstableView reloadData];
+                if ([dic count]!=0 && dic!=nil) {
+                    [idic_parameter_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                    [idic_edited_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                    [self.skstableView reloadData];
+                }
             };
         }
         PopViewManager *popView=[[PopViewManager alloc]init];
