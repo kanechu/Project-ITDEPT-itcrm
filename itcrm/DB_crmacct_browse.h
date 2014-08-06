@@ -19,6 +19,8 @@
 
 -(NSMutableArray*)fn_get_data_from_id:(NSString*)acct_id;
 
+-(NSMutableArray*)fn_get_acct_nameAndid;
+
 -(BOOL)fn_delete_all_data;
 
 @end

@@ -261,12 +261,16 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     UIButton *ibtn=(UIButton*)sender;
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
     DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
-    VC.alist_option=[db fn_get_data:@"" select_sql:@"acct_name"];
+    VC.alist_option=[db fn_get_acct_nameAndid];
     VC.flag=1;
     VC.callback=^(NSMutableDictionary *dic){
-        [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
-        [idic_edited_parameter setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
-        [self.skstableView reloadData];
+        if ([dic count]!=0 && dic!=nil) {
+            [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
+            [idic_parameter_contact setObject:[dic valueForKey:@"acct_id"] forKey:@"contact_ref_id"];
+            [idic_edited_parameter setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
+            [idic_edited_parameter setObject:[dic valueForKey:@"acct_id"] forKey:@"contact_ref_id"];
+            [self.skstableView reloadData];
+        }
     };
     PopViewManager *popView=[[PopViewManager alloc]init];
     [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];

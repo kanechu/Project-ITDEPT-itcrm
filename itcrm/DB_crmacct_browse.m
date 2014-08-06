@@ -44,6 +44,18 @@
     }
     return arr;
 }
+-(NSMutableArray*)fn_get_acct_nameAndid{
+    
+    NSMutableArray *arr=[NSMutableArray array];
+    if ([[idb fn_get_db]open]) {
+        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT distinct acct_id,acct_name FROM crmacct"];
+        while ([lfmdb_result next]) {
+            [arr addObject:[lfmdb_result resultDictionary]];
+        }
+        [[idb fn_get_db] close];
+    }
+    return arr;
+}
 -(NSMutableArray*)fn_get_data_from_id:(NSString*)acct_id{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {
