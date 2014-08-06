@@ -72,4 +72,6 @@
 @synthesize rec_upd_type;
 @synthesize rec_savable;
 @synthesize rec_deletable;
+@synthesize carr_name;
+
 @end

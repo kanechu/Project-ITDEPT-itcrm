@@ -72,5 +72,6 @@
 @property(nonatomic,copy)NSString *rec_upd_type;
 @property(nonatomic,copy)NSString *rec_savable;
 @property(nonatomic,copy)NSString *rec_deletable;
+@property(nonatomic,copy)NSString *carr_name;
 
 @end
