@@ -17,10 +17,10 @@
     idb=[DBManager getSharedInstance];
     return self;
 }
--(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode{
+-(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode user_logo:(NSString*)user_logo{
     [self fn_delete_data];
     if ([[idb fn_get_db]open]) {
-        NSString *insertSql=[NSString stringWithFormat:@"insert into loginInfo(user_code,password,system)values(\"%@\",\"%@\",\"%@\")",user_id,user_pass,systemCode];
+        NSString *insertSql=[NSString stringWithFormat:@"insert into loginInfo(user_code,password,system,user_logo)values(\"%@\",\"%@\",\"%@\",\"%@\")",user_id,user_pass,systemCode,user_logo];
         BOOL ib_updated=[[idb fn_get_db]executeUpdate:insertSql];
         if (!ib_updated) {
             return NO;

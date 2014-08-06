@@ -139,7 +139,7 @@
                     
                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                     RKLogError(@"Operation failed with error: %@", error);
-                    [SVProgressHUD dismissWithError:@"sorry!"];
+                    [SVProgressHUD dismissWithError:@"Request failed!"];
                 }];
     
 }

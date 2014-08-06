@@ -163,7 +163,7 @@
 }
 
 #pragma mark 请求systemIcon的数据
-- (void) fn_get_systemIcon_data:(NSString*)base_url os_value:(NSString*)value
+- (void) fn_get_systemIcon_data:(NSString*)base_url os_value:(NSString*)value isUpdate:(NSInteger)flag_isUpdate
 {
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
@@ -181,9 +181,16 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSystemIcon class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_systemIcon *db=[[DB_systemIcon alloc]init];
-        [db fn_save_systemIcon_data:arr_resp_result];
+        if (flag_isUpdate==1) {
+            if ([arr_resp_result count]!=0) {
+                NSString *ic_content=[[arr_resp_result objectAtIndex:0]valueForKey:@"ic_content"];
+                NSString *ic_name=[[arr_resp_result objectAtIndex:0]valueForKey:@"ic_name"];
+                [db fn_update_systemIcon_data:ic_content ic_name:ic_name];
+            }
+        }else{
+            [db fn_save_systemIcon_data:arr_resp_result];
+        }
     };
-
     [web_base fn_get_data:req_form];
 }
 

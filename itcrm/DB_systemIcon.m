@@ -33,6 +33,17 @@
     }
     return NO;
 }
+-(BOOL)fn_update_systemIcon_data:(NSString*)ic_content ic_name:(NSString*)ic_name{
+    if ([[idb fn_get_db]open]) {
+        BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"update systemIcon set ic_content=? where ic_name=?",[NSString stringWithFormat:@"%@",ic_content],[NSString stringWithFormat:@"%@",ic_name]];
+        if (!isSuccess) {
+            return NO;
+        }
+        [[idb fn_get_db]close];
+        return YES;
+    }
+    return NO;
+}
 -(NSMutableArray*)fn_get_systemIcon_data:(NSString*)ic_name{
     NSMutableArray *arr=[NSMutableArray array];
     if ([[idb fn_get_db]open]) {

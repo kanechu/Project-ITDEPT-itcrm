@@ -13,8 +13,13 @@
 @property(nonatomic,strong)DBManager *idb;
 
 -(BOOL)fn_save_systemIcon_data:(NSMutableArray*)ilist_result;
+
+-(BOOL)fn_update_systemIcon_data:(NSString*)ic_content ic_name:(NSString*)ic_name;
+
 -(NSMutableArray*)fn_get_systemIcon_data:(NSString*)ic_name;
--(BOOL)fn_delete_systemIcon_data;
+
 -(NSMutableArray*)fn_get_last_update_time;
+
+-(BOOL)fn_delete_systemIcon_data;
 
 @end
