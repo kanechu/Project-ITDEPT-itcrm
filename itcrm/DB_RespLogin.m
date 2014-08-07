@@ -22,10 +22,10 @@
     if ([[idb fn_get_db] open]) {
         for (RespLogin *lmap_data in arr) {
             NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from Resplogin where company_code = :company_code and sys_name = :sys_name and env = :env and web_addr =:web_addr" withParameterDictionary:ldict_row];
+            BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from Resplogin where company_code = :company_code and sys_name = :sys_name and env = :env and web_addr =:web_addr and php_addr =:php_addr" withParameterDictionary:ldict_row];
             if (! ib_delete)
                 return NO;
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into Resplogin (company_code, sys_name, env, web_addr) values (:company_code, :sys_name, :env, :web_addr)" withParameterDictionary:ldict_row];
+            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into Resplogin (company_code, sys_name, env, web_addr,php_addr) values (:company_code, :sys_name, :env, :web_addr,:php_addr)" withParameterDictionary:ldict_row];
             if (! ib_updated)
                 return NO;
             

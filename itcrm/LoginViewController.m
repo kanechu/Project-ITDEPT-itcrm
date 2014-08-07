@@ -87,7 +87,6 @@ enum TEXTFIELD_TAG {
 -(void)textFieldDidBeginEditing:(UITextField*)textField{
     checkText = textField;//设置被点击的对象
     checkText.delegate=self;
-    
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [checkText resignFirstResponder];
@@ -111,12 +110,11 @@ enum TEXTFIELD_TAG {
     
     [animationDurationValue getValue:&animationDuration];
     
-    CGRect textFrame = _tableview_form.frame;//当前tableView的位置
+    CGRect textFrame =[_tableview_form convertRect:_tableview_form.bounds toView:nil];
     float textY = textFrame.origin.y + textFrame.size.height;//得到tableView下边框距离顶部的高度
     float bottomY = self.view.frame.size.height - textY;//得到下边框到底部的距离
     
     if(bottomY >=keyboardRect.size.height ){//键盘默认高度,如果大于此高度，则直接返回
-        
         return;
         
     }

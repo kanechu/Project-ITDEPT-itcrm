@@ -14,5 +14,6 @@
 @synthesize sys_name;
 @synthesize env;
 @synthesize web_addr;
+@synthesize php_addr;
 
 @end

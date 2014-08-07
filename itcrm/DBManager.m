@@ -62,7 +62,7 @@ static int DB_VERSION = 1;
         NSLog(@"Failed to open/create database");
     } else {
        
-        NSString *ls_sql_Resplogin = @"CREATE TABLE IF NOT EXISTS Resplogin( unique_id INTEGER PRIMARY KEY,company_code TEXT NOT NULL DEFAULT '',sys_name TEXT NOT NULL DEFAULT '',env TEXT NOT NULL DEFAULT '',web_addr TEXT)";
+        NSString *ls_sql_Resplogin = @"CREATE TABLE IF NOT EXISTS Resplogin( unique_id INTEGER PRIMARY KEY,company_code TEXT NOT NULL DEFAULT '',sys_name TEXT NOT NULL DEFAULT '',env TEXT NOT NULL DEFAULT '',web_addr TEXT,php_addr TEXT NOT NULL DEFAULT '')";
         NSString *ls_sql_loginInfo = @"CREATE TABLE IF NOT EXISTS loginInfo( unique_id INTEGER PRIMARY KEY,user_code TEXT NOT NULL DEFAULT '',password TEXT NOT NULL DEFAULT '',system TEXT NOT NULL DEFAULT '',user_logo TEXT NOT NULL DEFAULT '')";
         NSString *ls_sql_searchCriteria = @"CREATE TABLE IF NOT EXISTS searchCriteria( unique_id INTEGER PRIMARY KEY,srch_type TEXT NOT NULL DEFAULT '',seq TEXT NOT NULL DEFAULT '',col_code TEXT NOT NULL DEFAULT '',col_label TEXT NOT NULL DEFAULT '',col_type TEXT NOT NULL DEFAULT '',col_option TEXT NOT NULL DEFAULT '',col_def TEXT NOT NULL DEFAULT '',group_name TEXT NOT NULL DEFAULT '',is_mandatory TEXT NOT NULL DEFAULT '',icon_name TEXT NOT NULL DEFAULT '')";
         
