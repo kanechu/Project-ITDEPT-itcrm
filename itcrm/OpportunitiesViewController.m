@@ -107,7 +107,7 @@
     return cell;
 }
 #pragma mark UITableViewDelegate
--(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellIndentifier=@"Cell_browse";
     Cell_browse *cell=[self.tableview dequeueReusableCellWithIdentifier:cellIndentifier];
     NSString *cellText = [[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"body"];
