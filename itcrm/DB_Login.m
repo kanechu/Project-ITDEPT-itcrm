@@ -62,7 +62,7 @@
         auth.password=[dic valueForKey:@"password"];
         auth.system=[dic valueForKey:@"system"];
     }
-    auth.version=@"1.2";
+    auth.version=@"1.5";
     return auth;
 }
 

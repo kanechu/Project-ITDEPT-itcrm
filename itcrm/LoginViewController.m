@@ -171,8 +171,8 @@ enum TEXTFIELD_TAG {
     auth.user_code=@"anonymous";
     auth.password=@"anonymous1";
     auth.system =@"ITNEW";
-    auth.version=@"1.2";
-    auth.com_sys_code=@"WTRANS/UAT";
+    auth.version=@"1.5";
+    auth.com_sys_code=is_systemCode;
     auth.app_code=@"ITCRM";
     req_form.Auth =auth;
     
@@ -185,21 +185,23 @@ enum TEXTFIELD_TAG {
         DB_RespLogin *db=[[DB_RespLogin alloc]init];
         [db fn_save_data:arr_resp_result];
         NSString* base_url=nil;
+        NSString* sys_name=nil;
         if (arr_resp_result!=nil && [arr_resp_result count]!=0) {
             base_url=[[arr_resp_result objectAtIndex:0] valueForKey:@"web_addr"];
+            sys_name=[[arr_resp_result objectAtIndex:0]valueForKey:@"sys_name"];
         }
-        [self fn_get_RespusersLogin_data:base_url];
+        [self fn_get_RespusersLogin_data:base_url sys_name:sys_name];
     };
     [web_base fn_get_data:req_form];
     
 }
-- (void) fn_get_RespusersLogin_data:(NSString*)base_url{
+- (void) fn_get_RespusersLogin_data:(NSString*)base_url sys_name:(NSString*)sys_name{
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
     auth.user_code=is_user;
     auth.password=is_pass;
-    auth.system =@"ITCRM";
-    auth.version=@"1.2";
+    auth.system =sys_name;
+    auth.version=@"1.5";
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_USERSLOGIN_URL;
@@ -212,7 +214,7 @@ enum TEXTFIELD_TAG {
             NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
             DB_Login *dbLogin=[[DB_Login alloc]init];
             NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
-            [dbLogin fn_save_data:is_user password:is_pass system:is_systemCode user_logo:user_logo];
+            [dbLogin fn_save_data:is_user password:is_pass system:sys_name user_logo:user_logo];
             [user_isLogin setInteger:1 forKey:@"isLogin"];
             [user_isLogin synchronize];
             [self dismissViewControllerAnimated:YES completion:^{}];
@@ -266,7 +268,7 @@ enum TEXTFIELD_TAG {
     }
     if (indexPath.row==2) {
         cell.it_textfield.tag=TAG3;
-        cell.it_textfield.text=@"ITCRM";
+        cell.it_textfield.text=@"FSI/TEST";
         is_systemCode=cell.it_textfield.text;
     }
     return cell;
