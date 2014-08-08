@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface QuoWebViewController : UIViewController<UIWebViewDelegate>
-@property (nonatomic,copy)NSString *url;
+@property (nonatomic,copy)NSString *php_addr;
+@property (nonatomic,copy)NSString *skip_url;
 @property (nonatomic,copy)NSString *post;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 

@@ -12,7 +12,7 @@
 #import "DB_RespLogin.h"
 #import "Cell_browse.h"
 #import "QuoWebViewController.h"
-
+#import "DB_Login.h"
 @interface CrmQuo_browseViewController ()
 @property(nonatomic,strong)Format_conversion *convert;
 @property(nonatomic,strong)DB_crmquo_browse *db_crmquo;
@@ -116,16 +116,28 @@
     [self performSegueWithIdentifier:@"segue_quoweb" sender:self];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];
+    NSMutableDictionary *dic=[alist_crmquo_parameter objectAtIndex:indexpath.row];
+    NSString *quo_uid=[dic valueForKey:@"quo_uid"];
     DB_RespLogin *db_login=[[DB_RespLogin alloc]init];
     NSMutableArray *arr_login=[db_login fn_get_all_data];
     NSString *baseUrl=nil;
     if ([arr_login count]!=0) {
         baseUrl=[[arr_login objectAtIndex:0]valueForKey:@"php_addr"];
     }
+    DB_Login *db=[[DB_Login alloc]init];
+    NSMutableArray *arr_userLogin=[db fn_get_allData];
+    NSString *userName=nil;
+    NSString *userPass=nil;
+    if ([arr_userLogin count]!=0) {
+        userName=[[arr_userLogin objectAtIndex:0]valueForKey:@"user_code"];
+        userPass=[[arr_userLogin objectAtIndex:0]valueForKey:@"password"];
+    }
     if ([[segue identifier] isEqualToString:@"segue_quoweb"]) {
         QuoWebViewController *VC=[segue destinationViewController];
-        VC.url=[baseUrl stringByAppendingString:@"/login/login_sub"];
-    VC.post=@"usrname=SA&usrpass=BUGFREE08&external=1&sysname=FSI.ITCRM";
+        VC.php_addr=baseUrl;
+        VC.skip_url=[NSString stringWithFormat:@"%@/ctrl_crm_quotation?view=%@",baseUrl,quo_uid];
+        VC.post=[NSString stringWithFormat:@"usrname=%@&usrpass=%@&external=1",userName,userPass];
     }
 }
 #pragma mark UISearchBarDelegate

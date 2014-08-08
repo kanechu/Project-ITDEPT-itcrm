@@ -10,11 +10,13 @@
 
 @interface QuoWebViewController ()
 @property (nonatomic,strong)UIActivityIndicatorView *activityview;
+@property (nonatomic,assign)NSInteger flag;
 @end
 
 @implementation QuoWebViewController
 @synthesize post;
-@synthesize url;
+@synthesize php_addr;
+@synthesize skip_url;
 @synthesize activityview;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +32,7 @@
     [super viewDidLoad];
     _webView.delegate=self;
     _webView.scalesPageToFit=YES;
+    _flag=0;
     [self fn_load];
 	// Do any additional setup after loading the view.
 }
@@ -43,6 +46,7 @@
     NSData *postData=[post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength=[NSString stringWithFormat:@"%d",[postData length]];
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
+    NSString *url=[php_addr stringByAppendingString:@"/login/login_sub"];
     [request setURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -72,6 +76,11 @@
     [view removeFromSuperview];
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     self.title=[webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    if (_flag==0) {
+        NSString *href_url=[NSString stringWithFormat:@"location.href = '%@'",skip_url];
+        [webView stringByEvaluatingJavaScriptFromString:href_url];
+        _flag++;
+    }
     
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
