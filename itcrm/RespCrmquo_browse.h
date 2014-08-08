@@ -56,6 +56,7 @@
 @property(nonatomic,copy)NSString *one_time;
 @property(nonatomic,copy)NSString *info_uid;
 @property(nonatomic,copy)NSString *fcl_lcl;
+@property(nonatomic,copy)NSString *carr_name;
 @property(nonatomic,copy)NSString *cntr_p1;
 @property(nonatomic,copy)NSString *cntr_p2;
 @property(nonatomic,copy)NSString *cntr_p3;
@@ -72,6 +73,5 @@
 @property(nonatomic,copy)NSString *rec_upd_type;
 @property(nonatomic,copy)NSString *rec_savable;
 @property(nonatomic,copy)NSString *rec_deletable;
-@property(nonatomic,copy)NSString *carr_name;
 
 @end

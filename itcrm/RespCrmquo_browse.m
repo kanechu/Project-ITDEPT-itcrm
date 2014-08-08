@@ -56,6 +56,7 @@
 @synthesize one_time;
 @synthesize info_uid;
 @synthesize fcl_lcl;
+@synthesize carr_name;
 @synthesize cntr_p1;
 @synthesize cntr_p2;
 @synthesize cntr_p3;
@@ -72,6 +73,5 @@
 @synthesize rec_upd_type;
 @synthesize rec_savable;
 @synthesize rec_deletable;
-@synthesize carr_name;
 
 @end

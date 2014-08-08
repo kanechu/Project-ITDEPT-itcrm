@@ -9,6 +9,7 @@
 #import "CrmQuo_browseViewController.h"
 #import "DB_crmquo_browse.h"
 #import "DB_formatlist.h"
+#import "DB_RespLogin.h"
 #import "Cell_browse.h"
 #import "QuoWebViewController.h"
 
@@ -97,6 +98,9 @@
     cell.il_show_text.text=body_str;
     CGFloat height=[convert fn_heightWithString:body_str font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
+    //设置选中cell的背景颜色
+    cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -112,10 +116,16 @@
     [self performSegueWithIdentifier:@"segue_quoweb" sender:self];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    DB_RespLogin *db_login=[[DB_RespLogin alloc]init];
+    NSMutableArray *arr_login=[db_login fn_get_all_data];
+    NSString *baseUrl=nil;
+    if ([arr_login count]!=0) {
+        baseUrl=[[arr_login objectAtIndex:0]valueForKey:@"php_addr"];
+    }
     if ([[segue identifier] isEqualToString:@"segue_quoweb"]) {
         QuoWebViewController *VC=[segue destinationViewController];
-        VC.url=@"http://192.168.1.28:81/itcrm.php/login/login_sub";
-    VC.post=@"usrname=SA&usrpass=BUGFREE07&external=1&sysname=FSI.ITCRM";
+        VC.url=[baseUrl stringByAppendingString:@"/login/login_sub"];
+    VC.post=@"usrname=SA&usrpass=BUGFREE08&external=1&sysname=FSI.ITCRM";
     }
 }
 #pragma mark UISearchBarDelegate
