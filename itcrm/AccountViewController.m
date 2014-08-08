@@ -188,7 +188,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     return nil;
 }
 
--(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
 #pragma mark 是否已经存在必填项的col_code

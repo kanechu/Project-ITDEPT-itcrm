@@ -228,7 +228,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
        // Configure the cell...
     return nil;
 }
--(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
 -(void)fn_isExist:(NSString*)col_code{
