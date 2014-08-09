@@ -492,7 +492,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Task Edit" id="MG2-ij-y8L">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="PwQ-OW-hdl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="PwQ-OW-hdl">
                             <connections>
                                 <action selector="fn_goBack:" destination="NEG-fv-6xJ" id="5Fn-R5-ZuA"/>
                             </connections>
@@ -654,7 +654,7 @@
                                                 <action selector="fn_go_back:" destination="8dQ-IT-1nN" id="Ay5-Hd-JfV"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" style="plain" id="XJF-RA-bDQ">
+                                        <barButtonItem key="rightBarButtonItem" id="XJF-RA-bDQ">
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HAS-H6-qeo">
                                                 <rect key="frame" x="264" y="7" width="40" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -828,7 +828,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Opportunities" id="bQh-kg-FPJ">
                         <barButtonItem key="backBarButtonItem" title="Back" id="k6B-fd-kfA"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="JlG-RW-B1B">
+                        <barButtonItem key="rightBarButtonItem" id="JlG-RW-B1B">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KO5-zo-zAu">
                                 <rect key="frame" x="233" y="5" width="71" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -953,7 +953,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Opportunity" id="Za4-Pc-GkA">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="Vvc-SC-U7c">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Vvc-SC-U7c">
                             <connections>
                                 <action selector="fn_cancel_edited_data:" destination="pdh-N5-vfb" id="IVz-NY-7c2"/>
                             </connections>
@@ -1556,7 +1556,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Contact" id="VkO-ck-50m">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="cancel" id="IlG-JL-Lqj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="IlG-JL-Lqj">
                             <connections>
                                 <action selector="fn_cancel_edited_data:" destination="DNb-w7-p0C" id="hav-R6-Fjx"/>
                             </connections>
@@ -1663,7 +1663,7 @@
                                                 <action selector="fn_go_back:" destination="jD9-aI-6zc" id="I8e-wC-cpK"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" width="280" style="plain" id="GLN-CK-xjT">
+                                        <barButtonItem key="rightBarButtonItem" width="280" id="GLN-CK-xjT">
                                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="-20" maxY="0.0"/>
                                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qwa-9F-qdT">
                                                 <rect key="frame" x="259" y="7" width="45" height="30"/>
