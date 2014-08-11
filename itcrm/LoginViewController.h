@@ -8,12 +8,18 @@
 
 #import <UIKit/UIKit.h>
 typedef void (^callBack_login)(void);
-@interface LoginViewController : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface LoginViewController : UIViewController<UITextFieldDelegate>
 @property (strong,nonatomic)callBack_login callback;
-@property (weak, nonatomic) IBOutlet UITableView *tableview_form;
-@property (weak, nonatomic) IBOutlet UIButton *ibt_loginButton;
+@property (weak, nonatomic) IBOutlet UITextField *itf_usercode;
+@property (weak, nonatomic) IBOutlet UITextField *itf_password;
+@property (weak, nonatomic) IBOutlet UITextField *itf_system;
+@property (weak, nonatomic) IBOutlet UIView *iv_usercode_line;
+@property (weak, nonatomic) IBOutlet UIView *iv_password_line;
+@property (weak, nonatomic) IBOutlet UIView *iv_system_line;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_login;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_showPassword;
 
-- (IBAction)fn_login_app:(id)sender;
-- (IBAction)fn_end_inputData:(id)sender;
+- (IBAction)fn_login_itcrm:(id)sender;
+- (IBAction)fn_isShowPassword:(id)sender;
 
 @end

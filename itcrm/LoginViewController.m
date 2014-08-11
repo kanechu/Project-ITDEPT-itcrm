@@ -16,7 +16,6 @@
 #import "Web_base.h"
 #import "NSArray.h"
 #import "SVProgressHUD.h"
-#import "Cell_login.h"
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
 #import "Web_resquestData.h"
@@ -24,24 +23,12 @@
 
 //用来标识点击的textfiled
 @property(nonatomic)UITextField *checkText;
-@property (nonatomic,strong)NSArray *ilist_imageName;
-@property (nonatomic,strong)NSArray *ilist_textfield;
-@property (nonatomic , copy)NSString *is_user;
-@property (nonatomic , copy)NSString *is_pass;
-@property (nonatomic , copy)NSString *is_systemCode;
 
 @end
-enum TEXTFIELD_TAG {
-    TAG1 = 1,
-    TAG2 ,TAG3
-};
+
 @implementation LoginViewController
 @synthesize checkText;
-@synthesize ilist_imageName;
-@synthesize ilist_textfield;
-@synthesize is_pass;
-@synthesize is_systemCode;
-@synthesize is_user;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,9 +36,9 @@ enum TEXTFIELD_TAG {
     [self fn_custom_style];
     //注册通知
     [self fn_registKeyBoardNotification];
-    ilist_imageName=@[@"user",@"pass",@"systemcode"];
-    ilist_textfield=@[@"user ID",@"user password",@"systemcode"];
-    self.view.backgroundColor=COLOR_LIGHT_YELLOW1;
+    _itf_password.delegate=self;
+    _itf_system.delegate=self;
+    _itf_usercode.delegate=self;
    	// Do any additional setup after loading the view, typically from a nib.
 }
 - (void)didReceiveMemoryWarning
@@ -61,6 +48,16 @@ enum TEXTFIELD_TAG {
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [self fn_removeKeyBoarNotificaton];
+}
+-(void)fn_custom_gesture{
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapgesture.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapgesture];
+}
+-(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    [checkText resignFirstResponder];
 }
 //监听键盘隐藏和显示事件
 -(void)fn_registKeyBoardNotification{
@@ -73,24 +70,32 @@ enum TEXTFIELD_TAG {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)fn_custom_style{
-    _tableview_form.layer.cornerRadius=6;
-    _tableview_form.layer.borderWidth=0.5;
-    _tableview_form.layer.borderColor=[UIColor lightGrayColor].CGColor;
-    _tableview_form.delegate=self;
-    _tableview_form.dataSource=self;
-    
-    _ibt_loginButton.layer.cornerRadius=6;
-    _ibt_loginButton.layer.borderWidth=1;
-    _ibt_loginButton.layer.borderColor=[UIColor whiteColor].CGColor;
+    _ibtn_login.layer.cornerRadius=2;
+    _ibtn_login.layer.borderWidth=0.5;
+    _ibtn_login.layer.borderColor=[UIColor lightGrayColor].CGColor;
+    [_ibtn_showPassword setImage:[UIImage imageNamed:@"checkbox_unchecked"] forState:UIControlStateNormal];
+    [_ibtn_showPassword setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateSelected];
 }
 #pragma mark UITextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField*)textField{
     checkText = textField;//设置被点击的对象
-    checkText.delegate=self;
+    if (_itf_usercode.editing) {
+        _iv_usercode_line.backgroundColor=COLOR_DARK_GREEN;
+    }else if(_itf_password.editing){
+        _iv_password_line.backgroundColor=COLOR_DARK_GREEN;
+    }else if(_itf_system.editing){
+        _iv_system_line.backgroundColor=COLOR_DARK_GREEN;
+    }
+
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [checkText resignFirstResponder];
     return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    _iv_system_line.backgroundColor=[UIColor lightGrayColor];
+    _iv_password_line.backgroundColor=[UIColor lightGrayColor];
+    _iv_usercode_line.backgroundColor=[UIColor lightGrayColor];
 }
 #pragma mark Responding to keyboard events
 - (void)keyboardWillShow:(NSNotification*)notification {
@@ -110,7 +115,7 @@ enum TEXTFIELD_TAG {
     
     [animationDurationValue getValue:&animationDuration];
     
-    CGRect textFrame =[_tableview_form convertRect:_tableview_form.bounds toView:nil];
+    CGRect textFrame =[checkText convertRect:checkText.bounds toView:nil];
     float textY = textFrame.origin.y + textFrame.size.height;//得到tableView下边框距离顶部的高度
     float bottomY = self.view.frame.size.height - textY;//得到下边框到底部的距离
     
@@ -118,7 +123,7 @@ enum TEXTFIELD_TAG {
         return;
         
     }
-    float moveY = keyboardRect.size.height - bottomY+2;
+    float moveY = keyboardRect.size.height - bottomY+10;
      [self moveInputBarWithKeyboardHeight:moveY withDuration:animationDuration];
 
 }
@@ -151,16 +156,7 @@ enum TEXTFIELD_TAG {
     
     [UIView commitAnimations];
 }
--(void)fn_custom_gesture{
-    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
-    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
-    tapgesture.cancelsTouchesInView = NO;
-    //将触摸事件添加到当前view
-    [self.view addGestureRecognizer:tapgesture];
-}
--(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
-    [checkText resignFirstResponder];
-}
+
 - (void) fn_get_Web_addr_data
 {
     [SVProgressHUD showWithStatus:@"Verifying,please wait!"];
@@ -172,7 +168,7 @@ enum TEXTFIELD_TAG {
     auth.password=@"anonymous1";
     auth.system =@"ITNEW";
     auth.version=@"1.5";
-    auth.com_sys_code=is_systemCode;
+    auth.com_sys_code=_itf_system.text;
     auth.app_code=@"ITCRM";
     req_form.Auth =auth;
     
@@ -198,8 +194,8 @@ enum TEXTFIELD_TAG {
 - (void) fn_get_RespusersLogin_data:(NSString*)base_url sys_name:(NSString*)sys_name{
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
-    auth.user_code=is_user;
-    auth.password=is_pass;
+    auth.user_code=_itf_usercode.text;
+    auth.password=_itf_password.text;
     auth.system =sys_name;
     auth.version=@"1.5";
     req_form.Auth =auth;
@@ -214,7 +210,7 @@ enum TEXTFIELD_TAG {
             NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
             DB_Login *dbLogin=[[DB_Login alloc]init];
             NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
-            [dbLogin fn_save_data:is_user password:is_pass system:sys_name user_logo:user_logo];
+            [dbLogin fn_save_data:_itf_usercode.text password:_itf_password.text system:sys_name user_logo:user_logo];
             [user_isLogin setInteger:1 forKey:@"isLogin"];
             [user_isLogin synchronize];
             [self dismissViewControllerAnimated:YES completion:^{}];
@@ -225,56 +221,31 @@ enum TEXTFIELD_TAG {
     };
     [web_base fn_get_data:req_form];
 }
-- (IBAction)fn_login_app:(id)sender {
-    [self fn_get_Web_addr_data];
+- (IBAction)fn_login_itcrm:(id)sender{
+    NSString *str_prompt=@"";
+    if ([_itf_usercode.text length]==0) {
+        str_prompt=@"Sorry,the user name can not be empty!";
+    }else if([_itf_password.text length]==0){
+        str_prompt=@"Sorry,the password can not be empty!";
+    }else if ([_itf_system.text length]==0){
+        str_prompt=@"Sorry,the system name can not be empty!";
+    }else{
+        [self fn_get_Web_addr_data];
+    }
+    if ([str_prompt length]!=0) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_prompt delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+
 }
 
-- (IBAction)fn_end_inputData:(id)sender {
-    UITextField *textfield=(UITextField*)sender;
-    if (textfield.tag==TAG1) {
-        is_user=textfield.text;
+- (IBAction)fn_isShowPassword:(id)sender {
+    _ibtn_showPassword.selected=!_ibtn_showPassword.selected;
+    if (_ibtn_showPassword.selected) {
+        _itf_password.secureTextEntry=NO;
+    }else{
+        _itf_password.secureTextEntry=YES;
     }
-    if (textfield.tag==TAG2) {
-        is_pass=textfield.text;
-    }
-    if (textfield.tag==TAG3) {
-        is_systemCode=textfield.text;
-    }
-}
-#pragma mark UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [ilist_imageName count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier=@"Cell_login1";
-    Cell_login *cell=[self.tableview_form dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell==nil) {
-        cell=[[Cell_login alloc]init];
-    }
-    cell.image_icon.image=[UIImage imageNamed:[ilist_imageName objectAtIndex:indexPath.row]];
-    cell.it_textfield.delegate=self;
-    cell.it_textfield.placeholder=[ilist_textfield objectAtIndex:indexPath.row];
-    if (indexPath.row==0) {
-        cell.it_textfield.tag=TAG1;
-        cell.it_textfield.text=@"YEN";
-        is_user=cell.it_textfield.text;
-    }
-    if (indexPath.row==1) {
-        cell.it_textfield.tag=TAG2;
-        cell.it_textfield.secureTextEntry=YES;
-        cell.it_textfield.text=@"392016";
-        is_pass=cell.it_textfield.text;
-    }
-    if (indexPath.row==2) {
-        cell.it_textfield.tag=TAG3;
-        cell.it_textfield.text=@"FSI/TEST";
-        is_systemCode=cell.it_textfield.text;
-    }
-    return cell;
-}
-#pragma mark UITableViewDelegate
--(BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
-    return NO;
-}
 @end

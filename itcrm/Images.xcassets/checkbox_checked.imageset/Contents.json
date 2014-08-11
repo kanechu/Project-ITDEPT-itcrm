@@ -3,11 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "ic_itdept_logo.png"
+      "filename" : "checkbox1_checked.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "checkbox1_checked@2x.png"
     }
   ],
   "info" : {

@@ -16,7 +16,6 @@
 		B22903FD1936C9CB004D1862 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903F61936C9CB004D1862 /* FMDatabasePool.m */; };
 		B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903F81936C9CB004D1862 /* FMDatabaseQueue.m */; };
 		B22903FF1936C9CB004D1862 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = B22903FA1936C9CB004D1862 /* FMResultSet.m */; };
-		B229040E1937239D004D1862 /* Cell_login.m in Sources */ = {isa = PBXBuildFile; fileRef = B229040D1937239D004D1862 /* Cell_login.m */; };
 		B240CA6D196BA8E100C0B6F4 /* Web_updateData.m in Sources */ = {isa = PBXBuildFile; fileRef = B240CA6C196BA8E100C0B6F4 /* Web_updateData.m */; };
 		B2452E7219416D9700D02A45 /* PopViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7119416D9700D02A45 /* PopViewManager.m */; };
 		B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7419417B9500D02A45 /* RegionViewController.m */; };
@@ -193,8 +192,6 @@
 		B22903F81936C9CB004D1862 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		B22903F91936C9CB004D1862 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		B22903FA1936C9CB004D1862 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		B229040C1937239D004D1862 /* Cell_login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_login.h; sourceTree = "<group>"; };
-		B229040D1937239D004D1862 /* Cell_login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_login.m; sourceTree = "<group>"; };
 		B240CA6B196BA8E100C0B6F4 /* Web_updateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web_updateData.h; sourceTree = "<group>"; };
 		B240CA6C196BA8E100C0B6F4 /* Web_updateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Web_updateData.m; sourceTree = "<group>"; };
 		B2452E7019416D9700D02A45 /* PopViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopViewManager.h; sourceTree = "<group>"; };
@@ -525,8 +522,6 @@
 			children = (
 				B257F2811935E16500EC88F5 /* Cell_menu_item.h */,
 				B257F2821935E16500EC88F5 /* Cell_menu_item.m */,
-				B229040C1937239D004D1862 /* Cell_login.h */,
-				B229040D1937239D004D1862 /* Cell_login.m */,
 				B25D7605193D6ACF005913D7 /* Cell_search.h */,
 				B25D7606193D6ACF005913D7 /* Cell_search.m */,
 				B27EDFC019401092007F89A6 /* Cell_search1.h */,
@@ -1052,7 +1047,6 @@
 				B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */,
 				B27EE0DB19404919007F89A6 /* MZFormSheetSegue.m in Sources */,
 				B2686202196E7B2D00B14251 /* CrmContact_browseViewController.m in Sources */,
-				B229040E1937239D004D1862 /* Cell_login.m in Sources */,
 				B2223C96196FDB4000FFE884 /* EditContactViewController.m in Sources */,
 				B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */,
 				B27EE0DA19404919007F89A6 /* MZFormSheetController.m in Sources */,
