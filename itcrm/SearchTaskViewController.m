@@ -291,8 +291,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 }
 
 - (IBAction)fn_clear_input_data:(id)sender {
-    idic_value=nil;
-    idic_value=[[NSMutableDictionary alloc]init];
+    [idic_value removeAllObjects];
     [alist_searchData removeAllObjects];
     [self.skstableview reloadData];
 }
