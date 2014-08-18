@@ -339,7 +339,7 @@
         static NSString *cellIndentifier=@"Cell_browse_edit";
         Cell_browse *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
         if (!cell) {
-            cell=[[Cell_browse alloc]init];
+            cell=[self.skstableView dequeueReusableCellWithIdentifier:@"Cell_browse_edit" forIndexPath:indexPath];
         }
         UIFont *font = [UIFont systemFontOfSize:15.0];
         cell.il_title.text=[dic valueForKey:@"title"];

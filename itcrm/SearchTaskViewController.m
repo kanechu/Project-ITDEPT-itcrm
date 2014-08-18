@@ -167,7 +167,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"SKSTableViewCell";
-    SKSTableViewCell *cell = [self.skstableview dequeueReusableCellWithIdentifier:CellIdentifier];
+    SKSTableViewCell *cell =[self.skstableview dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     cell.backgroundColor=COLOR_LIGTH_GREEN;
@@ -205,7 +205,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
         static NSString *cellIdentifier=@"Cell_search";
         Cell_search *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
-            cell=[[Cell_search alloc]init];
+            cell=[self.skstableview dequeueReusableCellWithIdentifier:@"Cell_search" forIndexPath:indexPath];
         }
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
@@ -221,6 +221,8 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
             if ([str_value length]!=0) {
                 str_value=[dateformatter stringFromDate:date];
             }
+        }else{
+            cell.itf_searchData.inputView=nil;
         }
         cell.itf_searchData.text=str_value;
         return cell;
