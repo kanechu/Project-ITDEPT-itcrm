@@ -53,10 +53,10 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_init_crmhbl_browse:(NSMutableArray*)crmhbl_browse{
-    // 获取crmhbl列表显示信息的格式
-    NSMutableArray *arr_format=[NSMutableArray array];
+    
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
-    arr_format=[db_format fn_get_list_data:@"crmacct_hbl"];
+    // 获取crmhbl列表显示信息的格式
+    NSMutableArray *arr_format=[db_format fn_get_list_data:@"crmacct_hbl"];
     if ([arr_format count]!=0) {
         //转换格式
         alist_crmhbl=[convert fn_format_conersion:arr_format browse:crmhbl_browse];

@@ -25,9 +25,8 @@
         base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
     }
     UploadingContract *req_form = [[UploadingContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     req_form.UpdateForm = [NSSet setWithObjects:UpdateForm, nil];
     Web_base *web_base=[[Web_base alloc]init];

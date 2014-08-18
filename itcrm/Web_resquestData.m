@@ -42,11 +42,9 @@
 #pragma mark 请求permit的数据
 - (void) fn_get_permit_data:(NSString*)base_url
 {
-    
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"app_code";
@@ -72,9 +70,8 @@
 {
     
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"form";
@@ -96,9 +93,8 @@
 #pragma mark 请求formatlist的数据
 - (void) fn_get_formatlist_data:(NSString*)base_url{
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"list_id";
@@ -119,9 +115,8 @@
 #pragma mark 请求crmacct_browse的数据
 - (void) fn_get_crmacct_browse_data:(NSString*)base_url{
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMACCT_BROWSE_URL;
@@ -140,9 +135,8 @@
 {
     
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"type";
@@ -166,9 +160,8 @@
 - (void) fn_get_systemIcon_data:(NSString*)base_url os_value:(NSString*)value isUpdate:(NSInteger)flag_isUpdate
 {
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"rec_upd_date";
@@ -198,9 +191,8 @@
 - (void) fn_get_crmopp_browse_data:(NSString*)base_url
 {
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMOOP_BROWSE_URL;
@@ -218,9 +210,8 @@
 - (void) fn_get_maintForm_data:(NSString*)base_url
 {
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"form";
@@ -244,9 +235,8 @@
 - (void) fn_get_crmtask_browse_data:(NSString*)base_url
 {
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMTASK_BROWSE_URL;
@@ -265,9 +255,8 @@
 - (void) fn_get_crmhbl_browse_data:(NSString*)base_url
 {
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMHBL_BROWSE_URL;
@@ -284,9 +273,8 @@
 #pragma mark 请求crmcontact_browse的数据
 - (void) fn_get_crmcontact_browse_data:(NSString*)base_url{
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"form";
@@ -307,9 +295,8 @@
 #pragma mark 请求crmquo_browse的数据
 - (void) fn_get_crmquo_browse_data:(NSString*)base_url{
     RequestContract *req_form = [[RequestContract alloc] init];
-    AuthContract *auth=[[AuthContract alloc]init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
-    auth=[dbLogin fn_request_auth];
+    AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"form";

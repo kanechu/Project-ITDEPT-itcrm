@@ -84,7 +84,7 @@
     NSInteger flag=0;
     NSMutableArray *arr_value=[[NSMutableArray alloc]initWithCapacity:10];
     for (Advance_SearchData *acct in alist_searchData) {
-        NSString *sql_value=[NSString string];
+        NSString *sql_value=nil;
         BOOL isHas=[self fn_isContain_a_character:acct.is_parameter substring:@","];
         if (flag==0 && [acct.is_searchValue length]!=0 && !isHas) {
             sql=[sql stringByAppendingFormat:@" where %@ like ?",acct.is_parameter];

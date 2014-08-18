@@ -794,7 +794,7 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6HJ-tK-rqf">
                                 <rect key="frame" x="0.0" y="533" width="320" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.45098039220000002" green="0.7843137255" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Search">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1848,8 +1848,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iu4-YE-TuG"/>
-        <segue reference="dLF-6P-NyO"/>
-        <segue reference="wbi-2X-kmd"/>
+        <segue reference="Dfc-YT-f1N"/>
+        <segue reference="vTW-Ye-vvC"/>
+        <segue reference="KeJ-f2-xSo"/>
     </inferredMetricsTieBreakers>
 </document>
