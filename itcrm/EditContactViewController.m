@@ -98,6 +98,13 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmcontact"];
     alist_maintContact=[db fn_get_MaintForm_data:@"crmcontact"];
     alist_filtered_contactdata=[[NSMutableArray alloc]initWithCapacity:10];
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+        NSString *str_name=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintContact];
+        if (arr!=nil) {
+            [alist_filtered_contactdata addObject:arr];
+        }
+    }
     
 }
 -(void)fn_custom_gesture{
@@ -135,10 +142,6 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintContact];
-    if (arr!=nil) {
-        [alist_filtered_contactdata addObject:arr];
-    }
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath

@@ -72,10 +72,17 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmopp"];
-    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_opp_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
     idic_opp_value=[[NSMutableDictionary alloc]initWithCapacity:10];
     alist_searchData=[[NSMutableArray alloc]init];
+    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+        NSString *str_name=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
+        if (arr!=nil) {
+            [alist_filtered_data addObject:arr];
+        }
+    }
 }
 
 #pragma mark SKSTableViewDelegate
@@ -100,10 +107,6 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
-    if (arr!=nil) {
-        [alist_filtered_data addObject:arr];
-    }
     return cell;
 }
 -(UITableViewCell*)tableView:(SKSTableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath{

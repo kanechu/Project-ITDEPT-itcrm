@@ -121,6 +121,13 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
     alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
     alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+        NSString *str_name=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_miantTask];
+        if (arr!=nil) {
+            [alist_filtered_taskdata addObject:arr];
+        }
+    }
 }
 #pragma mark create datePick
 -(void)fn_create_datepick{
@@ -189,11 +196,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_miantTask];
-    if (arr!=nil) {
-        [alist_filtered_taskdata addObject:arr];
-    }
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath

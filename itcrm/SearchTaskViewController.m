@@ -134,6 +134,13 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
     alist_code=[[NSMutableArray alloc]initWithCapacity:1];
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+        NSString *str_name=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
+        if (arr!=nil) {
+            [alist_filtered_data addObject:arr];
+        }
+    }
 }
 
 -(void)fn_custom_gesture{
@@ -175,10 +182,6 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
-    if (arr!=nil) {
-        [alist_filtered_data addObject:arr];
-    }
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath

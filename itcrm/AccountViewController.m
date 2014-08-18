@@ -88,11 +88,18 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
-    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:1];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
     alist_code=[[NSMutableArray alloc]initWithCapacity:1];
+    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+        NSString *str_name=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
+        if (arr!=nil) {
+            [alist_filtered_data addObject:arr];
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -124,11 +131,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
-    if (arr!=nil) {
-        [alist_filtered_data addObject:arr];
-    }
-    
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath

@@ -109,6 +109,13 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     alist_maintOpp=[db fn_get_MaintForm_data:@"crmopp"];
     alist_filtered_oppdata=[[NSMutableArray alloc]initWithCapacity:10];
     alist_option=[[NSMutableArray alloc]initWithCapacity:10];
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+        NSString *str_name=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintOpp];
+        if (arr!=nil) {
+            [alist_filtered_oppdata addObject:arr];
+        }
+    }
 }
 
 #pragma mark SKSTableViewDelegate 
@@ -135,10 +142,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintOpp];
-    if (arr!=nil) {
-        [alist_filtered_oppdata addObject:arr];
-    }
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
