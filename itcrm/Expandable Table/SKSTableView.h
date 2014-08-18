@@ -103,7 +103,7 @@
  *  @discussion You must set only this protocol for the delegation and the datasource of SKSTableView instance.
  */
 @property (nonatomic, weak) id <SKSTableViewDelegate> SKSTableViewDelegate;
--(void)fn_expandall;
+
 /**
  * A Boolean value indicating whether only one cell can be expanded at a time.
  *
@@ -111,12 +111,18 @@
  *      The default value for this property is NO.
  */
 @property (nonatomic, assign) BOOL shouldExpandOnlyOneCell;
-
+/**
+ *  for reload skstableview
+ */
+@property (nonatomic, copy) NSMutableDictionary *expandableCells;
 /**
  * Collapses all currently-expanded cells in the tableview altogether. No subrow is displayed, just main rows.
  */
 - (void)collapseCurrentlyExpandedIndexPaths;
-
+/**
+ *  open all cell
+ */
+-(void)fn_expandall;
 @end
 
 #pragma mark - NSIndexPath (SKSTableView)

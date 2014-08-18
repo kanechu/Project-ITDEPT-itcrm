@@ -126,6 +126,7 @@
         [idic_parameter setObject:@"#1" forKey:@"task_id"];
         maintTaskVC.idic_parameter_value=idic_parameter;
         maintTaskVC.add_flag=1;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
     if (buttonIndex==1) {
     }
@@ -206,20 +207,42 @@
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup=[[NSMutableDictionary alloc]initWithCapacity:10];
+    [self fn_get_filtered_data];
 }
 -(NSMutableArray*)fn_format_convert:(NSMutableArray*)arr_crm list_id:(NSString*)list_id; {
-    //获取crm列表显示信息的格式
-    NSMutableArray *arr_format=[NSMutableArray array];
     NSMutableArray *arr_browse=[NSMutableArray array];
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
-    arr_format=[db_format fn_get_list_data:list_id];
+    //获取crm列表显示信息的格式
+    NSMutableArray *arr_format=[db_format fn_get_list_data:list_id];
     if ([arr_format count]!=0) {
         //转换格式
         arr_browse=[format fn_format_conersion:arr_format browse:arr_crm];
     }
     return arr_browse;
 }
-
+#pragma mark 过滤数据
+-(void)fn_get_filtered_data{
+    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
+         NSString *str_groupName=[dic valueForKey:@"group_name"];
+        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_groupName arr:alist_maintForm];
+        if (arr!=nil && [arr count]!=0) {
+            [alist_filtered_data addObject:arr];
+        }else{
+            if ([str_groupName isEqualToString:@"Activity"]) {
+                [alist_filtered_data addObject:alist_crmtask];
+            }
+            if ([str_groupName isEqualToString:@"Contact"]) {
+                [alist_filtered_data addObject:alist_contact];
+            }
+            if ([str_groupName isEqualToString:@"Opportunity"]) {
+                [alist_filtered_data addObject:alist_crmopp];
+            }
+            if ([str_groupName isEqualToString:@"Shipment History"]) {
+                [alist_filtered_data addObject:alist_crmhbl];
+            }
+        }
+    }
+}
 #pragma mark SKSTableViewDelegate and datasourse
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -249,23 +272,6 @@
     cell.textLabel.text=str_groupName;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
-    NSArray *arr=[expand_helper fn_filtered_criteriaData:str_groupName arr:alist_maintForm];
-    if (arr!=nil && [arr count]!=0) {
-        [alist_filtered_data addObject:arr];
-    }else{
-        if ([str_groupName isEqualToString:@"Activity"]) {
-            [alist_filtered_data addObject:alist_crmtask];
-        }
-        if ([str_groupName isEqualToString:@"Contact"]) {
-            [alist_filtered_data addObject:alist_contact];
-        }
-        if ([str_groupName isEqualToString:@"Opportunity"]) {
-            [alist_filtered_data addObject:alist_crmopp];
-        }
-        if ([str_groupName isEqualToString:@"Shipment History"]) {
-            [alist_filtered_data addObject:alist_crmhbl];
-        }
-    }
     return cell;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
@@ -398,13 +404,20 @@
         if ([crmtask_arr count]!=0) {
             maintTaskVC.idic_parameter_value=[crmtask_arr objectAtIndex:0];
         }
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
     if ([groupName isEqualToString:@"Opportunity"]) {
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
         editOppVC.opp_id=[[alist_crmopp_value objectAtIndex:selectRow]valueForKey:@"opp_id"];
     }
 }
-
+#pragma mark 修改后，更新browse
+-(void)fn_update_browse{
+    [alist_filtered_data removeAllObjects];
+    [self fn_init_arr];
+    self.skstableView.expandableCells=nil;
+    [self.skstableView reloadData];
+}
 #pragma mark respond prepareForSegue: sender:
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier]isEqualToString:@"segue_acct_contactEdit"]) {

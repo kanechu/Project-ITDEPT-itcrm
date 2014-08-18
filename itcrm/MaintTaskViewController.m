@@ -234,6 +234,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
                 text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
             }
             cell.itv_data_textview.inputView=datePicker;
+        }else{
+            cell.itv_data_textview.inputView=nil;
         }
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px

@@ -20,9 +20,6 @@ CGFloat const kDefaultCellHeight = 60.0f;
 
 @interface SKSTableView () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, copy) NSMutableDictionary *expandableCells;
-
-
 - (NSInteger)numberOfExpandedSubrowsInSection:(NSInteger)section;
 
 - (NSIndexPath *)correspondingIndexPathForRowAtIndexPath:(NSIndexPath *)indexPath;
