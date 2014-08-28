@@ -91,6 +91,11 @@
     if (!cell) {
         cell=[[Cell_browse alloc]init];
     }
+    if (indexPath.row%2==0) {
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }else{
+        cell.backgroundColor=COLOR_LIGHT_BLUE;
+    }
     cell.ii_image.image=crmquo_icon;
     cell.il_title.text=[[alist_crmquo objectAtIndex:indexPath.row]valueForKey:@"title"];
     cell.il_show_text.lineBreakMode=NSLineBreakByWordWrapping;
@@ -100,7 +105,7 @@
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     //设置选中cell的背景颜色
     cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_GRAY;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

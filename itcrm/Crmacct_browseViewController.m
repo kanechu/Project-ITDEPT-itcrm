@@ -48,8 +48,6 @@
     self.tableView_acct.delegate=self;
     self.tableView_acct.dataSource=self;
     _searchBar.delegate=self;
-    
-    self.tableView_acct.backgroundColor=COLOR_LIGHT_YELLOW;
     db_acct=[[DB_crmacct_browse alloc]init];
     format=[[Format_conversion alloc]init];
     [self fn_get_acct_formatlist];
@@ -95,7 +93,12 @@
     if (cell==nil) {
         cell=[[Cell_browse alloc]init];
     }
-    cell.backgroundColor=COLOR_LIGHT_YELLOW;
+    if (indexPath.row%2==0) {
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }else{
+        cell.backgroundColor=COLOR_LIGHT_BLUE;
+    }
+    
     cell.ii_image.image=acct_icon;
     cell.il_title.text=[[ilist_account objectAtIndex:indexPath.row]valueForKey:@"title"];
     
@@ -104,7 +107,7 @@
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     //改变cell选中时的背景色
     cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_GRAY;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

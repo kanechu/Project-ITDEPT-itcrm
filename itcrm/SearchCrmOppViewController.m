@@ -59,7 +59,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
      *  隐藏表格的滚动条
      */
     self.skstableView.showsVerticalScrollIndicator=NO;
-    [_inav_bar setBarTintColor:COLOR_LIGHT_YELLOW];
+    
 	// Do any additional setup after loading the view.
 }
 

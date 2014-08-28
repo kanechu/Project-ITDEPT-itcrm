@@ -47,7 +47,6 @@
     [super viewDidLoad];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
-    self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
     _is_searchBar.delegate=self;
     format=[[Format_conversion alloc]init];
     db_crmopp=[[DB_crmopp_browse alloc]init];
@@ -92,7 +91,11 @@
     if (!cell) {
         cell=[[Cell_browse alloc]init];
     }
-    cell.backgroundColor=COLOR_LIGHT_YELLOW;
+    if (indexPath.row%2==0) {
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }else{
+        cell.backgroundColor=COLOR_LIGHT_BLUE;
+    }
     cell.ii_image.image=opp_image;
     cell.il_title.text=[[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"title"];
     cell.il_show_text.lineBreakMode=NSLineBreakByCharWrapping;
@@ -102,7 +105,7 @@
     cell.il_show_text.frame=CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height);
     //设置选中cell的背景颜色
     cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_YELLOW1;
+    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_GRAY;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

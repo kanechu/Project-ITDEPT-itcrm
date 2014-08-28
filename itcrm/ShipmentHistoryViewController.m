@@ -76,6 +76,11 @@
     if (!cell) {
         cell=[[Cell_browse alloc]init];
     }
+    if (indexPath.row%2==0) {
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }else{
+        cell.backgroundColor=COLOR_LIGHT_BLUE;
+    }
     UIFont *font=[UIFont systemFontOfSize:15.0f];
     cell.il_title.text=[[alist_crmhbl objectAtIndex:indexPath.row]valueForKey:@"title"];
     cell.il_title.font=font;

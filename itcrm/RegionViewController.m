@@ -41,9 +41,6 @@
     _is_searchBar.placeholder=is_placeholder;
     db=[[DB_Region alloc]init];
     ilist_region=[db fn_get_region_data:type];
-    self.tableview.backgroundColor=COLOR_LIGHT_YELLOW;
-    [_inav_navigationbar setBarTintColor:COLOR_LIGHT_YELLOW];
-    [self.view setBackgroundColor:COLOR_LIGHT_YELLOW];
 	// Do any additional setup after loading the view.
 }
 
@@ -67,12 +64,16 @@
         NSArray *nib=[[NSBundle mainBundle]loadNibNamed:@"Cell_region" owner:self options:nil];
         cell=[nib objectAtIndex:0];
     }
+    if (indexPath.row%2==0) {
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }else{
+        cell.backgroundColor=COLOR_LIGHT_BLUE;
+    }
     cell.il_display.text=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"display"];
     cell.il_data.text=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"data"];
     NSString *image_name=[[ilist_region objectAtIndex:indexPath.row]valueForKey:@"image"];
     cell.image.image=[self fn_convert_image:image_name];
     // Configure the cell...
-    cell.backgroundColor=COLOR_LIGHT_YELLOW;
     return cell;
 }
 

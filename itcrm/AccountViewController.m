@@ -58,12 +58,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self.skstableView fn_expandall];
     self.skstableView.showsVerticalScrollIndicator=NO;
     [self fn_custom_gesture];
-    self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
-    self.view.backgroundColor=COLOR_LIGHT_YELLOW;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     //避免键盘挡住UItextfield
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    [_inav_navBar setBarTintColor:COLOR_LIGHT_YELLOW];
     _ibtn_clear.layer.cornerRadius=3;
     // Do any additional setup after loading the view.
 }
@@ -162,7 +159,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW;
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
         cell.itf_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
         cell.itf_searchData.text=[idic_search_value valueForKey:col_code];
         return cell;
@@ -178,7 +175,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.ibtn_skip.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW;
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
         Format_conversion *convert=[[Format_conversion alloc]init];
         NSString *textValue=[idic_search_value valueForKey:col_code];
         NSString *col_option=[dic valueForKey:@"col_option"];

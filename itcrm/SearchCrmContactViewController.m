@@ -51,14 +51,11 @@ enum TEXT_TAG {
     [self fn_init_arr];
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
-    self.skstableView.backgroundColor=COLOR_LIGHT_YELLOW;
     self.skstableView.showsVerticalScrollIndicator=NO;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     [self fn_custom_gesture];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    [_inav_bar setBarTintColor:COLOR_LIGHT_YELLOW];
-    
-	// Do any additional setup after loading the view.
+   	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -152,7 +149,6 @@ enum TEXT_TAG {
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.itf_searchData.tag=TEXT_TAG1+indexPath.section*100+indexPath.subRow-1;
         cell.itf_searchData.text=[idic_value valueForKey:col_code];
         return cell;

@@ -66,9 +66,6 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     //loadview的时候，打开所有expandable
     [self.skstableview fn_expandall];
     self.skstableview.showsVerticalScrollIndicator=NO;
-    self.skstableview.backgroundColor=COLOR_LIGHT_YELLOW;
-    self.view.backgroundColor=COLOR_LIGHT_YELLOW;
-    [_inav_navigationbar setBarTintColor:COLOR_LIGHT_YELLOW];
     [expand_helper setExtraCellLineHidden:self.skstableview];
     [self fn_custom_gesture];
     //避免键盘挡住UITextField
@@ -212,7 +209,6 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
         }
         cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-        cell.backgroundColor=COLOR_LIGHT_YELLOW;
         cell.itf_searchData.delegate=self;
         cell.itf_searchData.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *str_value=[idic_value valueForKey:col_code];

@@ -341,6 +341,11 @@
         if (!cell) {
             cell=[self.skstableView dequeueReusableCellWithIdentifier:@"Cell_browse_edit" forIndexPath:indexPath];
         }
+        if ((indexPath.subRow-1)%2==0) {
+            cell.backgroundColor=COLOR_LIGHT_GRAY;
+        }else{
+            cell.backgroundColor=COLOR_LIGHT_BLUE;
+        }
         UIFont *font = [UIFont systemFontOfSize:15.0];
         cell.il_title.text=[dic valueForKey:@"title"];
         cell.il_title.font=font;
