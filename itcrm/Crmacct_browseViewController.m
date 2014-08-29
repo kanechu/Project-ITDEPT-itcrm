@@ -105,10 +105,10 @@
     cell.il_show_text.text=[[ilist_account objectAtIndex:indexPath.row] valueForKey:@"body"];
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
-    //改变cell选中时的背景色
-    cell.selectedBackgroundView=[[UIView alloc]initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor=COLOR_LIGHT_GRAY;
+    //cell选中时的无背景色
+    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+    
     return cell;
 }
 
