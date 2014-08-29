@@ -14,6 +14,7 @@ typedef void (^CallBack_option)(NSMutableDictionary *idic_option_value);
 @property (assign,nonatomic)NSInteger flag;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_cancel;
+@property (weak, nonatomic) IBOutlet UILabel *ilb_title;
 
 - (IBAction)fn_Cancel_selection:(id)sender;
 @end

@@ -371,7 +371,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         [self.skstableview reloadData];
     };
     PopViewManager *pop=[[PopViewManager alloc]init];
-    [pop PopupView:VC Size:CGSizeMake(250,300) uponView:self];
+    [pop PopupView:VC Size:CGSizeMake(240,300) uponView:self];
 }
 -(Respcrmtask_browse*)fn_init_updateform{
     NSString *unique_id=[idic_parameter_value valueForKey:@"unique_id"];

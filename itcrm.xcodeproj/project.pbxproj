@@ -21,6 +21,7 @@
 		B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7419417B9500D02A45 /* RegionViewController.m */; };
 		B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E78194195CA00D02A45 /* RespSystemIcon.m */; };
 		B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = B2452E7B1941979200D02A45 /* DB_systemIcon.m */; };
+		B255BA1A19B060BD004BBF0F /* DB_Com_SYS_Code.m in Sources */ = {isa = PBXBuildFile; fileRef = B255BA1919B060BD004BBF0F /* DB_Com_SYS_Code.m */; };
 		B256627319580C0900856C3E /* CrmTask_browseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B256627219580C0900856C3E /* CrmTask_browseViewController.m */; };
 		B257F27B1935E0B600EC88F5 /* Menu_home.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F27A1935E0B600EC88F5 /* Menu_home.m */; };
 		B257F2831935E16500EC88F5 /* Cell_menu_item.m in Sources */ = {isa = PBXBuildFile; fileRef = B257F2821935E16500EC88F5 /* Cell_menu_item.m */; };
@@ -202,6 +203,8 @@
 		B2452E78194195CA00D02A45 /* RespSystemIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespSystemIcon.m; sourceTree = "<group>"; };
 		B2452E7A1941979200D02A45 /* DB_systemIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_systemIcon.h; sourceTree = "<group>"; };
 		B2452E7B1941979200D02A45 /* DB_systemIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_systemIcon.m; sourceTree = "<group>"; };
+		B255BA1819B060BD004BBF0F /* DB_Com_SYS_Code.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_Com_SYS_Code.h; sourceTree = "<group>"; };
+		B255BA1919B060BD004BBF0F /* DB_Com_SYS_Code.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_Com_SYS_Code.m; sourceTree = "<group>"; };
 		B256627119580C0900856C3E /* CrmTask_browseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrmTask_browseViewController.h; sourceTree = "<group>"; };
 		B256627219580C0900856C3E /* CrmTask_browseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrmTask_browseViewController.m; sourceTree = "<group>"; };
 		B257F2791935E0B600EC88F5 /* Menu_home.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu_home.h; sourceTree = "<group>"; };
@@ -489,6 +492,8 @@
 				B2452E7B1941979200D02A45 /* DB_systemIcon.m */,
 				B260D99E194599570026A1E9 /* DB_MaintForm.h */,
 				B260D99F194599570026A1E9 /* DB_MaintForm.m */,
+				B255BA1819B060BD004BBF0F /* DB_Com_SYS_Code.h */,
+				B255BA1919B060BD004BBF0F /* DB_Com_SYS_Code.m */,
 			);
 			name = DataAccess;
 			sourceTree = "<group>";
@@ -1065,6 +1070,7 @@
 				B256627319580C0900856C3E /* CrmTask_browseViewController.m in Sources */,
 				B22903FD1936C9CB004D1862 /* FMDatabasePool.m in Sources */,
 				B273F492194ADA620007E055 /* SearchTaskViewController.m in Sources */,
+				B255BA1A19B060BD004BBF0F /* DB_Com_SYS_Code.m in Sources */,
 				B260D98E1945519D0026A1E9 /* RespCrmopp_browse.m in Sources */,
 				B29FB24B1980E9F8009C818C /* Custom_datePicker.m in Sources */,
 				B260D99D194596F10026A1E9 /* RespMaintForm.m in Sources */,

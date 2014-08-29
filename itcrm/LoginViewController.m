@@ -18,7 +18,9 @@
 #import "SVProgressHUD.h"
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
+#import "DB_Com_SYS_Code.h"
 #import "Web_resquestData.h"
+#import "OptionViewController.h"
 @interface LoginViewController ()
 
 //用来标识点击的textfiled
@@ -156,7 +158,7 @@
     
     [UIView commitAnimations];
 }
-
+#pragma mark NetWork Request
 - (void) fn_get_Web_addr_data
 {
     [SVProgressHUD showWithStatus:@"Verifying,please wait!"];
@@ -211,6 +213,8 @@
             DB_Login *dbLogin=[[DB_Login alloc]init];
             NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
             [dbLogin fn_save_data:_itf_usercode.text password:_itf_password.text system:sys_name user_logo:user_logo];
+            DB_Com_SYS_Code *db_sys_code=[[DB_Com_SYS_Code alloc]init];
+            [db_sys_code fn_save_com_sys_code:_itf_system.text];
             [user_isLogin setInteger:1 forKey:@"isLogin"];
             [user_isLogin synchronize];
             [self dismissViewControllerAnimated:YES completion:^{}];
@@ -221,6 +225,25 @@
     };
     [web_base fn_get_data:req_form];
 }
+#pragma mark -event action
+- (IBAction)fn_find_history_data:(id)sender {
+    DB_Com_SYS_Code *db=[[DB_Com_SYS_Code alloc]init];
+    NSMutableArray *alist_sys_code=[db fn_get_com_sys_code];
+    if ([alist_sys_code count]==0) {
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"No Historical Data!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }else{
+        OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+        VC.alist_option=alist_sys_code;
+        VC.flag=2;
+        VC.callback=^(NSMutableDictionary *dic){
+            _itf_system.text=[dic valueForKey:@"sys_code"];
+        };
+        PopViewManager *popV=[[PopViewManager alloc]init];
+        [popV PopupView:VC Size:CGSizeMake(230, 300) uponView:self];
+    }
+}
+
 - (IBAction)fn_login_itcrm:(id)sender{
     NSString *str_prompt=@"";
     if ([_itf_usercode.text length]==0) {

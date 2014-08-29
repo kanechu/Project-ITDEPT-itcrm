@@ -276,7 +276,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         }
     };
     PopViewManager *popView=[[PopViewManager alloc]init];
-    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
+    [ popView PopupView:VC Size:CGSizeMake(240, 300) uponView:self];
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

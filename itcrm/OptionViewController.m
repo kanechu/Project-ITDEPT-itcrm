@@ -29,9 +29,13 @@
     [super viewDidLoad];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
-    self.tableview.layer.cornerRadius=5;
-    _ibtn_cancel.layer.cornerRadius=5;
-    self.view.backgroundColor=[UIColor clearColor];
+    self.tableview.layer.cornerRadius=1;
+    
+    _ibtn_cancel.layer.cornerRadius=2;
+    _ibtn_cancel.layer.borderColor=[UIColor lightGrayColor].CGColor;
+    _ibtn_cancel.layer.borderWidth=0.5;
+    
+    _ilb_title.layer.cornerRadius=2;
 	// Do any additional setup after loading the view.
 }
 
@@ -52,8 +56,15 @@
     if (!cell) {
         cell=[[Cell_Option alloc]init];
     }
+    if (indexPath.row%2==0) {
+        cell.backgroundColor=COLOR_LIGHT_BLUE;
+    }else{
+        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }
     if (_flag==1) {
         cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"acct_name"];
+    }else if(_flag==2){
+        cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"sys_code"];
     }else
     {
         cell.il_option_label.text=[[alist_option objectAtIndex:indexPath.row]valueForKey:@"display"];
@@ -67,18 +78,6 @@
         _callback(idic_option);
     }
     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *formSheet){}];
-}
--(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    static NSString *CellIdentifier = @"Cell_Option_title";
-    Cell_Option *headerView = [self.tableview dequeueReusableCellWithIdentifier:CellIdentifier];
-    headerView.il_option_label.text=@"Please Select";
-    if (headerView == nil){
-        [NSException raise:@"headerView == nil.." format:@"No cells with matching CellIdentifier loaded from your storyboard"];
-    }
-    return headerView;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 44;
 }
 
 - (IBAction)fn_Cancel_selection:(id)sender {

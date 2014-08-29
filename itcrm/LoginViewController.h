@@ -18,6 +18,7 @@ typedef void (^callBack_login)(void);
 @property (weak, nonatomic) IBOutlet UIView *iv_system_line;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_login;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_showPassword;
+- (IBAction)fn_find_history_data:(id)sender;
 
 - (IBAction)fn_login_itcrm:(id)sender;
 - (IBAction)fn_isShowPassword:(id)sender;
