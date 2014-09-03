@@ -43,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_show_different_language];
     //设置代理
     _tableview.delegate=self;
     _tableview.dataSource=self;
@@ -62,6 +63,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)fn_show_different_language{
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    self.title=MYLocalizedString(@"lbl_browse_task", nil);
+    _is_searchbar.placeholder=MYLocalizedString(@"lbl_activity_search", nil);
 }
 -(void)fn_get_formatlist{
     //获取crmtask列表显示信息的格式

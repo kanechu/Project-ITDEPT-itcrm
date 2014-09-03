@@ -36,6 +36,7 @@
     _ibtn_cancel.layer.borderWidth=0.5;
     
     _ilb_title.layer.cornerRadius=2;
+    [self fn_show_different_language];
 	// Do any additional setup after loading the view.
 }
 
@@ -43,6 +44,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil) forState:UIControlStateNormal];
+    _ilb_title.text=MYLocalizedString(@"lbl_select", nil);
+    
 }
 
 #pragma mark UITableViewDataSource

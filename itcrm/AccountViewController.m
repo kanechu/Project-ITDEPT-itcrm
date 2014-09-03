@@ -52,6 +52,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 {
     [super viewDidLoad];
     [self fn_init_arr];
+    [self fn_show_different_language];
     //设置表的代理
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
@@ -69,6 +70,13 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    [_ibtn_clear setTitle:MYLocalizedString(@"lbl_clear", nil) forState:UIControlStateNormal];
+    [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
+    //设置UINavigationBar的标题
+    _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
+
 }
 
 #pragma mark UITextFieldDelegate
@@ -173,6 +181,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.il_prompt_label.text=col_label;
         cell.itf_input_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
         cell.ibtn_skip.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
+        [cell.ibtn_skip setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
         cell.itf_input_searchData.delegate=self;
         cell.backgroundColor=COLOR_LIGHT_GRAY;

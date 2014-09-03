@@ -93,6 +93,8 @@
     //获取将要修改的值
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
     idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];
+    //设置title
+    self.title=MYLocalizedString(@"lbl_edit_account", nil);
 	// Do any additional setup after loading the view.
 }
 
@@ -103,13 +105,13 @@
 }
 #pragma mark set rightButtonItem and action
 -(void)fn_set_rightButtonItem{
-    UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_show_actionSheet)];
+    UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_add", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_show_actionSheet)];
    // UIBarButtonItem *ibtn_save=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
    // NSArray *arr_item=[[NSArray alloc]initWithObjects:ibtn_save,ibtn_add, nil];
     self.navigationItem.rightBarButtonItem=ibtn_add;
 }
 -(void)fn_show_actionSheet{
-    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"cancle" destructiveButtonTitle:nil otherButtonTitles:@"Add activity",@"Add contact",@"Add opportunity", nil];
+    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil),MYLocalizedString(@"sheet_contact", nil),MYLocalizedString(@"sheet_opp", nil), nil];
     [actionsheet showFromRect:self.view.bounds inView:self.view animated:YES];
 }
 - (void)fn_save_modified_data:(id)sender {
@@ -182,25 +184,25 @@
     
     if ([alist_crmtask count]!=0) {
         NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
-        [crmtask_dic setObject:@"Activity" forKey:@"group_name"];
+        [crmtask_dic setObject:MYLocalizedString(@"lbl_task", nil) forKey:@"group_name"];
         [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmtask_dic];
     }
     if ([alist_contact count]!=0) {
         NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
-        [crmcontact_dic setObject:@"Contact" forKey:@"group_name"];
+        [crmcontact_dic setObject:MYLocalizedString(@"lbl_contact", nil) forKey:@"group_name"];
         [crmcontact_dic setObject:[NSString stringWithFormat:@"%d",[alist_contact count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmcontact_dic];
     }
     if ([alist_crmopp count]!=0) {
          NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
-        [crmopp_dic setObject:@"Opportunity" forKey:@"group_name"];
+        [crmopp_dic setObject:MYLocalizedString(@"lbl_opp", nil) forKey:@"group_name"];
         [crmopp_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmopp count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmopp_dic];
     }
     if ([alist_crmhbl count]!=0) {
          NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
-        [crmhbl_dic setObject:@"Shipment History" forKey:@"group_name"];
+        [crmhbl_dic setObject:MYLocalizedString(@"lbl_hbl", nil) forKey:@"group_name"];
         [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmhbl_dic];
     }
@@ -228,16 +230,16 @@
         if (arr!=nil && [arr count]!=0) {
             [alist_filtered_data addObject:arr];
         }else{
-            if ([str_groupName isEqualToString:@"Activity"]) {
+            if ([str_groupName isEqualToString:MYLocalizedString(@"lbl_task", nil)]) {
                 [alist_filtered_data addObject:alist_crmtask];
             }
-            if ([str_groupName isEqualToString:@"Contact"]) {
+            if ([str_groupName isEqualToString:MYLocalizedString(@"lbl_contact", nil)]) {
                 [alist_filtered_data addObject:alist_contact];
             }
-            if ([str_groupName isEqualToString:@"Opportunity"]) {
+            if ([str_groupName isEqualToString:MYLocalizedString(@"lbl_opp", nil) ]) {
                 [alist_filtered_data addObject:alist_crmopp];
             }
-            if ([str_groupName isEqualToString:@"Shipment History"]) {
+            if ([str_groupName isEqualToString:MYLocalizedString(@"lbl_hbl", nil) ]) {
                 [alist_filtered_data addObject:alist_crmhbl];
             }
         }
@@ -331,6 +333,7 @@
         cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         [idic_lookup setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
         [idic_lookup setObject:col_code forKey:@"key_parameter"];
+        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
         
         return cell;
         
@@ -354,7 +357,7 @@
         cell.il_show_text.text=[dic valueForKey:@"body"];
         CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:font constrainedToWidth:cell.il_show_text.frame.size.width];
         [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
-        if ([[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"]isEqualToString:@"Shipment History"]==NO) {
+        if ([[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"]isEqualToString:MYLocalizedString(@"lbl_hbl", nil)]==NO) {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }else{
             cell.accessoryType=UITableViewCellAccessoryNone;
@@ -397,11 +400,11 @@
 -(void)tableView:(SKSTableView *)tableView didSelectSubRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *groupName=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"group_name"];
     NSInteger selectRow=indexPath.subRow-1;
-    if ([groupName isEqualToString:@"Contact"]) {
+    if ([groupName isEqualToString:MYLocalizedString(@"lbl_contact", nil)]) {
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
         editContactVC.is_contact_id=[[alist_crmcontact_value objectAtIndex:selectRow]valueForKey:@"contact_id"];
     }
-    if ([groupName isEqualToString:@"Activity"]) {
+    if ([groupName isEqualToString:MYLocalizedString(@"lbl_task", nil)]) {
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
         NSString *is_task_id=[[alist_crmtask_value objectAtIndex:selectRow]valueForKey:@"task_id"];
         DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
@@ -411,7 +414,7 @@
         }
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
-    if ([groupName isEqualToString:@"Opportunity"]) {
+    if ([groupName isEqualToString:MYLocalizedString(@"lbl_opp", nil)]) {
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
         editOppVC.opp_id=[[alist_crmopp_value objectAtIndex:selectRow]valueForKey:@"opp_id"];
     }

@@ -48,13 +48,14 @@
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
+    
     format=[[Format_conversion alloc]init];
     db_crmopp=[[DB_crmopp_browse alloc]init];
     [self fn_get_formatlist];
     //获取crmopp的参数数据
     alist_opp_parameter=[db_crmopp fn_get_crmopp_data:_is_searchBar.text select_sql:select_sql];
     [self fn_init_crmopp_browse_arr:alist_opp_parameter];
-    
+    [self fn_show_different_language];
 	// Do any additional setup after loading the view.
 }
 
@@ -62,6 +63,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    _is_searchBar.placeholder=MYLocalizedString(@"lbl_opp_search", nil);
+    self.title=MYLocalizedString(@"lbl_browse_opp", nil);
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
 }
 -(void)fn_get_formatlist{
     //获取crmopp列表显示信息的格式

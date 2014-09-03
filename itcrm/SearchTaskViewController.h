@@ -13,9 +13,11 @@ typedef void (^CallBack_task)(NSMutableArray *arr_searchData);
 @interface SearchTaskViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate,DatepickerDelegate>
 @property(nonatomic,strong)CallBack_task callback_task;
 @property(nonatomic,strong)UITextField *checkText;
-@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navigationbar;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *i_navigationItem;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableview;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_clear;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_search;
 
 - (IBAction)fn_search_task:(id)sender;
 - (IBAction)fn_go_back:(id)sender;

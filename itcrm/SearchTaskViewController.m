@@ -60,6 +60,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_show_different_language];
     //设置表的代理
     self.skstableview.SKSTableViewDelegate=self;
     [self fn_init_arr];
@@ -80,6 +81,11 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)fn_show_different_language{
+    _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
+    [_ibtn_clear setTitle:MYLocalizedString(@"lbl_clear", nil) forState:UIControlStateNormal];
+    [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
 }
 -(void)fn_create_datepickerview{
     datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 250)];

@@ -49,6 +49,7 @@ enum TEXT_TAG {
 {
     [super viewDidLoad];
     [self fn_init_arr];
+    [self fn_show_different_language];
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
     self.skstableView.showsVerticalScrollIndicator=NO;
@@ -56,6 +57,11 @@ enum TEXT_TAG {
     [self fn_custom_gesture];
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
    	// Do any additional setup after loading the view.
+}
+- (void)fn_show_different_language{
+    [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
+    _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
+    
 }
 
 - (void)didReceiveMemoryWarning

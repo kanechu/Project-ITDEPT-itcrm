@@ -43,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
@@ -53,6 +54,7 @@
     
     alist_crmquo_parameter=[db_crmquo fn_get_crmquo_browse_data:_is_searchBar.text select_sql:select_sql];
     [self fn_init_crmquo_arr:alist_crmquo_parameter];
+    [self fn_show_different_language];
 	// Do any additional setup after loading the view.
 }
 
@@ -60,6 +62,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    self.title=MYLocalizedString(@"lbl_browse_quo", nil);
+    _is_searchBar.placeholder=MYLocalizedString(@"lbl_Quotation_search", nil);
 }
 //获取crmquo版面的显示格式
 -(void)fn_get_formatlist{

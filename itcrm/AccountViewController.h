@@ -21,10 +21,10 @@ typedef void (^CallBack_acct)(NSMutableArray * arr);
 @property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 //用来标识点击哪个uitextfield
 @property (nonatomic,weak)UITextField *checkText;
-
-@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navBar;
+@property (weak, nonatomic) IBOutlet UINavigationItem *i_navigationItem;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_clear;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_search;
 
 - (IBAction)fn_search_account:(id)sender;
 - (IBAction)fn_go_back:(id)sender;

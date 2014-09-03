@@ -64,6 +64,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_show_different_language];
     [self fn_init_arr];
     [self fn_init_idic_parameter];
     self.skstableview.SKSTableViewDelegate=self;
@@ -95,6 +96,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)fn_show_different_language{
+
+    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil) forState:UIControlStateNormal];
+    self.title=MYLocalizedString(@"lbl_edit_task", nil);
+    [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
 }
 #pragma mark 点击状态栏,Tableview回滚至top
 -(void)fn_tableView_scrollTop{
@@ -258,6 +265,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.itv_edit_textview.delegate=self;
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
         return cell;
     }
     if ([col_type isEqualToString:@"checkbox"]) {
@@ -308,11 +316,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (IBAction)fn_save_edit_data:(id)sender {
     NSString *str=nil;
     if (_add_flag==1) {
-        str=@"Whether to save the added data";
+        str=MYLocalizedString(@"msg_save_add", nil);
     }else{
-        str=@"Whether to save the modified data";
+        str=MYLocalizedString(@"msg_save_edit", nil);
     }
-    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
     [alertview show];
 }
 #pragma mark UIAlertViewDelegate
@@ -414,12 +422,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     BOOL isSame=[idic_parameter_value isEqualToDictionary:idic_parameter_value_copy];
     NSString *str=nil;
     if (_add_flag==1) {
-        str=@"Added a record but not saved,please select discard or save the record";
+        str=MYLocalizedString(@"msg_cancel_add", nil);
     }else{
-        str=@"the record has been eidted but not saved,please select discard or save the record";
+        str=MYLocalizedString(@"msg_cancel_edit", nil);
     }
     if (!isSame) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
         flag=1;
         [alert show];
     }else{

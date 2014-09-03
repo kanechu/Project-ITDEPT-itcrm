@@ -59,7 +59,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
      *  隐藏表格的滚动条
      */
     self.skstableView.showsVerticalScrollIndicator=NO;
-    
+    [self fn_show_different_language];
 	// Do any additional setup after loading the view.
 }
 
@@ -67,6 +67,10 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
+    _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
 }
 -(void)fn_init_arr{
     DB_searchCriteria *db=[[DB_searchCriteria alloc]init];

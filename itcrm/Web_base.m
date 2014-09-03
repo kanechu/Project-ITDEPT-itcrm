@@ -92,7 +92,7 @@
                                                           @"system": @"system" ,
                                                           @"version": @"version",
                                                           @"com_sys_code":@"com_sys_code",
-                                                          @"app_code":@"app_code"}];
+                                                          @"app_code":@"app_code",@"lang_code":@"lang_code"}];
     
     RKObjectMapping *lo_reqMapping = [RKObjectMapping requestMapping];
     

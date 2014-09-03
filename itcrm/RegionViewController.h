@@ -15,7 +15,8 @@ typedef void (^CallBack_region)(NSMutableDictionary* dic);
 @property (nonatomic,copy)NSString *type;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property (weak, nonatomic) IBOutlet UINavigationBar *inav_navigationbar;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *i_navigationItem;
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchBar;
 
 - (IBAction)fn_return_acctSearch:(id)sender;

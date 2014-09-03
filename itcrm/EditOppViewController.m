@@ -69,15 +69,24 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [self fn_custom_gesture];
     flag_cancel=0;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+    [self fn_show_different_language];
 	// Do any additional setup after loading the view.
 }
--(void)fn_tableView_scrollTop{
-    [self.skstableView setContentOffset:CGPointZero animated:YES];
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
+    [_ibtn_Cancel setTitle:MYLocalizedString(@"lbl_cancel", nil) forState:UIControlStateNormal];
+    self.title=MYLocalizedString(@"lbl_edit_opp", nil);
+    
+    
+}
+-(void)fn_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
 /**
  *  自定义一个手势，点击空白的地方，隐藏键盘
@@ -192,6 +201,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         cell.itv_edit_textview.delegate=self;
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
         NSString *text_value=[idic_parameter_opp valueForKey:col_code];
         NSString *text_display=nil;
         if ([col_stye isEqualToString:@"choice"]){
@@ -249,7 +259,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     }
 }
 - (IBAction)fn_save_modified_data:(id)sender {
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"whether to save the modified data" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_save_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
     [alert show];
 }
 #pragma mark UIAlertViewDelegate
@@ -334,7 +344,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 - (IBAction)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
     if (!isSame) {
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:@"the record has been eidted but not saved,please select discard or save the record" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_save_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
         [alertview show];
         flag_cancel=1;
     }else{

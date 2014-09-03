@@ -43,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_show_different_language];
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
@@ -58,6 +59,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)fn_show_different_language{
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    _is_searchBar.placeholder=MYLocalizedString(@"lbl_contact_search", nil);
+    self.title=MYLocalizedString(@"lbl_browse_contact", nil);
 }
 -(void)fn_get_formatlist{
     //获取crmcontact列表显示信息的格式

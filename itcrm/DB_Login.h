@@ -12,7 +12,7 @@
 @interface DB_Login : NSObject
 @property(nonatomic,strong)DBManager *idb;
 
--(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode user_logo:(NSString*)user_logo;
+-(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode user_logo:(NSString*)user_logo lang_code:(NSString*)lang_code;
 
 -(NSMutableArray*)fn_get_allData;
 

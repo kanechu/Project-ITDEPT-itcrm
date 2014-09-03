@@ -21,26 +21,34 @@
 #import "DB_Com_SYS_Code.h"
 #import "Web_resquestData.h"
 #import "OptionViewController.h"
+static NSInteger flag_first=1;
+static NSString  *is_language=@"";//标识语言类型
 @interface LoginViewController ()
 
 //用来标识点击的textfiled
 @property(nonatomic)UITextField *checkText;
+
+@property(nonatomic,copy)NSString *lang_code;
 
 @end
 
 @implementation LoginViewController
 @synthesize checkText;
 
+@synthesize lang_code;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self fn_custom_gesture];
     [self fn_custom_style];
+    [self fn_show_different_language];
     //注册通知
     [self fn_registKeyBoardNotification];
     _itf_password.delegate=self;
     _itf_system.delegate=self;
     _itf_usercode.delegate=self;
+
    	// Do any additional setup after loading the view, typically from a nib.
 }
 - (void)didReceiveMemoryWarning
@@ -77,6 +85,43 @@
     _ibtn_login.layer.borderColor=[UIColor lightGrayColor].CGColor;
     [_ibtn_showPassword setImage:[UIImage imageNamed:@"checkbox_unchecked"] forState:UIControlStateNormal];
     [_ibtn_showPassword setImage:[UIImage imageNamed:@"checkbox_checked"] forState:UIControlStateSelected];
+    [_ibtn_EN setTitle:@"English" forState:UIControlStateNormal];
+    _ibtn_EN.delegate=self;
+    [_ibtn_CN setTitle:@"简体中文" forState:UIControlStateNormal];
+    _ibtn_CN.delegate=self;
+    [_ibtn_TCN setTitle:@"繁体中文" forState:UIControlStateNormal];
+    _ibtn_TCN.delegate=self;
+    if (flag_first==1) {
+        NSString *current_language=[[MYLocalizedString getshareInstance]getCurrentLanguage];
+        is_language=current_language;
+        flag_first++;
+    }
+    if ([is_language isEqualToString:@"en"]) {
+        [_ibtn_EN setChecked:YES];
+        lang_code=@"EN";
+    }
+    if ([is_language isEqualToString:@"zh-Hans"]) {
+        [_ibtn_CN setChecked:YES];
+        lang_code=@"CN";
+    }
+    if ([is_language isEqualToString:@"zh-Hant"]) {
+        [_ibtn_TCN setChecked:YES];
+        lang_code=@"TCN";
+    }
+    [[MYLocalizedString getshareInstance]fn_setLanguage_type:is_language];
+}
+#pragma mark -language change
+-(void)fn_show_different_language{
+    _itf_usercode.placeholder=MYLocalizedString(@"lbl_username", nil);
+    _itf_password.placeholder=MYLocalizedString(@"lbl_pwd", nil);
+    _itf_system.placeholder=MYLocalizedString(@"lbl_system", nil);
+    [_ibtn_login setTitle:MYLocalizedString(@"lbl_login", nil) forState:UIControlStateNormal];
+    [_ibtn_history setTitle:MYLocalizedString(@"lbl_history", nil) forState:UIControlStateNormal];
+    _ilb_showPass.text=MYLocalizedString(@"lbl_show_pwd", nil);
+    _itv_title.text=MYLocalizedString(@"app_name", nil);
+    _itv_title.font=[UIFont systemFontOfSize:24];
+    _itv_title.textColor=[UIColor darkGrayColor];
+    
 }
 #pragma mark UITextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField*)textField{
@@ -161,7 +206,7 @@
 #pragma mark NetWork Request
 - (void) fn_get_Web_addr_data
 {
-    [SVProgressHUD showWithStatus:@"Verifying,please wait!"];
+    [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_identity_auth", nil)];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -208,13 +253,13 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUsersLogin class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         if ([[[arr_resp_result objectAtIndex:0]valueForKey:@"pass"]isEqualToString:@"true"]) {
-            [SVProgressHUD dismissWithSuccess:@"Successful landing!"];
+            [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_landing_success", nil)];
             NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
             DB_Login *dbLogin=[[DB_Login alloc]init];
             NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
-            [dbLogin fn_save_data:_itf_usercode.text password:_itf_password.text system:sys_name user_logo:user_logo];
+            [dbLogin fn_save_data:_itf_usercode.text password:_itf_password.text system:sys_name user_logo:user_logo lang_code:lang_code];
             DB_Com_SYS_Code *db_sys_code=[[DB_Com_SYS_Code alloc]init];
-            [db_sys_code fn_save_com_sys_code:_itf_system.text];
+            [db_sys_code fn_save_com_sys_code:_itf_system.text lang_code:is_language];
             [user_isLogin setInteger:1 forKey:@"isLogin"];
             [user_isLogin synchronize];
             [self dismissViewControllerAnimated:YES completion:^{}];
@@ -228,9 +273,9 @@
 #pragma mark -event action
 - (IBAction)fn_find_history_data:(id)sender {
     DB_Com_SYS_Code *db=[[DB_Com_SYS_Code alloc]init];
-    NSMutableArray *alist_sys_code=[db fn_get_com_sys_code];
+    NSMutableArray *alist_sys_code=[db fn_get_com_sys_code:is_language];
     if ([alist_sys_code count]==0) {
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"No Historical Data!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_prompt_history", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
         [alertView show];
     }else{
         OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
@@ -247,16 +292,16 @@
 - (IBAction)fn_login_itcrm:(id)sender{
     NSString *str_prompt=@"";
     if ([_itf_usercode.text length]==0) {
-        str_prompt=@"Sorry,the user name can not be empty!";
+        str_prompt=MYLocalizedString(@"lbl_empty_username", nil);
     }else if([_itf_password.text length]==0){
-        str_prompt=@"Sorry,the password can not be empty!";
+        str_prompt=MYLocalizedString(@"lbl_empty_password", nil);
     }else if ([_itf_system.text length]==0){
-        str_prompt=@"Sorry,the system name can not be empty!";
+        str_prompt=MYLocalizedString(@"lbl_empty_systemcode", nil);
     }else{
         [self fn_get_Web_addr_data];
     }
     if ([str_prompt length]!=0) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_prompt delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_prompt delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
         [alert show];
     }
 
@@ -270,5 +315,20 @@
         _itf_password.secureTextEntry=YES;
     }
 }
+#pragma mark - QRadioButtonDelegate
 
+- (void)didSelectedRadioButton:(QRadioButton *)radio groupId:(NSString *)groupId {
+    if ([radio.titleLabel.text isEqualToString:@"English"]) {
+        is_language=@"en";
+    }
+    if ([radio.titleLabel.text isEqualToString:@"简体中文"]) {
+        is_language=@"zh-Hans";
+    }
+    if ([radio.titleLabel.text isEqualToString:@"繁体中文"]) {
+        is_language=@"zh-Hant";
+    }
+    [[MYLocalizedString getshareInstance]fn_setLanguage_type:is_language];
+    
+    [self viewDidLoad];
+}
 @end

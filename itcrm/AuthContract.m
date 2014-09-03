@@ -22,4 +22,6 @@
 
 @synthesize app_code;
 
+@synthesize lang_code;
+
 @end

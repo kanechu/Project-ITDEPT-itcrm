@@ -17,10 +17,10 @@
     idb=[DBManager getSharedInstance];
     return self;
 }
--(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode user_logo:(NSString*)user_logo{
+-(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode user_logo:(NSString*)user_logo lang_code:(NSString*)lang_code{
     [self fn_delete_data];
     if ([[idb fn_get_db]open]) {
-        NSString *insertSql=[NSString stringWithFormat:@"insert into loginInfo(user_code,password,system,user_logo)values(\"%@\",\"%@\",\"%@\",\"%@\")",user_id,user_pass,systemCode,user_logo];
+        NSString *insertSql=[NSString stringWithFormat:@"insert into loginInfo(user_code,password,system,user_logo,lang_code)values(\"%@\",\"%@\",\"%@\",\"%@\",\"%@\")",user_id,user_pass,systemCode,user_logo,lang_code];
         BOOL ib_updated=[[idb fn_get_db]executeUpdate:insertSql];
         if (!ib_updated) {
             return NO;
@@ -61,6 +61,7 @@
         auth.user_code=[dic valueForKey:@"user_code"];
         auth.password=[dic valueForKey:@"password"];
         auth.system=[dic valueForKey:@"system"];
+        auth.lang_code=[dic valueForKey:@"lang_code"];
     }
     auth.version=@"1.5";
     return auth;

@@ -37,10 +37,11 @@
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     _is_searchBar.delegate=self;
-
+    
     _is_searchBar.placeholder=is_placeholder;
     db=[[DB_Region alloc]init];
     ilist_region=[db fn_get_region_data:type];
+    _i_navigationItem.title=MYLocalizedString(@"lbl_lookup", nil);
 	// Do any additional setup after loading the view.
 }
 

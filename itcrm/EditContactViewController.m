@@ -57,6 +57,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_show_different_language];
     [self fn_get_maint_crmcontact];
     [self fn_get_idic_parameter];
     self.skstableView.SKSTableViewDelegate=self;
@@ -79,6 +80,11 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 }
 -(void)fn_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
+}
+- (void)fn_show_different_language{
+    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil) forState:UIControlStateNormal];
+    [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
+    self.title=MYLocalizedString(@"lbl_edit_contact", nil);
 }
 
 #pragma mark 获取要修改的crmcontact
@@ -193,6 +199,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         cell.itv_edit_textview.text=[_convert fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
         cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
         cell.itv_edit_textview.delegate=self;
         CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
         if (height<5) {
@@ -245,14 +252,14 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     [idic_edited_parameter setObject:textView.text forKey:col_code];
 }
 - (IBAction)fn_save_modified_contact:(id)sender {
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:@"whether save the modified data" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_save_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
     [alertView show];
 }
 
 - (IBAction)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
     if (!isSame) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"the record has been eidted but not saved,please select discard or save the record" delegate:self cancelButtonTitle:@"Save" otherButtonTitles:@"Discard", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_cancel_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
         flag=1;
         [alert show];
     }else{

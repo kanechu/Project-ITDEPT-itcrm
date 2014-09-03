@@ -11,7 +11,9 @@
 typedef void (^callBack_contact)(NSMutableArray *);
 @interface SearchCrmContactViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate>
 @property (strong,nonatomic)callBack_contact callback;
-@property (weak, nonatomic) IBOutlet UINavigationBar *inav_bar;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *i_navigationItem;
+@property (weak, nonatomic) IBOutlet UIButton *ibtn_search;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
 - (IBAction)fn_go_back:(id)sender;
 

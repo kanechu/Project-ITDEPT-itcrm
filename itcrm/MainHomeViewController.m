@@ -47,6 +47,7 @@
 {
     [super viewDidLoad];
     //[self fn_show_userLogo];
+   // [self fn_set_lang_code];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
     [self fn_open_new_thread];
@@ -58,6 +59,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSString*)fn_get_lang_code{
+    DB_Login *db=[[DB_Login alloc]init];
+    NSMutableArray *arr=[db fn_get_allData];
+    NSString *lang_code=@"";
+    if ([arr count]!=0) {
+        lang_code=[[arr objectAtIndex:0]valueForKey:@"lang_code"];
+        if ([lang_code isEqualToString:@"EN"]) {
+            lang_code=@"en";
+        }
+        if ([lang_code isEqualToString:@"CN"]) {
+            lang_code=@"zh-Hans";
+        }
+        if ([lang_code isEqualToString:@"TCN"]) {
+            lang_code=@"zh-Hant";
+        }
+    }
+    return lang_code;
 }
 -(void)fn_show_userLogo{
     DB_Login *db_login=[[DB_Login alloc]init];
@@ -90,19 +110,25 @@
         VC.callback=^(){
             [self fn_resquestAndsave_data];
         };
+    }else{
+        NSString *lang=[self fn_get_lang_code];
+        [[MYLocalizedString getshareInstance]fn_setLanguage_type:lang];
     }
 }
 
 //初始化Item
 - (void) fn_refresh_menu;
 {
+    [_ibtn_logout setTitle:MYLocalizedString(@"lbl_logout", nil) forState:UIControlStateNormal];
+    self.title=MYLocalizedString(@"lbl_home", nil);
+    self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
     ilist_menu = [[NSMutableArray alloc] init];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Account" image:@"ic_acct"segue:@"segue_account"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Activity" image:@"ic_task" segue:@"segue_activity"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Contact" image:@"ic_contact" segue:@"segue_crmcontact_browse"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Quotation" image:@"ic_quo" segue:@"segue_crmquo_browse"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:MYLocalizedString(@"lbl_account", nil) image:@"ic_acct"segue:@"segue_account"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:MYLocalizedString(@"lbl_task", nil) image:@"ic_task" segue:@"segue_activity"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:MYLocalizedString(@"lbl_contact", nil) image:@"ic_contact" segue:@"segue_crmcontact_browse"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:MYLocalizedString(@"lbl_quo", nil) image:@"ic_quo" segue:@"segue_crmquo_browse"]];
    // [ilist_menu addObject:[Menu_home fn_create_item:@"Shipment" image:@"ic_menu3" segue:@"segue_ShipmentHistory"]];
-    [ilist_menu addObject:[Menu_home fn_create_item:@"Opportunity" image:@"ic_opp" segue:@"segue_opportunities"]];
+    [ilist_menu addObject:[Menu_home fn_create_item:MYLocalizedString(@"lbl_opp", nil) image:@"ic_opp" segue:@"segue_opportunities"]];
     self.iui_collectionview.delegate = self;
     
     self.iui_collectionview.dataSource = self;
@@ -148,8 +174,12 @@
 - (IBAction)fn_Logout_crm:(id)sender {
     LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     [self presentViewController:VC animated:YES completion:^{}];
+    
     VC.callback=^(){
+        //[self fn_set_lang_code];
+        [self fn_refresh_menu];
         [self fn_resquestAndsave_data];
+        
     };
     [self fn_delete_all_data];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
@@ -200,7 +230,7 @@
 }
 #pragma mark 请求全部的数据
 -(void)fn_resquestAndsave_data{
-    [SVProgressHUD showWithStatus:@"Loading, please wait!"];
+    [SVProgressHUD showWithStatus:MYLocalizedString(@"dialog_prompt", nil)];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     NSMutableArray *arr=[db fn_get_all_data];
     NSString* base_url=nil;

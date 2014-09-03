@@ -45,6 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fn_show_different_language];
     self.tableView_acct.delegate=self;
     self.tableView_acct.dataSource=self;
     _searchBar.delegate=self;
@@ -62,6 +63,15 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_show_different_language{
+    _searchBar.placeholder=MYLocalizedString(@"lbl_account_search", nil);
+    
+    self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
+    
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    self.title=MYLocalizedString(@"lbl_browse", nil);
+ 
 }
 -(void)fn_get_acct_formatlist{
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
