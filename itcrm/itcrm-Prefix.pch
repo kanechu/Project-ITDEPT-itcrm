@@ -22,4 +22,5 @@
     #import"AppConstants.h"
     #import"Custom_Color.h"
     #import"NSDictionary.h"
+    #import"MYLocalizedString.h"
 #endif

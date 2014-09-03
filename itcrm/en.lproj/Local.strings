@@ -1,0 +1,88 @@
+/* 
+  Localization.strings
+  itcrm
+
+  Created by itdept on 14-9-2.
+  Copyright (c) 2014年 itdept. All rights reserved.
+*/
+//other
+"app_name"=" IT CRM \nSYSTEM";
+"lbl_yes"="Yes";
+"lbl_action"="Action";
+"lbl_company"="COMPANY";
+//login
+"lbl_login"="Login";
+"lbl_username"="UserName";
+"lbl_pwd"="Password";
+"lbl_system"="System";
+"lbl_history"="History";
+"lbl_show_pwd"="Show Password";
+"lbl_logout"="Logout";
+//prompt
+"msg_get_crmData"="Please wait while downloading";
+"dialog_prompt"="Loading, Please wait.";
+"msg_network_fail"="The network connection is not available now. Please contact the network administrator.";
+"msg_upd_crmData"="Please wait while uploading data.";
+"lbl_ok"="OK";
+"lbl_empty_username"="Sorry,the user name can not be empty!";
+"lbl_empty_password"="Sorry,the password can not be empty!";
+"lbl_empty_systemcode"="Sorry,the system name can not be empty!";
+"lbl_prompt_history"="No Historical Data!";
+"msg_save_data"="Please wait while save data.";
+"lbl_save_success"="Save success";
+"lbl_save_fail"="Save fail";
+"toast_mandatory"="This field cannot be empty.";
+"toast_numeric"="This field must be numeric.";
+"toast_illegal"="Illegal character.";
+"set_back"="Modified to give up, leave this page?";
+"msg_identity_auth"="Verifying,please wait!";
+"msg_landing_success"="Successful landing!";
+"msg_cancel_edit"="the record has been edited but not saved,please select discard or save the record";
+"msg_cancel_add"="Added a record but not saved,please select discard or save the record";
+"msg_save_edit"="whether save the modified data?";
+"msg_save_add"="Whether to save the added data?";
+//button
+"lbl_advance"="Advance";
+"lbl_search"="Search";
+"lbl_edit"="Edit";
+"lbl_save"="Save";
+"lbl_discard"="Discard";
+"lbl_add"="Add";
+"lbl_back"="Back";
+"lbl_delete"="Delete";
+"lbl_cancel"="Cancel";
+"lbl_clear"="Clear";
+"lbl_lookup"="Lookup";
+
+//title
+"lbl_home"="Home";
+"lbl_browse_quo"="Browse Quotation";
+"lbl_browse_opp"="Browse Opportunties";
+"lbl_browse"="Browse Account";
+"lbl_browse_task"="Browse Task";
+"lbl_browse_contact"="Browse Contact";
+"lbl_advance_title"="Advance Search";
+"lbl_edit_account"="Edit Account";
+"lbl_edit_task"="Edit Activity";
+"lbl_edit_contact"="Edit Contact";
+"lbl_edit_opp"="Edit Opportunity";
+"lbl_select"="Please Select";
+//action sheet
+"sheet_task"="Add activity";
+"sheet_contact"="Add contact";
+"sheet_opp"="Add opportunity";
+
+//menu item
+"lbl_account"="Account";
+"lbl_quo"="Quotation";
+"lbl_task"="Activity";
+"lbl_contact"="Contact";
+"lbl_hbl"="Shipment History";
+"lbl_opp"="Opportunity";
+
+//search Bar placeholder
+"lbl_account_search"="Please input the account name";
+"lbl_activity_search"="Please input the task name";
+"lbl_contact_search"="Please input the contact name";
+"lbl_Quotation_search"="Please input the quo no";
+"lbl_opp_search"="Opportunity name";

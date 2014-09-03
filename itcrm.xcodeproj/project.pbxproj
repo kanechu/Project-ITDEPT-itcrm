@@ -72,6 +72,9 @@
 		B289A5E71947F62C0004B62B /* Cell_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B289A5E61947F62C0004B62B /* Cell_browse.m */; };
 		B28F1E68194EDF7800B7C5D7 /* Advance_SearchData.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1E67194EDF7800B7C5D7 /* Advance_SearchData.m */; };
 		B28F1E6B194EE2FD00B7C5D7 /* Cell_taskSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1E6A194EE2FD00B7C5D7 /* Cell_taskSearch.m */; };
+		B295284919B5556D000DCBDB /* Local.strings in Resources */ = {isa = PBXBuildFile; fileRef = B295284B19B5556D000DCBDB /* Local.strings */; };
+		B295285419B57BC9000DCBDB /* QRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B295285319B57BC9000DCBDB /* QRadioButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B295285A19B5CFFD000DCBDB /* MYLocalizedString.m in Sources */ = {isa = PBXBuildFile; fileRef = B295285919B5CFFD000DCBDB /* MYLocalizedString.m */; };
 		B298627019385CCB0097B553 /* RespPermit.m in Sources */ = {isa = PBXBuildFile; fileRef = B298626F19385CCB0097B553 /* RespPermit.m */; };
 		B298627919386FF30097B553 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627819386FF30097B553 /* DBManager.m */; };
 		B298627F193874140097B553 /* DB_RespLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = B298627E193874140097B553 /* DB_RespLogin.m */; };
@@ -305,6 +308,17 @@
 		B28F1E67194EDF7800B7C5D7 /* Advance_SearchData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Advance_SearchData.m; sourceTree = "<group>"; };
 		B28F1E69194EE2FD00B7C5D7 /* Cell_taskSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_taskSearch.h; sourceTree = "<group>"; };
 		B28F1E6A194EE2FD00B7C5D7 /* Cell_taskSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_taskSearch.m; sourceTree = "<group>"; };
+		B295284019B5546A000DCBDB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B295284119B5546A000DCBDB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B295284219B55497000DCBDB /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B295284319B55498000DCBDB /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B295284C19B55576000DCBDB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Local.strings; sourceTree = "<group>"; };
+		B295284D19B55576000DCBDB /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Local.strings"; sourceTree = "<group>"; };
+		B295284E19B55577000DCBDB /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Local.strings"; sourceTree = "<group>"; };
+		B295285219B57BC9000DCBDB /* QRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRadioButton.h; sourceTree = "<group>"; };
+		B295285319B57BC9000DCBDB /* QRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRadioButton.m; sourceTree = "<group>"; };
+		B295285819B5CFFD000DCBDB /* MYLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYLocalizedString.h; sourceTree = "<group>"; };
+		B295285919B5CFFD000DCBDB /* MYLocalizedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MYLocalizedString.m; sourceTree = "<group>"; };
 		B298626E19385CCB0097B553 /* RespPermit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespPermit.h; sourceTree = "<group>"; };
 		B298626F19385CCB0097B553 /* RespPermit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespPermit.m; sourceTree = "<group>"; };
 		B298627719386FF30097B553 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
@@ -501,6 +515,8 @@
 		B2452E6C19416D6F00D02A45 /* GlobalClass */ = {
 			isa = PBXGroup;
 			children = (
+				B295285819B5CFFD000DCBDB /* MYLocalizedString.h */,
+				B295285919B5CFFD000DCBDB /* MYLocalizedString.m */,
 				B2452E7019416D9700D02A45 /* PopViewManager.h */,
 				B2452E7119416D9700D02A45 /* PopViewManager.m */,
 				B2B704FB1946E0250012A531 /* Format_conversion.h */,
@@ -630,6 +646,8 @@
 		B2A642B91970E1E600CF7B36 /* customControl */ = {
 			isa = PBXGroup;
 			children = (
+				B295285219B57BC9000DCBDB /* QRadioButton.h */,
+				B295285319B57BC9000DCBDB /* QRadioButton.m */,
 				B2A642BA1970E20200CF7B36 /* Custom_Button.h */,
 				B2A642BB1970E20200CF7B36 /* Custom_Button.m */,
 				B29FB2491980E9F8009C818C /* Custom_datePicker.h */,
@@ -706,6 +724,7 @@
 				B2B092C419345E74002FE190 /* InfoPlist.strings */,
 				B2B092C719345E74002FE190 /* main.m */,
 				B2B092C919345E74002FE190 /* itcrm-Prefix.pch */,
+				B295284B19B5556D000DCBDB /* Local.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -926,6 +945,8 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = B2B092AF19345E74002FE190;
 			productRefGroup = B2B092B919345E74002FE190 /* Products */;
@@ -982,6 +1003,7 @@
 			files = (
 				B2B092D419345E74002FE190 /* Images.xcassets in Resources */,
 				B2B092C619345E74002FE190 /* InfoPlist.strings in Resources */,
+				B295284919B5556D000DCBDB /* Local.strings in Resources */,
 				B2B092CF19345E74002FE190 /* Main.storyboard in Resources */,
 				B22903DE1936C4A6004D1862 /* SVProgressHUD.bundle in Resources */,
 			);
@@ -1074,6 +1096,7 @@
 				B260D98E1945519D0026A1E9 /* RespCrmopp_browse.m in Sources */,
 				B29FB24B1980E9F8009C818C /* Custom_datePicker.m in Sources */,
 				B260D99D194596F10026A1E9 /* RespMaintForm.m in Sources */,
+				B295285A19B5CFFD000DCBDB /* MYLocalizedString.m in Sources */,
 				B298627919386FF30097B553 /* DBManager.m in Sources */,
 				B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */,
 				B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */,
@@ -1088,6 +1111,7 @@
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
 				B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */,
 				B2B308F71951648B00568256 /* KeyboardNoticeManager.m in Sources */,
+				B295285419B57BC9000DCBDB /* QRadioButton.m in Sources */,
 				B2223C90196FB38C00FFE884 /* SearchCrmContactViewController.m in Sources */,
 				B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */,
 				B260D997194593580026A1E9 /* Cell_maintForm1.m in Sources */,
@@ -1129,10 +1153,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B295284B19B5556D000DCBDB /* Local.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B295284C19B55576000DCBDB /* en */,
+				B295284D19B55576000DCBDB /* zh-Hans */,
+				B295284E19B55577000DCBDB /* zh-Hant */,
+			);
+			name = Local.strings;
+			sourceTree = "<group>";
+		};
 		B2B092C419345E74002FE190 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				B2B092C519345E74002FE190 /* en */,
+				B295284019B5546A000DCBDB /* zh-Hans */,
+				B295284219B55497000DCBDB /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1149,6 +1185,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				B2B092E419345E74002FE190 /* en */,
+				B295284119B5546A000DCBDB /* zh-Hans */,
+				B295284319B55498000DCBDB /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

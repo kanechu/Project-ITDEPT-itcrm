@@ -28,6 +28,9 @@
         [self fn_checkUpdate_crmtask];
         [self fn_checkUpdate_crmcontact];
         [self fn_checkUpdate_crmopp];
+    }else{
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_network_fail", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+        [alertview show];
     }
 }
 -(void)fn_checkUpdate_crmtask{
