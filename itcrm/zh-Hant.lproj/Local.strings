@@ -68,7 +68,7 @@
 "lbl_edit_contact"="修改通訊錄";
 "lbl_edit_opp"="修改商機";
 "lbl_select"="請選擇您要找的選項";
-
+"lbl_add_task"="添加活動";
 //action sheet
 "sheet_task"="添加活動";
 "sheet_contact"="添加聯系人";
@@ -87,3 +87,12 @@
 "lbl_contact_search"="請輸入聯系人名稱";
 "lbl_Quotation_search"="請輸入報價單號";
 "lbl_opp_search"="請輸入商機名稱";
+
+//datepicker
+"lbl_year"="年";
+"lbl_month"="月";
+"lbl_day"="日";
+"lbl_hour"="時";
+"lbl_minute"="分";
+"lbl_second"="秒";
+"lbl_done"="確定";

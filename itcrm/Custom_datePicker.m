@@ -56,9 +56,9 @@
     [toobar setBarStyle:UIBarStyleBlackTranslucent];
     [toobar setBarTintColor:COLOR_LIGTH_GREEN];
     [toobar setTintColor:[UIColor whiteColor]];
-    UIBarButtonItem *buttonCancel=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(fn_Click_Cancel)];
+    UIBarButtonItem *buttonCancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_Click_Cancel)];
     UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(fn_Click_done:)];
+    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithTitle:MYLocalizedString(@"lbl_done", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_Click_done:)];
     
     [toobar setItems:[NSArray arrayWithObjects:buttonCancel,buttonflexible,buttonDone, nil]];
     

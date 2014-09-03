@@ -63,10 +63,11 @@
 "lbl_browse_contact"="Browse Contact";
 "lbl_advance_title"="Advance Search";
 "lbl_edit_account"="Edit Account";
-"lbl_edit_task"="Edit Activity";
+"lbl_edit_task"="Edit Task";
 "lbl_edit_contact"="Edit Contact";
 "lbl_edit_opp"="Edit Opportunity";
 "lbl_select"="Please Select";
+"lbl_add_task"="Add Task";
 //action sheet
 "sheet_task"="Add activity";
 "sheet_contact"="Add contact";
@@ -86,3 +87,11 @@
 "lbl_contact_search"="Please input the contact name";
 "lbl_Quotation_search"="Please input the quo no";
 "lbl_opp_search"="Opportunity name";
+//datepicker
+"lbl_year"="Year";
+"lbl_month"="Month";
+"lbl_day"="Day";
+"lbl_hour"="Hour";
+"lbl_minute"="Minute";
+"lbl_second"="Second";
+"lbl_done"="Done";

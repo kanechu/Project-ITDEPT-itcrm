@@ -47,7 +47,6 @@
 {
     [super viewDidLoad];
     //[self fn_show_userLogo];
-   // [self fn_set_lang_code];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
     [self fn_open_new_thread];
@@ -108,6 +107,7 @@
         LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self presentViewController:VC animated:NO completion:^{}];
         VC.callback=^(){
+            [self fn_refresh_menu];
             [self fn_resquestAndsave_data];
         };
     }else{

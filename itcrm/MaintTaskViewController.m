@@ -87,7 +87,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
      */
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
     if (_add_flag==1) {
-        self.title=@"Add Task";
+        self.title=MYLocalizedString(@"lbl_add_task", nil);
     }
 	// Do any additional setup after loading the view.
 }

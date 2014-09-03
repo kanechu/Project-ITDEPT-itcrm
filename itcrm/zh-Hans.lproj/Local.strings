@@ -66,7 +66,7 @@
 "lbl_edit_contact"="修改通讯录";
 "lbl_edit_opp"="修改商机";
 "lbl_select"="请选择您要找的选项";
-
+"lbl_add_task"="添加活动";
 //action sheet
 "sheet_task"="添加活动";
 "sheet_contact"="添加联系人";
@@ -86,3 +86,12 @@
 "lbl_contact_search"="请输入联系人名称";
 "lbl_Quotation_search"="请输入报价单号";
 "lbl_opp_search"="请输入商机名称";
+
+//datepicker
+"lbl_year"="年";
+"lbl_month"="月";
+"lbl_day"="日";
+"lbl_hour"="时";
+"lbl_minute"="分";
+"lbl_second"="秒";
+"lbl_done"="确定";
