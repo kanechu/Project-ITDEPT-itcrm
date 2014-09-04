@@ -266,6 +266,8 @@ static NSString  *is_language=@"";//标识语言类型
             if (_callback) {
                 _callback();
             }
+        }else{
+            [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil)];
         }
     };
     [web_base fn_get_data:req_form];

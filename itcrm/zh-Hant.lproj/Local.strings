@@ -37,6 +37,7 @@
 "set_back"="是否放棄修改，離開此頁面";
 "msg_identity_auth"="驗證中,請耐心等候！";
 "msg_landing_success"="登入成功！";
+"msg_langding_failed"="登入失敗，請檢查密碼和用戶名是否匹配！";
 "msg_cancel_edit"="該記錄已被修改過，但沒有保存，請選擇丟棄或保存記錄。";
 "msg_cancel_add"="增加了壹個紀錄，但沒有保存，請選擇丟棄或保存記錄。";
 "msg_save_edit"="是否保存修改後的數據？";

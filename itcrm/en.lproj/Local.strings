@@ -37,6 +37,7 @@
 "set_back"="Modified to give up, leave this page?";
 "msg_identity_auth"="Verifying,please wait!";
 "msg_landing_success"="Successful landing!";
+"msg_langding_failed"="Login failed, please check the password and user name match!";
 "msg_cancel_edit"="the record has been edited but not saved,please select discard or save the record";
 "msg_cancel_add"="Added a record but not saved,please select discard or save the record";
 "msg_save_edit"="whether save the modified data?";

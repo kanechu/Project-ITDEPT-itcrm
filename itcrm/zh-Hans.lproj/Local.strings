@@ -37,6 +37,7 @@
 "set_back"="是否放弃修改，离开此页面";
 "msg_identity_auth"="验证中,请耐心等候！";
 "msg_landing_success"="登入成功！";
+"msg_langding_failed"="登入失败，请检查密码和用户名是否匹配！";
 "msg_cancel_edit"="该记录已被修改过，但没有保存，请选择丢弃或保存记录。";
 "msg_cancel_add"="增加了一个纪录，但没有保存，请选择丢弃或保存记录。";
 "msg_save_edit"="是否保存修改后的数据?";
