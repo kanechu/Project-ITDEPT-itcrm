@@ -267,7 +267,7 @@ static NSString  *is_language=@"";//标识语言类型
                 _callback();
             }
         }else{
-            [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil)];
+            [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil) afterDelay:4.0f];
         }
     };
     [web_base fn_get_data:req_form];
