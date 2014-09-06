@@ -25,5 +25,12 @@
 
     // Configure the view for the selected state
 }
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    _ii_image.layer.borderWidth=2.5;
+    _ii_image.layer.borderColor=COLOR_LIGHT_GRAY1.CGColor;
+    _ii_image.layer.cornerRadius=1;
+    
+}
 
 @end
