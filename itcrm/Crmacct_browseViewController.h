@@ -12,7 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView_acct;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (weak, nonatomic) IBOutlet UIButton *ibtn_advance;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_advance;
 
 - (IBAction)fn_advance_search:(id)sender;
 

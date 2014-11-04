@@ -11,7 +11,9 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UISearchBar *is_searchbar;
-@property (weak, nonatomic) IBOutlet UIButton *ibtn_advance;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_advance;
+
 - (IBAction)fn_advance_search_task:(id)sender;
 
 @end

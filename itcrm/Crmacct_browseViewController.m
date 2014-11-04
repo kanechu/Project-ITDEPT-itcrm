@@ -68,10 +68,9 @@
     _searchBar.placeholder=MYLocalizedString(@"lbl_account_search", nil);
     
     self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
-    
-    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     self.title=MYLocalizedString(@"lbl_browse", nil);
- 
+    
 }
 -(void)fn_get_acct_formatlist{
     DB_formatlist *db_format=[[DB_formatlist alloc]init];

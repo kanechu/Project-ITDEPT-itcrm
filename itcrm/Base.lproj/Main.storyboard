@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="hUq-0x-n1V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="hUq-0x-n1V">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -914,22 +914,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Opportunities" id="bQh-kg-FPJ">
-                        <barButtonItem key="rightBarButtonItem" id="JlG-RW-B1B">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KO5-zo-zAu">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Advance">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_advance_search_opp:" destination="2dk-cr-CFp" eventType="touchUpInside" id="X7b-Kb-OtH"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="JlG-RW-B1B">
+                            <connections>
+                                <action selector="fn_advance_search_opp:" destination="2dk-cr-CFp" id="g5s-77-JNk"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_advance" destination="KO5-zo-zAu" id="f6c-Ty-ZQ8"/>
+                        <outlet property="ibtn_advance" destination="JlG-RW-B1B" id="oqe-w8-z3B"/>
                         <outlet property="is_searchBar" destination="ggr-Ex-FV0" id="i8b-zl-yPn"/>
                         <outlet property="tableview" destination="JKK-Sl-BdS" id="RE5-Xw-BYu"/>
                         <segue destination="pdh-N5-vfb" kind="push" identifier="segue_editopp" id="wbi-2X-kmd"/>
@@ -1125,22 +1117,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Account" id="UXA-e4-fXD">
-                        <barButtonItem key="rightBarButtonItem" id="k9S-mK-aVm">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HrF-FF-PBJ">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Advance">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_advance_search:" destination="EQ7-pG-KJY" eventType="touchUpInside" id="Gvx-Pu-Fvt"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" id="rpg-TR-ihH">
+                            <connections>
+                                <action selector="fn_advance_search:" destination="EQ7-pG-KJY" id="opa-8o-U4n"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_advance" destination="HrF-FF-PBJ" id="71U-Wn-LeV"/>
+                        <outlet property="ibtn_advance" destination="rpg-TR-ihH" id="P7w-Yz-ssu"/>
                         <outlet property="searchBar" destination="lq2-JH-J6E" id="3b6-RE-Bwn"/>
                         <outlet property="tableView_acct" destination="Tfn-NF-5ab" id="cJc-aT-4LC"/>
                         <segue destination="RJe-1J-1t0" kind="push" identifier="segue_maintForm" id="rWc-9B-wH6"/>
@@ -1298,7 +1282,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Account" id="UsF-6v-TkQ"/>
+                    <navigationItem key="navigationItem" title="Edit Account" id="UsF-6v-TkQ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="4ai-0b-hTP">
+                            <connections>
+                                <action selector="fn_show_actionSheet:" destination="RJe-1J-1t0" id="KPP-Sf-3HA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="skstableView" destination="i0F-TE-qRT" id="yBF-Vv-ZLz"/>
                         <segue destination="NEG-fv-6xJ" kind="push" identifier="segue_acct_taskEdit" id="vTW-Ye-vvC"/>
@@ -1370,21 +1360,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Activity" id="EDO-cR-XqL">
                         <barButtonItem key="rightBarButtonItem" id="aZr-mS-mWv">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="68C-bw-CYD">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Advance">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_advance_search_task:" destination="zbT-eX-JTl" eventType="touchUpInside" id="J4D-dc-Rqn"/>
-                                </connections>
-                            </button>
+                            <connections>
+                                <action selector="fn_advance_search_task:" destination="zbT-eX-JTl" id="Aw8-8R-60q"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_advance" destination="68C-bw-CYD" id="dB1-4y-GMg"/>
+                        <outlet property="ibtn_advance" destination="aZr-mS-mWv" id="yAs-Q1-dVf"/>
                         <outlet property="is_searchbar" destination="G11-Cp-Py4" id="c0C-A7-CYr"/>
                         <outlet property="tableview" destination="Gio-2C-hVk" id="HZ2-fR-Jkf"/>
                         <segue destination="NEG-fv-6xJ" kind="push" identifier="segue_maintTask" id="iu4-YE-TuG"/>
@@ -1455,21 +1437,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Contact" id="eWt-Uo-VbX">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Z8A-w7-H7o">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AI3-0G-eiw">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Advance">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_advance_search:" destination="KCK-OR-bYT" eventType="touchUpInside" id="DHi-ge-bfH"/>
-                                </connections>
-                            </button>
+                            <connections>
+                                <action selector="fn_advance_search:" destination="KCK-OR-bYT" id="KPC-rf-NGL"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_advance" destination="AI3-0G-eiw" id="ZnR-bP-NNb"/>
+                        <outlet property="ibtn_advance" destination="Z8A-w7-H7o" id="P9D-fR-f92"/>
                         <outlet property="is_searchBar" destination="JXx-Za-P92" id="qOA-gC-HXb"/>
                         <outlet property="tableview" destination="ELa-94-u4b" id="lE9-pp-fZd"/>
                         <segue destination="DNb-w7-p0C" kind="push" identifier="Segue_editContact" id="dLF-6P-NyO"/>
@@ -1917,8 +1891,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="wbi-2X-kmd"/>
         <segue reference="iu4-YE-TuG"/>
+        <segue reference="wbi-2X-kmd"/>
         <segue reference="dLF-6P-NyO"/>
     </inferredMetricsTieBreakers>
 </document>

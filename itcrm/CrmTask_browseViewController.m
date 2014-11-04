@@ -65,7 +65,7 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_show_different_language{
-    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     self.title=MYLocalizedString(@"lbl_browse_task", nil);
     _is_searchbar.placeholder=MYLocalizedString(@"lbl_activity_search", nil);
 }

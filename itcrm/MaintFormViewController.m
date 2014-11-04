@@ -78,7 +78,6 @@
     [super viewDidLoad];
     format=[[Format_conversion alloc]init];
     [self fn_init_arr];
-    [self fn_set_rightButtonItem];
     //设置表的代理
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开expandable
@@ -103,17 +102,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark set rightButtonItem and action
--(void)fn_set_rightButtonItem{
-    UIBarButtonItem *ibtn_add=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_add", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_show_actionSheet)];
-   // UIBarButtonItem *ibtn_save=[[UIBarButtonItem alloc]initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
-   // NSArray *arr_item=[[NSArray alloc]initWithObjects:ibtn_save,ibtn_add, nil];
-    self.navigationItem.rightBarButtonItem=ibtn_add;
-}
--(void)fn_show_actionSheet{
-    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil),MYLocalizedString(@"sheet_contact", nil),MYLocalizedString(@"sheet_opp", nil), nil];
-    [actionsheet showFromRect:self.view.bounds inView:self.view animated:YES];
-}
+
 - (void)fn_save_modified_data:(id)sender {
     
 }
@@ -437,6 +426,11 @@
     if ([[segue identifier]isEqualToString:@" segue_acct_oppEdit"]) {
         editOppVC=[segue destinationViewController];
     }
+}
+
+- (IBAction)fn_show_actionSheet:(id)sender {
+    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil),MYLocalizedString(@"sheet_contact", nil),MYLocalizedString(@"sheet_opp", nil), nil];
+    [actionsheet showFromRect:self.view.bounds inView:self.view animated:YES];
 }
 
 - (IBAction)fn_lookup_data:(id)sender {

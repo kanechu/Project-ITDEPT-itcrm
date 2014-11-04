@@ -67,7 +67,7 @@
 - (void)fn_show_different_language{
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_opp_search", nil);
     self.title=MYLocalizedString(@"lbl_browse_opp", nil);
-    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil) forState:UIControlStateNormal];
+    [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
 }
 -(void)fn_get_formatlist{
