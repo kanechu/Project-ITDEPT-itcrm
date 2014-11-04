@@ -172,7 +172,6 @@
         [self fn_init_crmtask_arr:alist_crmtask_parameter];
         [self.tableview reloadData];
     };
-    PopViewManager *popV=[[PopViewManager alloc]init];
-    [popV PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    [self presentViewController:VC animated:YES completion:nil];
 }
 @end

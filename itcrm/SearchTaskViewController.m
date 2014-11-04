@@ -11,9 +11,7 @@
 #import "Cell_taskSearch.h"
 #import "SKSTableViewCell.h"
 #import "DB_searchCriteria.h"
-#import "MZFormSheetController.h"
 #import "Advance_SearchData.h"
-
 
 #define TEXTFIELD_TAG 100
 typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
@@ -260,7 +258,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
         if (_callback_task) {
             _callback_task(alist_searchData);
         }
-        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }else{
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
@@ -269,7 +267,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 }
 
 - (IBAction)fn_go_back:(id)sender {
-     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)fn_textfield_endEdit:(id)sender {

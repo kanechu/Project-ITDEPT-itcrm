@@ -7,7 +7,6 @@
 //
 
 #import "SearchCrmOppViewController.h"
-#import "MZFormSheetController.h"
 #import "SKSTableViewCell.h"
 #import "Cell_opp_search.h"
 #import "DB_searchCriteria.h"
@@ -153,14 +152,14 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     return 70;
 }
 - (IBAction)fn_go_back:(id)sender {
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *FormSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)fn_search_opp:(id)sender {
     if (callBack) {
         callBack(alist_searchData);
     }
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController *FormSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)fn_lookup_opp:(id)sender {

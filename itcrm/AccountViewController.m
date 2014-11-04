@@ -12,7 +12,6 @@
 #import "Cell_search.h"
 #import "Cell_search1.h"
 #import "DB_searchCriteria.h"
-#import "MZFormSheetController.h"
 #import "RegionViewController.h"
 #import "Advance_SearchData.h"
 
@@ -221,7 +220,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         if (_callback_acct) {
             _callback_acct(alist_searchData);
         }
-        [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }else{
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alert show];
@@ -230,7 +229,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 
 - (IBAction)fn_go_back:(id)sender {
-     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)fn_skip_region:(id)sender {

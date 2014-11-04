@@ -7,7 +7,6 @@
 //
 
 #import "SearchCrmContactViewController.h"
-#import "MZFormSheetController.h"
 #import "Cell_search.h"
 #import "DB_searchCriteria.h"
 #import "Advance_SearchData.h"
@@ -170,7 +169,7 @@ enum TEXT_TAG {
 
 - (IBAction)fn_go_back:(id)sender {
  
-   [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)fn_textfield_endEdit:(id)sender {
@@ -194,6 +193,6 @@ enum TEXT_TAG {
     if (_callback) {
         _callback(alist_searchData);
     }
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

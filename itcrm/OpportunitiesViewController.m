@@ -162,7 +162,6 @@
         [self fn_init_crmopp_browse_arr:alist_opp_parameter];
         [self.tableview reloadData];
     };
-    PopViewManager *pop=[[PopViewManager alloc]init];
-    [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    [self presentViewController:VC animated:YES completion:nil];
 }
 @end

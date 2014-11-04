@@ -159,7 +159,6 @@
         [self fn_init_crmcontact_arr:alist_contact_parameter];
         [self.tableview reloadData];
     };
-    PopViewManager *popVC=[[PopViewManager alloc]init];
-    [popVC PopupView:crm_contact Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    [self presentViewController:crm_contact animated:YES completion:nil];
 }
 @end
