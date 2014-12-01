@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DBManager;
+@class DatabaseQueue;
 @interface DB_RespLogin : NSObject
 
-@property(nonatomic,strong)DBManager *idb;
+@property(nonatomic,strong)DatabaseQueue *queue;
 
 -(BOOL)fn_save_data:(NSMutableArray*)arr;
 -(NSMutableArray*)fn_get_all_data;

@@ -37,11 +37,17 @@ static int DB_VERSION = 1;
 -(FMDatabase*) fn_get_db{
     return database;
 }
-
--(BOOL)fn_create_db{
+-(NSString*)fn_get_databaseFilePath{
+    
     NSArray *llist_paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *ls_documentDirectory = [llist_paths objectAtIndex:0];
     NSString *ls_dbPath = [ls_documentDirectory stringByAppendingPathComponent:@"itdept.db"];
+    return ls_dbPath;
+
+}
+-(BOOL)fn_create_db{
+    
+    NSString *ls_dbPath =[self fn_get_databaseFilePath];
     
     BOOL lb_Success = YES;
     database= [FMDatabase databaseWithPath:ls_dbPath] ;

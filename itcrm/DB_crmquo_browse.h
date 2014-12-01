@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DBManager;
+@class DatabaseQueue;
 @interface DB_crmquo_browse : NSObject
-@property(nonatomic,strong)DBManager *idb;
+@property(nonatomic,strong)DatabaseQueue *queue;
 
 -(BOOL)fn_save_crmquo_browse_data:(NSMutableArray*)alist_result;
 -(NSMutableArray*)fn_get_crmquo_browse_data:(NSString*)quo_no select_sql:(NSString *)select_sql;

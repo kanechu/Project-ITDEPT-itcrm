@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DBManager;
+@class DatabaseQueue;
 @interface DB_Com_SYS_Code : NSObject
 
-@property(nonatomic,strong)DBManager *idb;
+@property(nonatomic,strong)DatabaseQueue *queue;
 
 -(BOOL)fn_save_com_sys_code:(NSString*)sys_code lang_code:(NSString*)lang_code;
 -(NSMutableArray*)fn_get_com_sys_code:(NSString*)lang_code;

@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DBManager;
+@class DatabaseQueue;
 @interface DB_Region : NSObject
 
-@property(nonatomic,strong)DBManager *idb;
+@property(nonatomic,strong)DatabaseQueue *queue;
 -(BOOL)fn_save_region_data:(NSMutableArray*)ilist_result;
 -(NSMutableArray*)fn_get_region_data:(NSString*)type;
 -(NSMutableArray*)fn_get_lookup_data:(NSString*)display type:(NSString*)type;

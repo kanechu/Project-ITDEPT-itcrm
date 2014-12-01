@@ -7,55 +7,58 @@
 //
 
 #import "DB_RespLogin.h"
-#import "DBManager.h"
+#import "DatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
 #import "RespLogin.h"
 
 @implementation DB_RespLogin
-@synthesize idb;
+@synthesize queue;
 
 -(id)init{
-    idb=[DBManager getSharedInstance];
+    self=[super init];
+    if (self) {
+        queue=[DatabaseQueue fn_sharedInstance];
+    }
     return self;
 }
 -(BOOL)fn_save_data:(NSMutableArray*)arr{
-    if ([[idb fn_get_db] open]) {
-        for (RespLogin *lmap_data in arr) {
-            NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from Resplogin where company_code = :company_code and sys_name = :sys_name and env = :env and web_addr =:web_addr and php_addr =:php_addr" withParameterDictionary:ldict_row];
-            if (! ib_delete)
-                return NO;
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into Resplogin (company_code, sys_name, env, web_addr,php_addr) values (:company_code, :sys_name, :env, :web_addr,:php_addr)" withParameterDictionary:ldict_row];
-            if (! ib_updated)
-                return NO;
-            
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            for (RespLogin *lmap_data in arr) {
+                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                ib_updated =[db executeUpdate:@"delete from Resplogin where company_code = :company_code and sys_name = :sys_name and env = :env and web_addr =:web_addr and php_addr =:php_addr" withParameterDictionary:ldict_row];
+                
+                ib_updated =[db executeUpdate:@"insert into Resplogin (company_code, sys_name, env, web_addr,php_addr) values (:company_code, :sys_name, :env, :web_addr,:php_addr)" withParameterDictionary:ldict_row];
+            }
+            [db close];
         }
-        [[idb fn_get_db] close];
-        return  YES;
-    }
-    return NO;
+    }];
+    return ib_updated;
 }
 
 -(NSMutableArray*)fn_get_all_data{
-    NSMutableArray *llist_result=[NSMutableArray array];
-    if ([[idb fn_get_db] open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db] executeQuery:@"SELECT * FROM Resplogin"];
-        while ([lfmdb_result next]) {
-            [llist_result addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *llist_result=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM Resplogin"];
+            while ([lfmdb_result next]) {
+                [llist_result addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db] close];
-    }
+    }];
+    
     return llist_result;
 }
 -(BOOL)fn_delete_all_data{
-    if ([[idb fn_get_db]open]) {
-      BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from Resplogin"];
-        if (!isSuccess) {
-            return NO;
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from Resplogin"];
+            [db close];
         }
-        return YES;
-        [[idb fn_get_db]close];
-    }
-    return NO;
+    }];
+    return ib_deleted;
 }
 @end

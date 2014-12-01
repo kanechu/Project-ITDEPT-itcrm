@@ -7,75 +7,80 @@
 //
 
 #import "DB_systemIcon.h"
-#import "DBManager.h"
+#import "DatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
 #import "RespSystemIcon.h"
 @implementation DB_systemIcon
-@synthesize idb;
+@synthesize queue;
 -(id)init{
-    idb=[DBManager getSharedInstance];
+    self=[super init];
+    if (self) {
+        queue=[DatabaseQueue fn_sharedInstance];
+    }
     return self;
 }
 -(BOOL)fn_save_systemIcon_data:(NSMutableArray*)ilist_result{
-    if ([[idb fn_get_db] open]) {
-        for (RespSystemIcon *lmap_data in ilist_result) {
-            NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            BOOL ib_delete =[[idb fn_get_db] executeUpdate:@"delete from systemIcon where ic_name = :ic_name and ic_content = :ic_content and upd_date = :upd_date " withParameterDictionary:ldict_row];
-            if (! ib_delete)
-                return NO;
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into systemIcon (ic_name, ic_content, upd_date) values (:ic_name, :ic_content, :upd_date)" withParameterDictionary:ldict_row];
-            if (! ib_updated)
-                return NO;
-            
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            for (RespSystemIcon *lmap_data in ilist_result) {
+                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                ib_updated =[db executeUpdate:@"delete from systemIcon where ic_name = :ic_name and ic_content = :ic_content and upd_date = :upd_date " withParameterDictionary:ldict_row];
+                ib_updated =[db executeUpdate:@"insert into systemIcon (ic_name, ic_content, upd_date) values (:ic_name, :ic_content, :upd_date)" withParameterDictionary:ldict_row];
+            }
+            [db close];
         }
-        [[idb fn_get_db] close];
-        return  YES;
-    }
-    return NO;
+        
+    }];
+    return ib_updated;
 }
 -(BOOL)fn_update_systemIcon_data:(NSString*)ic_content ic_name:(NSString*)ic_name{
-    if ([[idb fn_get_db]open]) {
-        BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"update systemIcon set ic_content=? where ic_name=?",[NSString stringWithFormat:@"%@",ic_content],[NSString stringWithFormat:@"%@",ic_name]];
-        if (!isSuccess) {
-            return NO;
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_updated=[db executeUpdate:@"update systemIcon set ic_content=? where ic_name=?",[NSString stringWithFormat:@"%@",ic_content],[NSString stringWithFormat:@"%@",ic_name]];
+            [db close];
         }
-        [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+    }];
+    return ib_updated;
+    
 }
 -(NSMutableArray*)fn_get_systemIcon_data:(NSString*)ic_name{
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from systemIcon where ic_name like ?",ic_name];
-        while ([lfmdb_result next]) {
-            [arr addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from systemIcon where ic_name like ?",ic_name];
+            while ([lfmdb_result next]) {
+                [arr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
         
-    }
-     return arr;
+    }];
+    return arr;
 }
 -(BOOL)fn_delete_systemIcon_data{
-    if ([[idb fn_get_db]open]) {
-        BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from systemIcon"];
-        if (!isSuccess) {
-            return NO;
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from systemIcon"];
+            [db close];
         }
-        [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+        
+    }];
+    return ib_deleted;
 }
 -(NSMutableArray*)fn_get_last_update_time{
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:@"select MAX(upd_date)  as recent_date from systemIcon"];
-        while ([fmdb_result next]) {
-            [arr addObject:[fmdb_result resultDictionary]];
+    __block NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *fmdb_result=[db executeQuery:@"select MAX(upd_date)  as recent_date from systemIcon"];
+            while ([fmdb_result next]) {
+                [arr addObject:[fmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
     return arr;
 }
 @end

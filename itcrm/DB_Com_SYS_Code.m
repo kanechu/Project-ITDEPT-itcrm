@@ -7,52 +7,55 @@
 //
 
 #import "DB_Com_SYS_Code.h"
-#import "DBManager.h"
+#import "DatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
 @implementation DB_Com_SYS_Code
-@synthesize idb;
+@synthesize queue;
 
 -(id)init{
-    idb=[DBManager getSharedInstance];
+    self=[super init];
+    if (self) {
+        queue=[DatabaseQueue fn_sharedInstance];
+    }
     return self;
 }
 -(BOOL)fn_save_com_sys_code:(NSString*)sys_code lang_code:(NSString*)lang_code{
-    if ([[idb fn_get_db]open]) {
-        BOOL isDelete=[[idb fn_get_db]executeUpdate:@"delete from com_sys_code where sys_code =? and lang_code=?",sys_code,lang_code];
-        if (!isDelete) {
-            return NO;
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_updated=[db executeUpdate:@"delete from com_sys_code where sys_code =? and lang_code=?",sys_code,lang_code];
+            
+            NSString *insertSql=[NSString stringWithFormat:@"insert into com_sys_code(sys_code,lang_code)values(\"%@\",\"%@\")",sys_code,lang_code];
+            ib_updated=[db executeUpdate:insertSql];
+            [db close];
         }
-        NSString *insertSql=[NSString stringWithFormat:@"insert into com_sys_code(sys_code,lang_code)values(\"%@\",\"%@\")",sys_code,lang_code];
-        BOOL isSuccess=[[idb fn_get_db]executeUpdate:insertSql];
-        if (!isSuccess) {
-            return NO;
-        }
-        [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+        
+    }];
+    return ib_updated;
 }
 -(NSMutableArray*)fn_get_com_sys_code:(NSString*)lang_code{
-    NSMutableArray *arr_result=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from com_sys_code where lang_code like ?",lang_code];
-        while ([lfmdb_result next]) {
-            [arr_result addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *arr_result=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from com_sys_code where lang_code like ?",lang_code];
+            while ([lfmdb_result next]) {
+                [arr_result addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
+    
     return arr_result;
 }
 
 -(BOOL)fn_delete_all_com_sys_code{
-    if ([[idb fn_get_db]open]) {
-        BOOL isDelete=[[idb fn_get_db]executeUpdate:@"delete from com_sys_code"];
-        if (!isDelete) {
-            return NO;
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from com_sys_code"];
+            [db close];
         }
-        [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+    }];
+    return ib_deleted;
 }
 @end

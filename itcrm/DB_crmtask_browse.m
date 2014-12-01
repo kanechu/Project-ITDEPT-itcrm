@@ -7,31 +7,36 @@
 //
 
 #import "DB_crmtask_browse.h"
-#import "DBManager.h"
+#import "DatabaseQueue.h"
 #import "FMDatabaseAdditions.h"
 #import "RespCrmtask_browse.h"
 #import "Advance_SearchData.h"
 @implementation DB_crmtask_browse
-@synthesize idb;
+@synthesize queue;
 -(id)init{
-    idb=[DBManager getSharedInstance];
+    self=[super init];
+    if (self) {
+        queue=[DatabaseQueue fn_sharedInstance];
+    }
     return self;
 }
 
 -(BOOL)fn_save_crmtask_browse:(NSMutableArray*)alist_result{
-    if ([[idb fn_get_db] open]) {
-        for (Respcrmtask_browse *lmap_data in alist_result) {
-            NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-            [ldict_row setObject:@"0" forKey:@"is_modified"];
-         
-            BOOL ib_updated =[[idb fn_get_db] executeUpdate:@"insert into crmtask (uid, task_id, task_ref_id, task_ref_type, task_ref_code,task_ref_name, contact_id, contact_code, contact_name, contact_email, contact_mobile, contact_tel, task_ref_addr, task_ref_addr_01, task_ref_addr_02, task_ref_addr_03, task_ref_addr_04, task_title,task_desc, task_start_date, task_end_date, task_report, task_sm_report, duration_ttl, duration_hr, duration_min, duration_str, assign_to, assign_to_name, voided, rec_crt_user, rec_upd_user,rec_crt_date, rec_upd_date, rec_upd_type, rec_savable, rec_deletable, task_type, task_type_desc,task_type_lang, task_status, task_status_desc,task_status_lang,quo_uid,quo_no, task_date_period,report_mail, report_submit,is_modified) values (:uid, :task_id, :task_ref_id, :task_ref_type, :task_ref_code,:task_ref_name, :contact_id, :contact_code, :contact_name, :contact_email, :contact_mobile, :contact_tel, :task_ref_addr, :task_ref_addr_01, :task_ref_addr_02, :task_ref_addr_03, :task_ref_addr_04, :task_title,:task_desc, :task_start_date, :task_end_date, :task_report, :task_sm_report, :duration_ttl, :duration_hr, :duration_min, :duration_str, :assign_to, :assign_to_name, :voided, :rec_crt_user, :rec_upd_user,:rec_crt_date, :rec_upd_date, :rec_upd_type, :rec_savable, :rec_deletable, :task_type, :task_type_desc,:task_type_lang, :task_status, :task_status_desc,:task_status_lang,:quo_uid,:quo_no,:task_date_period,:report_mail, :report_submit,:is_modified)" withParameterDictionary:ldict_row];
-            if (! ib_updated)
-                return NO;
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            for (Respcrmtask_browse *lmap_data in alist_result) {
+                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                [ldict_row setObject:@"0" forKey:@"is_modified"];
+                
+                ib_updated =[db executeUpdate:@"insert into crmtask (uid, task_id, task_ref_id, task_ref_type, task_ref_code,task_ref_name, contact_id, contact_code, contact_name, contact_email, contact_mobile, contact_tel, task_ref_addr, task_ref_addr_01, task_ref_addr_02, task_ref_addr_03, task_ref_addr_04, task_title,task_desc, task_start_date, task_end_date, task_report, task_sm_report, duration_ttl, duration_hr, duration_min, duration_str, assign_to, assign_to_name, voided, rec_crt_user, rec_upd_user,rec_crt_date, rec_upd_date, rec_upd_type, rec_savable, rec_deletable, task_type, task_type_desc,task_type_lang, task_status, task_status_desc,task_status_lang,quo_uid,quo_no, task_date_period,report_mail, report_submit,is_modified) values (:uid, :task_id, :task_ref_id, :task_ref_type, :task_ref_code,:task_ref_name, :contact_id, :contact_code, :contact_name, :contact_email, :contact_mobile, :contact_tel, :task_ref_addr, :task_ref_addr_01, :task_ref_addr_02, :task_ref_addr_03, :task_ref_addr_04, :task_title,:task_desc, :task_start_date, :task_end_date, :task_report, :task_sm_report, :duration_ttl, :duration_hr, :duration_min, :duration_str, :assign_to, :assign_to_name, :voided, :rec_crt_user, :rec_upd_user,:rec_crt_date, :rec_upd_date, :rec_upd_type, :rec_savable, :rec_deletable, :task_type, :task_type_desc,:task_type_lang, :task_status, :task_status_desc,:task_status_lang,:quo_uid,:quo_no,:task_date_period,:report_mail, :report_submit,:is_modified)" withParameterDictionary:ldict_row];
+                
+            }
+            [db close];
         }
-        [[idb fn_get_db] close];
-        return  YES;
-    }
-    return NO;
+        
+    }];
+    return ib_updated;
 }
 -(BOOL)fn_update_crmtask_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id{
     NSString *sql=[NSString string];
@@ -47,36 +52,38 @@
         flag=1;
     }
     sql=[sql stringByAppendingFormat:@" where unique_id=%@",unique_id];
-    if ([[idb fn_get_db]open]) {
-        BOOL ib_updated =[[idb fn_get_db] executeUpdate:sql withParameterDictionary:idic_update];
-        if (!ib_updated)
-            return NO;
-        [[idb fn_get_db] close];
-        return  YES;
-    }
-    return NO;
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_updated =[db executeUpdate:sql withParameterDictionary:idic_update];
+            [db close];
+        }
+    }];
+    return ib_updated;
 }
 -(BOOL)fn_update_crmtask_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id{
-    if ([[idb fn_get_db]open]) {
-        BOOL ib_updated =[[idb fn_get_db]executeUpdate:@"update crmtask set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
-        if (!ib_updated)
-            return NO;
-        [[idb fn_get_db] close];
-        return  YES;
-    }
-    return NO;
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_updated =[db executeUpdate:@"update crmtask set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
+            [db close];
+        }
+    }];
+    return ib_updated;
 }
 
 -(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name select_sql:(NSString *)select_sql{
     NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmtask where task_ref_name like ?",select_sql];
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%%%@%%",task_ref_name]];
-        while ([lfmdb_result next]) {
-            [arr addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:is_sql,[NSString stringWithFormat:@"%%%@%%",task_ref_name]];
+            while ([lfmdb_result next]) {
+                [arr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
     return arr;
 }
 -(NSMutableArray*)fn_get_detail_crmtask_data:(NSMutableArray*)alist_searchData select_sql:(NSString *)select_sql{
@@ -99,61 +106,69 @@
         }
         flag=1;
     }
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:sql withArgumentsInArray:arr1];
-        while ([lfmdb_result next]) {
-            [arr addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:sql withArgumentsInArray:arr1];
+            while ([lfmdb_result next]) {
+                [arr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
     return arr;
 }
 -(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id select_sql:(NSString *)select_sql{
     select_sql=[select_sql stringByAppendingString:@",task_id"];
     NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmtask where task_ref_id like ?",select_sql];
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *fmdb_result=[[idb fn_get_db]executeQuery:is_sql,[NSString stringWithFormat:@"%@",task_ref_id]];
-        while ([fmdb_result next]) {
-            [arr addObject:[fmdb_result resultDictionary]];
+    __block  NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *fmdb_result=[db executeQuery:is_sql,[NSString stringWithFormat:@"%@",task_ref_id]];
+            while ([fmdb_result next]) {
+                [arr addObject:[fmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
     return arr;
 }
 -(NSMutableArray*)fn_get_crmtask_data_from_id:(NSString*)task_id{
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmtask where task_id like ?",[NSString stringWithFormat:@"%@",task_id]];
-        while ([lfmdb_result next]) {
-            [arr addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmtask where task_id like ?",[NSString stringWithFormat:@"%@",task_id]];
+            while ([lfmdb_result next]) {
+                [arr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
     return arr;
 }
 -(NSMutableArray*)fn_get_all_crmtask_data{
-    NSMutableArray *arr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from crmtask"];
-        while ([lfmdb_result next]) {
-            [arr addObject:[lfmdb_result resultDictionary]];
+    __block NSMutableArray *arr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmtask"];
+            while ([lfmdb_result next]) {
+                [arr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db]close];
-    }
+    }];
     return arr;
 }
 -(BOOL)fn_delete_all_data{
-    if ([[idb fn_get_db]open]) {
-        BOOL isSuccess=[[idb fn_get_db]executeUpdate:@"delete from crmtask"];
-        if (!isSuccess) {
-            return NO;
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from crmtask"];
+            [db close];
         }
-        [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+    }];
+    return ib_deleted;
+    
 }
 
 @end

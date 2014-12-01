@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DBManager;
+@class DatabaseQueue;
 @interface DB_crmacct_browse : NSObject
-@property(nonatomic,strong)DBManager *idb;
+@property(nonatomic,strong)DatabaseQueue *queue;
 
 -(BOOL)fn_save_crmacct_browse:(NSMutableArray*)alist_result;
 

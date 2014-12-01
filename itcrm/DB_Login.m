@@ -8,50 +8,55 @@
 
 #import "DB_Login.h"
 #import "AuthContract.h"
-#import "DBManager.h"
+#import "DatabaseQueue.h"
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
 @implementation DB_Login
-@synthesize idb;
+@synthesize queue;
 -(id)init{
-    idb=[DBManager getSharedInstance];
+    self=[super init];
+    if (self) {
+        queue=[DatabaseQueue fn_sharedInstance];
+    }
     return self;
 }
 -(BOOL)fn_save_data:(NSString*)user_id password:(NSString*)user_pass system:(NSString*)systemCode user_logo:(NSString*)user_logo lang_code:(NSString*)lang_code{
     [self fn_delete_data];
-    if ([[idb fn_get_db]open]) {
-        NSString *insertSql=[NSString stringWithFormat:@"insert into loginInfo(user_code,password,system,user_logo,lang_code)values(\"%@\",\"%@\",\"%@\",\"%@\",\"%@\")",user_id,user_pass,systemCode,user_logo,lang_code];
-        BOOL ib_updated=[[idb fn_get_db]executeUpdate:insertSql];
-        if (!ib_updated) {
-            return NO;
+    __block BOOL ib_updated=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            NSString *insertSql=[NSString stringWithFormat:@"insert into loginInfo(user_code,password,system,user_logo,lang_code)values(\"%@\",\"%@\",\"%@\",\"%@\",\"%@\")",user_id,user_pass,systemCode,user_logo,lang_code];
+            ib_updated=[db executeUpdate:insertSql];
+            [db close];
+            
         }
-         [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+    }];
+    return ib_updated;
 }
 -(NSMutableArray*)fn_get_allData{
-    NSMutableArray *resultArr=[NSMutableArray array];
-    if ([[idb fn_get_db]open]) {
-        FMResultSet *lfmdb_result=[[idb fn_get_db]executeQuery:@"select * from loginInfo"];
-        while ([lfmdb_result next]) {
-            [resultArr addObject:[lfmdb_result resultDictionary]];
+    __block  NSMutableArray *resultArr=[NSMutableArray array];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from loginInfo"];
+            while ([lfmdb_result next]) {
+                [resultArr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
         }
-        [[idb fn_get_db] close];
-    }
+    }];
     return resultArr;
 }
 -(BOOL)fn_delete_data{
-    if ([[idb fn_get_db]open]) {
-        NSString *delete=[NSString stringWithFormat:@"delete from loginInfo"];
-        BOOL ib_deleted=[[idb fn_get_db]executeUpdate:delete];
-        if (!ib_deleted) {
-            return NO;
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            NSString *delete=[NSString stringWithFormat:@"delete from loginInfo"];
+            ib_deleted=[db executeUpdate:delete];
+            
+            [db close];
         }
-        [[idb fn_get_db]close];
-        return YES;
-    }
-    return NO;
+    }];
+    return  ib_deleted;
 }
 -(AuthContract*)fn_request_auth{
     AuthContract *auth=[[AuthContract alloc]init];

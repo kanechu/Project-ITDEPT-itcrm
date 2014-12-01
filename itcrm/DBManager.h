@@ -18,12 +18,12 @@
 
 +(DBManager*)getSharedInstance;
 -(FMDatabase*) fn_get_db;
+-(NSString*)fn_get_databaseFilePath;
 -(BOOL) fn_create_db;
 -(BOOL)fn_create_table;
 - (int) fn_get_version;
 - (void)fn_set_version:(int)ai_version;
 - (BOOL)fn_chk_need_migration;
 - (void) fn_db_migrate;
-
 
 @end

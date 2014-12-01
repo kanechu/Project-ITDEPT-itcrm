@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-@class DBManager;
+@class DatabaseQueue;
 @interface DB_MaintForm : NSObject
 
-@property(nonatomic,strong)DBManager *idb;
+@property(nonatomic,strong)DatabaseQueue *queue;
 -(BOOL)fn_save_MaintForm_data:(NSMutableArray*)ilist_result;
 -(NSMutableArray*)fn_get_MaintForm_data:(NSString*)form_id;
 -(BOOL)fn_delete_all_data;
