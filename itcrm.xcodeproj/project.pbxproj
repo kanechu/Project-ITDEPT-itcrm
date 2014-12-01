@@ -82,6 +82,7 @@
 		B29D3554198F38EB0026C3A5 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B29D3553198F38EB0026C3A5 /* Reachability.m */; };
 		B29FB24B1980E9F8009C818C /* Custom_datePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B29FB24A1980E9F8009C818C /* Custom_datePicker.m */; };
 		B2A18D74196A506000045E1C /* RespUpdateStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A18D73196A506000045E1C /* RespUpdateStatus.m */; };
+		B2A548981A2C1DE6008334C0 /* DatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A548971A2C1DE6008334C0 /* DatabaseQueue.m */; };
 		B2A642B01970CE8500CF7B36 /* SearchCrmOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */; };
 		B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */; };
 		B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BB1970E20200CF7B36 /* Custom_Button.m */; };
@@ -333,6 +334,8 @@
 		B29FB24A1980E9F8009C818C /* Custom_datePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_datePicker.m; sourceTree = "<group>"; };
 		B2A18D72196A506000045E1C /* RespUpdateStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespUpdateStatus.h; sourceTree = "<group>"; };
 		B2A18D73196A506000045E1C /* RespUpdateStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespUpdateStatus.m; sourceTree = "<group>"; };
+		B2A548961A2C1DE6008334C0 /* DatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseQueue.h; sourceTree = "<group>"; };
+		B2A548971A2C1DE6008334C0 /* DatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseQueue.m; sourceTree = "<group>"; };
 		B2A642AE1970CE8500CF7B36 /* SearchCrmOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmOppViewController.h; sourceTree = "<group>"; };
 		B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCrmOppViewController.m; sourceTree = "<group>"; };
 		B2A642B51970D4C300CF7B36 /* Cell_opp_search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_opp_search.h; sourceTree = "<group>"; };
@@ -480,6 +483,8 @@
 			children = (
 				B298627719386FF30097B553 /* DBManager.h */,
 				B298627819386FF30097B553 /* DBManager.m */,
+				B2A548961A2C1DE6008334C0 /* DatabaseQueue.h */,
+				B2A548971A2C1DE6008334C0 /* DatabaseQueue.m */,
 				B298627D193874140097B553 /* DB_RespLogin.h */,
 				B298627E193874140097B553 /* DB_RespLogin.m */,
 				B2B22FC21939C0D50083E0C4 /* DB_Login.h */,
@@ -1055,6 +1060,7 @@
 				B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */,
 				B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */,
 				B2B0931E19346A52002FE190 /* AuthContract.m in Sources */,
+				B2A548981A2C1DE6008334C0 /* DatabaseQueue.m in Sources */,
 				B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */,
 				B2F1D39A1990E2190090C1EB /* RespUsersLogin.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,

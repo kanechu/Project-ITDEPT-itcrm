@@ -246,18 +246,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="ITDEPT" id="3Jj-h2-AhD">
                         <barButtonItem key="backBarButtonItem" title="Back" id="JDO-0c-nqV"/>
-                        <barButtonItem key="leftBarButtonItem" id="h5k-fd-GGl">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="N1m-wQ-wSC">
-                                <rect key="frame" x="16" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Logout">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_Logout_crm:" destination="SJP-5q-18v" eventType="touchUpInside" id="AEQ-qa-c75"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="leftBarButtonItem" id="33c-6H-lbV">
+                            <connections>
+                                <action selector="fn_Logout_crm:" destination="SJP-5q-18v" id="WiT-OJ-ZAW"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="aRt-Ey-YuA">
                             <connections>
@@ -266,7 +258,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_logout" destination="N1m-wQ-wSC" id="jkn-7m-pN0"/>
+                        <outlet property="ibtn_logout" destination="33c-6H-lbV" id="ruZ-yh-qLz"/>
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
                         <outlet property="user_logo" destination="b9e-Be-sfT" id="RRr-vA-wj0"/>
                         <segue destination="sUH-eH-Mej" kind="push" identifier="segue_crmquo_browse" id="aBn-az-hQe"/>

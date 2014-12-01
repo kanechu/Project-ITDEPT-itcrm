@@ -172,4 +172,13 @@
     NSTimeInterval timeinterval=millisecond_value/1000.0f;
     return [NSDate dateWithTimeIntervalSince1970:timeinterval];
 }
+#pragma mark -排序方法
+-(NSMutableArray*)fn_sort_the_array:(NSMutableArray*)alist_source  key:(NSString*)sortBy_name{
+    //如果需要降序，那么将ascending由YES改为NO
+    NSSortDescriptor *sortDes=[NSSortDescriptor sortDescriptorWithKey:sortBy_name ascending:YES];
+    NSArray *sortDescriptors=[NSArray arrayWithObject:sortDes];
+    NSMutableArray *sortedArray=[[alist_source sortedArrayUsingDescriptors:sortDescriptors]mutableCopy];
+    //重新排序后，返回
+    return sortedArray;
+}
 @end

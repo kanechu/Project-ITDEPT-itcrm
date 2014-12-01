@@ -14,7 +14,8 @@
 @property(weak,nonatomic) Menu_home *menu_item;
 @property (weak, nonatomic) IBOutlet UICollectionView *iui_collectionview;
 @property (weak, nonatomic) IBOutlet UIImageView *user_logo;
-@property (weak, nonatomic) IBOutlet UIButton *ibtn_logout;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_logout;
 
 - (IBAction)fn_menu_btn_clicked:(id)sender;
 - (IBAction)fn_Logout_crm:(id)sender;

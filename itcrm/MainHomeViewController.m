@@ -119,7 +119,7 @@
 //初始化Item
 - (void) fn_refresh_menu;
 {
-    [_ibtn_logout setTitle:MYLocalizedString(@"lbl_logout", nil) forState:UIControlStateNormal];
+    [_ibtn_logout setTitle:MYLocalizedString(@"lbl_logout", nil)];
     self.title=MYLocalizedString(@"lbl_home", nil);
     self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
     ilist_menu = [[NSMutableArray alloc] init];
@@ -261,4 +261,5 @@
     }
     [data fn_get_crmquo_browse_data:base_url];
 }
+
 @end
