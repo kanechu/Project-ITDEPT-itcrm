@@ -566,19 +566,14 @@
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Task Edit" id="MG2-ij-y8L">
-                        <barButtonItem key="rightBarButtonItem" id="Wug-nn-Qjr">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mgZ-vD-QGP">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="fn_goBack:" destination="NEG-fv-6xJ" eventType="touchUpInside" id="g7f-MT-ylg"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="aiD-Wh-Coo">
+                            <connections>
+                                <action selector="fn_goBack:" destination="NEG-fv-6xJ" id="Ijz-M7-HHd"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_cancel" destination="mgZ-vD-QGP" id="5S0-C8-sUa"/>
+                        <outlet property="ibtn_cancel" destination="aiD-Wh-Coo" id="UnC-xA-E3u"/>
                         <outlet property="ibtn_save" destination="Dr0-0v-4Z0" id="PAN-Oe-c9w"/>
                         <outlet property="skstableview" destination="IwR-Om-nSN" id="qf5-AA-Q8X"/>
                     </connections>
@@ -1024,22 +1019,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Opportunity" id="Za4-Pc-GkA">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="5L1-Dg-EJ6">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qyC-c5-A4z">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_cancel_edited_data:" destination="pdh-N5-vfb" eventType="touchUpInside" id="WA3-z4-l1M"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="bOI-IF-TFa">
+                            <connections>
+                                <action selector="fn_cancel_edited_data:" destination="pdh-N5-vfb" id="hO6-64-byh"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_Cancel" destination="qyC-c5-A4z" id="NHl-7M-zTj"/>
+                        <outlet property="ibtn_Cancel" destination="bOI-IF-TFa" id="qVn-eF-W8n"/>
                         <outlet property="ibtn_save" destination="gwE-Ey-h3Q" id="dTZ-0M-Jpx"/>
                         <outlet property="skstableView" destination="KDW-Tt-GPq" id="jWY-fh-Uw0"/>
                     </connections>
@@ -1627,22 +1614,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Contact" id="VkO-ck-50m">
-                        <barButtonItem key="rightBarButtonItem" id="Cap-zh-FTt">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RLy-XK-f7O">
-                                <rect key="frame" x="233" y="5" width="71" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_cancel_edited_data:" destination="DNb-w7-p0C" eventType="touchUpInside" id="rde-ly-NVg"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="O6o-zR-1ay">
+                            <connections>
+                                <action selector="fn_cancel_edited_data:" destination="DNb-w7-p0C" id="m28-fI-WZK"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_cancel" destination="RLy-XK-f7O" id="ogz-EE-Vcg"/>
+                        <outlet property="ibtn_cancel" destination="O6o-zR-1ay" id="IHk-6M-193"/>
                         <outlet property="ibtn_save" destination="KsK-69-oGD" id="9cp-gM-Pur"/>
                         <outlet property="skstableView" destination="TcH-SN-gnm" id="cvt-Tp-grw"/>
                     </connections>

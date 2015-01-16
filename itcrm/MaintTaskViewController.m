@@ -99,7 +99,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 -(void)fn_show_different_language{
 
-    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil) forState:UIControlStateNormal];
+    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     self.title=MYLocalizedString(@"lbl_edit_task", nil);
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
 }

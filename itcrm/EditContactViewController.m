@@ -82,7 +82,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
 - (void)fn_show_different_language{
-    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil) forState:UIControlStateNormal];
+    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
     self.title=MYLocalizedString(@"lbl_edit_contact", nil);
 }
