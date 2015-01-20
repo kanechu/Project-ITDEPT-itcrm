@@ -18,9 +18,9 @@
     NSMutableArray *alist_minutes;
     NSMutableArray *alist_seconds;
     NSString *is_currentMonth;
-    int selectedYearRow;
-    int selectedMonthRow;
-    int selectedDayRow;
+    NSInteger selectedYearRow;
+    NSInteger selectedMonthRow;
+    NSInteger selectedDayRow;
     BOOL firstTimeLoad;
 }
 @synthesize delegate;
@@ -128,7 +128,7 @@
     
     // Get Current  Month
     [formatter setDateFormat:@"MM"];
-    is_currentMonth = [NSString stringWithFormat:@"%d",[[formatter stringFromDate:date]integerValue]];
+    is_currentMonth = [NSString stringWithFormat:@"%@",@([[formatter stringFromDate:date]integerValue])];
     
     
     // Get Current  Date

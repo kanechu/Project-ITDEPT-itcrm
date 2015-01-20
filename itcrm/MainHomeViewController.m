@@ -148,7 +148,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     Cell_menu_item *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell_menu_item" forIndexPath:indexPath];
     cell.ibt_itemButton.layer.cornerRadius=7;
-    int  li_item=[indexPath item];
+    NSInteger  li_item=[indexPath item];
     menu_item=[ilist_menu objectAtIndex:li_item];
     cell.ilb_menuName.text=menu_item.is_label;
     [cell.ibt_itemButton setImage:[UIImage imageNamed:menu_item.is_image] forState:UIControlStateNormal];

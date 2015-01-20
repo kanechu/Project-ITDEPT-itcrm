@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="hUq-0x-n1V">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="hUq-0x-n1V">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -19,7 +20,7 @@
             </objects>
             <point key="canvasLocation" x="-3274" y="-256"/>
         </scene>
-        <!--Login View Controller - Login-->
+        <!--Login-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController storyboardIdentifier="LoginViewController" automaticallyAdjustsScrollViewInsets="NO" id="vXZ-lx-hvc" customClass="LoginViewController" sceneMemberID="viewController">
@@ -182,7 +183,7 @@
             </objects>
             <point key="canvasLocation" x="-2705" y="-954"/>
         </scene>
-        <!--Main Home View Controller - ITDEPT-->
+        <!--ITDEPT-->
         <scene sceneID="o15-jf-fX1">
             <objects>
                 <viewController storyboardIdentifier="MainHomeViewController" automaticallyAdjustsScrollViewInsets="NO" id="SJP-5q-18v" customClass="MainHomeViewController" sceneMemberID="viewController">
@@ -251,7 +252,7 @@
                                 <action selector="fn_Logout_crm:" destination="SJP-5q-18v" id="WiT-OJ-ZAW"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="aRt-Ey-YuA">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="aRt-Ey-YuA">
                             <connections>
                                 <action selector="fn_Refresh_data:" destination="SJP-5q-18v" id="Vqv-TR-i8h"/>
                             </connections>
@@ -273,7 +274,7 @@
             </objects>
             <point key="canvasLocation" x="-2618" y="-240"/>
         </scene>
-        <!--Crm Quo browse View Controller - Quotation-->
+        <!--Quotation-->
         <scene sceneID="ZxU-AP-7pE">
             <objects>
                 <viewController storyboardIdentifier="CrmQuo_browseViewController" id="sUH-eH-Mej" customClass="CrmQuo_browseViewController" sceneMemberID="viewController">
@@ -368,7 +369,7 @@
             </objects>
             <point key="canvasLocation" x="-755" y="394"/>
         </scene>
-        <!--Shipment History View Controller - Shipment History -->
+        <!--Shipment History -->
         <scene sceneID="6E0-2L-b8z">
             <objects>
                 <viewController storyboardIdentifier="ShipmentHistoryViewController" id="6EJ-hd-7lb" customClass="ShipmentHistoryViewController" sceneMemberID="viewController">
@@ -436,7 +437,7 @@
             </objects>
             <point key="canvasLocation" x="-1224" y="1132"/>
         </scene>
-        <!--Maint Task View Controller - Task Edit-->
+        <!--Task Edit-->
         <scene sceneID="YWI-bY-Zna">
             <objects>
                 <viewController storyboardIdentifier="MaintTaskViewController" automaticallyAdjustsScrollViewInsets="NO" id="NEG-fv-6xJ" customClass="MaintTaskViewController" sceneMemberID="viewController">
@@ -720,7 +721,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title=" Task Advance Search" id="W0u-QC-P8e">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="reply" id="sMG-LZ-7ks">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="sMG-LZ-7ks">
                                             <connections>
                                                 <action selector="fn_go_back:" destination="8dQ-IT-1nN" id="Ay5-Hd-JfV"/>
                                             </connections>
@@ -769,7 +770,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Advance Search" id="8mI-nP-2UW">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="reply" id="lA0-p1-UXg">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="lA0-p1-UXg">
                                             <connections>
                                                 <action selector="fn_go_back:" destination="Jli-LX-dfj" id="BgJ-v1-eHl"/>
                                             </connections>
@@ -842,7 +843,7 @@
             </objects>
             <point key="canvasLocation" x="-2049" y="979"/>
         </scene>
-        <!--Opportunities View Controller - Opportunities-->
+        <!--Opportunities-->
         <scene sceneID="4zu-Gf-2u3">
             <objects>
                 <viewController storyboardIdentifier="OpportunitiesViewController" automaticallyAdjustsScrollViewInsets="NO" id="2dk-cr-CFp" customClass="OpportunitiesViewController" sceneMemberID="viewController">
@@ -901,7 +902,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Opportunities" id="bQh-kg-FPJ">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="JlG-RW-B1B">
+                        <barButtonItem key="rightBarButtonItem" id="JlG-RW-B1B">
                             <connections>
                                 <action selector="fn_advance_search_opp:" destination="2dk-cr-CFp" id="g5s-77-JNk"/>
                             </connections>
@@ -918,7 +919,7 @@
             </objects>
             <point key="canvasLocation" x="-2059" y="1710"/>
         </scene>
-        <!--Edit Opp View Controller - Edit Opportunity-->
+        <!--Edit Opportunity-->
         <scene sceneID="ogH-aS-Wmm">
             <objects>
                 <viewController storyboardIdentifier="EditOppViewController" automaticallyAdjustsScrollViewInsets="NO" id="pdh-N5-vfb" customClass="EditOppViewController" sceneMemberID="viewController">
@@ -1035,7 +1036,7 @@
             </objects>
             <point key="canvasLocation" x="-1603" y="1710"/>
         </scene>
-        <!--Crmacct browse View Controller - Account-->
+        <!--Account-->
         <scene sceneID="S3N-gK-Ydy">
             <objects>
                 <viewController id="EQ7-pG-KJY" customClass="Crmacct_browseViewController" sceneMemberID="viewController">
@@ -1113,7 +1114,7 @@
             </objects>
             <point key="canvasLocation" x="-2355" y="-1820"/>
         </scene>
-        <!--Maint Form View Controller - Edit Account-->
+        <!--Edit Account-->
         <scene sceneID="Ckt-zg-r4G">
             <objects>
                 <viewController storyboardIdentifier="MaintFormViewController" automaticallyAdjustsScrollViewInsets="NO" id="RJe-1J-1t0" customClass="MaintFormViewController" sceneMemberID="viewController">
@@ -1279,7 +1280,7 @@
             </objects>
             <point key="canvasLocation" x="-1912" y="-1814"/>
         </scene>
-        <!--Crm Task browse View Controller - Activity-->
+        <!--Activity-->
         <scene sceneID="vFW-k8-oY5">
             <objects>
                 <viewController storyboardIdentifier="CrmTask_browseViewController" id="zbT-eX-JTl" customClass="CrmTask_browseViewController" sceneMemberID="viewController">
@@ -1355,7 +1356,7 @@
             </objects>
             <point key="canvasLocation" x="-1401" y="-1062"/>
         </scene>
-        <!--Crm Contact browse View Controller - Contact-->
+        <!--Contact-->
         <scene sceneID="fby-P5-pc7">
             <objects>
                 <viewController storyboardIdentifier="CrmContact_browseViewController" id="KCK-OR-bYT" customClass="CrmContact_browseViewController" sceneMemberID="viewController">
@@ -1415,7 +1416,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Contact" id="eWt-Uo-VbX">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="Z8A-w7-H7o">
+                        <barButtonItem key="rightBarButtonItem" id="Z8A-w7-H7o">
                             <connections>
                                 <action selector="fn_advance_search:" destination="KCK-OR-bYT" id="KPC-rf-NGL"/>
                             </connections>
@@ -1516,7 +1517,7 @@
             </objects>
             <point key="canvasLocation" x="-575" y="-742"/>
         </scene>
-        <!--Edit Contact View Controller - Edit Contact-->
+        <!--Edit Contact-->
         <scene sceneID="EWV-9b-mdl">
             <objects>
                 <viewController storyboardIdentifier="EditContactViewController" automaticallyAdjustsScrollViewInsets="NO" id="DNb-w7-p0C" customClass="EditContactViewController" sceneMemberID="viewController">

@@ -174,25 +174,25 @@
     if ([alist_crmtask count]!=0) {
         NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
         [crmtask_dic setObject:MYLocalizedString(@"lbl_task", nil) forKey:@"group_name"];
-        [crmtask_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmtask count]] forKey:@"COUNT(group_name)"];
+        [crmtask_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmtask.count)] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmtask_dic];
     }
     if ([alist_contact count]!=0) {
         NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
         [crmcontact_dic setObject:MYLocalizedString(@"lbl_contact", nil) forKey:@"group_name"];
-        [crmcontact_dic setObject:[NSString stringWithFormat:@"%d",[alist_contact count]] forKey:@"COUNT(group_name)"];
+        [crmcontact_dic setObject:[NSString stringWithFormat:@"%@",@(alist_contact.count)] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmcontact_dic];
     }
     if ([alist_crmopp count]!=0) {
          NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
         [crmopp_dic setObject:MYLocalizedString(@"lbl_opp", nil) forKey:@"group_name"];
-        [crmopp_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmopp count]] forKey:@"COUNT(group_name)"];
+        [crmopp_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmopp.count)] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmopp_dic];
     }
     if ([alist_crmhbl count]!=0) {
          NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
         [crmhbl_dic setObject:MYLocalizedString(@"lbl_hbl", nil) forKey:@"group_name"];
-        [crmhbl_dic setObject:[NSString stringWithFormat:@"%d",[alist_crmhbl count]] forKey:@"COUNT(group_name)"];
+        [crmhbl_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmhbl.count)] forKey:@"COUNT(group_name)"];
         [alist_groupNameAndNum addObject:crmhbl_dic];
     }
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];

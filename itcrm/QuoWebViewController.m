@@ -44,7 +44,7 @@
 }
 -(void)fn_load{
     NSData *postData=[post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSString *postLength=[NSString stringWithFormat:@"%d",[postData length]];
+    NSString *postLength=[NSString stringWithFormat:@"%@",@(postData.length)];
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
     NSString *url=[php_addr stringByAppendingString:@"/login/login_sub"];
     [request setURL:[NSURL URLWithString:url]];
