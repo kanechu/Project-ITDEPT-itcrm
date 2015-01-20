@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AuthContract.h"
 #import "RequestContract.h"
+#import "SearchFormContract.h"
 #import "UploadingContract.h"
+#import "NSArray.h"
 //定义回调函数
 typedef void (^CallBack_resp_result)(NSMutableArray* arr_resp_result);
 @interface Web_base : NSObject

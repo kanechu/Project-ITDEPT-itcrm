@@ -7,9 +7,6 @@
 //
 
 #import "Web_resquestData.h"
-#import "AuthContract.h"
-#import "RequestContract.h"
-#import "SearchFormContract.h"
 #import "RespPermit.h"
 #import "RespSearchCriteria.h"
 #import "RespFormatlist.h"
@@ -23,7 +20,6 @@
 #import "RespCrmcontact_browse.h"
 #import "RespCrmquo_browse.h"
 #import "Web_base.h"
-#import "NSArray.h"
 #import "DB_searchCriteria.h"
 #import "DB_Login.h"
 #import "DB_formatlist.h"

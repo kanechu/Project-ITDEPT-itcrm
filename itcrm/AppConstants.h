@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#define DEFAULT_SYSTEM @"ITNEW"
+#define APP_CODE @"ITCRM"
+#define ITCRM_VERSION [[[NSBundle mainBundle]infoDictionary]valueForKey:@"CFBundleShortVersionString"]!=nil ? [[[NSBundle mainBundle]infoDictionary]valueForKey:@"CFBundleShortVersionString"] : @"1.0"
+#define IS_ENCRYPTED @"0"
 @interface AppConstants : NSObject
 
 extern NSString* const STR_BASE_URL;
