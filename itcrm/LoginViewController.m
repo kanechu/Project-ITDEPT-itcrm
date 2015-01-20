@@ -8,13 +8,9 @@
 
 #import "LoginViewController.h"
 #import <RestKit/RestKit.h>
-#import "AuthContract.h"
-#import "RequestContract.h"
-#import "SearchFormContract.h"
 #import "RespLogin.h"
 #import "RespUsersLogin.h"
 #import "Web_base.h"
-#import "NSArray.h"
 #import "SVProgressHUD.h"
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
@@ -23,20 +19,22 @@
 #import "OptionViewController.h"
 static NSInteger flag_first=1;
 static NSString  *is_language=@"";//标识语言类型
+#define DEFAULT_USERCODE @"anonymous";
+#define DEFAULT_PASSWORD @"anonymous1";
+#define DEFAULT_SYSTEM @"ITNEW";
 @interface LoginViewController ()
 
 //用来标识点击的textfiled
 @property(nonatomic)UITextField *checkText;
 
 @property(nonatomic,copy)NSString *lang_code;
-
+@property(nonatomic, assign) CGRect keyboardRect;
 @end
 
 @implementation LoginViewController
 @synthesize checkText;
-
 @synthesize lang_code;
-
+@synthesize keyboardRect;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -109,6 +107,9 @@ static NSString  *is_language=@"";//标识语言类型
         lang_code=@"TCN";
     }
     [[MYLocalizedString getshareInstance]fn_setLanguage_type:is_language];
+    _itf_usercode.returnKeyType=UIReturnKeyNext;
+    _itf_password.returnKeyType=UIReturnKeyNext;
+    _itf_system.returnKeyType=UIReturnKeyDone;
 }
 #pragma mark -language change
 -(void)fn_show_different_language{
@@ -135,10 +136,6 @@ static NSString  *is_language=@"";//标识语言类型
     }
 
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [checkText resignFirstResponder];
-    return YES;
-}
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     _iv_system_line.backgroundColor=[UIColor lightGrayColor];
     _iv_password_line.backgroundColor=[UIColor lightGrayColor];
@@ -154,15 +151,17 @@ static NSString  *is_language=@"";//标识语言类型
 
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     
-    CGRect keyboardRect = [aValue CGRectValue];
-    
+    CGRect keyboardRect1 = [aValue CGRectValue];
+    if (keyboardRect1.size.width!=0) {
+        keyboardRect=keyboardRect1;
+    }
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     
     NSTimeInterval animationDuration;
     
     [animationDurationValue getValue:&animationDuration];
     
-    CGRect textFrame =[checkText convertRect:checkText.bounds toView:nil];
+    CGRect textFrame =[checkText convertRect:checkText.bounds toView:self.view];
     float textY = textFrame.origin.y + textFrame.size.height;//得到tableView下边框距离顶部的高度
     float bottomY = self.view.frame.size.height - textY;//得到下边框到底部的距离
     
@@ -211,12 +210,12 @@ static NSString  *is_language=@"";//标识语言类型
     [db fn_delete_all_data];
     RequestContract *req_form = [[RequestContract alloc] init];
     AuthContract *auth=[[AuthContract alloc]init];
-    auth.user_code=@"anonymous";
-    auth.password=@"anonymous1";
-    auth.system =@"ITNEW";
-    auth.version=@"1.5";
+    auth.user_code=DEFAULT_USERCODE;
+    auth.password=DEFAULT_PASSWORD;
+    auth.system =DEFAULT_SYSTEM;
+    auth.version=ITCRM_VERSION;
     auth.com_sys_code=_itf_system.text;
-    auth.app_code=@"ITCRM";
+    auth.app_code=APP_CODE;
     req_form.Auth =auth;
     
     Web_base *web_base=[[Web_base alloc]init];
@@ -244,7 +243,7 @@ static NSString  *is_language=@"";//标识语言类型
     auth.user_code=_itf_usercode.text;
     auth.password=_itf_password.text;
     auth.system =sys_name;
-    auth.version=@"1.5";
+    auth.version=ITCRM_VERSION;
     req_form.Auth =auth;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_USERSLOGIN_URL;
@@ -273,6 +272,18 @@ static NSString  *is_language=@"";//标识语言类型
     [web_base fn_get_data:req_form];
 }
 #pragma mark -event action
+- (IBAction)fn_userName_textField_didEndOnExit:(id)sender {
+    [self.itf_password becomeFirstResponder];
+    [self keyboardWillShow:nil];
+}
+- (IBAction)fn_pass_textField_didEndOnExit:(id)sender {
+    [self.itf_system becomeFirstResponder];
+    [self keyboardWillShow:nil];
+}
+- (IBAction)fn_sys_textField_didEndOnExit:(id)sender {
+    [sender resignFirstResponder];
+}
+
 - (IBAction)fn_find_history_data:(id)sender {
     DB_Com_SYS_Code *db=[[DB_Com_SYS_Code alloc]init];
     NSMutableArray *alist_sys_code=[db fn_get_com_sys_code:is_language];

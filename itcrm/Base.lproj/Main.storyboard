@@ -78,18 +78,27 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="fn_userName_textField_didEndOnExit:" destination="vXZ-lx-hvc" eventType="editingDidEndOnExit" id="ZpF-UB-aVi"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" id="I4v-uc-zcG">
                                 <rect key="frame" x="70" y="245" width="221" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="fn_pass_textField_didEndOnExit:" destination="vXZ-lx-hvc" eventType="editingDidEndOnExit" id="4Rt-Yc-aXf"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="System" minimumFontSize="17" clearButtonMode="whileEditing" id="Ari-4x-c5T">
                                 <rect key="frame" x="70" y="305" width="173" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="fn_sys_textField_didEndOnExit:" destination="vXZ-lx-hvc" eventType="editingDidEndOnExit" id="Ud0-bT-hKw"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JFl-7r-sCY">
                                 <rect key="frame" x="63" y="355" width="37" height="30"/>
