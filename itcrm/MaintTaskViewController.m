@@ -19,10 +19,12 @@
 #import "DB_Region.h"
 #import "RespCrmtask_browse.h"
 #import "Custom_datePicker.h"
+#import "Custom_BtnGraphicMixed.h"
 
 #define TEXT_TAG 100
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
+@property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
 
 @property (nonatomic,strong)NSMutableArray *alist_miantTask;
 //过滤后的数组
@@ -87,7 +89,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
      */
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
     if (_add_flag==1) {
-        self.title=MYLocalizedString(@"lbl_add_task", nil);
+        [_ibtn_logo setTitle:MYLocalizedString(@"lbl_add_task", nil) forState:UIControlStateNormal];
     }
 	// Do any additional setup after loading the view.
 }
@@ -100,8 +102,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 -(void)fn_show_different_language{
 
     [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
-    self.title=MYLocalizedString(@"lbl_edit_task", nil);
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
+    [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_task", nil) forState:UIControlStateNormal];
+    [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
 }
 #pragma mark 点击状态栏,Tableview回滚至top
 -(void)fn_tableView_scrollTop{

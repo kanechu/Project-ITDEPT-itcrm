@@ -446,7 +446,7 @@
             </objects>
             <point key="canvasLocation" x="-1224" y="1132"/>
         </scene>
-        <!--Task Edit-->
+        <!--Maint Task View Controller-->
         <scene sceneID="YWI-bY-Zna">
             <objects>
                 <viewController storyboardIdentifier="MaintTaskViewController" automaticallyAdjustsScrollViewInsets="NO" id="NEG-fv-6xJ" customClass="MaintTaskViewController" sceneMemberID="viewController">
@@ -575,8 +575,18 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Task Edit" id="MG2-ij-y8L">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="aiD-Wh-Coo">
+                    <navigationItem key="navigationItem" id="MG2-ij-y8L">
+                        <barButtonItem key="leftBarButtonItem" id="Dtt-bY-rrB">
+                            <button key="customView" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kvg-KI-aXE" customClass="Custom_BtnGraphicMixed">
+                                <rect key="frame" x="16" y="11" width="140" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="aiD-Wh-Coo">
                             <connections>
                                 <action selector="fn_goBack:" destination="NEG-fv-6xJ" id="Ijz-M7-HHd"/>
                             </connections>
@@ -584,6 +594,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="ibtn_cancel" destination="aiD-Wh-Coo" id="UnC-xA-E3u"/>
+                        <outlet property="ibtn_logo" destination="kvg-KI-aXE" id="oyz-Mc-30B"/>
                         <outlet property="ibtn_save" destination="Dr0-0v-4Z0" id="PAN-Oe-c9w"/>
                         <outlet property="skstableview" destination="IwR-Om-nSN" id="qf5-AA-Q8X"/>
                     </connections>
@@ -928,7 +939,7 @@
             </objects>
             <point key="canvasLocation" x="-2059" y="1710"/>
         </scene>
-        <!--Edit Opportunity-->
+        <!--Edit Opp View Controller-->
         <scene sceneID="ogH-aS-Wmm">
             <objects>
                 <viewController storyboardIdentifier="EditOppViewController" automaticallyAdjustsScrollViewInsets="NO" id="pdh-N5-vfb" customClass="EditOppViewController" sceneMemberID="viewController">
@@ -1028,8 +1039,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Opportunity" id="Za4-Pc-GkA">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="bOI-IF-TFa">
+                    <navigationItem key="navigationItem" id="Za4-Pc-GkA">
+                        <barButtonItem key="leftBarButtonItem" id="ghG-bv-Ct5">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="niZ-lk-RK7" customClass="Custom_BtnGraphicMixed">
+                                <rect key="frame" x="16" y="7" width="140" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="bOI-IF-TFa">
                             <connections>
                                 <action selector="fn_cancel_edited_data:" destination="pdh-N5-vfb" id="hO6-64-byh"/>
                             </connections>
@@ -1037,6 +1059,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="ibtn_Cancel" destination="bOI-IF-TFa" id="qVn-eF-W8n"/>
+                        <outlet property="ibtn_logo" destination="niZ-lk-RK7" id="3rf-74-jQg"/>
                         <outlet property="ibtn_save" destination="gwE-Ey-h3Q" id="dTZ-0M-Jpx"/>
                         <outlet property="skstableView" destination="KDW-Tt-GPq" id="jWY-fh-Uw0"/>
                     </connections>
@@ -1123,7 +1146,7 @@
             </objects>
             <point key="canvasLocation" x="-2355" y="-1820"/>
         </scene>
-        <!--Edit Account-->
+        <!--Maint Form View Controller-->
         <scene sceneID="Ckt-zg-r4G">
             <objects>
                 <viewController storyboardIdentifier="MaintFormViewController" automaticallyAdjustsScrollViewInsets="NO" id="RJe-1J-1t0" customClass="MaintFormViewController" sceneMemberID="viewController">
@@ -1271,7 +1294,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.96470588239999999" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Account" id="UsF-6v-TkQ">
+                    <navigationItem key="navigationItem" id="UsF-6v-TkQ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4ai-0b-hTP">
                             <connections>
                                 <action selector="fn_show_actionSheet:" destination="RJe-1J-1t0" id="KPP-Sf-3HA"/>
@@ -1526,7 +1549,7 @@
             </objects>
             <point key="canvasLocation" x="-575" y="-742"/>
         </scene>
-        <!--Edit Contact-->
+        <!--Edit Contact View Controller-->
         <scene sceneID="EWV-9b-mdl">
             <objects>
                 <viewController storyboardIdentifier="EditContactViewController" automaticallyAdjustsScrollViewInsets="NO" id="DNb-w7-p0C" customClass="EditContactViewController" sceneMemberID="viewController">
@@ -1623,8 +1646,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Contact" id="VkO-ck-50m">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="O6o-zR-1ay">
+                    <navigationItem key="navigationItem" id="VkO-ck-50m">
+                        <barButtonItem key="leftBarButtonItem" id="UAk-uM-vfc">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="NkS-OO-CvF" customClass="Custom_BtnGraphicMixed">
+                                <rect key="frame" x="16" y="7" width="140" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="O6o-zR-1ay">
                             <connections>
                                 <action selector="fn_cancel_edited_data:" destination="DNb-w7-p0C" id="m28-fI-WZK"/>
                             </connections>
@@ -1632,6 +1666,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="ibtn_cancel" destination="O6o-zR-1ay" id="IHk-6M-193"/>
+                        <outlet property="ibtn_logo" destination="NkS-OO-CvF" id="7xA-kS-oMx"/>
                         <outlet property="ibtn_save" destination="KsK-69-oGD" id="9cp-gM-Pur"/>
                         <outlet property="skstableView" destination="TcH-SN-gnm" id="cvt-Tp-grw"/>
                     </connections>

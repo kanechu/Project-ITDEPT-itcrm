@@ -17,9 +17,11 @@
 #import "RegionViewController.h"
 #import "RespCrmopp_browse.h"
 #import "Web_updateData.h"
+#import "Custom_BtnGraphicMixed.h"
 #define TEXT_TAG 100
 typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @interface EditOppViewController ()
+@property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
 @property (nonatomic,strong)NSMutableArray *alist_maintOpp;
 @property (nonatomic,strong)NSMutableArray *alist_filtered_oppdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
@@ -81,8 +83,8 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 - (void)fn_show_different_language{
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
     [_ibtn_Cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
-    self.title=MYLocalizedString(@"lbl_edit_opp", nil);
-    
+    [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_opp", nil) forState:UIControlStateNormal];
+    [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
     
 }
 -(void)fn_tableView_scrollTop{

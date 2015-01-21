@@ -17,10 +17,11 @@
 #import "OptionViewController.h"
 #import "RespCrmcontact_browse.h"
 #import "Web_updateData.h"
-
+#import "Custom_BtnGraphicMixed.h"
 #define TEXT_TAG 100
 typedef NSString* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
+@property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact;
 @property(nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact_copy;
@@ -84,7 +85,8 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 - (void)fn_show_different_language{
     [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
-    self.title=MYLocalizedString(@"lbl_edit_contact", nil);
+    [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_contact", nil) forState:UIControlStateNormal];
+    [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
 }
 
 #pragma mark 获取要修改的crmcontact
