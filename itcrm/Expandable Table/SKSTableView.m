@@ -19,6 +19,7 @@ CGFloat const kDefaultCellHeight = 60.0f;
 #pragma mark - SKSTableView
 
 @interface SKSTableView () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, copy) NSMutableDictionary *expandableCells;
 
 - (NSInteger)numberOfExpandedSubrowsInSection:(NSInteger)section;
 
@@ -104,6 +105,22 @@ CGFloat const kDefaultCellHeight = 60.0f;
     }
     
     return _expandableCells;
+}
+- (void)refreshData
+{
+    self.expandableCells = nil;
+    
+    [super reloadData];
+}
+
+- (void)refreshDataWithScrollingToIndexPath:(NSIndexPath *)indexPath
+{
+    [self refreshData];
+    
+    if (indexPath.section < [self numberOfSections] && indexPath.row < [self numberOfRowsInSection:indexPath.section])
+    {
+        [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 #pragma mark - UITableViewDataSource

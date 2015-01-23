@@ -412,8 +412,7 @@
 -(void)fn_update_browse{
     [alist_filtered_data removeAllObjects];
     [self fn_init_arr];
-    self.skstableView.expandableCells=nil;
-    [self.skstableView reloadData];
+    [self.skstableView refreshData];
 }
 #pragma mark respond prepareForSegue: sender:
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
