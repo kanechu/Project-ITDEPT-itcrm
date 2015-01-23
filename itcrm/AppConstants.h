@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#define APP_CODE @"ITCRM"
+#define APP_CODE @"MOB_ITCRM"
 #define ITCRM_VERSION [[[NSBundle mainBundle]infoDictionary]valueForKey:@"CFBundleShortVersionString"]!=nil ? [[[NSBundle mainBundle]infoDictionary]valueForKey:@"CFBundleShortVersionString"] : @"1.0"
 #define IS_ENCRYPTED @"0"
 @interface AppConstants : NSObject
