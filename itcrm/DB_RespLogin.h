@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef NS_ENUM(NSInteger, kAppConfig_field){
+    kWeb_addr,
+    kCompany_code,
+    kPhp_addr
+};
 @class DatabaseQueue;
 @interface DB_RespLogin : NSObject
 
@@ -15,5 +20,5 @@
 -(BOOL)fn_save_data:(NSMutableArray*)arr;
 -(NSMutableArray*)fn_get_all_data;
 -(BOOL)fn_delete_all_data;
-
+-(NSString*)fn_get_field_content:(kAppConfig_field)field_name;
 @end

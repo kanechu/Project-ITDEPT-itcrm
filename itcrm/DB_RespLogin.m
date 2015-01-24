@@ -61,4 +61,23 @@
     }];
     return ib_deleted;
 }
+-(NSString*)fn_get_field_content:(kAppConfig_field)field_name{
+    NSMutableArray *alist_appconfig=[self fn_get_all_data];
+    NSString *str_field_content;
+    NSString *str_key;
+    if (field_name==kWeb_addr) {
+        str_key=@"web_addr";
+    }else if (field_name==kPhp_addr){
+        str_key=@"php_addr";
+    }else if (field_name==kCompany_code){
+        str_key=@"company_code";
+    }
+    if ([alist_appconfig count]!=0) {
+        str_field_content=[[alist_appconfig objectAtIndex:0]valueForKey:str_key];
+        str_field_content=[str_field_content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
+    str_key=nil;
+    alist_appconfig=nil;
+    return str_field_content;
+}
 @end

@@ -192,7 +192,7 @@
             </objects>
             <point key="canvasLocation" x="-2705" y="-954"/>
         </scene>
-        <!--ITDEPT-->
+        <!--Main Home View Controller-->
         <scene sceneID="o15-jf-fX1">
             <objects>
                 <viewController storyboardIdentifier="MainHomeViewController" automaticallyAdjustsScrollViewInsets="NO" id="SJP-5q-18v" customClass="MainHomeViewController" sceneMemberID="viewController">
@@ -254,20 +254,27 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="ITDEPT" id="3Jj-h2-AhD">
+                    <navigationItem key="navigationItem" id="3Jj-h2-AhD">
                         <barButtonItem key="backBarButtonItem" title="Back" id="JDO-0c-nqV"/>
-                        <barButtonItem key="leftBarButtonItem" id="33c-6H-lbV">
+                        <barButtonItem key="leftBarButtonItem" id="sEG-Ca-QvX">
+                            <button key="customView" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1F1-0F-WBE" customClass="Custom_BtnGraphicMixed">
+                                <rect key="frame" x="16" y="7" width="140" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="33c-6H-lbV">
                             <connections>
                                 <action selector="fn_Logout_crm:" destination="SJP-5q-18v" id="WiT-OJ-ZAW"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="aRt-Ey-YuA">
-                            <connections>
-                                <action selector="fn_Refresh_data:" destination="SJP-5q-18v" id="Vqv-TR-i8h"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ibtn_logo" destination="1F1-0F-WBE" id="GYM-6W-GUf"/>
                         <outlet property="ibtn_logout" destination="33c-6H-lbV" id="ruZ-yh-qLz"/>
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
                         <outlet property="user_logo" destination="b9e-Be-sfT" id="RRr-vA-wj0"/>
