@@ -34,7 +34,6 @@
 //标识acct_maint服务器返回的分组数
 @property (nonatomic,assign)NSInteger flag_groupNum;
 @property (nonatomic,strong)NSMutableDictionary *idic_lookup;
-@property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
 @property (nonatomic,strong)EditContactViewController *editContactVC;
 @property (nonatomic,strong)EditOppViewController *editOppVC;
 @property (nonatomic,strong)MaintTaskViewController *maintTaskVC;
@@ -91,7 +90,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
     //获取将要修改的值
     DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];
+    //idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];
     //设置title
     self.title=MYLocalizedString(@"lbl_edit_account", nil);
 	// Do any additional setup after loading the view.

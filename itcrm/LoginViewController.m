@@ -15,6 +15,10 @@
 #import "DB_RespLogin.h"
 #import "DB_Login.h"
 #import "DB_Com_SYS_Code.h"
+#import "DB_formatlist.h"
+#import "DB_searchCriteria.h"
+#import "DB_MaintForm.h"
+#import "DB_Region.h"
 #import "Web_resquestData.h"
 #import "OptionViewController.h"
 static NSInteger flag_first=1;
@@ -262,11 +266,18 @@ static NSString  *is_language=@"";//标识语言类型
             [user_isLogin setInteger:1 forKey:@"isLogin"];
             [user_isLogin synchronize];
             [self dismissViewControllerAnimated:YES completion:^{}];
+            Web_resquestData *web_rest=[[Web_resquestData alloc]init];
+            [web_rest fn_get_formatlist_data:base_url];
+            [web_rest fn_get_maintForm_data:base_url];
+            [web_rest fn_get_mslookup_data:base_url];
+            [web_rest fn_get_search_data:base_url];
+            [web_rest fn_get_permit_data:base_url];
+            
             if (_callback) {
                 _callback();
             }
         }else{
-            [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil) afterDelay:4.0f];
+            [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil) afterDelay:2.0f];
         }
     };
     [web_base fn_get_data:req_form];

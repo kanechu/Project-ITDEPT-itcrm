@@ -251,8 +251,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         [alist_searchData addObject:[expand_helper fn_get_searchData:key idic_value:idic_search_value idic_parameter:idic_parameter]];
         [self.skstableView reloadData];
     };
-    PopViewManager *pop=[[PopViewManager alloc]init];
-    [pop PopupView:VC Size:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height) uponView:self];
+    [self presentViewController:VC animated:YES completion:nil];
 }
 
 -(void)fn_custom_gesture{

@@ -84,7 +84,7 @@
     if (_callback_region) {
         _callback_region(dic);
     }
-    [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(UIImage*)fn_convert_image:(NSString*)image_name{
     Format_conversion *format_convert=[[Format_conversion alloc]init];
@@ -101,6 +101,6 @@
 }
 
 - (IBAction)fn_return_acctSearch:(id)sender{
-     [self mz_dismissFormSheetControllerAnimated:YES completionHandler:^(MZFormSheetController* formSheet){}];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

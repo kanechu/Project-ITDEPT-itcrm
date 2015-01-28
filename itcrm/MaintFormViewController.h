@@ -15,6 +15,7 @@
 @property (nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSString *is_acct_id;
+@property (nonatomic,strong)NSMutableDictionary *idic_modified_value;
 - (IBAction)fn_show_actionSheet:(id)sender;
 
 - (IBAction)fn_lookup_data:(id)sender;
