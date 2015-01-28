@@ -19,7 +19,11 @@
 "lbl_show_pwd"="顯示密碼";
 "lbl_logout"="登出";
 //prompt
-"msg_get_crmData"="系統正在下載數據。";
+"msg_online"="在線查詢";
+"msg_get_crmData"="正在下載，請等候！";
+"msg_update_crmData"="正在更新，請等候！";
+"msg_download_success"="條數據下載完成，并成功保存到本地。";
+"msg_upd_success"="成功更新本地數據！";
 "dialog_prompt"="載入中，請稍候。";
 "msg_network_fail"="無法連接至網路，請聯絡網路管理員。";
 "msg_upd_crmData"="上傳數據，請等候。";
@@ -55,7 +59,7 @@
 "lbl_cancel"="取消";
 "lbl_clear"="清空";
 "lbl_lookup"="查找";
-
+"lbl_download"="下載";
 //title
 "lbl_home"="主頁";
 "lbl_browse_quo"="瀏覽價格";

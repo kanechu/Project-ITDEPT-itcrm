@@ -71,7 +71,7 @@
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM crmacct where acct_id like ?",[NSString stringWithFormat:@"%@",acct_id]];
+            FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM crmacct where acct_id like ?",acct_id];
             while ([lfmdb_result next]) {
                 [arr addObject:[lfmdb_result resultDictionary]];
             }
@@ -86,6 +86,16 @@
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
             ib_deleted=[db executeUpdate:@"delete from crmacct"];
+            [db close];
+        }
+    }];
+    return ib_deleted;
+}
+-(BOOL)fn_delete_single_acct_data:(NSString*)acct_id{
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from crmacct where acct_id like ?",acct_id];
             [db close];
         }
     }];
@@ -162,6 +172,33 @@
     }else{
         return NO;
     }
+}
+
+-(kOperation_type)fn_get_operation_type:(NSString*)rec_upd_date acct_id:(NSString*)acct_id{
+    __block kOperation_type flag_opration_type;
+    NSMutableArray *alist_result=[self fn_get_data_from_id:acct_id];
+    if ([alist_result count]!=0) {
+        [queue inDataBase:^(FMDatabase *db){
+            NSMutableArray *arr=[NSMutableArray array];
+            if ([db open]) {
+                FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM crmacct where acct_id like ? and rec_upd_date like ?",acct_id,rec_upd_date];
+                while ([lfmdb_result next]) {
+                    [arr addObject:[lfmdb_result resultDictionary]];
+                }
+                [db close];
+            }
+            if ([arr count]==0) {
+                flag_opration_type=kUpdate_acct;
+            }else{
+                flag_opration_type=kNon_operation;
+            }
+            arr=nil;
+        }];
+        
+    }else{
+        flag_opration_type=kDownload_acct;
+    }
+    return flag_opration_type;
 }
 
 @end

@@ -10,6 +10,8 @@
 #define APP_CODE @"MOB_ITCRM"
 #define ITCRM_VERSION [[[NSBundle mainBundle]infoDictionary]valueForKey:@"CFBundleShortVersionString"]!=nil ? [[[NSBundle mainBundle]infoDictionary]valueForKey:@"CFBundleShortVersionString"] : @"1.0"
 #define IS_ENCRYPTED @"0"
+#define SYSTEM_VERSION_GREATER_THAN_IOS8 ([[[UIDevice currentDevice] systemVersion] compare:@"8.0"] != NSOrderedAscending )
+
 @interface AppConstants : NSObject
 
 extern NSString* const STR_BASE_URL;

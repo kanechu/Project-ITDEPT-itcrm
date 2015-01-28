@@ -54,7 +54,16 @@
     }
     
     NSMutableArray *alist_crm_browse=[[NSMutableArray alloc]initWithCapacity:10];
-    for (NSDictionary *dic in arr_browse) {
+    NSDateFormatter *_dateFormatter=[[NSDateFormatter alloc]init];
+    [_dateFormatter setDateFormat:@"yyyy-mm-dd"];
+
+    for (NSMutableDictionary *dic_old in arr_browse) {
+        NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithDictionary:dic_old];
+        NSString *rec_upd_date=[dic_old valueForKey:@"rec_upd_date"];
+        NSDate *upd_date=[self dateFromUnixTimestamp:rec_upd_date];
+        NSString *str_rec_upd_date=[_dateFormatter stringFromDate:upd_date];
+        [dic setObject:str_rec_upd_date forKey:@"rec_upd_date"];
+        str_rec_upd_date=nil;
         NSMutableDictionary *dic1=[NSMutableDictionary dictionary];
         NSString *joint_str=[NSString string];
         NSString *ist_title=[self fn_replaceString:t_title withParameter:arr_t_title atString:@"%s" :dic];
@@ -180,5 +189,13 @@
     NSMutableArray *sortedArray=[[alist_source sortedArrayUsingDescriptors:sortDescriptors]mutableCopy];
     //重新排序后，返回
     return sortedArray;
+}
+//检测一个字符串中是否含有某个字符
+-(BOOL)fn_isContain_a_character:(NSString*)_parentString substring:(NSString*)_substring{
+    if ([_parentString rangeOfString:_substring].location!=NSNotFound) {
+        return YES;
+    }else{
+        return NO;
+    }
 }
 @end

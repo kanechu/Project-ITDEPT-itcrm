@@ -19,7 +19,11 @@
 "lbl_show_pwd"="显示密码";
 "lbl_logout"="登出";
 //prompt
-"msg_get_crmData"="系统正在下载数据。";
+"msg_online"="在线查询";
+"msg_get_crmData"="正在下载，请等候！";
+"msg_update_crmData"="正在更新，请等候！";
+"msg_download_success"="条数据下载完成，并成功保存到本地。";
+"msg_upd_success"="成功更新本地数据！";
 "dialog_prompt"="正在载入，请等候。";
 "msg_network_fail"="无法连接至网络，请联络网络管理员。";
 "msg_upd_crmData"="上传数据，请等候。";
@@ -54,6 +58,7 @@
 "lbl_cancel"="取消";
 "lbl_clear"="清空";
 "lbl_lookup"="查找";
+"lbl_download"="下载";
 //title
 "lbl_home"="主页";
 "lbl_browse_quo"="浏览价格";

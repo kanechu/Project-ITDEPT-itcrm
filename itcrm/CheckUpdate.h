@@ -10,6 +10,7 @@
 
 @interface CheckUpdate : NSObject
 
+-(BOOL)fn_check_isNetworking;
 -(void)fn_checkUpdate_all_db;
 
 @end

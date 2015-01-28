@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 @class DatabaseQueue;
+typedef NS_ENUM(NSInteger, kOperation_type){
+    kDownload_acct,
+    kUpdate_acct,
+    kNon_operation
+};
 @interface DB_crmacct_browse : NSObject
 @property(nonatomic,strong)DatabaseQueue *queue;
 
@@ -22,5 +27,8 @@
 -(NSMutableArray*)fn_get_acct_nameAndid;
 
 -(BOOL)fn_delete_all_data;
+-(BOOL)fn_delete_single_acct_data:(NSString*)acct_id;
+
+-(kOperation_type)fn_get_operation_type:(NSString*)rec_upd_date acct_id:(NSString*)acct_id;
 
 @end

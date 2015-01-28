@@ -19,7 +19,6 @@
 #import "RespCrmhbl_browse.h"
 #import "RespCrmcontact_browse.h"
 #import "RespCrmquo_browse.h"
-#import "Web_base.h"
 #import "DB_searchCriteria.h"
 #import "DB_Login.h"
 #import "DB_formatlist.h"
@@ -44,7 +43,7 @@
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"app_code";
-    search.os_value = @"ITNEW";
+    search.os_value =APP_CODE;
     SearchFormContract *search1 = [[SearchFormContract alloc]init];
     search1.os_column = @"type";
     search1.os_value = @"all";
@@ -55,7 +54,7 @@
     web_base.iresp_class=[RespPermit class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespPermit class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
-        
+        NSLog(@"%@",arr_resp_result);
     };
     [web_base fn_get_data:req_form];
     
@@ -80,7 +79,11 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSearchCriteria class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-        [db fn_save_searchCriteria_data:arr_resp_result];
+        if ([arr_resp_result count]!=0) {
+            [db fn_delete_all_data];
+            [db fn_save_searchCriteria_data:arr_resp_result];
+        }
+        db=nil;
     };
     [web_base fn_get_data:req_form];
     
@@ -103,25 +106,34 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespFormatlist class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_formatlist *db=[[DB_formatlist alloc]init];
-        [db fn_save_formatlist_data:arr_resp_result];
+        if ([arr_resp_result count]!=0) {
+            [db fn_delete_all_data];
+            [db fn_save_formatlist_data:arr_resp_result];
+        }
+        db=nil;
     };
     [web_base fn_get_data:req_form];
 }
 
 #pragma mark 请求crmacct_browse的数据
-- (void) fn_get_crmacct_browse_data:(NSString*)base_url{
+- (void) fn_get_crmacct_browse_data:(NSString*)base_url searchForms:(NSSet*)iSet_searchForms{
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
+    req_form.SearchForm=iSet_searchForms;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMACCT_BROWSE_URL;
+#warning neet fix
+    base_url=@"http://192.168.2.198:81/webservice/";
+    auth.system=@"ITCRM";
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmacct_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
-        DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
-        [db fn_save_crmacct_browse:arr_resp_result];
+        if (_callBack) {
+            _callBack(arr_resp_result);
+        }
     };
     [web_base fn_get_data:req_form];
 }
@@ -145,7 +157,11 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespRegion class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_Region *db=[[DB_Region alloc]init];
-        [db fn_save_region_data:arr_resp_result];
+        if ([arr_resp_result count]!=0) {
+            [db fn_delete_region_data];
+            [db fn_save_region_data:arr_resp_result];
+        }
+        db=nil;
     };
 
     [web_base fn_get_data:req_form];
@@ -220,7 +236,11 @@
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespMaintForm class]];
     web_base.callback=^(NSMutableArray *arr_resp_result){
         DB_MaintForm *db=[[DB_MaintForm alloc]init];
-        [db fn_save_MaintForm_data:arr_resp_result];
+        if ([arr_resp_result count]!=0) {
+            [db fn_delete_all_data];
+            [db fn_save_MaintForm_data:arr_resp_result];
+        }
+        db=nil;
     };
 
     [web_base fn_get_data:req_form];

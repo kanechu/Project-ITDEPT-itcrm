@@ -24,4 +24,6 @@
  *  @return 返回排序好的数组
  */
 -(NSMutableArray*)fn_sort_the_array:(NSMutableArray*)alist_source  key:(NSString*)sortBy_name;
+-(BOOL)fn_isContain_a_character:(NSString*)_parentString substring:(NSString*)_substring;
+
 @end

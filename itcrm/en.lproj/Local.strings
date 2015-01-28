@@ -19,7 +19,11 @@
 "lbl_show_pwd"="Show Password";
 "lbl_logout"="Logout";
 //prompt
-"msg_get_crmData"="Please wait while downloading";
+"msg_online"="Online Query";
+"msg_get_crmData"="Downloading,Please wait!";
+"msg_update_crmData"="Updating,Please wait!";
+"msg_download_success"=" data download is complete, and successfully saved locally.";
+"msg_upd_success"="Successfully updated local data！";
 "dialog_prompt"="Loading, Please wait.";
 "msg_network_fail"="The network connection is not available now. Please contact the network administrator.";
 "msg_upd_crmData"="Please wait while uploading data.";
@@ -54,6 +58,7 @@
 "lbl_cancel"="Cancel";
 "lbl_clear"="Clear";
 "lbl_lookup"="Lookup";
+"lbl_download"="Download";
 
 //title
 "lbl_home"="Home";

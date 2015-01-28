@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Web_base.h"
 @interface Web_resquestData : NSObject
-
+@property (strong, nonatomic) CallBack_resp_result callBack;
 - (void) fn_get_permit_data:(NSString*)base_url;
 - (void) fn_get_search_data:(NSString*)base_url;
 - (void) fn_get_formatlist_data:(NSString*)base_url;
-- (void) fn_get_crmacct_browse_data:(NSString*)base_url;
+- (void) fn_get_crmacct_browse_data:(NSString*)base_url searchForms:(NSSet*)iSet_searchForms;
 - (void) fn_get_mslookup_data:(NSString*)base_url;
 - (void) fn_get_systemIcon_data:(NSString*)base_url os_value:(NSString*)value isUpdate:(NSInteger)flag_isUpdate;
 - (void) fn_get_crmopp_browse_data:(NSString*)base_url;
