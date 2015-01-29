@@ -14,5 +14,7 @@
 
 @property(nonatomic, copy) NSString *os_value;
 
+@property(nonatomic, strong) NSSet *os_dyn_6;
+
 
 @end

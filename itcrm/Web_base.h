@@ -25,6 +25,7 @@ typedef void (^CallBack_resp_result)(NSMutableArray* arr_resp_result);
 @property (strong,nonatomic) NSArray *ilist_resp_mapping;
 
 - (void) fn_get_data:(RequestContract*)ao_form ;
-
+- (void) fn_get_crmacct_download_data:(RequestContract*)ao_form auth:(AuthContract*)auth;
 - (void) fn_update_data:(UploadingContract*)ao_form updateform:(id)updateform;
+
 @end

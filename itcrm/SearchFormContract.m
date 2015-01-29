@@ -14,5 +14,6 @@
 
 @synthesize os_value;
 
+@synthesize os_dyn_6;
 
 @end

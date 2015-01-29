@@ -13,24 +13,7 @@
 #import "RespCrmacct_browse.h"
 #import "RespRegion.h"
 #import "RespSystemIcon.h"
-#import "RespCrmopp_browse.h"
 #import "RespMaintForm.h"
-#import "RespCrmtask_browse.h"
-#import "RespCrmhbl_browse.h"
-#import "RespCrmcontact_browse.h"
-#import "RespCrmquo_browse.h"
-#import "DB_searchCriteria.h"
-#import "DB_Login.h"
-#import "DB_formatlist.h"
-#import "DB_crmacct_browse.h"
-#import "DB_Region.h"
-#import "DB_systemIcon.h"
-#import "DB_crmopp_browse.h"
-#import "DB_crmtask_browse.h"
-#import "DB_MaintForm.h"
-#import "DB_crmhbl_browse.h"
-#import "DB_crmcontact_browse.h"
-#import "DB_crmquo_browse.h"
 #import "SVProgressHUD.h"
 @implementation Web_resquestData
 
@@ -120,6 +103,7 @@
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
+    dbLogin=nil;
     req_form.Auth =auth;
     req_form.SearchForm=iSet_searchForms;
     Web_base *web_base=[[Web_base alloc]init];
@@ -136,6 +120,8 @@
         }
     };
     [web_base fn_get_data:req_form];
+    req_form=nil;
+    web_base=nil;
 }
 
 #pragma mark 请求lookup的数据
@@ -331,5 +317,33 @@
     
     [web_base fn_get_data:req_form];
 }
-
+#pragma mark -download acct relate data
+- (void) fn_get_crmacct_relate_data:(NSString*)base_url alist_acc_id:(NSArray*)alist_acc_id{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    AuthContract *auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    dbLogin=nil;
+    SearchFormContract *search = [[SearchFormContract alloc]init];
+    search.os_column = @"acct_id";
+   // search.os_dyn_6 =[NSSet setWithArray:alist_acc_id];
+    search.os_dyn_6=[NSSet setWithObject:@"11E04000002"];
+    req_form.SearchForm = [NSSet setWithObjects:search, nil];
+#warning neet fix
+    base_url=@"http://192.168.2.198:81/webservice/";
+    auth.system=@"ITCRM";
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_CRMACCT_DOWNLOAD_URL;
+    web_base.base_url=base_url;
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        if(_callBack){
+            _callBack(arr_resp_result);
+        }
+    };
+    
+    [web_base fn_get_crmacct_download_data:req_form auth:auth];
+    req_form=nil;
+    search=nil;
+    web_base=nil;
+}
 @end

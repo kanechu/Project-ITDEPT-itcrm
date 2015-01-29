@@ -8,6 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "Web_base.h"
+#import "DB_searchCriteria.h"
+#import "DB_Login.h"
+#import "DB_formatlist.h"
+#import "DB_Region.h"
+#import "DB_systemIcon.h"
+#import "DB_crmopp_browse.h"
+#import "DB_crmtask_browse.h"
+#import "DB_MaintForm.h"
+#import "DB_crmhbl_browse.h"
+#import "DB_crmcontact_browse.h"
+#import "DB_crmquo_browse.h"
+#import "RespCrmopp_browse.h"
+#import "RespCrmtask_browse.h"
+#import "RespCrmhbl_browse.h"
+#import "RespCrmcontact_browse.h"
+#import "RespCrmquo_browse.h"
 @interface Web_resquestData : NSObject
 @property (strong, nonatomic) CallBack_resp_result callBack;
 - (void) fn_get_permit_data:(NSString*)base_url;
@@ -22,4 +38,5 @@
 - (void) fn_get_crmhbl_browse_data:(NSString*)base_url;
 - (void) fn_get_crmcontact_browse_data:(NSString*)base_url;
 - (void) fn_get_crmquo_browse_data:(NSString*)base_url;
+- (void) fn_get_crmacct_relate_data:(NSString*)base_url alist_acc_id:(NSArray*)alist_acc_id;
 @end

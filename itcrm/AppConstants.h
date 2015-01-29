@@ -33,4 +33,6 @@ extern NSString* const STR_CRMQUO_BROWSE_URL;
 extern NSString* const STR_CRMCONTACT_UPDATE_URL;
 extern NSString* const STR_CRMOPP_UPDATE_URL;
 extern NSString* const STR_USERSLOGIN_URL;
+extern NSString* const STR_CRMACCT_DOWNLOAD_URL;
+
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B209B76A1A78B7AD0098EEFF /* Resp_crmacct_dowload.m in Sources */ = {isa = PBXBuildFile; fileRef = B209B7691A78B7AD0098EEFF /* Resp_crmacct_dowload.m */; };
 		B2223C90196FB38C00FFE884 /* SearchCrmContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */; };
 		B2223C96196FDB4000FFE884 /* EditContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2223C95196FDB4000FFE884 /* EditContactViewController.m */; };
 		B22903DE1936C4A6004D1862 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B22903DB1936C4A6004D1862 /* SVProgressHUD.bundle */; };
@@ -181,6 +182,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B209B7681A78B7AD0098EEFF /* Resp_crmacct_dowload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resp_crmacct_dowload.h; sourceTree = "<group>"; };
+		B209B7691A78B7AD0098EEFF /* Resp_crmacct_dowload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resp_crmacct_dowload.m; sourceTree = "<group>"; };
 		B2223C8E196FB38C00FFE884 /* SearchCrmContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmContactViewController.h; sourceTree = "<group>"; };
 		B2223C8F196FB38C00FFE884 /* SearchCrmContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCrmContactViewController.m; sourceTree = "<group>"; };
 		B2223C94196FDB4000FFE884 /* EditContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditContactViewController.h; sourceTree = "<group>"; };
@@ -807,6 +810,8 @@
 				B27EDFC71940173C007F89A6 /* RespRegion.m */,
 				B2452E77194195CA00D02A45 /* RespSystemIcon.h */,
 				B2452E78194195CA00D02A45 /* RespSystemIcon.m */,
+				B209B7681A78B7AD0098EEFF /* Resp_crmacct_dowload.h */,
+				B209B7691A78B7AD0098EEFF /* Resp_crmacct_dowload.m */,
 				B260D98C1945519D0026A1E9 /* RespCrmopp_browse.h */,
 				B260D98D1945519D0026A1E9 /* RespCrmopp_browse.m */,
 				B2B704EF194693840012A531 /* RespCrmtask_browse.h */,
@@ -1118,6 +1123,7 @@
 				B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,
 				B2A18D74196A506000045E1C /* RespUpdateStatus.m in Sources */,
+				B209B76A1A78B7AD0098EEFF /* Resp_crmacct_dowload.m in Sources */,
 				B27EE0D719404919007F89A6 /* MZAppearance.m in Sources */,
 				B2B0933519346C9C002FE190 /* MainHomeViewController.m in Sources */,
 				B25D75FA193D64A2005913D7 /* SKSTableView.m in Sources */,
