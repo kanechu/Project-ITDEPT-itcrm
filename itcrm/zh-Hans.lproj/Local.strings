@@ -11,7 +11,7 @@
 "lbl_action"="动作";
 "lbl_company"="公司名";
 //login
-"lbl_login"="登入";
+"lbl_login"="登录";
 "lbl_username"="用户名";
 "lbl_pwd"="密码";
 "lbl_system"="系统";

@@ -78,6 +78,9 @@
         NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
         NSString *binary_str=[format fn_get_binaryData:iconName];
         task_icon=[format fn_binaryData_convert_image:binary_str];
+        if (task_icon==nil) {
+            task_icon=[UIImage imageNamed:@"ic_task"];
+        }
     }
 }
 -(void)fn_init_crmtask_arr:(NSMutableArray*)arr_crmtask{

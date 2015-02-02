@@ -11,7 +11,7 @@
 "lbl_action"="動作";
 "lbl_company"="公司名";
 //login
-"lbl_login"="登入";
+"lbl_login"="登錄";
 "lbl_username"="用戶名";
 "lbl_pwd"="密碼";
 "lbl_system"="系統";

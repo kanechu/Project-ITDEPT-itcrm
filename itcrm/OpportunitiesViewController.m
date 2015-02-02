@@ -79,6 +79,9 @@
         NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
         NSString *binary_str=[format fn_get_binaryData:iconName];
         opp_image=[format fn_binaryData_convert_image:binary_str];
+        if (opp_image==nil) {
+            opp_image=[UIImage imageNamed:@"ic_opp"];
+        }
     }
 }
 

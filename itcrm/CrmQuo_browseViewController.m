@@ -77,6 +77,9 @@
         NSString *iconName=[[alist_format objectAtIndex:0]valueForKey:@"icon"];
         NSString *binary_str=[convert fn_get_binaryData:iconName];
         crmquo_icon=[convert fn_binaryData_convert_image:binary_str];
+        if (crmquo_icon==nil) {
+            crmquo_icon=[UIImage imageNamed:@"ic_quo"];
+        }
     }
 }
 -(void)fn_init_crmquo_arr:(NSMutableArray*)arr_crmquo{
