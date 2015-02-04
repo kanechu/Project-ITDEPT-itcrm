@@ -1049,7 +1049,7 @@
                     <navigationItem key="navigationItem" id="Za4-Pc-GkA">
                         <barButtonItem key="leftBarButtonItem" id="ghG-bv-Ct5">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="niZ-lk-RK7" customClass="Custom_BtnGraphicMixed">
-                                <rect key="frame" x="16" y="7" width="140" height="30"/>
+                                <rect key="frame" x="16" y="7" width="160" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal">

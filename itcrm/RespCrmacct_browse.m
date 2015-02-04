@@ -78,6 +78,6 @@
 @synthesize no_of_staff;
 @synthesize nomin_agent_list;
 @synthesize postal_code;
-
+@synthesize max_upd_date;
 
 @end

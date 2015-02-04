@@ -79,6 +79,6 @@
 @property(nonatomic,copy)NSString *accttgt_dest_code;
 @property(nonatomic,copy)NSString *accttgt_dest_name;
 @property(nonatomic,copy)NSString *accttgt_vol;
-
+@property(nonatomic,copy)NSString *max_upd_date;
 
 @end

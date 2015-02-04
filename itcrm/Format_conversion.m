@@ -55,7 +55,7 @@
     
     NSMutableArray *alist_crm_browse=[[NSMutableArray alloc]initWithCapacity:10];
     NSDateFormatter *_dateFormatter=[[NSDateFormatter alloc]init];
-    [_dateFormatter setDateFormat:@"yyyy-mm-dd"];
+    [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 
     for (NSMutableDictionary *dic_old in arr_browse) {
         NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithDictionary:dic_old];

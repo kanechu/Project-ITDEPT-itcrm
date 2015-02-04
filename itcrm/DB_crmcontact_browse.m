@@ -133,7 +133,7 @@
 }
 -(NSMutableArray*)fn_get_relate_crmcontact_data:(NSString *)contact_ref_id select_sql:(NSString *)select_sql{
     select_sql=[select_sql stringByAppendingString:@",contact_id"];
-    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmcontact where contact_ref_id like ?",select_sql];
+    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmcontact where contact_type ='ACCT' and contact_ref_id like ? ORDER BY rec_upd_date,rec_crt_date DESC",select_sql];
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
