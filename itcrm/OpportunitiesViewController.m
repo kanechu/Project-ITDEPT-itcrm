@@ -45,18 +45,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableview.delegate=self;
-    self.tableview.dataSource=self;
-    _is_searchBar.delegate=self;
-    
-    format=[[Format_conversion alloc]init];
-    db_crmopp=[[DB_crmopp_browse alloc]init];
     [self fn_get_formatlist];
-    //获取crmopp的参数数据
-    alist_opp_parameter=[db_crmopp fn_get_crmopp_data:_is_searchBar.text select_sql:select_sql];
-    [self fn_init_crmopp_browse_arr:alist_opp_parameter];
-    [self fn_show_different_language];
-	// Do any additional setup after loading the view.
+    [self fn_set_property];
+   	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,13 +55,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)fn_show_different_language{
+- (void)fn_set_property{
+    self.tableview.delegate=self;
+    self.tableview.dataSource=self;
+    _is_searchBar.delegate=self;
+    
+    db_crmopp=[[DB_crmopp_browse alloc]init];
+    
+    //获取crmopp的参数数据
+    alist_opp_parameter=[db_crmopp fn_get_crmopp_data:_is_searchBar.text select_sql:select_sql];
+    [self fn_init_crmopp_browse_arr:alist_opp_parameter];
+    
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_opp_search", nil);
     self.title=MYLocalizedString(@"lbl_browse_opp", nil);
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
+    
     self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
 }
 -(void)fn_get_formatlist{
+    format=[[Format_conversion alloc]init];
     //获取crmopp列表显示信息的格式
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmopp"];
@@ -88,6 +91,15 @@
 -(void)fn_init_crmopp_browse_arr:(NSMutableArray*)arr_crmopp{
     if ([arr_format count]!=0) {
         alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
+        if ([alist_crmopp_browse count]==0) {
+            View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableview.frame];
+            footView.str_msg=MYLocalizedString(@"no_opp_prompt", nil);
+            [self.tableview setTableFooterView:footView];
+            [self.tableview setScrollEnabled:NO];
+        }else{
+            [self.tableview setTableFooterView:nil];
+            [self.tableview setScrollEnabled:YES];
+        }
     }
 }
 
@@ -140,7 +152,8 @@
     NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];
     if ([[segue identifier]isEqualToString:@"segue_editopp"]) {
         EditOppViewController *VC=[segue destinationViewController];
-        VC.opp_id=[[alist_opp_parameter objectAtIndex:indexpath.row ] valueForKey:@"opp_id"];
+        VC.idic_parameter_opp=[alist_opp_parameter objectAtIndex:indexpath.row ];
+        VC.flag_can_edit=1;
     }
 }
 #pragma mark UISearchBarDelegate

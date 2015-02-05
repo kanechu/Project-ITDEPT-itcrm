@@ -43,15 +43,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_show_different_language];
-    self.tableview.delegate=self;
-    self.tableview.dataSource=self;
-    _is_searchBar.delegate=self;
-    convert=[[Format_conversion alloc]init];
-    db_crmcontact=[[DB_crmcontact_browse alloc]init];
+   
     [self fn_get_formatlist];
-    alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:_is_searchBar.text select_sql:select_sql];
-    [self fn_init_crmcontact_arr:alist_contact_parameter];
+    [self fn_set_property];
 	// Do any additional setup after loading the view.
 }
 
@@ -60,17 +54,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_show_different_language{
+-(void)fn_set_property{
+    self.tableview.delegate=self;
+    self.tableview.dataSource=self;
+    _is_searchBar.delegate=self;
+    
+    db_crmcontact=[[DB_crmcontact_browse alloc]init];
+    alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:_is_searchBar.text select_sql:select_sql];
+    [self fn_init_crmcontact_arr:alist_contact_parameter];
+
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_contact_search", nil);
     self.title=MYLocalizedString(@"lbl_browse_contact", nil);
 }
 -(void)fn_get_formatlist{
+    convert=[[Format_conversion alloc]init];
     //获取crmcontact列表显示信息的格式
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     arr_format=[db_format fn_get_list_data:@"crmcontact"];
     if ([arr_format count]!=0) {
-         select_sql=[[arr_format objectAtIndex:0]valueForKey:@"select_sql"];
+        select_sql=[[arr_format objectAtIndex:0]valueForKey:@"select_sql"];
         NSString *iconName=[[arr_format objectAtIndex:0]valueForKey:@"icon"];
         NSString *binary_str=[convert fn_get_binaryData:iconName];
         contact_icon=[convert fn_binaryData_convert_image:binary_str];
@@ -84,6 +87,15 @@
     if ([arr_format count]!=0) {
         //转换格式
         alist_crmcontact=[convert fn_format_conersion:arr_format browse:arr_crmcontact];
+        if ([alist_contact_parameter count]==0) {
+            View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableview.frame];
+            footView.str_msg=MYLocalizedString(@"no_contact_prompt", nil);
+            [self.tableview setTableFooterView:footView];
+            [self.tableview setScrollEnabled:NO];
+        }else{
+            [self.tableview setTableFooterView:nil];
+            [self.tableview setScrollEnabled:YES];
+        }
     }
 }
 
@@ -120,7 +132,10 @@
     Cell_browse *cell=[self.tableview dequeueReusableCellWithIdentifier:cellIndentifier];
     NSString *cellText = [[alist_crmcontact objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[convert fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
-    return height+10+23;
+    if (height<21) {
+        height=21;
+    }
+    return height+21;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"Segue_editContact" sender:self];
@@ -135,8 +150,8 @@
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
     if([[segue identifier] isEqualToString:@"Segue_editContact"]){
         EditContactViewController *VC=[segue destinationViewController];
-        VC.is_contact_id=[[alist_contact_parameter objectAtIndex:selectedRowIndex.row]valueForKey:@"contact_id"];
-        
+        VC.idic_parameter_contact=[alist_contact_parameter objectAtIndex:selectedRowIndex.row];
+        VC.flag_can_edit=1;
     }
 }
 

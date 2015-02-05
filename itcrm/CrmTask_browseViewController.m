@@ -43,18 +43,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_show_different_language];
-    //设置代理
-    _tableview.delegate=self;
-    _tableview.dataSource=self;
-    _is_searchbar.delegate=self;
     
-    format=[[Format_conversion alloc]init];
-    db_crmtask=[[DB_crmtask_browse alloc]init];
     [self fn_get_formatlist];
-    //获取crmtask的参数
-    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
-    [self fn_init_crmtask_arr:alist_crmtask_parameter];
+    [self fn_set_property];
     
 	// Do any additional setup after loading the view.
 }
@@ -64,12 +55,23 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_show_different_language{
+-(void)fn_set_property{
+    //设置代理
+    _tableview.delegate=self;
+    _tableview.dataSource=self;
+    _is_searchbar.delegate=self;
+    
+    db_crmtask=[[DB_crmtask_browse alloc]init];
+    //获取crmtask的参数
+    alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:_is_searchbar.text select_sql:select_sql];
+    [self fn_init_crmtask_arr:alist_crmtask_parameter];
+    
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     self.title=MYLocalizedString(@"lbl_browse_task", nil);
     _is_searchbar.placeholder=MYLocalizedString(@"lbl_activity_search", nil);
 }
 -(void)fn_get_formatlist{
+    format=[[Format_conversion alloc]init];
     //获取crmtask列表显示信息的格式
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     alist_format=[db_format fn_get_list_data:@"crmtask"];
@@ -87,6 +89,15 @@
     if ([alist_format count]!=0) {
         //转换格式
         alist_crmtask=[format fn_format_conersion:alist_format browse:arr_crmtask];
+        if ([alist_crmtask count]!=0) {
+            [self.tableview setTableFooterView:nil];
+            [self.tableview setScrollEnabled:YES];
+        }else{
+            View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableview.frame];
+            footView.str_msg=MYLocalizedString(@"no_task_prompt", nil);
+            [self.tableview setTableFooterView:footView];
+            [self.tableview setScrollEnabled:NO];
+        }
     }
 }
 
@@ -159,13 +170,10 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
-    NSString *is_task_id=[[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row]valueForKey:@"task_id"];
-    NSMutableArray *arr_crmtask=[db_crmtask fn_get_crmtask_data_from_id:is_task_id];
     if([[segue identifier] isEqualToString:@"segue_maintTask"]){
         MaintTaskViewController *taskVC=[segue destinationViewController];
-        if ([arr_crmtask count]!=0) {
-            taskVC.idic_parameter_value=[arr_crmtask objectAtIndex:0];
-        }
+        taskVC.idic_parameter_value=[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row];
+        taskVC.flag_can_edit=1;
     }
 }
 - (IBAction)fn_advance_search_task:(id)sender {
