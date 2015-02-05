@@ -108,9 +108,6 @@
     req_form.SearchForm=iSet_searchForms;
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMACCT_BROWSE_URL;
-#warning neet fix
-    base_url=@"http://192.168.2.198:81/webservice/";
-    auth.system=@"ITCRM";
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmacct_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]];
@@ -326,12 +323,8 @@
     dbLogin=nil;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"acct_id";
-   // search.os_dyn_6 =[NSSet setWithArray:alist_acc_id];
-    search.os_dyn_6=[NSSet setWithObject:@"11E04000002"];
+    search.os_dyn_6 =[NSSet setWithArray:alist_acc_id];
     req_form.SearchForm = [NSSet setWithObjects:search, nil];
-#warning neet fix
-    base_url=@"http://192.168.2.198:81/webservice/";
-    auth.system=@"ITCRM";
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMACCT_DOWNLOAD_URL;
     web_base.base_url=base_url;
@@ -340,7 +333,6 @@
             _callBack(arr_resp_result);
         }
     };
-    
     [web_base fn_get_crmacct_download_data:req_form auth:auth];
     req_form=nil;
     search=nil;

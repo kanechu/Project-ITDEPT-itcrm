@@ -19,15 +19,13 @@
 #pragma mark update
 - (void) fn_get_updateStatus_data:(id)UpdateForm path:(NSString*)il_url :(CallBack_data)callback {
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    NSMutableArray *arr=[db fn_get_all_data];
-    NSString* base_url=nil;
-    if (arr!=nil && [arr count]!=0) {
-        base_url=[[arr objectAtIndex:0] valueForKey:@"web_addr"];
-    }
+    NSString* base_url=[db fn_get_field_content:kWeb_addr];
+    db=nil;
     UploadingContract *req_form = [[UploadingContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
     req_form.Auth =auth;
+    dbLogin=nil;
     req_form.UpdateForm = [NSSet setWithObjects:UpdateForm, nil];
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=il_url;
@@ -38,5 +36,7 @@
         callback(arr_resp_result);
     };
     [web_base fn_update_data:req_form updateform:UpdateForm];
+    req_form=nil;
+    web_base=nil;
 }
 @end
