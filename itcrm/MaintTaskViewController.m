@@ -84,12 +84,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_set_property{
-    //_flag_can_edit 为1该用户已经把acct下载了，表示可以编辑
-    if (_flag_can_edit!=1) {
-        _ibtn_save.enabled=NO;
-    }else{
-        _ibtn_save.enabled=YES;
-    }
     
     [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
@@ -98,7 +92,14 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     if (_add_flag==1) {
         [_ibtn_logo setTitle:MYLocalizedString(@"lbl_add_task", nil) forState:UIControlStateNormal];
     }
-    
+    //_flag_can_edit 为1该用户已经把acct下载了，表示可以编辑
+    if (_flag_can_edit!=1) {
+        _ibtn_save.enabled=NO;
+        
+    }else{
+        _ibtn_save.enabled=YES;
+    }
+    [_ibtn_save setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     //深拷贝，备份一份要修改的crmtask
     idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
     idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];

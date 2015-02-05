@@ -91,6 +91,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     }else{
         _ibtn_save.enabled=YES;
     }
+    [_ibtn_save setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];

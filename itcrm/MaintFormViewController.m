@@ -74,12 +74,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_set_property];
+    format=[[Format_conversion alloc]init];
     if (_flag_isDowload==1) {
         [self fn_init_arr_offline];
     }else{
         [self fn_init_arr_online];
     }
+    [self fn_set_property];
     [self fn_custom_gesture];
   
     // Do any additional setup after loading the view.
@@ -106,7 +107,6 @@
         _ibtn_add_operation.enabled=NO;
     }
     
-    format=[[Format_conversion alloc]init];
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     
@@ -125,6 +125,7 @@
         [idic_parameter setObject:@"#1" forKey:@"task_id"];
         maintTaskVC.idic_parameter_value=idic_parameter;
         maintTaskVC.add_flag=1;
+        maintTaskVC.flag_can_edit=1;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
     if (buttonIndex==1) {
@@ -134,6 +135,7 @@
         [idic_parameter setObject:@"#1" forKey:@"contact_id"];
         editContactVC.idic_parameter_contact=idic_parameter;
         editContactVC.add_contact_flag=1;
+        editContactVC.flag_can_edit=1;
     }
     if (buttonIndex==2) {
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
@@ -142,6 +144,7 @@
         [idic_parameter setObject:@"#1" forKey:@"opp_id"];
         editOppVC.idic_parameter_opp=idic_parameter;
         editOppVC.add_opp_flag=1;
+        editOppVC.flag_can_edit=1;
     }
     idic_parameter=nil;
 }
