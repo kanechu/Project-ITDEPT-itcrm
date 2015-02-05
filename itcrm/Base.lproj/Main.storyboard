@@ -1115,7 +1115,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iY4-VE-lMD">
-                                                    <rect key="frame" x="74" y="2" width="203" height="21"/>
+                                                    <rect key="frame" x="74" y="2" width="170" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.095784356544682328" green="0.32188287110748615" blue="0.92099808670000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1320,6 +1320,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ibtn_add_operation" destination="4ai-0b-hTP" id="UFa-Z0-U1s"/>
                         <outlet property="skstableView" destination="i0F-TE-qRT" id="yBF-Vv-ZLz"/>
                         <segue destination="NEG-fv-6xJ" kind="push" identifier="segue_acct_taskEdit" id="vTW-Ye-vvC"/>
                         <segue destination="DNb-w7-p0C" kind="push" identifier="segue_acct_contactEdit" id="Dfc-YT-f1N"/>
@@ -1925,8 +1926,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iu4-YE-TuG"/>
-        <segue reference="wbi-2X-kmd"/>
-        <segue reference="dLF-6P-NyO"/>
+        <segue reference="Dfc-YT-f1N"/>
+        <segue reference="KeJ-f2-xSo"/>
+        <segue reference="vTW-Ye-vvC"/>
     </inferredMetricsTieBreakers>
 </document>

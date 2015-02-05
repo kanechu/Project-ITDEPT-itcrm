@@ -60,6 +60,13 @@
     for (NSMutableDictionary *dic_old in arr_browse) {
         NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithDictionary:dic_old];
         NSString *rec_upd_date=[dic_old valueForKey:@"rec_upd_date"];
+        if ([[dic_old allKeys]containsObject:@"task_start_date"]) {
+            NSString *task_start_date=[dic_old valueForKey:@"task_start_date"];
+            NSDate *task_date=[self dateFromUnixTimestamp:task_start_date];
+            NSString *str_task_date=[_dateFormatter stringFromDate:task_date];
+            [dic setObject:str_task_date forKey:@"task_start_date"];
+        
+        }
         NSDate *upd_date=[self dateFromUnixTimestamp:rec_upd_date];
         NSString *str_rec_upd_date=[_dateFormatter stringFromDate:upd_date];
         [dic setObject:str_rec_upd_date forKey:@"rec_upd_date"];
@@ -170,7 +177,7 @@
             flag=1;
         }
     }
-    if (flag==0) {
+    if (flag==0 || [display_str length]==0) {
         display_str=data;
     }
     return display_str;

@@ -33,8 +33,8 @@
 "lbl_empty_systemcode"="Sorry,the system name can not be empty!";
 "lbl_prompt_history"="No Historical Data!";
 "msg_save_data"="Please wait while save data.";
-"lbl_save_success"="Save success";
-"lbl_save_fail"="Save fail";
+"lbl_save_success"="Save successfully!";
+"lbl_save_fail"="Save failed!";
 "toast_mandatory"="This field cannot be empty.";
 "toast_numeric"="This field must be numeric.";
 "toast_illegal"="Illegal character.";
@@ -46,6 +46,9 @@
 "msg_cancel_add"="Added a record but not saved,please select discard or save the record";
 "msg_save_edit"="whether save the modified data?";
 "msg_save_add"="Whether to save the added data?";
+"msg_save_title"="Save Data";
+"msg_save_locally"="Your edited data is being saved locally, You need to manually submit.";
+
 //button
 "lbl_advance"="Advance";
 "lbl_search"="Search";
@@ -86,6 +89,13 @@
 "lbl_contact"="Contact";
 "lbl_hbl"="Shipment History";
 "lbl_opp"="Opportunity";
+
+//no data prompt
+"no_account_prompt"="No Account Data";
+"no_quo_prompt"="No Quotation Data";
+"no_task_prompt"="No Activity Data";
+"no_contact_prompt"="No Contact Data";
+"no_opp_prompt"="No Opportunity Data";
 
 //search Bar placeholder
 "lbl_account_search"="Please input the account name";

@@ -23,4 +23,5 @@
     #import"Custom_Color.h"
     #import"NSDictionary.h"
     #import"MYLocalizedString.h"
+    #import "View_show_prompt.h"
 #endif
