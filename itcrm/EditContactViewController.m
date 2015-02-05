@@ -18,11 +18,12 @@
 #import "RespCrmcontact_browse.h"
 #import "Web_updateData.h"
 #import "Custom_BtnGraphicMixed.h"
+#import "CheckUpdate.h"
+#import "SVProgressHUD.h"
 #define TEXT_TAG 100
 typedef NSString* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
-@property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact;
 @property(nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact_copy;
 @property(nonatomic,strong)NSMutableArray *alist_maintContact;
@@ -31,9 +32,10 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)UITextView *checkTextView;
 @property (nonatomic,strong)Format_conversion *convert;
+@property (nonatomic,strong)CheckUpdate *check_obj;
 @property (nonatomic,strong)passValue_contact passValue;
 @property (nonatomic,strong)UITextView *checkText;
-@property (nonatomic,assign)NSInteger flag;
+@property (nonatomic,assign)NSInteger flag_click_cancel;
 @end
 
 @implementation EditContactViewController
@@ -45,7 +47,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 @synthesize passValue;
 @synthesize idic_parameter_contact_copy;
 @synthesize idic_edited_parameter;
-@synthesize flag;
+@synthesize flag_click_cancel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,19 +60,9 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_show_different_language];
     [self fn_get_maint_crmcontact];
-    [self fn_get_idic_parameter];
-    self.skstableView.SKSTableViewDelegate=self;
-    [self.skstableView fn_expandall];
-    self.skstableView.showsVerticalScrollIndicator=NO;
+    [self fn_set_property];
     [self fn_custom_gesture];
-    [expand_helper setExtraCellLineHidden:self.skstableView];
-    _convert=[[Format_conversion alloc]init];
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    flag=0;
-    //注册通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 	// Do any additional setup after loading the view.
 }
 
@@ -82,24 +74,38 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 -(void)fn_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
-- (void)fn_show_different_language{
+- (void)fn_set_property{
+    //深拷贝一份要修改的contact,用于还原
+    idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
+    idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    
     [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_contact", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
+    if (_add_contact_flag==1) {
+        [_ibtn_logo setTitle:MYLocalizedString(@"sheet_contact", nil) forState:UIControlStateNormal];
+    }
+     if (_flag_can_edit!=1) {
+        _ibtn_save.enabled=NO;
+    }else{
+        _ibtn_save.enabled=YES;
+    }
+    
+    self.skstableView.SKSTableViewDelegate=self;
+    [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableView];
+    
+    _convert=[[Format_conversion alloc]init];
+    _check_obj=[[CheckUpdate alloc]init];
+    
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    //注册通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+
 }
 
-#pragma mark 获取要修改的crmcontact
--(void)fn_get_idic_parameter{
-    DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
-    NSMutableArray *arr_crmcontact=[db fn_get_crmcontact_browse:_is_contact_id];
-    if ([arr_crmcontact count]!=0) {
-        idic_parameter_contact=[arr_crmcontact objectAtIndex:0];
-    }
-    //深拷贝一份要修改的contact,用于还原
-    idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
-    idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
-}
 #pragma mark -获取定制contact maint版面的数据
 -(void)fn_get_maint_crmcontact{
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
@@ -164,6 +170,12 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     //is_enable
     NSString *is_enable=[dic valueForKey:@"is_enable"];
     NSInteger is_enable_flag=[is_enable integerValue];
+    if (_flag_can_edit!=1) {
+        is_enable_flag=0;
+    }else{
+        is_enable_flag=1;
+    }
+    
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block EditContactViewController *blockSelf=self;
     passValue=^NSString*(NSInteger tag){
@@ -250,19 +262,33 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
     NSString *col_code=passValue(textView.tag);
-    [idic_parameter_contact setObject:textView.text forKey:col_code];
-    [idic_edited_parameter setObject:textView.text forKey:col_code];
+    NSString *str_value=textView.text;
+    str_value=[str_value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [idic_parameter_contact setObject:str_value forKey:col_code];
+    [idic_edited_parameter setObject:str_value forKey:col_code];
 }
 - (IBAction)fn_save_modified_contact:(id)sender {
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_save_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
+    NSString *str_msg=nil;
+    if (_add_contact_flag==1) {
+        str_msg=MYLocalizedString(@"msg_save_add", nil);
+    }else{
+        str_msg=MYLocalizedString(@"msg_save_edit", nil);
+    }
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
     [alertView show];
 }
 
 - (IBAction)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
+    NSString *str_msg=nil;
+    if (_add_contact_flag==1) {
+        str_msg=MYLocalizedString(@"msg_cancel_add", nil);
+    }else{
+        str_msg=MYLocalizedString(@"msg_cancel_edit", nil);
+    }
     if (!isSame) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_cancel_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
-        flag=1;
+        flag_click_cancel=1;
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
         [alert show];
     }else{
         [self.navigationController popViewControllerAnimated:YES];
@@ -289,44 +315,44 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==0) {
+    if (buttonIndex==[alertView firstOtherButtonIndex]) {
+        BOOL isSuccess=NO;
         DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
-        [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
-        BOOL isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
+        if (_add_contact_flag==1) {
+            NSMutableArray *alist_crmcontact=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
+            isSuccess=[db fn_save_crmcontact_browse:alist_crmcontact];
+            alist_crmcontact=nil;
+        }else{
+            [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
+            isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
+        }
+        
         if (isSuccess) {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
-        }
-        Web_updateData *web_update=[[Web_updateData alloc]init];
-        [web_update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMCONTACT_UPDATE_URL :^(NSMutableArray *arr){
-            NSString *status=nil;
-            if ([arr count]!=0) {
-                status=[[arr objectAtIndex:0]valueForKey:@"status"];
+            idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
+            if (flag_click_cancel==1 || _add_contact_flag==1) {
+                [self.navigationController popViewControllerAnimated:YES];
             }
-            if ([status isEqualToString:@"1"]) {
-                [db fn_update_crmcontact_ismodified:@"0" unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
-            }
-            
-        }];
-        if (flag==1) {
-            [self.navigationController popViewControllerAnimated:YES];
+            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+            [alertview show];
         }
+       
     }
-    if (buttonIndex==1) {
+    if (buttonIndex==[alertView cancelButtonIndex]) {
         idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];
         [self.skstableView reloadData];
-        if (flag==1) {
+        if (flag_click_cancel==1) {
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
 -(RespCrmcontact_browse*)fn_get_updateform{
     RespCrmcontact_browse *updateform_contact=[[RespCrmcontact_browse alloc]init];
-    NSString *unique_id=[idic_parameter_contact valueForKey:@"unique_id"];
-    [idic_parameter_contact removeObjectForKey:@"unique_id"];
-    [idic_parameter_contact removeObjectForKey:@"is_modified"];
     [updateform_contact setValuesForKeysWithDictionary:idic_parameter_contact];
-    [idic_parameter_contact setObject:unique_id forKey:@"unique_id"];
+    if (_add_contact_flag==1) {
+        idic_parameter_contact=[[NSDictionary dictionaryWithPropertiesOfObject:updateform_contact]mutableCopy];
+        [updateform_contact setValuesForKeysWithDictionary:idic_parameter_contact];
+    }
     return updateform_contact;
 }
-
 @end

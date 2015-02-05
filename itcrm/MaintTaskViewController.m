@@ -9,35 +9,38 @@
 #import "MaintTaskViewController.h"
 #import "SKSTableView.h"
 #import "SKSTableViewCell.h"
+#import "Web_updateData.h"
 #import "DB_MaintForm.h"
+#import "DB_crmtask_browse.h"
+#import "DB_Region.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
 #import "Cell_lookup.h"
 #import "OptionViewController.h"
-#import "DB_crmtask_browse.h"
-#import "Web_updateData.h"
-#import "DB_Region.h"
 #import "RespCrmtask_browse.h"
 #import "Custom_datePicker.h"
 #import "Custom_BtnGraphicMixed.h"
-
+#import "CheckUpdate.h"
+#import "SVProgressHUD.h"
 #define TEXT_TAG 100
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
-
+@property (nonatomic,strong)UITextView *checkTextView;
 @property (nonatomic,strong)NSMutableArray *alist_miantTask;
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_taskdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)Format_conversion *format;
+@property (nonatomic,strong)CheckUpdate *check_obj;
 //备份原来要修改的crmtask
 @property (nonatomic,readonly)NSMutableDictionary *idic_parameter_value_copy;
 @property (nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property (nonatomic,strong)pass_colCode pass_value;
 @property (nonatomic,strong)Custom_datePicker *datePicker;
 @property (nonatomic,copy)NSString *select_date;
-@property (nonatomic,assign)NSInteger flag;
+//用于标识点击cancel
+@property (nonatomic,assign)NSInteger flag_click_cancel;
 @property (nonatomic,strong)NSDateFormatter *dateformatter;
 @end
 
@@ -51,7 +54,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize idic_parameter_value_copy;
 @synthesize idic_edited_parameter;
 @synthesize select_date;
-@synthesize flag;//用于标识点击cancel
+@synthesize flag_click_cancel;
 @synthesize datePicker;
 @synthesize dateformatter;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,31 +69,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_show_different_language];
     [self fn_init_arr];
-    [self fn_init_idic_parameter];
-    self.skstableview.SKSTableViewDelegate=self;
-    [self.skstableview fn_expandall];
-    self.skstableview.showsVerticalScrollIndicator=NO;
-    [expand_helper setExtraCellLineHidden:self.skstableview];
+    [self fn_set_property];
     [self fn_custom_gesture];
-    format=[[Format_conversion alloc]init];
-    //避免键盘挡住UITextView
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_create_datepick];
-    flag=0;
     [self fn_set_datetime_formatter];
-    /**
-     *  给点击状态栏的操作添加观察者
-     *
-     *  @param fn_tableView_scrollTop 点击状态栏触发的方法
-     *
-     *  @return nil
-     */
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
-    if (_add_flag==1) {
-        [_ibtn_logo setTitle:MYLocalizedString(@"lbl_add_task", nil) forState:UIControlStateNormal];
-    }
+    
 	// Do any additional setup after loading the view.
 }
 
@@ -99,12 +83,43 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_show_different_language{
-
+-(void)fn_set_property{
+    //_flag_can_edit 为1该用户已经把acct下载了，表示可以编辑
+    if (_flag_can_edit!=1) {
+        _ibtn_save.enabled=NO;
+    }else{
+        _ibtn_save.enabled=YES;
+    }
+    
     [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_task", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
+    if (_add_flag==1) {
+        [_ibtn_logo setTitle:MYLocalizedString(@"lbl_add_task", nil) forState:UIControlStateNormal];
+    }
+    
+    //深拷贝，备份一份要修改的crmtask
+    idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
+    idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    
+    format=[[Format_conversion alloc]init];
+    
+    self.skstableview.SKSTableViewDelegate=self;
+    [self.skstableview fn_expandall];
+    self.skstableview.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableview];
+   
+    //避免键盘挡住UITextView
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    /**
+     *  给点击状态栏的操作添加观察者
+     *
+     *  @param fn_tableView_scrollTop 点击状态栏触发的方法
+     *
+     *  @return nil
+     */
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
 #pragma mark 点击状态栏,Tableview回滚至top
 -(void)fn_tableView_scrollTop{
@@ -119,12 +134,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [dateformatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"]];
     [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 }
-#pragma mark 备份要修改的crmtask
--(void)fn_init_idic_parameter{
-    //深拷贝，备份一份要修改的crmtask
-    idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
-    idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
-}
+
 #pragma mark -获取定制maint版面的数据
 -(void)fn_init_arr{
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
@@ -220,6 +230,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     //is_enable
     NSString *is_enable=[dic valueForKey:@"is_enable"];
     NSInteger is_enable_flag=[is_enable integerValue];
+    if (_flag_can_edit!=1) {
+        is_enable_flag=0;
+    }else{
+        is_enable_flag=1;
+    }
     //is_mandatory
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
     if ([is_mandatory isEqualToString:@"1"]) {
@@ -323,21 +338,21 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }else{
         str=MYLocalizedString(@"msg_save_edit", nil);
     }
-    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
+    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil) otherButtonTitles:MYLocalizedString(@"lbl_save", nil), nil];
     [alertview show];
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==1) {
+    if (buttonIndex==[alertView cancelButtonIndex]) {
         //还原数据
         idic_parameter_value=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value_copy];
         [self.skstableview reloadData];
-        if (flag==1) {
+        if (flag_click_cancel==1) {
             [self.navigationController popViewControllerAnimated:YES];
         }
     }
-    if (buttonIndex==0) {
-        BOOL isSuccess=0;
+    if (buttonIndex==[alertView firstOtherButtonIndex]) {
+        BOOL isSuccess=NO;
         DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
         if (_add_flag==1) {
             NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
@@ -348,22 +363,16 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         }
         if (isSuccess) {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
-        }
-        if (flag==1 || _add_flag==1) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        Web_updateData *web_update=[[Web_updateData alloc]init];
-        [web_update fn_get_updateStatus_data:[self fn_init_updateform] path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
-            NSString *status=nil;
-            if ([arr count]!=0) {
-                status=[[arr objectAtIndex:0]valueForKey:@"status"];
+            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+            [alertview show];
+            idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
+            if (flag_click_cancel==1 || _add_flag==1) {
+                [self.navigationController popViewControllerAnimated:YES];
             }
-            if ([status isEqualToString:@"1"]) {
-                [db fn_update_crmtask_ismodified:@"0" unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
-            }
-        }];
+        }
     }
 }
+
 - (IBAction)fn_lookup_data:(id)sender {
     UIButton *btn=(UIButton*)sender;
     NSMutableDictionary *dic=_pass_value(btn.tag);
@@ -385,17 +394,12 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [pop PopupView:VC Size:CGSizeMake(240,300) uponView:self];
 }
 -(Respcrmtask_browse*)fn_init_updateform{
-    NSString *unique_id=[idic_parameter_value valueForKey:@"unique_id"];
-    [idic_parameter_value removeObjectForKey:@"unique_id"];
-    [idic_parameter_value removeObjectForKey:@"is_modified"];
     Respcrmtask_browse *upd_form=[[Respcrmtask_browse alloc]init];
     //使用kvc给模型数据赋值
     [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
     if (_add_flag==1) {
         idic_parameter_value=[[NSDictionary dictionaryWithPropertiesOfObject:upd_form]mutableCopy];
         [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
-    }else{
-        [idic_parameter_value setObject:unique_id forKey:@"unique_id"];
     }
     return upd_form;
 }
@@ -416,8 +420,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }else if([col_type isEqualToString:@"datetime"]&&[select_date length]==0){
         return;
     }else{
-        [idic_parameter_value setObject:textView.text forKey:col_code];
-        [idic_edited_parameter setObject:textView.text forKey:col_code];
+        NSString *str_value=textView.text;
+        str_value=[str_value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [idic_parameter_value setObject:str_value forKey:col_code];
+        [idic_edited_parameter setObject:str_value forKey:col_code];
     }
 }
 
@@ -430,8 +436,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         str=MYLocalizedString(@"msg_cancel_edit", nil);
     }
     if (!isSame) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
-        flag=1;
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
+        flag_click_cancel=1;
         [alert show];
     }else{
         [self.navigationController popViewControllerAnimated:YES];

@@ -26,7 +26,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @property (nonatomic,strong)NSMutableArray *alist_filtered_oppdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSMutableArray *alist_option;
-@property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp;
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp_copy;
 @property (nonatomic,strong)NSMutableDictionary *idic_edited_opp;
 @property (nonatomic,strong)Format_conversion *convert;
@@ -36,7 +35,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @end
 
 @implementation EditOppViewController
-@synthesize opp_id;
 @synthesize alist_filtered_oppdata;
 @synthesize alist_groupNameAndNum;
 @synthesize alist_maintOpp;
@@ -61,18 +59,9 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 {
     [super viewDidLoad];
     [self fn_get_maint_crmopp];
-    [self fn_get_idic_parameter];
-    self.skstableView.SKSTableViewDelegate=self;
-    [expand_helper setExtraCellLineHidden:self.skstableView];
-    [self.skstableView fn_expandall];
-    self.skstableView.showsVerticalScrollIndicator=NO;
-    convert=[[Format_conversion alloc]init];
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [self fn_set_property];
     [self fn_custom_gesture];
-    flag_cancel=0;
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
-    [self fn_show_different_language];
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,12 +69,32 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)fn_show_different_language{
+- (void)fn_set_property{
+    idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
+    idic_edited_opp=[[NSMutableDictionary alloc]initWithCapacity:1];
+    
     [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
     [_ibtn_Cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_opp", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
+    if (_add_opp_flag==1) {
+        [_ibtn_logo setTitle:MYLocalizedString(@"sheet_opp", nil) forState:UIControlStateNormal];
+    }
+    if (_flag_can_edit!=1) {
+        _ibtn_save.enabled=NO;
+    }else{
+        _ibtn_save.enabled=YES;
+    }
     
+    self.skstableView.SKSTableViewDelegate=self;
+    [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableView];
+    
+    convert=[[Format_conversion alloc]init];
+    
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
 -(void)fn_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
@@ -103,16 +112,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [textViewCheck resignFirstResponder];
 }
-#pragma mark -获取要修改的opp数据
--(void)fn_get_idic_parameter{
-    DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
-    NSMutableArray *arr_crmcontact=[db fn_get_crmopp_with_id:opp_id];
-    if ([arr_crmcontact count]!=0) {
-        idic_parameter_opp=[arr_crmcontact objectAtIndex:0];
-    }
-    idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
-    idic_edited_opp=[[NSMutableDictionary alloc]initWithCapacity:1];
-}
+
 #pragma mark -获取定制opp maint版面的数据
 -(void)fn_get_maint_crmopp{
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
@@ -167,6 +167,11 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     //is_enable
     NSString *is_enable=[dic valueForKey:@"is_enable"];
     NSInteger is_enable_flag=[is_enable integerValue];
+    if (_flag_can_edit!=1) {
+        is_enable_flag=0;
+    }else{
+        is_enable_flag=1;
+    }
     //col_opption
     NSString *col_option=[dic valueForKey:@"col_option"];
     [self fn_get_choice_arr:col_option];
@@ -256,38 +261,48 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSMutableDictionary *dic=pass_value(textView.tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     if (textView.text!=nil) {
-        [idic_parameter_opp setObject:textView.text forKey:col_code];
-        [idic_edited_opp setObject:textView.text forKey:col_code];
+        NSString *str_value=textView.text;
+        //去掉字符串的前后空格
+        str_value=[str_value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        [idic_parameter_opp setObject:str_value forKey:col_code];
+        [idic_edited_opp setObject:str_value forKey:col_code];
     }
 }
 - (IBAction)fn_save_modified_data:(id)sender {
-    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_save_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
+    NSString *str_msg=nil;
+    if (_add_opp_flag==1) {
+        str_msg=MYLocalizedString(@"msg_save_add", nil);
+    }else{
+        str_msg=MYLocalizedString(@"msg_save_edit", nil);
+    }
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
     [alert show];
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==0) {
+   
+    if (buttonIndex==[alertView firstOtherButtonIndex]) {
+        BOOL isSuccess=NO;
         DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
-        [idic_edited_opp setObject:@"1" forKey:@"is_modified"];
-        BOOL isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
+        if (_add_opp_flag==1) {
+            NSMutableArray *alist_crmopp=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
+            isSuccess=[db_crmopp fn_save_crmopp_browse:alist_crmopp];
+        }else{
+            [idic_edited_opp setObject:@"1" forKey:@"is_modified"];
+            isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
+        }
         if (isSuccess) {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
-        }
-        Web_updateData *update=[[Web_updateData alloc]init];
-        [update fn_get_updateStatus_data:[self fn_get_updateform] path:STR_CRMOPP_UPDATE_URL :^(NSMutableArray *alist_result){
-            NSString *status=nil;
-            if ([alist_result count]!=0) {
-                status=[[alist_result objectAtIndex:0]valueForKey:@"status"];
+            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+            [alertview show];
+            idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
+            if (flag_cancel==1 ||_add_opp_flag) {
+                [self.navigationController popViewControllerAnimated:YES];
             }
-            if ([status isEqualToString:@"1"]) {
-                [db_crmopp fn_update_crmopp_ismodified:@"0" unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
-            }
-        } ];
-        if (flag_cancel==1) {
-            [self.navigationController popViewControllerAnimated:YES];
         }
+        
     }
-    if (buttonIndex==1) {
+    if (buttonIndex==[alertView cancelButtonIndex]) {
         idic_parameter_opp=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp_copy];
         [self.skstableView reloadData];
         if (flag_cancel==1) {
@@ -298,14 +313,12 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 }
 -(RespCrmopp_browse*)fn_get_updateform{
     RespCrmopp_browse *updateform_contact=[[RespCrmopp_browse alloc]init];
-    NSString *unique_id=[idic_parameter_opp valueForKey:@"unique_id"];
-    [idic_parameter_opp removeObjectForKey:@"unique_id"];
-    [idic_parameter_opp removeObjectForKey:@"is_modified"];
+   //使用kvc给模型数据赋值
     [updateform_contact setValuesForKeysWithDictionary:idic_parameter_opp];
-    [idic_parameter_opp setObject:unique_id forKey:@"unique_id"];
+    idic_parameter_opp=[[NSDictionary dictionaryWithPropertiesOfObject:updateform_contact]mutableCopy];
+    [updateform_contact setValuesForKeysWithDictionary:idic_parameter_opp];
     return updateform_contact;
 }
-
 - (IBAction)fn_lookup_data:(id)sender {
     UIButton *ibtn=(UIButton*)sender;
     NSMutableDictionary *idic=pass_value(ibtn.tag);
@@ -345,8 +358,14 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 
 - (IBAction)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
+    NSString *str_msg=nil;
+    if (_add_opp_flag==1) {
+        str_msg=MYLocalizedString(@"msg_cancel_add", nil);
+    }else{
+        str_msg=MYLocalizedString(@"msg_cancel_edit", nil);
+    }
     if (!isSame) {
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_save_edit", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
         [alertview show];
         flag_cancel=1;
     }else{

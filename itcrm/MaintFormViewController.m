@@ -7,14 +7,8 @@
 //
 
 #import "MaintFormViewController.h"
-#import "DB_MaintForm.h"
-#import "DB_formatlist.h"
-#import "DB_crmhbl_browse.h"
-#import "DB_crmopp_browse.h"
-#import "DB_crmtask_browse.h"
+#import "Web_resquestData.h"
 #import "DB_crmacct_browse.h"
-#import "DB_crmcontact_browse.h"
-#import "DB_Region.h"
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
@@ -26,6 +20,11 @@
 #import "MaintTaskViewController.h"
 
 @interface MaintFormViewController ()
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_add_operation;
+@property (nonatomic,strong)NSMutableArray *alist_maintForm;
+//过滤后的数组
+@property (nonatomic,strong)NSMutableArray *alist_filtered_data;
+@property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property(nonatomic,strong)NSMutableArray *alist_crmopp;
 @property(nonatomic,strong)NSMutableArray *alist_crmtask;
 @property (nonatomic,strong)NSMutableArray *alist_crmhbl;
@@ -75,25 +74,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    format=[[Format_conversion alloc]init];
-    [self fn_init_arr];
-    //设置表的代理
-    self.skstableView.SKSTableViewDelegate=self;
-    //loadview的时候，打开expandable
-    [self.skstableView fn_expandall];
-    self.skstableView.showsVerticalScrollIndicator=NO;
-    [expand_helper setExtraCellLineHidden:self.skstableView];
-    //避免键盘挡住UITextView
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [self fn_set_property];
+    if (_flag_isDowload==1) {
+        [self fn_init_arr_offline];
+    }else{
+        [self fn_init_arr_online];
+    }
     [self fn_custom_gesture];
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
-    //获取将要修改的值
-    DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
-    //idic_modified_value=[[db_crmacct fn_get_data_from_id:_is_acct_id] objectAtIndex:0];
-    //设置title
-    self.title=MYLocalizedString(@"lbl_edit_account", nil);
-	// Do any additional setup after loading the view.
+  
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,12 +94,32 @@
 - (void)fn_save_modified_data:(id)sender {
     
 }
+- (void)fn_set_property{
+    //设置表的代理
+    self.skstableView.SKSTableViewDelegate=self;
+    //loadview的时候，打开expandable
+    [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableView];
+    
+    if (_flag_isDowload!=1) {
+        _ibtn_add_operation.enabled=NO;
+    }
+    
+    format=[[Format_conversion alloc]init];
+    //避免键盘挡住UITextView
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+    //设置title
+    self.title=MYLocalizedString(@"lbl_edit_account", nil);
+}
 #pragma mark UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex==0) {
+    NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
+    NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
+    if (buttonIndex==[actionSheet firstOtherButtonIndex]) {
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
-        NSString *ref_name=[idic_modified_value valueForKey:@"acct_name"];
-        NSMutableDictionary *idic_parameter=[NSMutableDictionary dictionary];
         [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
         [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
         [idic_parameter setObject:@"#1" forKey:@"task_id"];
@@ -119,11 +128,22 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
     if (buttonIndex==1) {
+        [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
+        [idic_parameter setObject:ref_name forKey:@"contact_ref_name"];
+        [idic_parameter setObject:_is_acct_id forKey:@"contact_ref_id"];
+        [idic_parameter setObject:@"#1" forKey:@"contact_id"];
+        editContactVC.idic_parameter_contact=idic_parameter;
+        editContactVC.add_contact_flag=1;
     }
     if (buttonIndex==2) {
+        [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
+        [idic_parameter setObject:ref_name forKey:@"opp_ref_name"];
+        [idic_parameter setObject:_is_acct_id forKey:@"opp_ref_id"];
+        [idic_parameter setObject:@"#1" forKey:@"opp_id"];
+        editOppVC.idic_parameter_opp=idic_parameter;
+        editOppVC.add_opp_flag=1;
     }
-    if (buttonIndex==3) {
-    }
+    idic_parameter=nil;
 }
 #pragma mark 点击状态栏Tableview回滚top
 -(void)fn_tableView_scrollTop{
@@ -145,8 +165,52 @@
 }
 
 #pragma mark -初始化数组
--(void)fn_init_arr{
+//在线环境下初始化数组
+-(void)fn_init_arr_online{
+    //获取crmtask的列表数据
+    NSArray *arr_crmtask=[_resp_download.ActivityResult allObjects];
+    alist_crmtask_value=[[NSMutableArray alloc]init];
+    for (Respcrmtask_browse *resp_crmtask in arr_crmtask) {
+        NSDictionary *dic=[NSDictionary dictionaryWithPropertiesOfObject:resp_crmtask];
+        [alist_crmtask_value addObject:dic];
+        dic=nil;
+    }
+    alist_crmtask=[self fn_format_convert:alist_crmtask_value list_id:@"crmacct_task"];
     
+    //获取crmopp的列表数据
+    NSArray *arr_crmopp=[_resp_download.OppResult allObjects];
+    alist_crmopp_value=[[NSMutableArray alloc]init];
+    for (RespCrmopp_browse *resp_crmopp in arr_crmopp) {
+        NSDictionary *dic=[NSDictionary dictionaryWithPropertiesOfObject:resp_crmopp];
+        [alist_crmopp_value addObject:dic];
+        dic=nil;
+    }
+    alist_crmopp=[self fn_format_convert:alist_crmopp_value list_id:@"crmacct_opp"];
+    
+    //获取crmhbl的列表数据
+    NSArray *arr_crmhbl=[_resp_download.HblResult allObjects];
+    NSMutableArray *crmhbl_arr=[[NSMutableArray alloc]init];
+    for (RespCrmhbl_browse *resp_crmhbl in arr_crmhbl) {
+        NSDictionary *dic=[NSDictionary dictionaryWithPropertiesOfObject:resp_crmhbl];
+        [crmhbl_arr addObject:dic];
+        dic=nil;
+    }
+    alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
+    crmhbl_arr=nil;
+    
+    //获取crmcontact的列表数据
+    alist_crmcontact_value=[[NSMutableArray alloc]init];
+    NSArray *arr_crmcontact=[_resp_download.ContactResult allObjects];
+    for (RespCrmcontact_browse *resp_contact in arr_crmcontact) {
+        NSDictionary *dic=[NSDictionary dictionaryWithPropertiesOfObject:resp_contact];
+        [alist_crmcontact_value addObject:dic];
+        dic=nil;
+    }
+    alist_contact=[self fn_format_convert:alist_crmcontact_value list_id:@"crmacct_contact"];
+    [self fn_add_groupNameAndNum];
+}
+//离线环境下初始化数组
+-(void)fn_init_arr_offline{
     DB_formatlist *db_format=[[DB_formatlist alloc]init];
     //获取crmtask的列表数据
     DB_crmtask_browse  *db_crmtask=[[DB_crmtask_browse alloc]init];
@@ -165,35 +229,39 @@
     DB_crmcontact_browse  *db_crmcontact=[[DB_crmcontact_browse alloc]init];
     alist_crmcontact_value=[db_crmcontact fn_get_relate_crmcontact_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_contact"]];
     alist_contact=[self fn_format_convert:alist_crmcontact_value list_id:@"crmacct_contact"];
+    [self fn_add_groupNameAndNum];
+   
+}
+- (void)fn_add_groupNameAndNum{
     
     DB_MaintForm *db=[[DB_MaintForm alloc]init];
     alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
     flag_groupNum=[alist_groupNameAndNum count];
+    //添加活动组
     
-    if ([alist_crmtask count]!=0) {
-        NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
-        [crmtask_dic setObject:MYLocalizedString(@"lbl_task", nil) forKey:@"group_name"];
-        [crmtask_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmtask.count)] forKey:@"COUNT(group_name)"];
-        [alist_groupNameAndNum addObject:crmtask_dic];
-    }
-    if ([alist_contact count]!=0) {
-        NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
-        [crmcontact_dic setObject:MYLocalizedString(@"lbl_contact", nil) forKey:@"group_name"];
-        [crmcontact_dic setObject:[NSString stringWithFormat:@"%@",@(alist_contact.count)] forKey:@"COUNT(group_name)"];
-        [alist_groupNameAndNum addObject:crmcontact_dic];
-    }
-    if ([alist_crmopp count]!=0) {
-         NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
-        [crmopp_dic setObject:MYLocalizedString(@"lbl_opp", nil) forKey:@"group_name"];
-        [crmopp_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmopp.count)] forKey:@"COUNT(group_name)"];
-        [alist_groupNameAndNum addObject:crmopp_dic];
-    }
-    if ([alist_crmhbl count]!=0) {
-         NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
-        [crmhbl_dic setObject:MYLocalizedString(@"lbl_hbl", nil) forKey:@"group_name"];
-        [crmhbl_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmhbl.count)] forKey:@"COUNT(group_name)"];
-        [alist_groupNameAndNum addObject:crmhbl_dic];
-    }
+    NSMutableDictionary *crmtask_dic=[NSMutableDictionary dictionary];
+    [crmtask_dic setObject:MYLocalizedString(@"lbl_task", nil) forKey:@"group_name"];
+    [crmtask_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmtask.count)] forKey:@"COUNT(group_name)"];
+    [alist_groupNameAndNum addObject:crmtask_dic];
+    
+    //添加通讯录组
+    NSMutableDictionary *crmcontact_dic=[NSMutableDictionary dictionary];
+    [crmcontact_dic setObject:MYLocalizedString(@"lbl_contact", nil) forKey:@"group_name"];
+    [crmcontact_dic setObject:[NSString stringWithFormat:@"%@",@(alist_contact.count)] forKey:@"COUNT(group_name)"];
+    [alist_groupNameAndNum addObject:crmcontact_dic];
+    
+    //添加商机组
+    NSMutableDictionary *crmopp_dic=[NSMutableDictionary dictionary];
+    [crmopp_dic setObject:MYLocalizedString(@"lbl_opp", nil) forKey:@"group_name"];
+    [crmopp_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmopp.count)] forKey:@"COUNT(group_name)"];
+    [alist_groupNameAndNum addObject:crmopp_dic];
+    
+    //添加货运记录组
+    NSMutableDictionary *crmhbl_dic=[NSMutableDictionary dictionary];
+    [crmhbl_dic setObject:MYLocalizedString(@"lbl_hbl", nil) forKey:@"group_name"];
+    [crmhbl_dic setObject:[NSString stringWithFormat:@"%@",@(alist_crmhbl.count)] forKey:@"COUNT(group_name)"];
+    [alist_groupNameAndNum addObject:crmhbl_dic];
+    
     alist_maintForm=[db fn_get_MaintForm_data:@"crmacct"];
     alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
     idic_lookup=[[NSMutableDictionary alloc]initWithCapacity:10];
@@ -208,15 +276,31 @@
         //转换格式
         arr_browse=[format fn_format_conersion:arr_format browse:arr_crm];
     }
+    db_format=nil;
     return arr_browse;
 }
 #pragma mark 过滤数据
 -(void)fn_get_filtered_data{
     for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-         NSString *str_groupName=[dic valueForKey:@"group_name"];
+        NSString *str_groupName=[dic valueForKey:@"group_name"];
         NSArray *arr=[expand_helper fn_filtered_criteriaData:str_groupName arr:alist_maintForm];
         if (arr!=nil && [arr count]!=0) {
-            [alist_filtered_data addObject:arr];
+            NSMutableArray *arr_copy=[[NSMutableArray alloc]initWithArray:arr];
+            for (NSDictionary *dic_maintform in arr) {
+                NSString *col_label=[dic_maintform valueForKey:@"col_label"];
+                NSString *col_code=[dic_maintform valueForKey:@"col_code"];
+                NSString *col_code_value=[idic_modified_value valueForKey:col_code];
+                if ([col_label length]==0&&[col_code_value length]==0) {
+                    [alist_maintForm removeObject:dic_maintform];
+                    [arr_copy removeObject:dic_maintform];
+                }
+                col_label=nil;
+                col_code=nil;
+                col_code_value=nil;
+            }
+            [dic setObject:@(arr_copy.count) forKey:@"COUNT(group_name)"];
+            [alist_filtered_data addObject:arr_copy];
+            arr_copy=nil;
         }else{
             if ([str_groupName isEqualToString:MYLocalizedString(@"lbl_task", nil)]) {
                 [alist_filtered_data addObject:alist_crmtask];
@@ -390,27 +474,26 @@
     NSInteger selectRow=indexPath.subRow-1;
     if ([groupName isEqualToString:MYLocalizedString(@"lbl_contact", nil)]) {
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
-        editContactVC.is_contact_id=[[alist_crmcontact_value objectAtIndex:selectRow]valueForKey:@"contact_id"];
+        editContactVC.idic_parameter_contact=[alist_crmcontact_value objectAtIndex:selectRow];
+        editContactVC.flag_can_edit=_flag_isDowload;
     }
     if ([groupName isEqualToString:MYLocalizedString(@"lbl_task", nil)]) {
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
-        NSString *is_task_id=[[alist_crmtask_value objectAtIndex:selectRow]valueForKey:@"task_id"];
-        DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
-        NSMutableArray *crmtask_arr=[db_crmtask fn_get_crmtask_data_from_id:is_task_id];
-        if ([crmtask_arr count]!=0) {
-            maintTaskVC.idic_parameter_value=[crmtask_arr objectAtIndex:0];
-        }
+        maintTaskVC.idic_parameter_value=[alist_crmtask_value objectAtIndex:indexPath.subRow-1];
+        maintTaskVC.flag_can_edit=_flag_isDowload;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
     if ([groupName isEqualToString:MYLocalizedString(@"lbl_opp", nil)]) {
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
-        editOppVC.opp_id=[[alist_crmopp_value objectAtIndex:selectRow]valueForKey:@"opp_id"];
+        editOppVC.idic_parameter_opp=[alist_crmopp_value objectAtIndex:selectRow];
+        editOppVC.flag_can_edit=_flag_isDowload;
     }
 }
 #pragma mark 修改后，更新browse
 -(void)fn_update_browse{
     [alist_filtered_data removeAllObjects];
-    [self fn_init_arr];
+#warning neet fix
+    //[self fn_init_arr];
     [self.skstableView refreshData];
 }
 #pragma mark respond prepareForSegue: sender:
