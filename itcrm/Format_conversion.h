@@ -25,5 +25,6 @@
  */
 -(NSMutableArray*)fn_sort_the_array:(NSMutableArray*)alist_source  key:(NSString*)sortBy_name;
 -(BOOL)fn_isContain_a_character:(NSString*)_parentString substring:(NSString*)_substring;
+-(NSString*)fn_get_current_date_millisecond;
 
 @end

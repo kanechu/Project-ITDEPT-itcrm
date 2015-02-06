@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "RespCrmacct_browse.h"
 @interface Resp_crmacct_dowload : NSObject
 @property (nonatomic,copy) NSString *acct_id;
+@property (nonatomic,copy) NSSet *AccountResult;
 @property (nonatomic,strong) NSSet *ContactResult;
 @property (nonatomic,strong) NSSet *HblResult;
 @property (nonatomic,strong) NSSet *OppResult;

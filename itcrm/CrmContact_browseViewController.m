@@ -135,7 +135,7 @@
     if (height<21) {
         height=21;
     }
-    return height+21;
+    return height+5+21;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"Segue_editContact" sender:self];

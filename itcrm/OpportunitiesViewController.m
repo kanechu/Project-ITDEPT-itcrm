@@ -136,7 +136,7 @@
     Cell_browse *cell=[self.tableview dequeueReusableCellWithIdentifier:cellIndentifier];
     NSString *cellText = [[alist_crmopp_browse objectAtIndex:indexPath.row]valueForKey:@"body"];
     CGFloat height=[format fn_heightWithString:cellText font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
-    return height+10+23;
+    return height+5+23;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

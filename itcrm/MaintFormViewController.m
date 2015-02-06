@@ -122,6 +122,7 @@
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
         [idic_parameter setObject:ref_name forKey:@"task_ref_name"];
         [idic_parameter setObject:_is_acct_id forKey:@"task_ref_id"];
+        [idic_parameter setObject:@"ACCT" forKey:@"task_ref_type"];
         [idic_parameter setObject:@"#1" forKey:@"task_id"];
         maintTaskVC.idic_parameter_value=idic_parameter;
         maintTaskVC.add_flag=1;
@@ -132,6 +133,7 @@
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
         [idic_parameter setObject:ref_name forKey:@"contact_ref_name"];
         [idic_parameter setObject:_is_acct_id forKey:@"contact_ref_id"];
+        [idic_parameter setObject:@"ACCT" forKey:@"contact_type"];
         [idic_parameter setObject:@"#1" forKey:@"contact_id"];
         editContactVC.idic_parameter_contact=idic_parameter;
         editContactVC.add_contact_flag=1;
@@ -141,6 +143,7 @@
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
         [idic_parameter setObject:ref_name forKey:@"opp_ref_name"];
         [idic_parameter setObject:_is_acct_id forKey:@"opp_ref_id"];
+        [idic_parameter setObject:@"ACCT" forKey:@"opp_ref_type"];
         [idic_parameter setObject:@"#1" forKey:@"opp_id"];
         editOppVC.idic_parameter_opp=idic_parameter;
         editOppVC.add_opp_flag=1;
@@ -219,19 +222,22 @@
     DB_crmtask_browse  *db_crmtask=[[DB_crmtask_browse alloc]init];
     alist_crmtask_value=[db_crmtask fn_get_relate_crmtask_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_task"]];
     alist_crmtask=[self fn_format_convert:alist_crmtask_value list_id:@"crmacct_task"];
+    db_crmtask=nil;
     //获取crmopp的列表数据
     DB_crmopp_browse  *db_crmopp=[[DB_crmopp_browse alloc]init];
     alist_crmopp_value=[db_crmopp fn_get_relate_crmopp_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_opp"]];
     alist_crmopp=[self fn_format_convert:alist_crmopp_value list_id:@"crmacct_opp"];
-    
+    db_crmopp=nil;
     //获取crmhbl的列表数据
     DB_crmhbl_browse  *db_crmhbl=[[DB_crmhbl_browse alloc]init];
     NSMutableArray *crmhbl_arr=[db_crmhbl fn_get_relate_crmhbl_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_hbl"]];
     alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
+    db_crmhbl=nil;
     //获取crmcontact的列表数据
     DB_crmcontact_browse  *db_crmcontact=[[DB_crmcontact_browse alloc]init];
     alist_crmcontact_value=[db_crmcontact fn_get_relate_crmcontact_data:_is_acct_id select_sql:[db_format fn_get_select_sql:@"crmacct_contact"]];
     alist_contact=[self fn_format_convert:alist_crmcontact_value list_id:@"crmacct_contact"];
+    db_crmcontact=nil;
     [self fn_add_groupNameAndNum];
    
 }

@@ -201,4 +201,43 @@
     return flag_opration_type;
 }
 
+-(kOperation_type)fn_is_need_sync:(NSString*)max_upd_date acct_id:(NSString*)acct_id{
+    __block kOperation_type flag_opration_type;
+    NSMutableArray *alist_result=[self fn_get_data_from_id:acct_id];
+    if ([alist_result count]!=0) {
+        [queue inDataBase:^(FMDatabase *db){
+            long rtn_datetime=0;
+            long sync_datetime=0;
+            if ([db open]) {
+                FMResultSet *lfmdb_result=[db executeQuery:@"SELECT rec_upd_date FROM crmacct where acct_id like ?",acct_id];
+                rtn_datetime=[lfmdb_result longForColumn:@"rec_upd_date"];
+                FMResultSet *lfmdb_opp=[db executeQuery:@"SELECT MAX(rec_upd_date) FROM crmopp_browse where opp_ref_type='ACCT' AND opp_ref_id like ?",acct_id];
+                sync_datetime=[lfmdb_opp longForColumn:@"rec_upd_date"];
+                if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
+                    rtn_datetime=sync_datetime;
+                }
+                FMResultSet *lfmdb_task=[db executeQuery:@"SELECT MAX(rec_upd_date) FROM crmtask where task_ref_type='ACCT' AND task_ref_id like ?",acct_id];
+                sync_datetime=[lfmdb_task longForColumn:@"rec_upd_date"];
+                if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
+                    rtn_datetime=sync_datetime;
+                }
+                FMResultSet *lfmdb_contact=[db executeQuery:@"SELECT MAX(rec_upd_date) FROM crmcontact where contact_type='ACCT' AND contact_ref_id like ?",acct_id];
+                sync_datetime=[lfmdb_contact longForColumn:@"rec_upd_date"];
+                if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
+                    rtn_datetime=sync_datetime;
+                }
+                [db close];
+            }
+            if ([max_upd_date longLongValue]!=rtn_datetime) {
+                flag_opration_type=kUpdate_acct;
+            }else{
+                flag_opration_type=kNon_operation;
+            }
+        }];
+        
+    }else{
+        flag_opration_type=kDownload_acct;
+    }
+    return flag_opration_type;
+}
 @end

@@ -31,4 +31,6 @@ typedef NS_ENUM(NSInteger, kOperation_type){
 
 -(kOperation_type)fn_get_operation_type:(NSString*)rec_upd_date acct_id:(NSString*)acct_id;
 
+-(kOperation_type)fn_is_need_sync:(NSString*)max_upd_date acct_id:(NSString*)acct_id;
+
 @end

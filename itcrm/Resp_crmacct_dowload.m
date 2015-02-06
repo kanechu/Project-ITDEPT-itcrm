@@ -10,6 +10,7 @@
 
 @implementation Resp_crmacct_dowload
 @synthesize acct_id;
+@synthesize AccountResult;
 @synthesize ContactResult;
 @synthesize HblResult;
 @synthesize OppResult;

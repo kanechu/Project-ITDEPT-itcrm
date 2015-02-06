@@ -180,6 +180,9 @@
     RKObjectMapping* lo_response_mapping = [RKObjectMapping mappingForClass:[Resp_crmacct_dowload class]];
     [lo_response_mapping addAttributeMappingsFromArray:@[@"acct_id"]];
     
+    RKObjectMapping* lo_crmacct_response_mapping=[RKObjectMapping mappingForClass:[RespCrmacct_browse class]];
+    [lo_crmacct_response_mapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]]];
+    
     RKObjectMapping* lo_contact_response_mapping=[RKObjectMapping mappingForClass:[RespCrmcontact_browse class]];
     [lo_contact_response_mapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[RespCrmcontact_browse class]]];
     
@@ -195,6 +198,8 @@
     
     RKObjectMapping* lo_task_response_mapping=[RKObjectMapping mappingForClass:[Respcrmtask_browse class]];
     [lo_task_response_mapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[Respcrmtask_browse class]]];
+    
+    [lo_response_mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"AccountResult" toKeyPath:@"AccountResult" withMapping:lo_crmacct_response_mapping]];
     [lo_response_mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"ContactResult" toKeyPath:@"ContactResult" withMapping:lo_contact_response_mapping]];
     [lo_response_mapping addPropertyMapping:[RKRelationshipMapping relationshipMappingFromKeyPath:@"HblResult" toKeyPath:@"HblResult" withMapping:lo_hbl_response_mapping]];
     
