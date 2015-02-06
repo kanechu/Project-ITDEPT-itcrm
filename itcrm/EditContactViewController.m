@@ -20,6 +20,7 @@
 #import "Custom_BtnGraphicMixed.h"
 #import "CheckUpdate.h"
 #import "SVProgressHUD.h"
+#import "Format_conversion.h"
 #define TEXT_TAG 100
 typedef NSString* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
@@ -324,6 +325,11 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
             isSuccess=[db fn_save_crmcontact_browse:alist_crmcontact];
             alist_crmcontact=nil;
         }else{
+            Format_conversion *format_obj=[[Format_conversion alloc]init];
+            NSString *current_date=[format_obj fn_get_current_date_millisecond];
+            [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];
+            format_obj=nil;
+            current_date=nil;
             [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
             isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
         }
@@ -354,6 +360,9 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         idic_parameter_contact=[[NSDictionary dictionaryWithPropertiesOfObject:updateform_contact]mutableCopy];
         [updateform_contact setValuesForKeysWithDictionary:idic_parameter_contact];
     }
+    Format_conversion *format_obj=[[Format_conversion alloc]init];
+    updateform_contact.rec_upd_date=[format_obj fn_get_current_date_millisecond];
+    format_obj=nil;
     return updateform_contact;
 }
 @end

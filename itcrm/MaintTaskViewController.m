@@ -359,6 +359,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
             NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
             isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
         }else{
+            NSString *current_date=[format fn_get_current_date_millisecond];
+            [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];
+            current_date=nil;
             [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
             isSuccess=[db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
         }
@@ -387,8 +390,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
     VC.alist_option=alist_option;
     VC.callback=^(NSMutableDictionary *dic){
+        NSString *lang_key=[NSString stringWithFormat:@"%@_lang",key];
         [idic_parameter_value setObject:[dic valueForKey:@"data"] forKey:key];
         [idic_edited_parameter setObject:[dic valueForKey:@"data"] forKey:key];
+        [idic_parameter_value setObject:[dic valueForKey:@"display"] forKey:lang_key];
+        [idic_edited_parameter setObject:[dic valueForKey:@"display"] forKey:lang_key];
         [self.skstableview reloadData];
     };
     PopViewManager *pop=[[PopViewManager alloc]init];
@@ -402,6 +408,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         idic_parameter_value=[[NSDictionary dictionaryWithPropertiesOfObject:upd_form]mutableCopy];
         [upd_form setValuesForKeysWithDictionary:idic_parameter_value];
     }
+    upd_form.rec_upd_date=[format fn_get_current_date_millisecond];
     return upd_form;
 }
 #pragma mark UITextViewDelegate

@@ -289,6 +289,10 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             NSMutableArray *alist_crmopp=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
             isSuccess=[db_crmopp fn_save_crmopp_browse:alist_crmopp];
         }else{
+
+            NSString *current_date=[convert fn_get_current_date_millisecond];
+            [idic_edited_opp setObject:current_date forKey:@"rec_upd_date"];
+            current_date=nil;
             [idic_edited_opp setObject:@"1" forKey:@"is_modified"];
             isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
         }
@@ -318,6 +322,8 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [updateform_contact setValuesForKeysWithDictionary:idic_parameter_opp];
     idic_parameter_opp=[[NSDictionary dictionaryWithPropertiesOfObject:updateform_contact]mutableCopy];
     [updateform_contact setValuesForKeysWithDictionary:idic_parameter_opp];
+    NSString *current_date=[convert fn_get_current_date_millisecond];
+    updateform_contact.rec_upd_date=current_date;
     return updateform_contact;
 }
 - (IBAction)fn_lookup_data:(id)sender {

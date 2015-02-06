@@ -70,7 +70,7 @@
     return ib_updated;
 }
 -(NSMutableArray*)fn_get_crmopp_data:(NSString*)opp_name select_sql:(NSString*)select_sql{
-    NSString *sql=[NSString stringWithFormat:@"SELECT %@ FROM crmopp_browse where opp_name like ?",select_sql];
+    NSString *sql=[NSString stringWithFormat:@"SELECT * FROM crmopp_browse where opp_name like ?"];
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
@@ -85,7 +85,7 @@
 }
 -(NSMutableArray*)fn_get_relate_crmopp_data:(NSString *)opp_ref_id select_sql:(NSString *)select_sql{
     select_sql=[select_sql stringByAppendingString:@",opp_id"];
-    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmopp_browse where opp_ref_type = 'ACCT' and opp_ref_id like ? ORDER BY rec_upd_date,rec_crt_date DESC",select_sql];
+    NSString *is_sql=[NSString stringWithFormat:@"select * from crmopp_browse where opp_ref_type = 'ACCT' and opp_ref_id like ? ORDER BY rec_upd_date,rec_crt_date DESC"];
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
