@@ -358,6 +358,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         if (_add_flag==1) {
             NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
             isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
+            [db fn_update_crmtask_ismodified:@"1" task_id:[idic_parameter_value valueForKey:@"task_id"]];
         }else{
             NSString *current_date=[format fn_get_current_date_millisecond];
             [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];

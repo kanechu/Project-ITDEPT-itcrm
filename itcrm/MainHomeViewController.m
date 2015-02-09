@@ -80,23 +80,6 @@
         _user_logo.image=[convert fn_binaryData_convert_image:userlogo];
     }
 }
-/*
--(void)fn_open_new_thread{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [NSTimer scheduledTimerWithTimeInterval:120.0f target:self selector:@selector(fn_update_to_server) userInfo:nil repeats:YES];
-        //定时器要加入runloop中才能执行
-        [[NSRunLoop currentRunLoop]run];
-        
-    });
-}*/
--(void)fn_update_to_server{
-    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
-    NSInteger flag_isLogin=[user_isLogin integerForKey:@"isLogin"];
-    if (flag_isLogin==1) {
-        CheckUpdate *update=[[CheckUpdate alloc]init];
-        [update fn_checkUpdate_all_db];
-    }
-}
 
 -(void)fn_isLogin_crm{
     NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];

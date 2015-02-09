@@ -288,6 +288,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         if (_add_opp_flag==1) {
             NSMutableArray *alist_crmopp=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
             isSuccess=[db_crmopp fn_save_crmopp_browse:alist_crmopp];
+            [db_crmopp fn_update_crmopp_ismodified:@"1" opp_id:[idic_parameter_opp valueForKey:@"opp_id"]];
         }else{
 
             NSString *current_date=[convert fn_get_current_date_millisecond];

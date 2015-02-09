@@ -18,6 +18,8 @@
 #import "SVProgressHUD.h"
 #import "CheckUpdate.h"
 
+static NSInteger flag_complete_upload=0;
+
 @interface Crmacct_browseViewController ()
 /*These outlets to the buttons use a 'strong' reference instead of 'weak' because we want to keep the buttons around even if they're not inside a view.*/
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *ibtn_download;
@@ -41,6 +43,7 @@
 @property (nonatomic, strong) UIImage *acct_icon;
 @property (nonatomic, copy) NSString *base_url;
 @property (nonatomic, assign) kOperation_type flag_opration_type;
+//标识是否处于长按状态
 @property (nonatomic, assign) NSInteger flag_longPress_state;
 @property (nonatomic, assign) NSInteger flag_isDownload;
 @end
@@ -161,8 +164,8 @@
         tapGesture_imgV=nil;
         NSMutableDictionary *dic_acct=[alist_account_parameter objectAtIndex:indexPath.row];
         NSString *acct_id=[dic_acct valueForKey:@"acct_id"];
-        NSString *rec_upd_date=[dic_acct valueForKey:@"rec_upd_date"];
-        _flag_opration_type=[db_acct fn_get_operation_type:rec_upd_date acct_id:acct_id];
+        NSString *max_upd_date=[dic_acct valueForKey:@"max_upd_date"];
+        _flag_opration_type=[db_acct fn_is_need_sync:max_upd_date acct_id:acct_id];
         if (_flag_opration_type==kDownload_acct) {
             cell.ii_image.image=[UIImage imageNamed:@"ic_download"];
         }else if(_flag_opration_type==kUpdate_acct){
@@ -171,7 +174,7 @@
             cell.ii_image.image=acct_icon;
         }
         acct_id=nil;
-        rec_upd_date=nil;
+        max_upd_date=nil;
         dic_acct=nil;
         
         UILongPressGestureRecognizer *longGesture=[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(fn_multiple_download_crmacct:)];
@@ -230,9 +233,9 @@
     }else{
         NSMutableDictionary *dic_acct=[alist_account_parameter objectAtIndex:indexPath.row];
         NSString *acct_id=[dic_acct valueForKey:@"acct_id"];
-        NSString *rec_upd_date=[dic_acct valueForKey:@"rec_upd_date"];
-        _flag_opration_type=[db_acct fn_get_operation_type:rec_upd_date acct_id:acct_id];
-        if (_flag_opration_type==kNon_operation) {
+        NSString *max_upd_date=[dic_acct valueForKey:@"max_upd_date"];
+        _flag_opration_type=[db_acct fn_is_need_sync:max_upd_date acct_id:acct_id];
+        if (_flag_opration_type==kNon_operation || _flag_opration_type==kUpdate_acct) {
             _flag_isDownload=1;
             [self performSegueWithIdentifier:@"segue_maintForm" sender:self];
         }else{
@@ -285,9 +288,19 @@
 }
 #pragma mark -event action
 - (IBAction)fn_download_multi_acct:(id)sender {
-    [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_get_crmData", nil)];
     [db_acct fn_save_crmacct_browse:alist_multi_acct];
-    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fn_hiden_hud) userInfo:nil repeats:NO];
+    //Exit download mode after download acct
+    [self.tableView_acct setEditing:NO animated:YES];
+    [self fn_updateButtonsToMatchState];
+    NSMutableArray *alist_acct_id=[NSMutableArray array];
+    for (NSDictionary *dic in alist_multi_acct) {
+        NSString *acct_id=[dic valueForKey:@"acct_id"];
+        [alist_acct_id addObject:acct_id];
+    }
+    [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_get_crmData", nil)];
+    [self fn_crmacct_download_relate_data:alist_acct_id];
+    alist_acct_id=nil;
+    
 }
 - (IBAction)fn_cancel_multi_select_acct:(id)sender {
     _flag_longPress_state=0;
@@ -330,19 +343,19 @@
     NSMutableArray *alist_acct=[[NSMutableArray alloc]initWithObjects:resp, nil];
     NSMutableDictionary *dic_acct=[alist_account_parameter objectAtIndex:imag_view.tag];
     NSString *acct_id=[dic_acct valueForKey:@"acct_id"];
-    NSString *rec_upd_date=[dic_acct valueForKey:@"rec_upd_date"];
-    _flag_opration_type=[db_acct fn_get_operation_type:rec_upd_date acct_id:acct_id];
+    NSString *max_upd_date=[dic_acct valueForKey:@"max_upd_date"];
+    _flag_opration_type=[db_acct fn_is_need_sync:max_upd_date acct_id:acct_id];
     if (_flag_opration_type==kDownload_acct&&_flag_longPress_state!=1) {
-        [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_get_crmData", nil)];
         [db_acct fn_save_crmacct_browse:alist_acct];
+        [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_get_crmData", nil)];
         [self fn_crmacct_download_relate_data:[NSArray arrayWithObject:acct_id]];
     }else if(_flag_opration_type==kUpdate_acct&&_flag_longPress_state!=1){
         [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_update_crmData", nil)];
-        [db_acct fn_delete_single_acct_data:acct_id];
-        [db_acct fn_save_crmacct_browse:alist_acct];
-    }
-    if (_flag_opration_type!=kNon_operation && _flag_longPress_state!=1) {
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(fn_hiden_hud) userInfo:nil repeats:NO];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_isComplete_upload_relate_data:) name:@"complete_upload_task" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_isComplete_upload_relate_data:) name:@"complete_upload_contact" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_isComplete_upload_relate_data:) name:@"complete_upload_opp" object:nil];
+        CheckUpdate *check_obj=[[CheckUpdate alloc]init];
+        [check_obj fn_checkUpdate_all_db:acct_id];
     }
     alist_acct=nil;
 }
@@ -353,31 +366,6 @@
         [self.tableView_acct setEditing:YES animated:YES];
     }
     [self fn_updateButtonsToMatchState];
-}
-- (void)fn_hiden_hud{
-    if (_flag_opration_type==kDownload_acct) {
-        [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"1%@",MYLocalizedString(@"msg_download_success", nil)]];
-    }
-    if (_flag_opration_type==kUpdate_acct) {
-        [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_upd_success", nil)];
-        
-    }
-    if (_flag_longPress_state==1) {
-        //Exit download mode after download acct
-        [self.tableView_acct setEditing:NO animated:YES];
-        [self fn_updateButtonsToMatchState];
-        [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"%@%@",@(alist_multi_acct.count),MYLocalizedString(@"msg_download_success", nil)]];
-        _flag_longPress_state=0;
-        NSMutableArray *alist_acct_id=[NSMutableArray array];
-        for (NSDictionary *dic in alist_multi_acct) {
-            NSString *acct_id=[dic valueForKey:@"acct_id"];
-            [alist_acct_id addObject:acct_id];
-        }
-        [self fn_crmacct_download_relate_data:alist_acct_id];
-        alist_acct_id=nil;
-        [alist_multi_acct removeAllObjects];
-    }
-    [self.tableView_acct reloadData];
 }
 
 - (void)fn_online_search_crmacct:(NSSet*)iSet_searchForms{
@@ -408,28 +396,68 @@
         DB_crmopp_browse *db_opp=[[DB_crmopp_browse alloc]init];
         DB_crmquo_browse *db_quo=[[DB_crmquo_browse alloc]init];
         DB_crmtask_browse *db_task=[[DB_crmtask_browse alloc]init];
+        [alist_acct_download addObjectsFromArray:alist_resp_result];
+        if (_flag_longPress_state==1 || _flag_opration_type==kDownload_acct) {
+            if (_flag_opration_type==1) {
+                [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"%@%@",@(alist_multi_acct.count),MYLocalizedString(@"msg_download_success", nil)]];
+                _flag_longPress_state=0;
+                [alist_multi_acct removeAllObjects];
+            }else{
+                
+                [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"1%@",MYLocalizedString(@"msg_download_success", nil)]];
+            }
+            
+        }else if (_flag_opration_type==kUpdate_acct){
+            [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_upd_success", nil)];
+            
+        }
         for (Resp_crmacct_dowload *resp_crmacct_obj in alist_resp_result) {
+            NSString *acct_id=resp_crmacct_obj.acct_id;
+            NSMutableArray *alist_acct=[[resp_crmacct_obj.AccountResult allObjects]mutableCopy];
+            if ([alist_acct count]!=0) {
+                [db_acct fn_delete_single_acct_data:acct_id];
+                [db_acct fn_save_crmacct_browse:alist_acct];
+            }
+            
             NSMutableArray *alist_contact=[[resp_crmacct_obj.ContactResult allObjects]mutableCopy];
+            [db_contact fn_delete_relate_crmcontact_data:acct_id];
             [db_contact fn_save_crmcontact_browse:alist_contact];
+            
             NSMutableArray *alist_hbl=[[resp_crmacct_obj.HblResult allObjects]mutableCopy];
+            [db_hbl fn_delete_relate_hbl_data:acct_id];
             [db_hbl fn_save_crmhbl_browse:alist_hbl];
+            
             NSMutableArray *alist_opp=[[resp_crmacct_obj.OppResult allObjects]mutableCopy];
+            [db_opp fn_delete_relate_crmopp_data:acct_id];
             [db_opp fn_save_crmopp_browse:alist_opp];
+            
             NSMutableArray *alist_quo=[[resp_crmacct_obj.QuoResult allObjects]mutableCopy];
+            [db_quo fn_delete_relate_crmquo_data:acct_id];
             [db_quo fn_save_crmquo_browse_data:alist_quo];
+            
             NSMutableArray *alist_activity=[[resp_crmacct_obj.ActivityResult allObjects]mutableCopy];
+            [db_task fn_delete_relate_crmtask_data:acct_id];
             [db_task fn_save_crmtask_browse:alist_activity];
             
         }
+            
+        [self.tableView_acct reloadData];
         db_contact=nil;
         db_hbl=nil;
         db_opp=nil;
         db_quo=nil;
         db_task=nil;
-        [alist_acct_download addObjectsFromArray:alist_resp_result];
     };
     web_obj=nil;
-
+}
+-(void)fn_isComplete_upload_relate_data:(NSNotification*)notification{
+    NSString *acct_id=[notification object];
+    flag_complete_upload++;
+    if (flag_complete_upload==3) {
+        flag_complete_upload=0;
+        [self fn_crmacct_download_relate_data:[NSArray arrayWithObject:acct_id]];
+    }
+    
 }
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
@@ -454,7 +482,6 @@
         [self.tableView_acct reloadData];
     }
 }
-
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSIndexPath *selectedRowIndex=[self.tableView_acct indexPathForSelectedRow];

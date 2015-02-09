@@ -323,6 +323,7 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
         if (_add_contact_flag==1) {
             NSMutableArray *alist_crmcontact=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
             isSuccess=[db fn_save_crmcontact_browse:alist_crmcontact];
+            [db fn_update_crmcontact_ismodified:@"1" contact_id:[idic_parameter_contact valueForKey:@"contact_id"]];
             alist_crmcontact=nil;
         }else{
             Format_conversion *format_obj=[[Format_conversion alloc]init];
