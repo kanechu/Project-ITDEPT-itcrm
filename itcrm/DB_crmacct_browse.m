@@ -174,58 +174,38 @@
     }
 }
 
--(kOperation_type)fn_get_operation_type:(NSString*)rec_upd_date acct_id:(NSString*)acct_id{
-    __block kOperation_type flag_opration_type;
-    NSMutableArray *alist_result=[self fn_get_data_from_id:acct_id];
-    if ([alist_result count]!=0) {
-        [queue inDataBase:^(FMDatabase *db){
-            NSMutableArray *arr=[NSMutableArray array];
-            if ([db open]) {
-                FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM crmacct where acct_id like ? and rec_upd_date like ?",acct_id,rec_upd_date];
-                while ([lfmdb_result next]) {
-                    [arr addObject:[lfmdb_result resultDictionary]];
-                }
-                [db close];
-            }
-            if ([arr count]==0) {
-                flag_opration_type=kUpdate_acct;
-            }else{
-                flag_opration_type=kNon_operation;
-            }
-            arr=nil;
-        }];
-        
-    }else{
-        flag_opration_type=kDownload_acct;
-    }
-    return flag_opration_type;
-}
-
 -(kOperation_type)fn_is_need_sync:(NSString*)max_upd_date acct_id:(NSString*)acct_id{
     __block kOperation_type flag_opration_type;
     NSMutableArray *alist_result=[self fn_get_data_from_id:acct_id];
     if ([alist_result count]!=0) {
         [queue inDataBase:^(FMDatabase *db){
-            long rtn_datetime=0;
-            long sync_datetime=0;
+            long long  rtn_datetime=0;
+            long long  sync_datetime=0;
             if ([db open]) {
-                FMResultSet *lfmdb_result=[db executeQuery:@"SELECT rec_upd_date FROM crmacct where acct_id like ?",acct_id];
-                rtn_datetime=[lfmdb_result longForColumn:@"rec_upd_date"];
-                FMResultSet *lfmdb_opp=[db executeQuery:@"SELECT MAX(rec_upd_date) FROM crmopp_browse where opp_ref_type='ACCT' AND opp_ref_id like ?",acct_id];
-                sync_datetime=[lfmdb_opp longForColumn:@"rec_upd_date"];
+                NSString *str_rtn_datetime;
+                str_rtn_datetime=[db stringForQuery:@"SELECT rec_upd_date FROM crmacct where acct_id like ?",acct_id];
+                rtn_datetime=[str_rtn_datetime longLongValue];
+                str_rtn_datetime=nil;
+                
+                NSString *str_sync_datetime;
+                str_sync_datetime=[db stringForQuery:@"SELECT MAX(rec_upd_date) FROM crmopp_browse where opp_ref_type='ACCT' AND opp_ref_id like ?",acct_id];
+                sync_datetime=[str_sync_datetime longLongValue];
                 if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
                     rtn_datetime=sync_datetime;
                 }
-                FMResultSet *lfmdb_task=[db executeQuery:@"SELECT MAX(rec_upd_date) FROM crmtask where task_ref_type='ACCT' AND task_ref_id like ?",acct_id];
-                sync_datetime=[lfmdb_task longForColumn:@"rec_upd_date"];
+                
+                str_sync_datetime=[db stringForQuery:@"SELECT MAX(rec_upd_date) FROM crmtask where task_ref_type='ACCT' AND task_ref_id like ?",acct_id];
+                sync_datetime=[str_sync_datetime longLongValue];
                 if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
                     rtn_datetime=sync_datetime;
                 }
-                FMResultSet *lfmdb_contact=[db executeQuery:@"SELECT MAX(rec_upd_date) FROM crmcontact where contact_type='ACCT' AND contact_ref_id like ?",acct_id];
-                sync_datetime=[lfmdb_contact longForColumn:@"rec_upd_date"];
+                
+                str_sync_datetime=[db stringForQuery:@"SELECT MAX(rec_upd_date) FROM crmcontact where contact_type='ACCT' AND contact_ref_id like ?",acct_id];
+                sync_datetime=[str_sync_datetime longLongValue];
                 if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
                     rtn_datetime=sync_datetime;
                 }
+                str_sync_datetime=nil;
                 [db close];
             }
             if ([max_upd_date longLongValue]!=rtn_datetime) {

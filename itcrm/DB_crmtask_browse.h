@@ -16,7 +16,7 @@
 
 -(BOOL)fn_update_crmtask_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id;
 
--(BOOL)fn_update_crmtask_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id;
+-(BOOL)fn_update_crmtask_ismodified:(NSString*)is_modified task_id:(NSString*)task_id;
 
 -(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name select_sql:(NSString *)select_sql;
 
@@ -26,7 +26,9 @@
 
 -(NSMutableArray*)fn_get_crmtask_data_from_id:(NSString*)task_id;
 
--(NSMutableArray*)fn_get_all_crmtask_data;
+-(NSMutableArray*)fn_get_need_sync_crmtask:(NSString*)acct_id;
+
+-(BOOL)fn_delete_relate_crmtask_data:(NSString*)acct_id;
 
 -(BOOL)fn_delete_all_data;
 

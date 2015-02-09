@@ -61,11 +61,11 @@
     }];
     return ib_updated;
 }
--(BOOL)fn_update_crmtask_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id{
+-(BOOL)fn_update_crmtask_ismodified:(NSString*)is_modified task_id:(NSString*)task_id{
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            ib_updated =[db executeUpdate:@"update crmtask set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
+            ib_updated =[db executeUpdate:@"update crmtask set is_modified=? where task_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",task_id]];
             [db close];
         }
     }];
@@ -120,7 +120,7 @@
 }
 -(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id select_sql:(NSString *)select_sql{
     select_sql=[select_sql stringByAppendingString:@",task_id"];
-    NSString *is_sql=[NSString stringWithFormat:@"select * from crmtask where task_ref_type='ACCT' and task_ref_id like ? ORDER BY rec_upd_date,rec_crt_date DESC"];
+    NSString *is_sql=[NSString stringWithFormat:@"select * from crmtask where task_ref_type='ACCT' and task_ref_id like ? ORDER BY rec_upd_date,rec_crt_date DESC limit 3"];
     __block  NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
@@ -146,11 +146,11 @@
     }];
     return arr;
 }
--(NSMutableArray*)fn_get_all_crmtask_data{
+-(NSMutableArray*)fn_get_need_sync_crmtask:(NSString*)acct_id{
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmtask"];
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmtask where task_ref_type='ACCT' and task_ref_id like ? and is_modified='1' ",acct_id];
             while ([lfmdb_result next]) {
                 [arr addObject:[lfmdb_result resultDictionary]];
             }
@@ -158,6 +158,17 @@
         }
     }];
     return arr;
+}
+
+-(BOOL)fn_delete_relate_crmtask_data:(NSString*)acct_id{
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from crmtask where task_ref_type='ACCT' and task_ref_id like ?",acct_id];
+            [db close];
+        }
+    }];
+    return ib_deleted;
 }
 -(BOOL)fn_delete_all_data{
     __block BOOL ib_deleted=NO;

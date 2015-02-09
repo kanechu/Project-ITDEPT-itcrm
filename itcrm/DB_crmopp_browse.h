@@ -16,7 +16,7 @@
 
 -(BOOL)fn_update_crmopp_data:(NSMutableDictionary*)idic_opp unique_id:(NSString*)unique_id;
 
--(BOOL)fn_update_crmopp_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id;
+-(BOOL)fn_update_crmopp_ismodified:(NSString*)is_modified opp_id:(NSString*)opp_id;
 
 -(NSMutableArray*)fn_get_crmopp_data:(NSString*)opp_name select_sql:(NSString*)select_sql;
 
@@ -26,7 +26,9 @@
 
 -(NSMutableArray*)fn_get_crmopp_with_id:(NSString*)opp_id;
 
--(NSMutableArray*)fn_get_all_crmopp_data;
+-(NSMutableArray*)fn_get_need_sync_crmopp_data:(NSString*)acct_id;
+
+-(BOOL)fn_delete_relate_crmopp_data:(NSString*)acct_id;
 
 -(BOOL)fn_delete_all_data;
 

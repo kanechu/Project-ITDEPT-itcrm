@@ -17,6 +17,8 @@
 
 -(NSMutableArray*)fn_get_relate_crmhbl_data:(NSString *)acct_id select_sql:(NSString *)select_sql;
 
+-(BOOL)fn_delete_relate_hbl_data:(NSString*)acct_id;
+
 -(BOOL)fn_delete_all_data;
 
 @end

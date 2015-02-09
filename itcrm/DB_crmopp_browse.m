@@ -59,11 +59,11 @@
     }];
     return ib_updated;
 }
--(BOOL)fn_update_crmopp_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id{
+-(BOOL)fn_update_crmopp_ismodified:(NSString*)is_modified opp_id:(NSString*)opp_id{
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            ib_updated =[db executeUpdate:@"update crmopp_browse set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
+            ib_updated =[db executeUpdate:@"update crmopp_browse set is_modified=? where opp_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",opp_id]];
             [db close];
         }
     }];
@@ -141,11 +141,11 @@
     }];
     return arr;
 }
--(NSMutableArray*)fn_get_all_crmopp_data{
+-(NSMutableArray*)fn_get_need_sync_crmopp_data:(NSString*)acct_id{
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmopp_browse"];
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmopp_browse where opp_ref_type = 'ACCT' and opp_ref_id like ? and is_modified= '1' ",acct_id];
             while ([lfmdb_result next]) {
                 [arr addObject:[lfmdb_result resultDictionary]];
             }
@@ -154,7 +154,16 @@
     }];
     return arr;
 }
-
+-(BOOL)fn_delete_relate_crmopp_data:(NSString*)acct_id{
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from crmopp_browse where opp_ref_type = 'ACCT' and opp_ref_id like ?",acct_id];
+            [db close];
+        }
+    }];
+    return ib_deleted;
+}
 -(BOOL)fn_delete_all_data{
     __block BOOL ib_deleted=NO;
     [queue inDataBase:^(FMDatabase *db){

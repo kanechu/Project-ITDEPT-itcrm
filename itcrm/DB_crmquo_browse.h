@@ -12,6 +12,11 @@
 @property(nonatomic,strong)DatabaseQueue *queue;
 
 -(BOOL)fn_save_crmquo_browse_data:(NSMutableArray*)alist_result;
+
 -(NSMutableArray*)fn_get_crmquo_browse_data:(NSString*)quo_no select_sql:(NSString *)select_sql;
+
+-(BOOL)fn_delete_relate_crmquo_data:(NSString*)acct_id;
+
 -(BOOL)fn_delete_all_crmquo_data;
+
 @end

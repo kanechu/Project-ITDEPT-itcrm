@@ -23,41 +23,48 @@
         return NO;
     }
 }
--(void)fn_checkUpdate_all_db{
+-(void)fn_checkUpdate_all_db:(NSString*)acct_id{
     if ([self fn_check_isNetworking]) {
-        [self fn_checkUpdate_crmtask];
-        [self fn_checkUpdate_crmcontact];
-        [self fn_checkUpdate_crmopp];
+        [self fn_checkUpdate_crmtask:acct_id];
+        [self fn_checkUpdate_crmcontact:acct_id];
+        [self fn_checkUpdate_crmopp:acct_id];
     }
 }
--(void)fn_checkUpdate_crmtask{
+-(void)fn_checkUpdate_crmtask:(NSString*)acct_id{
     Web_updateData *web_update=[[Web_updateData alloc]init];
     DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
-    NSMutableArray *arr_crmtask=[db_crmtask fn_get_all_crmtask_data];
+    NSMutableArray *arr_crmtask=[db_crmtask fn_get_need_sync_crmtask:acct_id];
+   __block NSInteger i=0;
     for (NSMutableDictionary *idic in arr_crmtask) {
-        NSString *is_modified=[idic valueForKey:@"is_modified"];
-        if ([is_modified isEqualToString:@"1"]) {
-            Respcrmtask_browse *upd_form=[[Respcrmtask_browse alloc]init];
-            [web_update fn_get_updateStatus_data:[self fn_init_updateform:idic upd_form:upd_form ]path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
-                NSString *status=nil;
-                if ([arr count]!=0) {
-                    status=[[arr objectAtIndex:0]valueForKey:@"status"];
-                }
-                if ([status isEqualToString:@"1"]) {
-                    [db_crmtask fn_update_crmtask_ismodified:@"0" unique_id:[idic valueForKey:@"unique_id"]];
-                }
-            }];
-        }
+        Respcrmtask_browse *upd_form=[[Respcrmtask_browse alloc]init];
+        [web_update fn_get_updateStatus_data:[self fn_init_updateform:idic upd_form:upd_form ]path:STR_CRMTASK_UPDATE_URL :^(NSMutableArray *arr){
+            NSString *status=nil;
+            if ([arr count]!=0) {
+                status=[[arr objectAtIndex:0]valueForKey:@"status"];
+            }
+            if ([status isEqualToString:@"1"]) {
+                [db_crmtask fn_update_crmtask_ismodified:@"0" task_id:[idic valueForKey:@"task_id"]];
+            }
+            i++;
+            if (i==[arr_crmtask count]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"complete_upload_task" object:acct_id];
+            }
+        }];
+        upd_form=nil;
     }
+    if ([arr_crmtask count]==0) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"complete_upload_task" object:acct_id];
+    }
+    web_update=nil;
+    db_crmtask=nil;
 }
 
--(void)fn_checkUpdate_crmcontact{
+-(void)fn_checkUpdate_crmcontact:(NSString*)acct_id{
     Web_updateData *web_update=[[Web_updateData alloc]init];
     DB_crmcontact_browse *db_crmcontact=[[DB_crmcontact_browse alloc]init];
-    NSMutableArray *arr_crmcontact=[db_crmcontact fn_get_all_crmcontact_data];
+    NSMutableArray *arr_crmcontact=[db_crmcontact fn_get_need_sync_crmcontact:acct_id];
+    __block NSInteger i=0;
     for (NSMutableDictionary *idic in arr_crmcontact) {
-        NSString *is_modified=[idic valueForKey:@"is_modified"];
-        if ([is_modified isEqualToString:@"1"]) {
             RespCrmcontact_browse *upd_form=[[RespCrmcontact_browse alloc]init];
             [web_update fn_get_updateStatus_data:[self fn_init_updateform:idic upd_form:upd_form] path:STR_CRMCONTACT_UPDATE_URL :^(NSMutableArray *arr){
                 NSString *status=nil;
@@ -65,31 +72,48 @@
                     status=[[arr objectAtIndex:0]valueForKey:@"status"];
                 }
                 if ([status isEqualToString:@"1"]) {
-                    [db_crmcontact fn_update_crmcontact_ismodified:@"0" unique_id:[idic valueForKey:@"unique_id"]];
+                    [db_crmcontact fn_update_crmcontact_ismodified:@"0" contact_id:[idic valueForKey:@"contact_id"]];
+                }
+                i++;
+                if (i==[arr_crmcontact count]) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"complete_upload_contact" object:acct_id];
                 }
             }];
-        }
+        upd_form=nil;
     }
+    if ([arr_crmcontact count]==0) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"complete_upload_contact" object:acct_id];
+    }
+    web_update=nil;
+    db_crmcontact=nil;
 }
--(void)fn_checkUpdate_crmopp{
+-(void)fn_checkUpdate_crmopp:(NSString*)acct_id{
     Web_updateData *web_update=[[Web_updateData alloc]init];
     DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
-    NSMutableArray *arr_crmopp=[db_crmopp fn_get_all_crmopp_data];
+    NSMutableArray *arr_crmopp=[db_crmopp fn_get_need_sync_crmopp_data:acct_id];
+    __block NSInteger i=0;
     for (NSMutableDictionary *idic in arr_crmopp) {
-        NSString *is_modified=[idic valueForKey:@"is_modified"];
-        if ([is_modified isEqualToString:@"1"]) {
-            RespCrmopp_browse *upd_form=[[RespCrmopp_browse alloc]init];
-            [web_update fn_get_updateStatus_data:[self fn_init_updateform:idic upd_form:upd_form] path:STR_CRMOPP_UPDATE_URL :^(NSMutableArray *arr){
-                NSString *status=nil;
-                if ([arr count]!=0) {
-                    status=[[arr objectAtIndex:0]valueForKey:@"status"];
-                }
-                if ([status isEqualToString:@"1"]) {
-                    [db_crmopp fn_update_crmopp_ismodified:@"0" unique_id:[idic valueForKey:@"unique_id"]];
-                }
-            }];
-        }
+        RespCrmopp_browse *upd_form=[[RespCrmopp_browse alloc]init];
+        [web_update fn_get_updateStatus_data:[self fn_init_updateform:idic upd_form:upd_form] path:STR_CRMOPP_UPDATE_URL :^(NSMutableArray *arr){
+            NSString *status=nil;
+            if ([arr count]!=0) {
+                status=[[arr objectAtIndex:0]valueForKey:@"status"];
+            }
+            if ([status isEqualToString:@"1"]) {
+                [db_crmopp fn_update_crmopp_ismodified:@"0" opp_id:[idic valueForKey:@"opp_id"]];
+            }
+            i++;
+            if (i==[arr_crmopp count]) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"complete_upload_opp" object:acct_id];
+            }
+        }];
+        upd_form=nil;
     }
+    if ([arr_crmopp count]==0) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"complete_upload_opp" object:acct_id];
+    }
+    web_update=nil;
+    db_crmopp=nil;
 }
 
 

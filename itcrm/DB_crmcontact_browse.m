@@ -61,11 +61,11 @@
     return ib_updated;
   
 }
--(BOOL)fn_update_crmcontact_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id{
+-(BOOL)fn_update_crmcontact_ismodified:(NSString*)is_modified contact_id:(NSString*)contact_id{
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            ib_updated =[db executeUpdate:@"update crmcontact set is_modified=? where unique_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",unique_id]];
+            ib_updated =[db executeUpdate:@"update crmcontact set is_modified=? where contact_id=?",[NSString stringWithFormat:@"%@",is_modified],[NSString stringWithFormat:@"%@",contact_id]];
             
             [db close];
         }
@@ -146,11 +146,11 @@
     }];
     return arr;
 }
--(NSMutableArray*)fn_get_all_crmcontact_data{
+-(NSMutableArray*)fn_get_need_sync_crmcontact:(NSString*)acct_id{
     __block NSMutableArray *arr_result=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmcontact"];
+            FMResultSet *lfmdb_result=[db executeQuery:@"select * from crmcontact where contact_type ='ACCT' and contact_ref_id like ? and is_modified='1' ",acct_id];
             while ([lfmdb_result next]) {
                 [arr_result addObject:[lfmdb_result resultDictionary]];
             }
@@ -158,6 +158,16 @@
         }
     }];
     return arr_result;
+}
+-(BOOL)fn_delete_relate_crmcontact_data:(NSString*)acct_id{
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from crmcontact where contact_type ='ACCT' and contact_ref_id like ?",acct_id];
+            [db close];
+        }
+    }];
+    return ib_deleted;
 }
 
 -(BOOL)fn_delete_all_crmcontact_data{

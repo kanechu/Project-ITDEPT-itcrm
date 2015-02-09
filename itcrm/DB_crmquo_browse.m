@@ -47,6 +47,18 @@
     }];
     return arr_crmquo;
 }
+-(BOOL)fn_delete_relate_crmquo_data:(NSString*)acct_id{
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from crmquo_browse where acct_id like ?",acct_id];
+            [db close];
+        }
+        
+    }];
+    return ib_deleted;
+}
+
 -(BOOL)fn_delete_all_crmquo_data{
     __block BOOL ib_deleted=NO;
     [queue inDataBase:^(FMDatabase *db){

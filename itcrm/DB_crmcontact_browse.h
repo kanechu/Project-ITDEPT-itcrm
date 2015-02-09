@@ -15,7 +15,7 @@
 
 -(BOOL)fn_update_crmcontact_browse:(NSMutableDictionary*)idic_update unique_id:(NSString*)unique_id;
 
--(BOOL)fn_update_crmcontact_ismodified:(NSString*)is_modified unique_id:(NSString*)unique_id;
+-(BOOL)fn_update_crmcontact_ismodified:(NSString*)is_modified contact_id:(NSString*)contact_id;
 
 -(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_name select_sql:(NSString *)select_sql;
 
@@ -25,7 +25,9 @@
 
 -(NSMutableArray*)fn_get_relate_crmcontact_data:(NSString *)contact_ref_id select_sql:(NSString *)select_sql;
 
--(NSMutableArray*)fn_get_all_crmcontact_data;
+-(NSMutableArray*)fn_get_need_sync_crmcontact:(NSString*)acct_id;
+
+-(BOOL)fn_delete_relate_crmcontact_data:(NSString*)acct_id;
 
 -(BOOL)fn_delete_all_crmcontact_data;
 

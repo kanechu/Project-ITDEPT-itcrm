@@ -48,6 +48,17 @@
     }];
     return ib_deleted;
 }
+-(BOOL)fn_delete_relate_hbl_data:(NSString*)acct_id{
+    __block BOOL ib_deleted=NO;
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_deleted=[db executeUpdate:@"delete from  crmhbl_browse  where acct_id like ?",acct_id];
+            [db close];
+        }
+        
+    }];
+    return ib_deleted;
+}
 
 -(NSMutableArray*)fn_get_crmhbl_data:(NSString*)acct_name{
     __block NSMutableArray *arr=[NSMutableArray array];
@@ -63,7 +74,7 @@
     return arr;
 }
 -(NSMutableArray*)fn_get_relate_crmhbl_data:(NSString *)acct_id select_sql:(NSString *)select_sql{
-    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmhbl_browse where acct_id like ?",select_sql];
+    NSString *is_sql=[NSString stringWithFormat:@"select %@ from crmhbl_browse where acct_id like ? limit 50",select_sql];
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
