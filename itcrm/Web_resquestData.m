@@ -36,8 +36,8 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespPermit class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespPermit class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        NSLog(@"%@",arr_resp_result);
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
+        
     };
     [web_base fn_get_data:req_form];
     
@@ -60,13 +60,17 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespSearchCriteria class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSearchCriteria class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-        if ([arr_resp_result count]!=0) {
-            [db fn_delete_all_data];
-            [db fn_save_searchCriteria_data:arr_resp_result];
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
+        if (isTimeOut) {
+            
+        }else{
+            DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+            if ([arr_resp_result count]!=0) {
+                [db fn_delete_all_data];
+                [db fn_save_searchCriteria_data:arr_resp_result];
+            }
+            db=nil;
         }
-        db=nil;
     };
     [web_base fn_get_data:req_form];
     
@@ -87,13 +91,17 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespFormatlist class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespFormatlist class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        DB_formatlist *db=[[DB_formatlist alloc]init];
-        if ([arr_resp_result count]!=0) {
-            [db fn_delete_all_data];
-            [db fn_save_formatlist_data:arr_resp_result];
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
+        if (isTimeOut) {
+            
+        }else{
+            DB_formatlist *db=[[DB_formatlist alloc]init];
+            if ([arr_resp_result count]!=0) {
+                [db fn_delete_all_data];
+                [db fn_save_formatlist_data:arr_resp_result];
+            }
+            db=nil;
         }
-        db=nil;
     };
     [web_base fn_get_data:req_form];
 }
@@ -111,9 +119,9 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespCrmacct_browse class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmacct_browse class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
         if (_callBack) {
-            _callBack(arr_resp_result);
+            _callBack(arr_resp_result,isTimeOut);
         }
     };
     [web_base fn_get_data:req_form];
@@ -138,7 +146,7 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespRegion class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespRegion class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
         DB_Region *db=[[DB_Region alloc]init];
         if ([arr_resp_result count]!=0) {
             [db fn_delete_region_data];
@@ -167,7 +175,7 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespSystemIcon class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespSystemIcon class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
         DB_systemIcon *db=[[DB_systemIcon alloc]init];
         if (flag_isUpdate==1) {
             if ([arr_resp_result count]!=0) {
@@ -178,25 +186,6 @@
         }else{
             [db fn_save_systemIcon_data:arr_resp_result];
         }
-    };
-    [web_base fn_get_data:req_form];
-}
-
-#pragma mark 请求crmopp_browse的数据
-- (void) fn_get_crmopp_browse_data:(NSString*)base_url
-{
-    RequestContract *req_form = [[RequestContract alloc] init];
-    DB_Login *dbLogin=[[DB_Login alloc]init];
-    AuthContract *auth=[dbLogin fn_request_auth];
-    req_form.Auth =auth;
-    Web_base *web_base=[[Web_base alloc]init];
-    web_base.il_url=STR_CRMOOP_BROWSE_URL;
-    web_base.base_url=base_url;
-    web_base.iresp_class=[RespCrmopp_browse class];
-    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmopp_browse class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
-        [db fn_save_crmopp_browse:arr_resp_result];
     };
     [web_base fn_get_data:req_form];
 }
@@ -217,7 +206,7 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespMaintForm class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespMaintForm class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
         DB_MaintForm *db=[[DB_MaintForm alloc]init];
         if ([arr_resp_result count]!=0) {
             [db fn_delete_all_data];
@@ -229,7 +218,27 @@
     [web_base fn_get_data:req_form];
     
 }
-
+/*
+ 
+#pragma mark 请求crmopp_browse的数据
+- (void) fn_get_crmopp_browse_data:(NSString*)base_url
+{
+    RequestContract *req_form = [[RequestContract alloc] init];
+    DB_Login *dbLogin=[[DB_Login alloc]init];
+    AuthContract *auth=[dbLogin fn_request_auth];
+    req_form.Auth =auth;
+    Web_base *web_base=[[Web_base alloc]init];
+    web_base.il_url=STR_CRMOOP_BROWSE_URL;
+    web_base.base_url=base_url;
+    web_base.iresp_class=[RespCrmopp_browse class];
+    web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespCrmopp_browse class]];
+    web_base.callback=^(NSMutableArray *arr_resp_result){
+        DB_crmopp_browse *db=[[DB_crmopp_browse alloc]init];
+        [db fn_save_crmopp_browse:arr_resp_result];
+    };
+    [web_base fn_get_data:req_form];
+}
+ 
 #pragma mark 请求crmtask_browse的数据
 - (void) fn_get_crmtask_browse_data:(NSString*)base_url
 {
@@ -313,7 +322,7 @@
     };
     
     [web_base fn_get_data:req_form];
-}
+}*/
 #pragma mark -download acct relate data
 - (void) fn_get_crmacct_relate_data:(NSString*)base_url alist_acc_id:(NSArray*)alist_acc_id{
     RequestContract *req_form = [[RequestContract alloc] init];
@@ -328,9 +337,9 @@
     Web_base *web_base=[[Web_base alloc]init];
     web_base.il_url=STR_CRMACCT_DOWNLOAD_URL;
     web_base.base_url=base_url;
-    web_base.callback=^(NSMutableArray *arr_resp_result){
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
         if(_callBack){
-            _callBack(arr_resp_result);
+            _callBack(arr_resp_result,isTimeOut);
         }
     };
     [web_base fn_get_crmacct_download_data:req_form auth:auth];

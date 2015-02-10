@@ -24,11 +24,10 @@
     }
 }
 -(void)fn_checkUpdate_all_db:(NSString*)acct_id{
-    if ([self fn_check_isNetworking]) {
-        [self fn_checkUpdate_crmtask:acct_id];
-        [self fn_checkUpdate_crmcontact:acct_id];
-        [self fn_checkUpdate_crmopp:acct_id];
-    }
+    [self fn_checkUpdate_crmtask:acct_id];
+    [self fn_checkUpdate_crmcontact:acct_id];
+    [self fn_checkUpdate_crmopp:acct_id];
+    
 }
 -(void)fn_checkUpdate_crmtask:(NSString*)acct_id{
     Web_updateData *web_update=[[Web_updateData alloc]init];

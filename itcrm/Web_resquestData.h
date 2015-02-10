@@ -32,11 +32,13 @@
 - (void) fn_get_crmacct_browse_data:(NSString*)base_url searchForms:(NSSet*)iSet_searchForms;
 - (void) fn_get_mslookup_data:(NSString*)base_url;
 - (void) fn_get_systemIcon_data:(NSString*)base_url os_value:(NSString*)value isUpdate:(NSInteger)flag_isUpdate;
-- (void) fn_get_crmopp_browse_data:(NSString*)base_url;
 - (void) fn_get_maintForm_data:(NSString*)base_url;
+/*
+- (void) fn_get_crmopp_browse_data:(NSString*)base_url;
 - (void) fn_get_crmtask_browse_data:(NSString*)base_url;
 - (void) fn_get_crmhbl_browse_data:(NSString*)base_url;
 - (void) fn_get_crmcontact_browse_data:(NSString*)base_url;
 - (void) fn_get_crmquo_browse_data:(NSString*)base_url;
+ */
 - (void) fn_get_crmacct_relate_data:(NSString*)base_url alist_acc_id:(NSArray*)alist_acc_id;
 @end
