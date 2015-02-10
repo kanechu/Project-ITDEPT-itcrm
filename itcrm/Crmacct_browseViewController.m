@@ -45,7 +45,10 @@ static NSInteger flag_complete_upload=0;
 @property (nonatomic, assign) kOperation_type flag_opration_type;
 //标识是否处于长按状态
 @property (nonatomic, assign) NSInteger flag_longPress_state;
+//标识数据是否已经下载
 @property (nonatomic, assign) NSInteger flag_isDownload;
+//选取更新的行
+@property (nonatomic, assign) NSInteger flag_SelectRow;
 @end
 
 @implementation Crmacct_browseViewController
@@ -238,6 +241,7 @@ static NSInteger flag_complete_upload=0;
         if (_flag_opration_type==kNon_operation || _flag_opration_type==kUpdate_acct) {
             _flag_isDownload=1;
             [self performSegueWithIdentifier:@"segue_maintForm" sender:self];
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
         }else{
             _flag_isDownload=0;
             if ([self fn_get_crmacct_download_data:acct_id]!=nil) {
@@ -341,6 +345,7 @@ static NSInteger flag_complete_upload=0;
     UIImageView *imag_view =(UIImageView*)[tapGesture view];
     RespCrmacct_browse *resp=[alist_temp_acct objectAtIndex:imag_view.tag];
     NSMutableArray *alist_acct=[[NSMutableArray alloc]initWithObjects:resp, nil];
+    _flag_SelectRow=imag_view.tag;
     NSMutableDictionary *dic_acct=[alist_account_parameter objectAtIndex:imag_view.tag];
     NSString *acct_id=[dic_acct valueForKey:@"acct_id"];
     NSString *max_upd_date=[dic_acct valueForKey:@"max_upd_date"];
@@ -398,7 +403,7 @@ static NSInteger flag_complete_upload=0;
         DB_crmtask_browse *db_task=[[DB_crmtask_browse alloc]init];
         [alist_acct_download addObjectsFromArray:alist_resp_result];
         if (_flag_longPress_state==1 || _flag_opration_type==kDownload_acct) {
-            if (_flag_opration_type==1) {
+            if (_flag_longPress_state==1) {
                 [SVProgressHUD dismissWithSuccess:[NSString stringWithFormat:@"%@%@",@(alist_multi_acct.count),MYLocalizedString(@"msg_download_success", nil)]];
                 _flag_longPress_state=0;
                 [alist_multi_acct removeAllObjects];
@@ -417,6 +422,10 @@ static NSInteger flag_complete_upload=0;
             if ([alist_acct count]!=0) {
                 [db_acct fn_delete_single_acct_data:acct_id];
                 [db_acct fn_save_crmacct_browse:alist_acct];
+                RespCrmacct_browse *resp_obj=[alist_acct objectAtIndex:0];
+                NSDictionary *dic_acct=[NSDictionary dictionaryWithPropertiesOfObject:resp_obj];
+                [alist_account_parameter removeObjectAtIndex:_flag_SelectRow];
+                [alist_account_parameter insertObject:dic_acct atIndex:_flag_SelectRow];
             }
             
             NSMutableArray *alist_contact=[[resp_crmacct_obj.ContactResult allObjects]mutableCopy];
@@ -459,6 +468,10 @@ static NSInteger flag_complete_upload=0;
     }
     
 }
+-(void)fn_update_browse{
+    [self.tableView_acct reloadData];
+}
+
 #pragma mark UISearchBarDelegate
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     if ([_check_obj fn_check_isNetworking]) {

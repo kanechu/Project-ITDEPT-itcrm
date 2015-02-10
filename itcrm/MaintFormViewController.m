@@ -501,9 +501,9 @@
 #pragma mark 修改后，更新browse
 -(void)fn_update_browse{
     [alist_filtered_data removeAllObjects];
-#warning neet fix
-    //[self fn_init_arr];
+    [self fn_init_arr_offline];
     [self.skstableView refreshData];
+    [self.skstableView fn_expandall];
 }
 #pragma mark respond prepareForSegue: sender:
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
