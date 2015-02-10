@@ -71,6 +71,8 @@
         str_key=@"php_addr";
     }else if (field_name==kCompany_code){
         str_key=@"company_code";
+    }else if (field_name==kSys_name){
+        str_key=@"sys_name";
     }
     if ([alist_appconfig count]!=0) {
         str_field_content=[[alist_appconfig objectAtIndex:0]valueForKey:str_key];

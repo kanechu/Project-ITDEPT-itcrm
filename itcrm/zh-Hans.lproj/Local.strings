@@ -25,7 +25,9 @@
 "msg_download_success"="条数据下载完成，并成功保存到本地。";
 "msg_upd_success"="成功更新本地数据！";
 "dialog_prompt"="正在载入，请等候。";
-"msg_network_fail"="无法连接至网络，请联络网络管理员。";
+"msg_no_network"="无网络连接";
+"msg_network_fail"="应用程序不能访问服务器，因为它没有连接到互联网。";
+"msg_request_timeout"="网络请求服务器超时，取消或者重试？";
 "msg_upd_crmData"="上传数据，请等候。";
 "lbl_ok"="确定";
 "lbl_empty_username"="请输入用户名";
@@ -61,6 +63,7 @@
 "lbl_clear"="清空";
 "lbl_lookup"="查找";
 "lbl_download"="下载";
+"lbl_retry"="重试";
 //title
 "lbl_home"="主页";
 "lbl_browse_quo"="浏览价格";

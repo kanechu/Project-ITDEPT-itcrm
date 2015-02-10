@@ -13,26 +13,29 @@
 #import "Web_base.h"
 #import "SVProgressHUD.h"
 #import "DB_RespLogin.h"
-#import "DB_Login.h"
 #import "DB_Com_SYS_Code.h"
-#import "DB_formatlist.h"
-#import "DB_searchCriteria.h"
-#import "DB_MaintForm.h"
-#import "DB_Region.h"
 #import "Web_resquestData.h"
 #import "OptionViewController.h"
+#import "CheckUpdate.h"
+
 static NSInteger flag_first=1;
 static NSString  *is_language=@"";//标识语言类型
 #define DEFAULT_USERCODE @"anonymous";
 #define DEFAULT_PASSWORD @"anonymous1";
 #define DEFAULT_SYSTEM @"ITNEW";
-@interface LoginViewController ()
+typedef NS_ENUM(NSInteger, kTimeOut_stage){
+    kAppconfig_stage,
+    kLogin_stage
+};
+@interface LoginViewController ()<UIAlertViewDelegate>
 
 //用来标识点击的textfiled
 @property(nonatomic)UITextField *checkText;
+@property (nonatomic, copy) NSString *lang_code;
+@property (nonatomic, assign) CGRect keyboardRect;
+@property (nonatomic, strong) CheckUpdate *check_obj;
+@property (nonatomic, assign) kTimeOut_stage timeOut_stage;
 
-@property(nonatomic,copy)NSString *lang_code;
-@property(nonatomic, assign) CGRect keyboardRect;
 @end
 
 @implementation LoginViewController
@@ -50,7 +53,9 @@ static NSString  *is_language=@"";//标识语言类型
     _itf_password.delegate=self;
     _itf_system.delegate=self;
     _itf_usercode.delegate=self;
-
+    
+    _check_obj=[[CheckUpdate alloc]init];
+    
    	// Do any additional setup after loading the view, typically from a nib.
 }
 - (void)didReceiveMemoryWarning
@@ -206,6 +211,34 @@ static NSString  *is_language=@"";//标识语言类型
     
     [UIView commitAnimations];
 }
+#pragma mark -show alert
+-(void)fn_show_network_unavailable_alert{
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_no_network", nil) message:MYLocalizedString(@"msg_network_fail", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+    [alertView show];
+    alertView=nil;
+}
+-(void)fn_show_request_timeOut_alert{
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_request_timeout", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:MYLocalizedString(@"lbl_retry", nil), nil];
+    [alertView show];
+    alertView=nil;
+}
+#pragma mark -UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==[alertView firstOtherButtonIndex]) {
+        if (_timeOut_stage==kAppconfig_stage) {
+            [self fn_get_Web_addr_data];
+        }else if (_timeOut_stage==kLogin_stage){
+            DB_RespLogin *db=[[DB_RespLogin alloc]init];
+            NSString *base_url=[db fn_get_field_content:kWeb_addr];
+            NSString *sys_name=[db fn_get_field_content:kSys_name];
+            [self fn_get_RespusersLogin_data:base_url sys_name:sys_name];
+            db=nil;
+            base_url=nil;
+            sys_name=nil;
+        }
+    }
+}
+
 #pragma mark NetWork Request
 - (void) fn_get_Web_addr_data
 {
@@ -227,16 +260,23 @@ static NSString  *is_language=@"";//标识语言类型
     web_base.base_url=STR_BASE_URL;
     web_base.iresp_class=[RespLogin class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespLogin class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        DB_RespLogin *db=[[DB_RespLogin alloc]init];
-        [db fn_save_data:arr_resp_result];
-        NSString* base_url=nil;
-        NSString* sys_name=nil;
-        if (arr_resp_result!=nil && [arr_resp_result count]!=0) {
-            base_url=[[arr_resp_result objectAtIndex:0] valueForKey:@"web_addr"];
-            sys_name=[[arr_resp_result objectAtIndex:0]valueForKey:@"sys_name"];
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
+        if (isTimeOut) {
+            _timeOut_stage=kAppconfig_stage;
+            [self fn_show_request_timeOut_alert];
+            
+        }else{
+            DB_RespLogin *db=[[DB_RespLogin alloc]init];
+            [db fn_save_data:arr_resp_result];
+            db=nil;
+            NSString* base_url=nil;
+            NSString* sys_name=nil;
+            if (arr_resp_result!=nil && [arr_resp_result count]!=0) {
+                base_url=[[arr_resp_result objectAtIndex:0] valueForKey:@"web_addr"];
+                sys_name=[[arr_resp_result objectAtIndex:0]valueForKey:@"sys_name"];
+            }
+            [self fn_get_RespusersLogin_data:base_url sys_name:sys_name];
         }
-        [self fn_get_RespusersLogin_data:base_url sys_name:sys_name];
     };
     [web_base fn_get_data:req_form];
     
@@ -254,30 +294,36 @@ static NSString  *is_language=@"";//标识语言类型
     web_base.base_url=base_url;
     web_base.iresp_class=[RespUsersLogin class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUsersLogin class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        if ([[[arr_resp_result objectAtIndex:0]valueForKey:@"pass"]isEqualToString:@"true"]) {
-            [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_landing_success", nil)];
-            NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
-            DB_Login *dbLogin=[[DB_Login alloc]init];
-            NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
-            [dbLogin fn_save_data:_itf_usercode.text password:_itf_password.text system:sys_name user_logo:user_logo lang_code:lang_code];
-            DB_Com_SYS_Code *db_sys_code=[[DB_Com_SYS_Code alloc]init];
-            [db_sys_code fn_save_com_sys_code:_itf_system.text lang_code:is_language];
-            [user_isLogin setInteger:1 forKey:@"isLogin"];
-            [user_isLogin synchronize];
-            [self dismissViewControllerAnimated:YES completion:^{}];
-            Web_resquestData *web_rest=[[Web_resquestData alloc]init];
-            [web_rest fn_get_formatlist_data:base_url];
-            [web_rest fn_get_maintForm_data:base_url];
-            [web_rest fn_get_mslookup_data:base_url];
-            [web_rest fn_get_search_data:base_url];
-            [web_rest fn_get_permit_data:base_url];
-            
-            if (_callback) {
-                _callback();
-            }
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
+        if (isTimeOut) {
+            _timeOut_stage=kLogin_stage;
+            [self fn_show_request_timeOut_alert];
         }else{
-            [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil) afterDelay:2.0f];
+            if ([[[arr_resp_result objectAtIndex:0]valueForKey:@"pass"]isEqualToString:@"true"]) {
+                [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_landing_success", nil)];
+                NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
+                DB_Login *dbLogin=[[DB_Login alloc]init];
+                NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
+                [dbLogin fn_save_data:_itf_usercode.text password:_itf_password.text system:sys_name user_logo:user_logo lang_code:lang_code];
+                DB_Com_SYS_Code *db_sys_code=[[DB_Com_SYS_Code alloc]init];
+                [db_sys_code fn_save_com_sys_code:_itf_system.text lang_code:is_language];
+                [user_isLogin setInteger:1 forKey:@"isLogin"];
+                [user_isLogin synchronize];
+                [self dismissViewControllerAnimated:YES completion:^{}];
+                Web_resquestData *web_rest=[[Web_resquestData alloc]init];
+                [web_rest fn_get_formatlist_data:base_url];
+                [web_rest fn_get_maintForm_data:base_url];
+                [web_rest fn_get_mslookup_data:base_url];
+                [web_rest fn_get_search_data:base_url];
+                [web_rest fn_get_permit_data:base_url];
+                
+                if (_callback) {
+                    _callback();
+                }
+                
+            }else{
+                [SVProgressHUD dismissWithError:MYLocalizedString(@"msg_langding_failed", nil) afterDelay:2.0f];
+            }
         }
     };
     [web_base fn_get_data:req_form];
@@ -314,21 +360,25 @@ static NSString  *is_language=@"";//标识语言类型
 }
 
 - (IBAction)fn_login_itcrm:(id)sender{
-    NSString *str_prompt=@"";
-    if ([_itf_usercode.text length]==0) {
-        str_prompt=MYLocalizedString(@"lbl_empty_username", nil);
-    }else if([_itf_password.text length]==0){
-        str_prompt=MYLocalizedString(@"lbl_empty_password", nil);
-    }else if ([_itf_system.text length]==0){
-        str_prompt=MYLocalizedString(@"lbl_empty_systemcode", nil);
+    if ([_check_obj fn_check_isNetworking]) {
+        NSString *str_prompt=@"";
+        if ([_itf_usercode.text length]==0) {
+            str_prompt=MYLocalizedString(@"lbl_empty_username", nil);
+        }else if([_itf_password.text length]==0){
+            str_prompt=MYLocalizedString(@"lbl_empty_password", nil);
+        }else if ([_itf_system.text length]==0){
+            str_prompt=MYLocalizedString(@"lbl_empty_systemcode", nil);
+        }else{
+            [self fn_get_Web_addr_data];
+        }
+        if ([str_prompt length]!=0) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_prompt delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
     }else{
-        [self fn_get_Web_addr_data];
+        [self fn_show_network_unavailable_alert];
     }
-    if ([str_prompt length]!=0) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_prompt delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
-        [alert show];
-    }
-
 }
 
 - (IBAction)fn_isShowPassword:(id)sender {

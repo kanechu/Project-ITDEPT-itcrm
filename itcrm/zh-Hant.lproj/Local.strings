@@ -25,7 +25,9 @@
 "msg_download_success"="條數據下載完成，并成功保存到本地。";
 "msg_upd_success"="成功更新本地數據！";
 "dialog_prompt"="載入中，請稍候。";
-"msg_network_fail"="無法連接至網路，請聯絡網路管理員。";
+"msg_no_network"="無網絡連接";
+"msg_network_fail"="應用程序不能訪問服務器，因為它沒有連接到互聯網。";
+"msg_request_timeout"="網絡請求服務器超時，取消或者重試？";
 "msg_upd_crmData"="上傳數據，請等候。";
 "lbl_ok"="確定";
 "lbl_empty_username"="請輸入用戶名";
@@ -61,6 +63,7 @@
 "lbl_clear"="清空";
 "lbl_lookup"="查找";
 "lbl_download"="下載";
+"lbl_retry"="重試";
 //title
 "lbl_home"="主頁";
 "lbl_browse_quo"="瀏覽價格";

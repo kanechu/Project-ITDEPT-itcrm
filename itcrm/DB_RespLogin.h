@@ -10,7 +10,8 @@
 typedef NS_ENUM(NSInteger, kAppConfig_field){
     kWeb_addr,
     kCompany_code,
-    kPhp_addr
+    kPhp_addr,
+    kSys_name
 };
 @class DatabaseQueue;
 @interface DB_RespLogin : NSObject

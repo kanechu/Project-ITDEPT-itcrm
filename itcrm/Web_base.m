@@ -80,11 +80,21 @@
                 success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
                     ilist_resp_result = [NSMutableArray arrayWithArray:result.array];
                     if (_callback) {
-                        _callback(ilist_resp_result);
+                        _callback(ilist_resp_result,NO);
                     }
-            
+                    
                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                     RKLogError(@"Operation failed with error: %@", error);
+                    NSString *str_error=[NSString stringWithFormat:@"%@",error];
+                    if ([str_error rangeOfString:@"Code=-1001"].location!=NSNotFound) {
+                        if (_callback) {
+                            _callback(ilist_resp_result,YES);
+                        }
+                    }else{
+                        if (_callback) {
+                            _callback(ilist_resp_result,NO);
+                        }
+                    }
                 }];
 }
 
@@ -140,12 +150,22 @@
                 success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
                     ilist_resp_result = [NSMutableArray arrayWithArray:result.array];
                     if (_callback) {
-                        _callback(ilist_resp_result);
+                        _callback(ilist_resp_result,NO);
                     }
                     
                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                     RKLogError(@"Operation failed with error: %@", error);
-                    [SVProgressHUD dismiss];
+                    NSString *str_error=[NSString stringWithFormat:@"%@",error];
+                    if ([str_error rangeOfString:@"Code=-1001"].location!=NSNotFound) {
+                        if (_callback) {
+                            _callback(ilist_resp_result,YES);
+                        }
+                    }else{
+                        if (_callback) {
+                            _callback(ilist_resp_result,NO);
+                        }
+                    }
+
                 }];
     
 }
@@ -221,14 +241,23 @@
                 success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
                     ilist_resp_result = [NSMutableArray arrayWithArray:result.array];
                     if (_callback) {
-                        _callback(ilist_resp_result);
+                        _callback(ilist_resp_result,NO);
                     }
                     
                 } failure:^(RKObjectRequestOperation *operation, NSError *error) {
                     RKLogError(@"Operation failed with error: %@", error);
-                    [SVProgressHUD dismiss];
+                    NSString *str_error=[NSString stringWithFormat:@"%@",error];
+                    if ([str_error rangeOfString:@"Code=-1001"].location!=NSNotFound) {
+                        if (_callback) {
+                            _callback(ilist_resp_result,YES);
+                        }
+                    }else{
+                        if (_callback) {
+                            _callback(ilist_resp_result,NO);
+                        }
+                    }
+
                 }];
-    
 }
 
 @end

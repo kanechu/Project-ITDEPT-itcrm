@@ -32,8 +32,12 @@
     web_base.base_url=base_url;
     web_base.iresp_class=[RespUpdateStatus class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespUpdateStatus class]];
-    web_base.callback=^(NSMutableArray *arr_resp_result){
-        callback(arr_resp_result);
+    web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
+        if (isTimeOut) {
+            
+        }else{
+            callback(arr_resp_result);
+        }
     };
     [web_base fn_update_data:req_form updateform:UpdateForm];
     req_form=nil;
