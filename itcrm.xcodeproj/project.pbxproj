@@ -88,7 +88,6 @@
 		B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BB1970E20200CF7B36 /* Custom_Button.m */; };
 		B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BE1971089A00CF7B36 /* EditOppViewController.m */; };
 		B2A642C2197124E900CF7B36 /* expand_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642C1197124E900CF7B36 /* expand_helper.m */; };
-		B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA4D4B19614123004C440F /* Cell_lookup.m */; };
 		B2B092BC19345E74002FE190 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BB19345E74002FE190 /* Foundation.framework */; };
 		B2B092BE19345E74002FE190 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BD19345E74002FE190 /* CoreGraphics.framework */; };
 		B2B092C019345E74002FE190 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BF19345E74002FE190 /* UIKit.framework */; };
@@ -347,8 +346,6 @@
 		B2A642BE1971089A00CF7B36 /* EditOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditOppViewController.m; sourceTree = "<group>"; };
 		B2A642C0197124E900CF7B36 /* expand_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expand_helper.h; sourceTree = "<group>"; };
 		B2A642C1197124E900CF7B36 /* expand_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = expand_helper.m; sourceTree = "<group>"; };
-		B2AA4D4A19614123004C440F /* Cell_lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_lookup.h; sourceTree = "<group>"; };
-		B2AA4D4B19614123004C440F /* Cell_lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_lookup.m; sourceTree = "<group>"; };
 		B2B092B819345E74002FE190 /* itcrm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itcrm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B092BB19345E74002FE190 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B2B092BD19345E74002FE190 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -563,8 +560,6 @@
 				B260D996194593580026A1E9 /* Cell_maintForm1.m */,
 				B260D998194594D80026A1E9 /* Cell_maintForm2.h */,
 				B260D999194594D80026A1E9 /* Cell_maintForm2.m */,
-				B2AA4D4A19614123004C440F /* Cell_lookup.h */,
-				B2AA4D4B19614123004C440F /* Cell_lookup.m */,
 				B2CA048719625227005A6F9A /* Cell_Option.h */,
 				B2CA048819625227005A6F9A /* Cell_Option.m */,
 			);
@@ -1096,7 +1091,6 @@
 				B260D99A194594D80026A1E9 /* Cell_maintForm2.m in Sources */,
 				B260D9911945674F0026A1E9 /* DB_crmopp_browse.m in Sources */,
 				B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */,
-				B2AA4D4C19614123004C440F /* Cell_lookup.m in Sources */,
 				B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */,
 				B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */,
 				B26CBCA519347E5A00C5287B /* NSArray.m in Sources */,
