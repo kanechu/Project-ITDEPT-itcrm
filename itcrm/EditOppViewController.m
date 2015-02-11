@@ -255,6 +255,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     return height;
 }
 #pragma mark UITextViewDelegate
+
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     textViewCheck=textView;
 }
@@ -399,6 +400,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         if ([data isEqualToString:[dic valueForKey:@"data"]]) {
             display_str=[dic valueForKey:@"display"];
             flag=1;
+            break;
         }
     }
     if (flag==0) {
@@ -413,11 +415,22 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     VC.type=is_type;
     VC.callback_region=^(NSMutableDictionary *dic){
         NSString *str_data=[dic valueForKey:@"data"];
+        NSString *str_display=[dic valueForKey:@"display"];
         [idic_parameter_opp setObject:str_data forKey:key];
         [idic_edited_opp setObject:str_data forKey:key];
+        [idic_edited_opp setObject:str_display forKey:[self fn_get_display_key:key]];
         [self.skstableView reloadData];
+        str_data=nil;
+        str_display=nil;
         
     };
     [self presentViewController:VC animated:YES completion:nil];
+}
+-(NSString*)fn_get_display_key:(NSString*)key_code{
+    NSString *key_name=key_code;
+    if ([key_code rangeOfString:@"_code"].location!=NSNotFound) {
+        key_name=[key_code stringByReplacingOccurrencesOfString:@"_code" withString:@"_name"];
+    }
+    return key_name;
 }
 @end

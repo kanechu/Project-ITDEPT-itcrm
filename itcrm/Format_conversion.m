@@ -185,6 +185,7 @@
     NSString *display_str=[NSString string];
     DB_Region *db=[[DB_Region alloc]init];
     NSMutableArray  *arr_lookup=[db fn_get_region_data:option_type];
+    db=nil;
     NSInteger flag=0;
     for (NSMutableDictionary *dic in arr_lookup) {
         if ([data isEqualToString:[dic valueForKey:@"data"]]) {
