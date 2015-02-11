@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_cancel;
 
 - (IBAction)fn_save_edit_data:(id)sender;
-- (IBAction)fn_lookup_data:(id)sender;
 - (IBAction)fn_goBack:(id)sender;
 - (IBAction)fn_click_checkBox:(id)sender;
 

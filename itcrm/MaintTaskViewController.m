@@ -233,8 +233,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     NSInteger is_enable_flag=[is_enable integerValue];
     if (_flag_can_edit!=1) {
         is_enable_flag=0;
-    }else{
-        is_enable_flag=1;
     }
     //is_mandatory
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
@@ -246,7 +244,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     _pass_value=^NSMutableDictionary*(NSInteger tag){
         return blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
     };
-    if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"]) {
+    if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"] || [col_type isEqualToString:@"lookup"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
         Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {
@@ -257,34 +255,20 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
+        cell.itv_data_textview.inputView=nil;
         if ([col_type isEqualToString:@"datetime"]) {
             if ([text_value length]!=0) {
                 text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
             }
             cell.itv_data_textview.inputView=datePicker;
-        }else{
-            cell.itv_data_textview.inputView=nil;
+            
+        }else if([col_type isEqualToString:@"lookup"]){
+            text_value=[format fn_convert_display_status:text_value col_option:[dic valueForKey:@"col_option"]];
         }
         cell.itv_data_textview.text=text_value;
         //UITextView 上下左右有8px
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
-        return cell;
-    }
-    if ([col_type isEqualToString:@"lookup"]) {
-        static NSString *cellIdentifier=@"Cell_lookup_taskEdit";
-        Cell_lookup *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_lookup alloc]init];
-        }
-        cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
-        NSString *str_status=[idic_parameter_value valueForKey:col_code];
-        cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
-        cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        cell.itv_edit_textview.delegate=self;
-        cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
         return cell;
     }
     if ([col_type isEqualToString:@"checkbox"]) {
@@ -378,16 +362,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }
 }
 
-- (IBAction)fn_lookup_data:(id)sender {
-    UIButton *btn=(UIButton*)sender;
-    NSMutableDictionary *dic=_pass_value(btn.tag);
-    NSString *col_option=[dic valueForKey:@"col_option"];
-    NSString *col_code=[dic valueForKey:@"col_code"];
-    [self fn_pop_lookup_View:col_option key_flag:col_code];
-}
 -(void)fn_pop_lookup_View:(NSString*)is_type key_flag:(NSString*)key{
     DB_Region *db=[[DB_Region alloc]init];
     NSMutableArray* alist_option=[db fn_get_region_data:is_type];
+    db=nil;
     OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
     VC.alist_option=alist_option;
     VC.callback=^(NSMutableDictionary *dic){
@@ -413,6 +391,18 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     return upd_form;
 }
 #pragma mark UITextViewDelegate
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    NSMutableDictionary *dic=_pass_value(textView.tag);
+    NSString *col_option=[dic valueForKey:@"col_option"];
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    NSString *col_type=[dic valueForKey:@"col_type"];
+    if ([col_type isEqualToString:@"lookup"]) {
+        [self fn_pop_lookup_View:col_option key_flag:col_code];
+        col_option=nil;col_code=nil;col_type=nil;
+        return NO;
+    }
+    return YES;
+}
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
     NSDate *date=[NSDate date];
