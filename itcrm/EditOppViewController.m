@@ -232,7 +232,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSString *col_type=[idic valueForKey:@"col_type"];
     NSString *col_option=[idic valueForKey:@"col_option"];
     NSString *col_code=[idic valueForKey:@"col_code"];
-    NSString *str_placeholder=[NSString stringWithFormat:@"please input a %@",col_code];
+    NSString *str_placeholder=[idic valueForKey:@"col_label"];
     if ([col_type isEqualToString:@"int"]) {
         return YES;
     }

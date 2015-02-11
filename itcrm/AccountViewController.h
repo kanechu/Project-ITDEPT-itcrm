@@ -28,7 +28,6 @@ typedef void (^CallBack_acct)(NSMutableArray * arr);
 
 - (IBAction)fn_search_account:(id)sender;
 - (IBAction)fn_go_back:(id)sender;
-- (IBAction)fn_skip_region:(id)sender;
 - (IBAction)fn_textfield_endEdit:(id)sender;
 - (IBAction)fn_clear_input_data:(id)sender;
 

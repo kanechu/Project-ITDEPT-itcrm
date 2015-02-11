@@ -8,7 +8,7 @@
 
 #import "SearchCrmOppViewController.h"
 #import "SKSTableViewCell.h"
-#import "Cell_opp_search.h"
+#import "Cell_maintForm1.h"
 #import "DB_searchCriteria.h"
 #import "RegionViewController.h"
 #import "Advance_SearchData.h"
@@ -17,7 +17,7 @@ enum IBTN_TAG{
     IBTN_TAG=100
 };
 typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
-@interface SearchCrmOppViewController ()
+@interface SearchCrmOppViewController ()<UITextViewDelegate>
 @property(nonatomic,strong)NSMutableArray *alist_filtered_data;
 @property(nonatomic,strong)NSMutableArray * alist_groupNameAndNum;
 @property(nonatomic,strong)NSMutableArray * alist_searchCriteria;
@@ -25,6 +25,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 @property(nonatomic,strong)NSMutableDictionary *idic_opp_value;
 @property(nonatomic,strong)opp_passValue pass_value;
 @property(nonatomic,strong)NSMutableArray *alist_searchData;
+@property (nonatomic,strong)UITextView *textViewCheck;
 @end
 
 @implementation SearchCrmOppViewController
@@ -59,6 +60,8 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
      */
     self.skstableView.showsVerticalScrollIndicator=NO;
     [self fn_show_different_language];
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
 }
 
@@ -86,6 +89,19 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
             [alist_filtered_data addObject:arr];
         }
     }
+}
+/**
+ *  自定义一个手势，点击空白的地方，隐藏键盘
+ */
+-(void)fn_custom_gesture{
+    UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
+    //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
+    tapgesture.cancelsTouchesInView = NO;
+    //将触摸事件添加到当前view
+    [self.view addGestureRecognizer:tapgesture];
+}
+-(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
+    [_textViewCheck resignFirstResponder];
 }
 
 #pragma mark SKSTableViewDelegate
@@ -121,6 +137,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *col_option=[dic valueForKey:@"col_option"];
+    NSString *col_type=[dic valueForKey:@"col_type"];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block SearchCrmOppViewController *blockSelf=self;
     pass_value=^NSMutableDictionary*(NSInteger tag){
@@ -131,19 +148,21 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
         col_label=[col_label stringByAppendingString:@"*"];
     }
     static NSString *cellIndentifier=@"Cell_opp_search";
-    Cell_opp_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
-    if (cell==nil) {
-        cell=[[Cell_opp_search alloc]init];
-    }
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
+    cell.backgroundColor=COLOR_LIGHT_GRAY;
     cell.il_remind_label.text=col_label;
     cell.il_remind_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-    cell.ibtn_lookup_label.tag=IBTN_TAG+indexPath.section*100+indexPath.subRow-1;
+    cell.is_enable=1;
+    cell.itv_data_textview.tag=IBTN_TAG+indexPath.section*100+indexPath.subRow-1;
+    cell.itv_data_textview.delegate=self;
     Format_conversion *convert=[[Format_conversion alloc]init];
     NSString *str_data=[idic_opp_value valueForKey:col_code];
-    NSString *str_display=[convert fn_convert_display_status:str_data col_option:col_option];
-    cell.ibtn_lookup_label.label.text=str_display;
+    if ([col_type isEqualToString:@"lookup"]) {
+        str_data=[convert fn_convert_display_status:str_data col_option:col_option];
+    }
+    cell.itv_data_textview.text=str_data;
+    str_data=nil;
     return cell;
-    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
@@ -151,6 +170,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
     return 70;
 }
+#pragma mark -event action
 - (IBAction)fn_go_back:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -161,15 +181,42 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-- (IBAction)fn_lookup_opp:(id)sender {
-    Custom_Button *ibtn=(Custom_Button*)sender;
-    NSMutableDictionary *idic=pass_value(ibtn.tag);
+#pragma mark -UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    NSMutableDictionary *idic=pass_value(textView.tag);
     NSString *col_code=[idic valueForKey:@"col_code"];
     NSString *col_option=[idic valueForKey:@"col_option"];
-    NSString *str_placeholder=[NSString stringWithFormat:@"please input %@",col_code];
-    [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
+    NSString *col_type=[idic valueForKey:@"col_type"];
+    if ([col_type isEqualToString:@"lookup"]) {
+        NSString *str_placeholder=[idic valueForKey:@"col_label"];
+        [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
+        col_code=nil;col_option=nil;col_type=nil;
+        return NO;
+    }
+    return YES;
 }
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    _textViewCheck=textView;
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    NSMutableDictionary *dic=pass_value(textView.tag);
+    NSString *col_code=[dic valueForKey:@"col_code"];
+    if (textView.text!=nil) {
+        NSString *str_value=textView.text;
+        //去掉字符串的前后空格
+        str_value=[str_value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSMutableArray *alist_searchData_copy=[NSMutableArray arrayWithArray:alist_searchData];
+        for (Advance_SearchData *searchData in alist_searchData_copy) {
+            if ([searchData.is_parameter isEqualToString:col_code]) {
+                [alist_searchData removeObject:searchData];
+            }
+        }
+        [idic_opp_parameter setObject:col_code forKey:col_code];
+        [idic_opp_value setObject:textView.text forKey:col_code];
+        [alist_searchData addObject:[expand_helper fn_get_searchData:col_code idic_value:idic_opp_value idic_parameter:idic_opp_parameter]];
+    }
+}
+
 -(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
     RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
     VC.is_placeholder=placeholder;

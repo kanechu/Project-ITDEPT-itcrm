@@ -17,6 +17,5 @@ typedef void (^callBack_opp)(NSMutableArray *alist_searchData);
 @property (weak, nonatomic) IBOutlet UIButton *ibtn_search;
 - (IBAction)fn_go_back:(id)sender;
 - (IBAction)fn_search_opp:(id)sender;
-- (IBAction)fn_lookup_opp:(id)sender;
 
 @end

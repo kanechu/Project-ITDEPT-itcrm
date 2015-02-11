@@ -56,7 +56,6 @@
 		B2759998193EF955005CF480 /* DB_formatlist.m in Sources */ = {isa = PBXBuildFile; fileRef = B2759997193EF955005CF480 /* DB_formatlist.m */; };
 		B275999B193F0E19005CF480 /* RespCrmacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B275999A193F0E19005CF480 /* RespCrmacct_browse.m */; };
 		B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B275999D193F2205005CF480 /* DB_crmacct_browse.m */; };
-		B27EDFC219401092007F89A6 /* Cell_search1.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFC119401092007F89A6 /* Cell_search1.m */; };
 		B27EDFC81940173C007F89A6 /* RespRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFC71940173C007F89A6 /* RespRegion.m */; };
 		B27EDFCB1940185A007F89A6 /* DB_Region.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFCA1940185A007F89A6 /* DB_Region.m */; };
 		B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0BD19402495007F89A6 /* Cell_region.m */; };
@@ -86,7 +85,6 @@
 		B2A548981A2C1DE6008334C0 /* DatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A548971A2C1DE6008334C0 /* DatabaseQueue.m */; };
 		B2A553031A83566D006ADA5A /* View_show_prompt.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A553021A83566D006ADA5A /* View_show_prompt.m */; };
 		B2A642B01970CE8500CF7B36 /* SearchCrmOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */; };
-		B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */; };
 		B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BB1970E20200CF7B36 /* Custom_Button.m */; };
 		B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BE1971089A00CF7B36 /* EditOppViewController.m */; };
 		B2A642C2197124E900CF7B36 /* expand_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642C1197124E900CF7B36 /* expand_helper.m */; };
@@ -280,8 +278,6 @@
 		B275999A193F0E19005CF480 /* RespCrmacct_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespCrmacct_browse.m; sourceTree = "<group>"; };
 		B275999C193F2205005CF480 /* DB_crmacct_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_crmacct_browse.h; sourceTree = "<group>"; };
 		B275999D193F2205005CF480 /* DB_crmacct_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_crmacct_browse.m; sourceTree = "<group>"; };
-		B27EDFC019401092007F89A6 /* Cell_search1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_search1.h; sourceTree = "<group>"; };
-		B27EDFC119401092007F89A6 /* Cell_search1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_search1.m; sourceTree = "<group>"; };
 		B27EDFC61940173C007F89A6 /* RespRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespRegion.h; sourceTree = "<group>"; };
 		B27EDFC71940173C007F89A6 /* RespRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespRegion.m; sourceTree = "<group>"; };
 		B27EDFC91940185A007F89A6 /* DB_Region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_Region.h; sourceTree = "<group>"; };
@@ -345,8 +341,6 @@
 		B2A553021A83566D006ADA5A /* View_show_prompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = View_show_prompt.m; sourceTree = "<group>"; };
 		B2A642AE1970CE8500CF7B36 /* SearchCrmOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchCrmOppViewController.h; sourceTree = "<group>"; };
 		B2A642AF1970CE8500CF7B36 /* SearchCrmOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchCrmOppViewController.m; sourceTree = "<group>"; };
-		B2A642B51970D4C300CF7B36 /* Cell_opp_search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell_opp_search.h; sourceTree = "<group>"; };
-		B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell_opp_search.m; sourceTree = "<group>"; };
 		B2A642BA1970E20200CF7B36 /* Custom_Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Custom_Button.h; sourceTree = "<group>"; };
 		B2A642BB1970E20200CF7B36 /* Custom_Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Custom_Button.m; sourceTree = "<group>"; };
 		B2A642BD1971089A00CF7B36 /* EditOppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditOppViewController.h; sourceTree = "<group>"; };
@@ -559,8 +553,6 @@
 				B257F2821935E16500EC88F5 /* Cell_menu_item.m */,
 				B25D7605193D6ACF005913D7 /* Cell_search.h */,
 				B25D7606193D6ACF005913D7 /* Cell_search.m */,
-				B27EDFC019401092007F89A6 /* Cell_search1.h */,
-				B27EDFC119401092007F89A6 /* Cell_search1.m */,
 				B28F1E69194EE2FD00B7C5D7 /* Cell_taskSearch.h */,
 				B28F1E6A194EE2FD00B7C5D7 /* Cell_taskSearch.m */,
 				B27EE0BC19402495007F89A6 /* Cell_region.h */,
@@ -575,8 +567,6 @@
 				B2AA4D4B19614123004C440F /* Cell_lookup.m */,
 				B2CA048719625227005A6F9A /* Cell_Option.h */,
 				B2CA048819625227005A6F9A /* Cell_Option.m */,
-				B2A642B51970D4C300CF7B36 /* Cell_opp_search.h */,
-				B2A642B61970D4C300CF7B36 /* Cell_opp_search.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1066,14 +1056,12 @@
 				B27EDFC81940173C007F89A6 /* RespRegion.m in Sources */,
 				B2B092CC19345E74002FE190 /* AppDelegate.m in Sources */,
 				B2759998193EF955005CF480 /* DB_formatlist.m in Sources */,
-				B27EDFC219401092007F89A6 /* Cell_search1.m in Sources */,
 				B2B092C819345E74002FE190 /* main.m in Sources */,
 				B2C48822197CE14E0087A382 /* QuoWebViewController.m in Sources */,
 				B275998F193EF22A005CF480 /* Web_resquestData.m in Sources */,
 				B27EE0DC19404919007F89A6 /* MZTransition.m in Sources */,
 				B27EE0D919404919007F89A6 /* MZFormSheetBackgroundWindowViewController.m in Sources */,
 				B29D3554198F38EB0026C3A5 /* Reachability.m in Sources */,
-				B2A642B71970D4C300CF7B36 /* Cell_opp_search.m in Sources */,
 				B2B0931F19346A52002FE190 /* RequestContract.m in Sources */,
 				B2CA048F1962532B005A6F9A /* OptionViewController.m in Sources */,
 				B2686205196E92CA00B14251 /* RespCrmquo_browse.m in Sources */,

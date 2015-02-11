@@ -10,7 +10,6 @@
 #import "SKSTableView.h"
 #import "SKSTableViewCell.h"
 #import "Cell_search.h"
-#import "Cell_search1.h"
 #import "DB_searchCriteria.h"
 #import "RegionViewController.h"
 #import "Advance_SearchData.h"
@@ -79,6 +78,20 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 
 #pragma mark UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    NSMutableDictionary *idic=_pass_value(textField.tag);
+    NSString *col_option=[idic valueForKey:@"col_option"];
+    NSString *col_label=[idic valueForKey:@"col_label"];
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    NSString *col_type=[idic valueForKey:@"col_type"];
+    if ([col_type isEqualToString:@"lookup"]) {
+        [self fn_pop_regionView:col_label type:col_option key_flag:col_code];
+        col_option=nil;col_label=nil;col_code=nil;col_type=nil;
+        return NO;
+    }
+    return YES;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     checkText = textField;//设置被点击的对象
 }
@@ -157,42 +170,26 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     _pass_value=^NSMutableDictionary*(NSInteger tag){
         return blockSelf-> alist_filtered_data [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
     };
+    
+    static NSString *cellIdentifier=@"Cell_search1";
+    Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.il_prompt_label.text=col_label;
+    cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
+    cell.itf_searchData.delegate=self;
+    cell.backgroundColor=COLOR_LIGHT_GRAY;
+    cell.itf_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
     if ([col_stye isEqualToString:@"string"]) {
-        static NSString *cellIdentifier=@"Cell_search1";
-        Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_search alloc]init];
-        }
-        cell.il_prompt_label.text=col_label;
-        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-        cell.itf_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_GRAY;
-        cell.itf_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
+        
         cell.itf_searchData.text=[idic_search_value valueForKey:col_code];
         return cell;
-    }
-    if ([col_stye isEqualToString:@"lookup"]) {
-        static NSString *cellIdentifier=@"Cell_search11";
-        Cell_search1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_search1 alloc]init];
-        }
-        cell.il_prompt_label.text=col_label;
-        cell.itf_input_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
-        cell.ibtn_skip.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
-        [cell.ibtn_skip setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
-        cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
-        cell.itf_input_searchData.delegate=self;
-        cell.backgroundColor=COLOR_LIGHT_GRAY;
+    }else if([col_stye isEqualToString:@"lookup"]){
         Format_conversion *convert=[[Format_conversion alloc]init];
         NSString *textValue=[idic_search_value valueForKey:col_code];
         NSString *col_option=[dic valueForKey:@"col_option"];
-        cell.itf_input_searchData.text=[convert fn_convert_display_status:textValue col_option:col_option];
-        return cell;
+        cell.itf_searchData.text=[convert fn_convert_display_status:textValue col_option:col_option];
     }
-    
     // Configure the cell...
-    return nil;
+    return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -232,14 +229,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)fn_skip_region:(id)sender {
-    UIButton *btn=(UIButton*)sender;
-    NSMutableDictionary *idic=_pass_value(btn.tag);
-    NSString *col_option=[idic valueForKey:@"col_option"];
-    NSString *col_label=[idic valueForKey:@"col_label"];
-    NSString *col_code=[idic valueForKey:@"col_code"];
-    [self fn_pop_regionView:[NSString stringWithFormat:@"Please fill in %@",col_label] type:col_option key_flag:col_code];
-}
 -(void)fn_pop_regionView:(NSString*)placeholder type:(NSString*)is_type key_flag:(NSString*)key{
     RegionViewController *VC=(RegionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"RegionViewController"];
     VC.is_placeholder=placeholder;
