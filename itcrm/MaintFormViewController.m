@@ -13,7 +13,6 @@
 #import "Cell_maintForm1.h"
 #import "Cell_maintForm2.h"
 #import "Cell_browse.h"
-#import "Cell_lookup.h"
 #import "OptionViewController.h"
 #import "EditContactViewController.h"
 #import "EditOppViewController.h"
@@ -166,6 +165,19 @@
     [checkTextView resignFirstResponder];
 }
 #pragma mark UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+    DB_Region *db=[[DB_Region alloc]init];
+    NSString *str_type=[idic_lookup valueForKey:@"status"];
+    VC.alist_option=[db fn_get_region_data:str_type];
+    VC.callback=^(NSMutableDictionary *dic){
+        [idic_modified_value setObject:[dic valueForKey:@"display"] forKey:[idic_lookup valueForKey:@"key_parameter"]];
+        [self.skstableView reloadData];
+    };
+    PopViewManager *popView=[[PopViewManager alloc]init];
+    [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
+    return YES;
+}
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
 }
@@ -373,18 +385,22 @@
     if ([[dic valueForKey:@"is_mandatory"] isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
     }
-    if ([col_stye isEqualToString:@"string"]) {
+    if ([col_stye isEqualToString:@"string"] || [col_stye isEqualToString:@"lookup"]) {
         static NSString *cellIdentifier=@"Cell_maintForm1";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_maintForm1 alloc]init];
-        }
         cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
-        cell.itv_data_textview.text=[idic_modified_value valueForKey:col_code];
+        cell.itv_data_textview.delegate=self;
+        NSString *str_status=[idic_modified_value valueForKey:col_code];
+        cell.itv_data_textview.text=str_status;
+        if ([col_stye isEqualToString:@"lookup"]) {
+            cell.itv_data_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
+            [idic_lookup setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
+            [idic_lookup setObject:col_code forKey:@"key_parameter"];
+        }
+        
         CGFloat height=[format fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
         [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
-        cell.itv_data_textview.delegate=self;
         return cell;
     }
     if ([col_stye isEqualToString:@"checkbox"] ) {
@@ -402,23 +418,7 @@
         }
         return cell;
     }
-    if ([col_stye isEqualToString:@"lookup"]) {
-        static NSString *cellIndentifier=@"Cell_lookup";
-        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
-        if (!cell) {
-            cell=[[Cell_lookup alloc]init];
-        }
-        cell.itv_edit_textview.delegate=self;
-        cell.il_remind_label.text=col_label;
-        NSString *str_status=[idic_modified_value valueForKey:col_code];
-        cell.itv_edit_textview.text=[format fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
-        [idic_lookup setObject:[dic valueForKey:@"col_option"] forKey:@"status"];
-        [idic_lookup setObject:col_code forKey:@"key_parameter"];
-        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
-        
-        return cell;
-        
-    }
+   
     if (indexPath.section>flag_groupNum-1) {
         static NSString *cellIndentifier=@"Cell_browse_edit";
         Cell_browse *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
@@ -525,19 +525,6 @@
     [actionsheet showFromRect:self.view.bounds inView:self.view animated:YES];
     // UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil),MYLocalizedString(@"sheet_contact", nil),MYLocalizedString(@"sheet_opp", nil), nil];
 
-}
-
-- (IBAction)fn_lookup_data:(id)sender {
-    OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
-    DB_Region *db=[[DB_Region alloc]init];
-    NSString *str_type=[idic_lookup valueForKey:@"status"];
-    VC.alist_option=[db fn_get_region_data:str_type];
-    VC.callback=^(NSMutableDictionary *dic){
-        [idic_modified_value setObject:[dic valueForKey:@"display"] forKey:[idic_lookup valueForKey:@"key_parameter"]];
-        [self.skstableView reloadData];
-    };
-    PopViewManager *popView=[[PopViewManager alloc]init];
-   [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
 }
 
 @end

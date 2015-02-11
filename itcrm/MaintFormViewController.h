@@ -19,6 +19,4 @@
 
 - (IBAction)fn_show_actionSheet:(id)sender;
 
-- (IBAction)fn_lookup_data:(id)sender;
-
 @end
