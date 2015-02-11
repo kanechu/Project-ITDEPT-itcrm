@@ -290,7 +290,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             isSuccess=[db_crmopp fn_save_crmopp_browse:alist_crmopp];
             [db_crmopp fn_update_crmopp_ismodified:@"1" opp_id:[idic_parameter_opp valueForKey:@"opp_id"]];
         }else{
-
             NSString *current_date=[convert fn_get_current_date_millisecond];
             [idic_edited_opp setObject:current_date forKey:@"rec_upd_date"];
             current_date=nil;
@@ -298,7 +297,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
             isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
         }
         if (isSuccess) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"crmopp_update" object:nil];
             UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
             [alertview show];
             idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
@@ -373,7 +372,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         str_msg=MYLocalizedString(@"msg_cancel_edit", nil);
     }
     if (!isSame) {
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_save", nil) otherButtonTitles:MYLocalizedString(@"lbl_discard", nil), nil];
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil) otherButtonTitles:MYLocalizedString(@"lbl_save", nil), nil];
         [alertview show];
         flag_cancel=1;
     }else{
@@ -415,6 +414,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     VC.callback_region=^(NSMutableDictionary *dic){
         NSString *str_data=[dic valueForKey:@"data"];
         [idic_parameter_opp setObject:str_data forKey:key];
+        [idic_edited_opp setObject:str_data forKey:key];
         [self.skstableView reloadData];
         
     };

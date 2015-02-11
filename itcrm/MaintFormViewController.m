@@ -485,6 +485,7 @@
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
         editContactVC.idic_parameter_contact=[alist_crmcontact_value objectAtIndex:selectRow];
         editContactVC.flag_can_edit=_flag_isDowload;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"contact_update" object:nil];
     }
     if ([groupName isEqualToString:MYLocalizedString(@"lbl_task", nil)]) {
         [self performSegueWithIdentifier:@"segue_acct_taskEdit" sender:self];
@@ -496,6 +497,7 @@
         [self performSegueWithIdentifier:@" segue_acct_oppEdit" sender:self];
         editOppVC.idic_parameter_opp=[alist_crmopp_value objectAtIndex:selectRow];
         editOppVC.flag_can_edit=_flag_isDowload;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"crmopp_update" object:nil];
     }
 }
 #pragma mark 修改后，更新browse

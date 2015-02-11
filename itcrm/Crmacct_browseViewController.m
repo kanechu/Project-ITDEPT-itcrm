@@ -243,6 +243,8 @@ static NSInteger flag_complete_upload=0;
             _flag_isDownload=1;
             [self performSegueWithIdentifier:@"segue_maintForm" sender:self];
             [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"contact_update" object:nil];
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"crmopp_update" object:nil];
         }else{
             _flag_isDownload=0;
             if ([self fn_get_crmacct_download_data:acct_id]!=nil) {
