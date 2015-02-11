@@ -74,6 +74,7 @@
     return ib_updated;
 }
 -(NSMutableArray*)fn_get_crmcontact_browse_data:(NSString*)contact_name select_sql:(NSString *)select_sql{
+    select_sql=[NSString stringWithFormat:@"%@,unique_id",select_sql];
     NSString *sql=[NSString stringWithFormat:@"select %@ from crmcontact where contact_name like ?",select_sql];
     __block NSMutableArray *arr_crmcontact=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){

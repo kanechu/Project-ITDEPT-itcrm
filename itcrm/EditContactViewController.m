@@ -22,7 +22,7 @@
 #import "SVProgressHUD.h"
 #import "Format_conversion.h"
 #define TEXT_TAG 100
-typedef NSString* (^passValue_contact)(NSInteger tag);
+typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
 @property(nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
@@ -174,60 +174,33 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     NSInteger is_enable_flag=[is_enable integerValue];
     if (_flag_can_edit!=1) {
         is_enable_flag=0;
-    }else{
-        is_enable_flag=1;
     }
-    
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block EditContactViewController *blockSelf=self;
-    passValue=^NSString*(NSInteger tag){
-        return [blockSelf-> alist_filtered_contactdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100] valueForKey:@"col_code"];
+    passValue=^NSDictionary*(NSInteger tag){
+        return blockSelf-> alist_filtered_contactdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
     };
-    if ([col_stye isEqualToString:@"string"]) {
-        static NSString *cellIdentifier=@"Cell_maintForm1_contact";
-        Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_maintForm1 alloc]init];
-        }
-        cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
-        cell.itv_data_textview.delegate=self;
-        cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        NSString *text_value=[idic_parameter_contact valueForKey:col_code];
-        cell.itv_data_textview.text=text_value;
-        //UITextView 上下左右有8px
-        CGFloat height=[_convert fn_heightWithString:text_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-        if (height<35) {
-            height=20;
-        }
-        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+14)];
-        return cell;
-    }
-    if ([col_stye isEqualToString:@"local_lookup"]) {
-        static NSString *cellIdentifier=@"Cell_lookup_contact";
-        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_lookup alloc]init];
-        }
-        cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
-        NSString *str_status=[idic_parameter_contact valueForKey:col_code];
-        cell.itv_edit_textview.text=[_convert fn_convert_display_status:str_status col_option:[dic valueForKey:@"col_option"]];
-        cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
-        cell.itv_edit_textview.delegate=self;
-        CGFloat height=[_convert fn_heightWithString:cell.itv_edit_textview.text font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
-        if (height<5) {
-            height=20;
-        }
-        [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+14)];
-      
-        return cell;
-    }
+    static NSString *cellIdentifier=@"Cell_maintForm1_contact";
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.is_enable=is_enable_flag;
+    cell.il_remind_label.text=col_label;
+    cell.itv_data_textview.delegate=self;
+    cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+    NSString *text_value=[idic_parameter_contact valueForKey:col_code];
+    cell.itv_data_textview.text=text_value;
     
+    if ([col_stye isEqualToString:@"local_lookup"]) {
+        
+        cell.itv_data_textview.text=[_convert fn_convert_display_status:text_value col_option:[dic valueForKey:@"col_option"]];
+    }
+    //UITextView 上下左右有8px
+    CGFloat height=[_convert fn_heightWithString:text_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    if (height<35) {
+        height=20;
+    }
+    [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+14)];
     // Configure the cell...
-    return nil;
+    return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
@@ -235,35 +208,48 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
     NSMutableDictionary *idic=alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
     NSString *col_code=[idic valueForKey:@"col_code"];
-    NSString *col_type=[idic valueForKey:@"col_type"];
     NSString *str_value=[idic_parameter_contact valueForKey:col_code];
     CGFloat height=0;
-    if ([col_type isEqualToString:@"string"]) {
-        static NSString *cellIndetifier=@"Cell_maintForm1_contact";
-        Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndetifier];
-        height=[_convert fn_heightWithString:str_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-        height=height+16+10;
-    }
-    if ([col_type isEqualToString:@"local_lookup"]) {
-        static NSString *cellIdentifier=@"Cell_lookup_contact";
-        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        height=[_convert fn_heightWithString:str_value font:cell.itv_edit_textview.font  constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
-        if (height<5) {
-            height=20;
-        }
-        height=height+16+10;
-    }
+    static NSString *cellIndetifier=@"Cell_maintForm1_contact";
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndetifier];
+    height=[_convert fn_heightWithString:str_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    height=height+16+10;
     if (height<44) {
         height=44;
     }
     return height;
 }
 #pragma mark UITextViewDelegate
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    NSDictionary *idic=passValue(textView.tag);
+    NSString *col_type=[idic valueForKey:@"col_type"];
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    if ([col_type isEqualToString:@"local_lookup"]) {
+        OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+        DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
+        VC.alist_option=[db fn_get_acct_nameAndid];
+        VC.flag=1;
+        VC.callback=^(NSMutableDictionary *dic){
+            if ([dic count]!=0 && dic!=nil) {
+                [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                [idic_parameter_contact setObject:[dic valueForKey:@"acct_id"] forKey:@"contact_ref_id"];
+                [idic_edited_parameter setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                [idic_edited_parameter setObject:[dic valueForKey:@"acct_id"] forKey:@"contact_ref_id"];
+                [self.skstableView reloadData];
+            }
+        };
+        PopViewManager *popView=[[PopViewManager alloc]init];
+        [ popView PopupView:VC Size:CGSizeMake(240, 300) uponView:self];
+        return NO;
+    }
+    return YES;
+}
+
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
 }
 -(void)textViewDidEndEditing:(UITextView *)textView{
-    NSString *col_code=passValue(textView.tag);
+    NSString *col_code=[passValue(textView.tag) valueForKey:@"col_code"];
     NSString *str_value=textView.text;
     str_value=[str_value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [idic_parameter_contact setObject:str_value forKey:col_code];
@@ -297,24 +283,6 @@ typedef NSString* (^passValue_contact)(NSInteger tag);
     }
 }
 
-- (IBAction)fn_lookup_data:(id)sender {
-    UIButton *ibtn=(UIButton*)sender;
-    OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
-    DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
-    VC.alist_option=[db fn_get_acct_nameAndid];
-    VC.flag=1;
-    VC.callback=^(NSMutableDictionary *dic){
-        if ([dic count]!=0 && dic!=nil) {
-            [idic_parameter_contact setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
-            [idic_parameter_contact setObject:[dic valueForKey:@"acct_id"] forKey:@"contact_ref_id"];
-            [idic_edited_parameter setObject:[dic valueForKey:@"acct_name"] forKey:passValue(ibtn.tag)];
-            [idic_edited_parameter setObject:[dic valueForKey:@"acct_id"] forKey:@"contact_ref_id"];
-            [self.skstableView reloadData];
-        }
-    };
-    PopViewManager *popView=[[PopViewManager alloc]init];
-    [ popView PopupView:VC Size:CGSizeMake(240, 300) uponView:self];
-}
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==[alertView firstOtherButtonIndex]) {

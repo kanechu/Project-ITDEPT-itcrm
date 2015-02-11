@@ -23,5 +23,4 @@
 - (IBAction)fn_save_modified_contact:(id)sender;
 - (IBAction)fn_cancel_edited_data:(id)sender;
 
-- (IBAction)fn_lookup_data:(id)sender;
 @end

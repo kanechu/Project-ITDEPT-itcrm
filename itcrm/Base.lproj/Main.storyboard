@@ -1554,7 +1554,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0Es-6z-MKO">
-                                                    <rect key="frame" x="110" y="5" width="190" height="35"/>
+                                                    <rect key="frame" x="110" y="5" width="200" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -1566,45 +1566,6 @@
                                         <connections>
                                             <outlet property="il_remind_label" destination="m6X-6d-oGp" id="IjX-Qq-2Rd"/>
                                             <outlet property="itv_data_textview" destination="0Es-6z-MKO" id="FEr-Go-mF6"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell_lookup_contact" rowHeight="60" id="c8d-uT-KCN" customClass="Cell_lookup">
-                                        <rect key="frame" x="0.0" y="66" width="320" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c8d-uT-KCN" id="q8p-xZ-okR">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5aK-RY-XUY">
-                                                    <rect key="frame" x="5" y="5" width="105" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="LUe-gQ-Wn6">
-                                                    <rect key="frame" x="110" y="5" width="135" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bWS-Ig-Wtk">
-                                                    <rect key="frame" x="245" y="5" width="55" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Lookup">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="fn_lookup_data:" destination="DNb-w7-p0C" eventType="touchUpInside" id="0JD-5h-wz4"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.98431372549999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <outlet property="ibtn_lookup" destination="bWS-Ig-Wtk" id="0vy-UB-dzz"/>
-                                            <outlet property="il_remind_label" destination="5aK-RY-XUY" id="EBi-Yz-yKW"/>
-                                            <outlet property="itv_edit_textview" destination="LUe-gQ-Wn6" id="LPX-bc-AcG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
