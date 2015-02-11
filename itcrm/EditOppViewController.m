@@ -10,7 +10,6 @@
 #import "DB_MaintForm.h"
 #import "SKSTableViewCell.h"
 #import "Cell_maintForm1.h"
-#import "Cell_lookup.h"
 #import "DB_crmopp_browse.h"
 #import "DB_crmacct_browse.h"
 #import "OptionViewController.h"
@@ -170,61 +169,42 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSInteger is_enable_flag=[is_enable integerValue];
     if (_flag_can_edit!=1) {
         is_enable_flag=0;
-    }else{
-        is_enable_flag=1;
     }
     //col_opption
     NSString *col_option=[dic valueForKey:@"col_option"];
     [self fn_get_choice_arr:col_option];
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
-     __block EditOppViewController *blockSelf=self;
-     pass_value=^NSMutableDictionary*(NSInteger tag){
-         return blockSelf-> alist_filtered_oppdata [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
-     };
+    __block EditOppViewController *blockSelf=self;
+    pass_value=^NSMutableDictionary*(NSInteger tag){
+        return blockSelf-> alist_filtered_oppdata [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
+    };
+    static NSString *cellIdentifier=@"Cell_maintForm1_opp";
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.is_enable=is_enable_flag;
+    cell.il_remind_label.text=col_label;
+    cell.itv_data_textview.delegate=self;
+    cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+    NSString *text_value=[idic_parameter_opp valueForKey:col_code];
+    
     if ([col_stye isEqualToString:@"int"]) {
-        static NSString *cellIdentifier=@"Cell_maintForm1_opp";
-        Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_maintForm1 alloc]init];
-        }
-        cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
-        cell.itv_data_textview.delegate=self;
-        cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        NSString *text_value=[idic_parameter_opp valueForKey:col_code];
+
         NSString *text_display=[convert fn_convert_display_status:text_value col_option:col_option];
         cell.itv_data_textview.text=text_display;
-        //UITextView 上下左右有8px
-        CGFloat height=[convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-        [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
-        return cell;
+        cell.itv_data_textview.keyboardType=UIKeyboardTypeNumberPad;
     }else{
-        static NSString *cellIndentifer=@"Cell_lookup_opp";
-        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifer];
-        if (cell==nil) {
-            cell=[[Cell_lookup alloc]init];
-        }
-        cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
-        cell.itv_edit_textview.delegate=self;
-        cell.itv_edit_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        cell.ibtn_lookup.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
-        [cell.ibtn_lookup setTitle:MYLocalizedString(@"lbl_lookup", nil) forState:UIControlStateNormal];
-        NSString *text_value=[idic_parameter_opp valueForKey:col_code];
+        
         NSString *text_display=nil;
         if ([col_stye isEqualToString:@"choice"]){
             text_display=[self fn_convert_display_status:text_value];
         }else{
             text_display=[convert fn_convert_display_status:text_value col_option:col_option];
         }
-        cell.itv_edit_textview.text=text_display;
-        //UITextView 上下左右有8px
-        CGFloat height=[convert fn_heightWithString:cell.itv_edit_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
-        [cell.itv_edit_textview setFrame:CGRectMake(cell.itv_edit_textview.frame.origin.x, cell.itv_edit_textview.frame.origin.y, cell.itv_edit_textview.frame.size.width, height+16)];
-        return cell;
+        cell.itv_data_textview.text=text_display;
     }
-    
-    return nil;
+    //UITextView 上下左右有8px
+    CGFloat height=[convert fn_heightWithString:cell.itv_data_textview.text font:[UIFont systemFontOfSize:15] constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    [cell.itv_data_textview setFrame:CGRectMake(cell.itv_data_textview.frame.origin.x, cell.itv_data_textview.frame.origin.y, cell.itv_data_textview.frame.size.width, height+16)];
+    return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
@@ -234,28 +214,61 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     NSMutableDictionary *dic=alist_filtered_oppdata[indexPath.section][indexPath.subRow-1];
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *col_option=[dic valueForKey:@"col_option"];
-    NSString *col_type=[dic valueForKey:@"col_type"];
     NSString *text_value=[idic_parameter_opp valueForKey:col_code];
     NSString *text_display=[convert fn_convert_display_status:text_value col_option:col_option];
-    CGFloat height=0;
-    if ([col_type isEqualToString:@"int"]) {
-        static NSString *cellIdentifier=@"Cell_maintForm1_opp";
-        Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        
-         height=[convert fn_heightWithString:text_display font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
-    }else{
-        static NSString *cellIndentifer=@"Cell_lookup_opp";
-        Cell_lookup *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifer];
-        height=[convert fn_heightWithString:text_display font:cell.itv_edit_textview.font constrainedToWidth:cell.itv_edit_textview.contentSize.width-16];
-    }
-   height=height+16+10;
+    CGFloat height;
+    static NSString *cellIdentifier=@"Cell_maintForm1_opp";
+    Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    height=[convert fn_heightWithString:text_display font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
+    height=height+16+10;
     if (height<44) {
         height=44;
     }
     return height;
 }
 #pragma mark UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    NSMutableDictionary *idic=pass_value(textView.tag);
+    NSString *col_type=[idic valueForKey:@"col_type"];
+    NSString *col_option=[idic valueForKey:@"col_option"];
+    NSString *col_code=[idic valueForKey:@"col_code"];
+    NSString *str_placeholder=[NSString stringWithFormat:@"please input a %@",col_code];
+    if ([col_type isEqualToString:@"int"]) {
+        return YES;
+    }
+    if ([col_type isEqualToString:@"choice"]||[col_type isEqualToString:@"local_lookup"]) {
+        OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
+        DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
+        if ([col_type isEqualToString:@"choice"]) {
+            [self fn_get_choice_arr:col_option];
+            VC.alist_option=alist_option;
+            VC.callback=^(NSMutableDictionary *dic){
+                [idic_parameter_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
+                [idic_edited_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
+                [self.skstableView reloadData];
+            };
+            
+        }else{
+            VC.alist_option=[db fn_get_acct_nameAndid];
+            VC.flag=1;
+            VC.callback=^(NSMutableDictionary *dic){
+                if ([dic count]!=0 && dic!=nil) {
+                    [idic_parameter_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                    [idic_edited_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
+                    [self.skstableView reloadData];
+                }
+            };
+        }
+        PopViewManager *popView=[[PopViewManager alloc]init];
+        [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
+        return NO;
+    }else{
+        [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
+        return NO;
+    }
+    return YES;
 
+}
 - (void)textViewDidBeginEditing:(UITextView *)textView{
     textViewCheck=textView;
 }
@@ -327,43 +340,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     updateform_contact.rec_upd_date=current_date;
     return updateform_contact;
 }
-- (IBAction)fn_lookup_data:(id)sender {
-    UIButton *ibtn=(UIButton*)sender;
-    NSMutableDictionary *idic=pass_value(ibtn.tag);
-    NSString *col_type=[idic valueForKey:@"col_type"];
-    NSString *col_option=[idic valueForKey:@"col_option"];
-    NSString *col_code=[idic valueForKey:@"col_code"];
-    NSString *str_placeholder=[NSString stringWithFormat:@"please input a %@",col_code];
-    if ([col_type isEqualToString:@"choice"]||[col_type isEqualToString:@"local_lookup"]) {
-        OptionViewController *VC=(OptionViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"OptionViewController"];
-        DB_crmacct_browse *db=[[DB_crmacct_browse alloc]init];
-        if ([col_type isEqualToString:@"choice"]) {
-            [self fn_get_choice_arr:col_option];
-            VC.alist_option=alist_option;
-            VC.callback=^(NSMutableDictionary *dic){
-                [idic_parameter_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
-                [idic_edited_opp setObject:[dic valueForKey:@"data"] forKey:col_code];
-                [self.skstableView reloadData];
-            };
-            
-        }else{
-            VC.alist_option=[db fn_get_acct_nameAndid];
-            VC.flag=1;
-            VC.callback=^(NSMutableDictionary *dic){
-                if ([dic count]!=0 && dic!=nil) {
-                    [idic_parameter_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
-                    [idic_edited_opp setObject:[dic valueForKey:@"acct_name"] forKey:col_code];
-                    [self.skstableView reloadData];
-                }
-            };
-        }
-        PopViewManager *popView=[[PopViewManager alloc]init];
-        [ popView PopupView:VC Size:CGSizeMake(250, 300) uponView:self];
-    }else{
-        [self fn_pop_regionView:str_placeholder type:col_option key_flag:col_code];
-    }
-}
-
 - (IBAction)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
     NSString *str_msg=nil;
