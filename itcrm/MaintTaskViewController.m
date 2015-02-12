@@ -273,15 +273,13 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     if ([col_type isEqualToString:@"checkbox"]) {
         static NSString *cellIndetifier=@"Cell_maintForm2_task";
         Cell_maintForm2 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIndetifier];
-        if (!cell) {
-            cell=[[Cell_maintForm2 alloc]init];
-        }
         cell.is_enable=is_enable_flag;
         cell.il_remind_label.text=col_label;
         NSString *is_submit=[idic_parameter_value valueForKey:col_code];
-        if ([is_submit length]==0) {
+        if ([is_submit length]==0 || [is_submit isEqualToString:@" "]) {
             is_submit=@"0";
         }
+        
         if ([is_submit isEqualToString:@"0"]) {
             [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateNormal];
             [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateSelected];
@@ -447,21 +445,16 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     NSMutableDictionary *idic=_pass_value(ibtn.tag);
     NSString *col_code=[idic valueForKey:@"col_code"];
     NSString *is_submit=[idic_parameter_value valueForKey:col_code];
+    if ([is_submit length]==0 || [is_submit isEqualToString:@" "]) {
+        is_submit=@"0";
+    }
     BOOL submited=[is_submit isEqualToString:@"1"];
     ibtn.selected=!ibtn.selected;
     NSString *submite_value=nil;
-    if (ibtn.selected) {
-        if (submited) {
-            submite_value=@"0";
-        }else{
-            submite_value=@"1";
-        }
+    if (submited) {
+        submite_value=@"0";
     }else{
-        if (submited) {
-            submite_value=@"0";
-        }else{
-            submite_value=@"1";
-        }
+        submite_value=@"1";
     }
     [idic_parameter_value setObject:submite_value forKey:col_code];
     [idic_edited_parameter setObject:submite_value forKey:col_code];
