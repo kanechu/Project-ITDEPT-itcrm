@@ -252,7 +252,7 @@ static NSInteger flag_complete_upload=0;
                 [self performSegueWithIdentifier:@"segue_maintForm" sender:self];
             }else{
                 if ([_check_obj fn_check_isNetworking]) {
-                    [SVProgressHUD showWithStatus:@"Loading......"];
+                    [SVProgressHUD showWithStatus:MYLocalizedString(@"dialog_prompt", nil)];
                     Web_resquestData *web_obj=[[Web_resquestData alloc]init];
                     [web_obj fn_get_crmacct_relate_data:_base_url alist_acc_id:[NSArray arrayWithObject:acct_id]];
                     web_obj.callBack=^(NSMutableArray *alist_resp_result,BOOL isTimeOut){

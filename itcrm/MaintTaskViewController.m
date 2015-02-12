@@ -314,14 +314,21 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     return height;
 }
 - (IBAction)fn_save_edit_data:(id)sender {
-    NSString *str=nil;
-    if (_add_flag==1) {
-        str=MYLocalizedString(@"msg_save_add", nil);
+    BOOL isSame=[idic_parameter_value isEqualToDictionary:idic_parameter_value_copy];
+    if (!isSame) {
+        NSString *str=nil;
+        if (_add_flag==1) {
+            str=MYLocalizedString(@"msg_save_add", nil);
+        }else{
+            str=MYLocalizedString(@"msg_save_edit", nil);
+        }
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil) otherButtonTitles:MYLocalizedString(@"lbl_save", nil), nil];
+        [alertview show];
     }else{
-        str=MYLocalizedString(@"msg_save_edit", nil);
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+        [alertview show];
     }
-    UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil) otherButtonTitles:MYLocalizedString(@"lbl_save", nil), nil];
-    [alertview show];
+    
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

@@ -28,19 +28,11 @@
 "msg_no_network"="No Internet connection";
 "msg_network_fail"="Application cannot access the server because it is not connected to the Internet.";
 "msg_request_timeout"="Network requests the server timeout, cancel or retry?";
-"msg_upd_crmData"="Please wait while uploading data.";
 "lbl_ok"="OK";
 "lbl_empty_username"="Sorry,the user name can not be empty!";
 "lbl_empty_password"="Sorry,the password can not be empty!";
 "lbl_empty_systemcode"="Sorry,the system name can not be empty!";
 "lbl_prompt_history"="No Historical Data!";
-"msg_save_data"="Please wait while save data.";
-"lbl_save_success"="Save successfully!";
-"lbl_save_fail"="Save failed!";
-"toast_mandatory"="This field cannot be empty.";
-"toast_numeric"="This field must be numeric.";
-"toast_illegal"="Illegal character.";
-"set_back"="Modified to give up, leave this page?";
 "msg_identity_auth"="Verifying,please wait!";
 "msg_landing_success"="Successful landing!";
 "msg_langding_failed"="Login failed, please check the password and user name match!";
@@ -50,7 +42,7 @@
 "msg_save_add"="Whether to save the added data?";
 "msg_save_title"="Save Data";
 "msg_save_locally"="Your edited data is being saved locally, You need to manually submit.";
-
+"msg_already_save"="Data already exists locally, without any modifications.";
 //button
 "lbl_advance"="Advance";
 "lbl_search"="Search";

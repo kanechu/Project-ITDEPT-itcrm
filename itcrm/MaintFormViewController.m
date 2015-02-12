@@ -188,10 +188,15 @@
     //获取crmtask的列表数据
     NSArray *arr_crmtask=[_resp_download.ActivityResult allObjects];
     alist_crmtask_value=[[NSMutableArray alloc]init];
+    NSInteger i=0;
     for (Respcrmtask_browse *resp_crmtask in arr_crmtask) {
+        if (i==3) {
+            break;
+        }
         NSDictionary *dic=[NSDictionary dictionaryWithPropertiesOfObject:resp_crmtask];
         [alist_crmtask_value addObject:dic];
         dic=nil;
+        i++;
     }
     alist_crmtask=[self fn_format_convert:alist_crmtask_value list_id:@"crmacct_task"];
     
@@ -208,10 +213,15 @@
     //获取crmhbl的列表数据
     NSArray *arr_crmhbl=[_resp_download.HblResult allObjects];
     NSMutableArray *crmhbl_arr=[[NSMutableArray alloc]init];
+    NSInteger j=0;
     for (RespCrmhbl_browse *resp_crmhbl in arr_crmhbl) {
+        if (j==50) {
+            break;
+        }
         NSDictionary *dic=[NSDictionary dictionaryWithPropertiesOfObject:resp_crmhbl];
         [crmhbl_arr addObject:dic];
         dic=nil;
+        j++;
     }
     alist_crmhbl=[self fn_format_convert:crmhbl_arr list_id:@"crmacct_hbl"];
     crmhbl_arr=nil;

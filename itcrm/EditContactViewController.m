@@ -255,14 +255,20 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [idic_edited_parameter setObject:str_value forKey:col_code];
 }
 - (IBAction)fn_save_modified_contact:(id)sender {
-    NSString *str_msg=nil;
-    if (_add_contact_flag==1) {
-        str_msg=MYLocalizedString(@"msg_save_add", nil);
+    BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
+    if (!isSame) {
+        NSString *str_msg=nil;
+        if (_add_contact_flag==1) {
+            str_msg=MYLocalizedString(@"msg_save_add", nil);
+        }else{
+            str_msg=MYLocalizedString(@"msg_save_edit", nil);
+        }
+        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
+        [alertView show];
     }else{
-        str_msg=MYLocalizedString(@"msg_save_edit", nil);
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+        [alertview show];
     }
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
-    [alertView show];
 }
 
 - (IBAction)fn_cancel_edited_data:(id)sender {

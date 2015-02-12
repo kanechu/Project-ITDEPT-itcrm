@@ -28,19 +28,11 @@
 "msg_no_network"="無網絡連接";
 "msg_network_fail"="應用程序不能訪問服務器，因為它沒有連接到互聯網。";
 "msg_request_timeout"="網絡請求服務器超時，取消或者重試？";
-"msg_upd_crmData"="上傳數據，請等候。";
 "lbl_ok"="確定";
 "lbl_empty_username"="請輸入用戶名";
 "lbl_empty_password"="請輸入密碼";
 "lbl_empty_systemcode"="請輸入系統名稱";
 "lbl_prompt_history"="沒有您輸入的記錄";
-"msg_save_data"="系統正在保存數據。";
-"lbl_save_success"="保存成功！";
-"lbl_save_fail"="保存失敗！";
-"toast_mandatory"="此欄位不能為空";
-"toast_numeric"="此欄位必須為數字";
-"toast_illegal"="非法字符";
-"set_back"="是否放棄修改，離開此頁面";
 "msg_identity_auth"="驗證中,請耐心等候！";
 "msg_landing_success"="登入成功！";
 "msg_langding_failed"="登入失敗，請檢查密碼和用戶名是否匹配！";
@@ -50,6 +42,7 @@
 "msg_save_add"="是否保存所添加的數據？";
 "msg_save_title"="保存數據";
 "msg_save_locally"="您編輯的數據被保存在本地，您需要手動提交。";
+"msg_already_save"="數據已經存在本地，沒有任何修改。";
 //button
 "lbl_advance"="進階";
 "lbl_search"="搜索";

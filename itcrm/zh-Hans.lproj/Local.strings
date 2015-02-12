@@ -28,19 +28,11 @@
 "msg_no_network"="无网络连接";
 "msg_network_fail"="应用程序不能访问服务器，因为它没有连接到互联网。";
 "msg_request_timeout"="网络请求服务器超时，取消或者重试？";
-"msg_upd_crmData"="上传数据，请等候。";
 "lbl_ok"="确定";
 "lbl_empty_username"="请输入用户名";
 "lbl_empty_password"="请输入密码";
 "lbl_empty_systemcode"="请输入系统名称";
 "lbl_prompt_history"="没有您输入的记录";
-"msg_save_data"="系统正在保存数据。";
-"lbl_save_success"="保存成功！";
-"lbl_save_fail"="保存失败！";
-"toast_mandatory"="此栏位不能为空";
-"toast_numeric"="此栏位必须为数字";
-"toast_illegal"="非法字符";
-"set_back"="是否放弃修改，离开此页面";
 "msg_identity_auth"="验证中,请耐心等候！";
 "msg_landing_success"="登入成功！";
 "msg_langding_failed"="登入失败，请检查密码和用户名是否匹配！";
@@ -50,6 +42,7 @@
 "msg_save_add"="是否保存所添加的数据?";
 "msg_save_title"="保存数据";
 "msg_save_locally"="您编辑的数据被保存在本地，您需要手动提交。";
+"msg_already_save"="数据已经存在本地，沒有任何修改。";
 //button
 "lbl_advance"="进阶";
 "lbl_search"="搜索";
