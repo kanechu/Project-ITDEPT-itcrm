@@ -98,9 +98,10 @@ static NSInteger flag_complete_upload=0;
     db_acct=[[DB_crmacct_browse alloc]init];
     format=[[Format_conversion alloc]init];
     _check_obj=[[CheckUpdate alloc]init];
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
     
+    DB_RespLogin *db=[[DB_RespLogin alloc]init];
     _base_url=[db fn_get_field_content:kWeb_addr];
+    db=nil;
     if (![_check_obj fn_check_isNetworking]) {
         alist_account_parameter=[db_acct fn_get_data:_searchBar.text select_sql:select_sql];
         [self fn_init_account:alist_account_parameter];
@@ -112,7 +113,7 @@ static NSInteger flag_complete_upload=0;
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     [_ibtn_download setTitle:MYLocalizedString(@"lbl_download", nil)];
     [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
-    self.title=MYLocalizedString(@"lbl_browse", nil);
+    self.title=MYLocalizedString(@"lbl_account", nil);
     
 }
 -(void)fn_get_acct_formatlist{

@@ -66,11 +66,6 @@
 "lbl_retry"="重试";
 //title
 "lbl_home"="主页";
-"lbl_browse_quo"="浏览价格";
-"lbl_browse_opp"="浏览商机";
-"lbl_browse"="浏览客户";
-"lbl_browse_task"="浏览活动";
-"lbl_browse_contact"="通讯录浏览";
 "lbl_advance_title"="进阶搜索";
 "lbl_edit_account"="修改客户";
 "lbl_edit_task"="修改活动";

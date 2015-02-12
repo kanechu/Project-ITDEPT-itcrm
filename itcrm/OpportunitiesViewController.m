@@ -67,7 +67,7 @@
     [self fn_init_crmopp_browse_arr:alist_opp_parameter];
     
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_opp_search", nil);
-    self.title=MYLocalizedString(@"lbl_browse_opp", nil);
+    self.title=MYLocalizedString(@"lbl_opp", nil);
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     
     self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);

@@ -64,7 +64,7 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)fn_show_different_language{
-    self.title=MYLocalizedString(@"lbl_browse_quo", nil);
+    self.title=MYLocalizedString(@"lbl_quo", nil);
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_Quotation_search", nil);
 }
 //获取crmquo版面的显示格式

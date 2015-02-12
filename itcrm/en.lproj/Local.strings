@@ -68,11 +68,6 @@
 
 //title
 "lbl_home"="Home";
-"lbl_browse_quo"="Browse Quotation";
-"lbl_browse_opp"="Browse Opportunties";
-"lbl_browse"="Browse Account";
-"lbl_browse_task"="Browse Task";
-"lbl_browse_contact"="Browse Contact";
 "lbl_advance_title"="Advance Search";
 "lbl_edit_account"="Edit Account";
 "lbl_edit_task"="Edit Task";

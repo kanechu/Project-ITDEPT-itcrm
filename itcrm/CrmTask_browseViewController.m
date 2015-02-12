@@ -67,7 +67,7 @@
     [self fn_init_crmtask_arr:alist_crmtask_parameter];
     
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
-    self.title=MYLocalizedString(@"lbl_browse_task", nil);
+    self.title=MYLocalizedString(@"lbl_task", nil);
     _is_searchbar.placeholder=MYLocalizedString(@"lbl_activity_search", nil);
 }
 -(void)fn_get_formatlist{

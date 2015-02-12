@@ -65,7 +65,7 @@
 
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_contact_search", nil);
-    self.title=MYLocalizedString(@"lbl_browse_contact", nil);
+    self.title=MYLocalizedString(@"lbl_contact", nil);
 }
 -(void)fn_get_formatlist{
     convert=[[Format_conversion alloc]init];
