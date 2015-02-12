@@ -325,10 +325,22 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:str delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil) otherButtonTitles:MYLocalizedString(@"lbl_save", nil), nil];
         [alertview show];
     }else{
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                         target:self
+                                       selector:@selector(fn_hiden_alertView:)
+                                       userInfo:alertview
+                                        repeats:NO];
         [alertview show];
     }
     
+}
+-(void)fn_hiden_alertView:(NSTimer*)theTimer{
+    UIAlertView *alertView=(UIAlertView*)[theTimer userInfo];
+    [alertView dismissWithClickedButtonIndex:0 animated:0];
+    alertView=nil;
+    [theTimer invalidate];
+    theTimer=nil;
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

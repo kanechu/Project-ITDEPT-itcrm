@@ -266,11 +266,22 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
         UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
         [alertView show];
     }else{
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                         target:self
+                                       selector:@selector(fn_hiden_alertView:)
+                                       userInfo:alertview
+                                        repeats:NO];
         [alertview show];
     }
 }
-
+-(void)fn_hiden_alertView:(NSTimer*)theTimer{
+    UIAlertView *alertView=(UIAlertView*)[theTimer userInfo];
+    [alertView dismissWithClickedButtonIndex:0 animated:0];
+    alertView=nil;
+    [theTimer invalidate];
+    theTimer=nil;
+}
 - (IBAction)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
     NSString *str_msg=nil;
