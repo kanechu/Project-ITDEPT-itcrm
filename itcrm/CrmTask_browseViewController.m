@@ -49,6 +49,9 @@
     
 	// Do any additional setup after loading the view.
 }
+- (void)viewWillAppear:(BOOL)animated{
+     [self.tableview deselectRowAtIndexPath:[self.tableview indexPathForSelectedRow] animated:NO];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -127,8 +130,6 @@
     CGFloat height=[format fn_heightWithString:cell.il_show_text.text font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
     // Configure the cell...
-    //设置选中cell时无背景颜色
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     //示意标识
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;

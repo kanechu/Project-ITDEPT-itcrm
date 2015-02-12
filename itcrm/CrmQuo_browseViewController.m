@@ -57,7 +57,9 @@
     [self fn_show_different_language];
 	// Do any additional setup after loading the view.
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [self.tableview deselectRowAtIndexPath:[self.tableview indexPathForSelectedRow] animated:NO];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -121,8 +123,6 @@
     cell.il_show_text.text=body_str;
     CGFloat height=[convert fn_heightWithString:body_str font:cell.il_show_text.font constrainedToWidth:cell.il_show_text.frame.size.width];
     [cell.il_show_text setFrame:CGRectMake(cell.il_show_text.frame.origin.x, cell.il_show_text.frame.origin.y, cell.il_show_text.frame.size.width, height)];
-    //设置选中cell时无背景颜色
-    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
