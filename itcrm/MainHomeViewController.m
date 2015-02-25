@@ -23,7 +23,7 @@
 
 @property(strong,nonatomic)NSMutableArray *ilist_menu;
 @property(weak,nonatomic) Menu_home *menu_item;
-
+@property(assign,nonatomic)NSInteger flag_first_isLogin;
 @end
 
 @implementation MainHomeViewController
@@ -45,6 +45,13 @@
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
 	// Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    if (_flag_first_isLogin==0) {
+        [self fn_present_loginView];
+    }
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,6 +78,7 @@
     }
     return lang_code;
 }
+
 -(void)fn_show_userLogo{
     DB_Login *db_login=[[DB_Login alloc]init];
     NSMutableArray *arr_loginInfo=[db_login fn_get_allData];
@@ -80,20 +88,25 @@
         _user_logo.image=[convert fn_binaryData_convert_image:userlogo];
     }
 }
-
 -(void)fn_isLogin_crm{
     NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
-    NSInteger flag_isLogin=[user_isLogin integerForKey:@"isLogin"];
-    if (flag_isLogin==0) {
-        LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self presentViewController:VC animated:NO completion:^{}];
-        VC.callback=^(){
-            [self fn_refresh_menu];
-        };
-    }else{
+    _flag_first_isLogin=[user_isLogin integerForKey:@"isLogin"];
+    if (_flag_first_isLogin==1) {
         NSString *lang=[self fn_get_lang_code];
         [[MYLocalizedString getshareInstance]fn_setLanguage_type:lang];
     }
+}
+- (void)fn_present_loginView{
+    LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    if (_flag_first_isLogin==0) {
+        [self presentViewController:VC animated:NO completion:^{}];
+    }else{
+        [self presentViewController:VC animated:YES completion:nil];
+    }
+    VC.callback=^(){
+        [self fn_refresh_menu];
+        _flag_first_isLogin=1;
+    };
 }
 
 //初始化Item
@@ -154,13 +167,7 @@
 }
 
 - (IBAction)fn_Logout_crm:(id)sender {
-    LoginViewController *VC=(LoginViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    [self presentViewController:VC animated:YES completion:^{}];
-    
-    VC.callback=^(){
-        [self fn_refresh_menu];
-        
-    };
+    [self fn_present_loginView];
     DB_RespLogin *db=[[DB_RespLogin alloc]init];
     [db fn_delete_all_data];
     db=nil;
