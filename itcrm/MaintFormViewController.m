@@ -74,7 +74,7 @@
 {
     [super viewDidLoad];
     format=[[Format_conversion alloc]init];
-    if (_flag_isDowload==1 || _flag_isDowload==2) {
+    if (_flag_isDowload==1) {
         [self fn_init_arr_offline];
     }else{
         [self fn_init_arr_online];
@@ -102,12 +102,9 @@
     self.skstableView.showsVerticalScrollIndicator=NO;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     
-    if (_flag_isDowload==1 || _flag_isDowload==2) {
-        _ibtn_add_operation.enabled=YES;
-    }else{
+    if (_flag_isDowload!=1) {
         _ibtn_add_operation.enabled=NO;
     }
-    
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     

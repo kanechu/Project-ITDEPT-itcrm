@@ -127,7 +127,7 @@
         DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
         NSMutableArray *alist_crmaccts=[db_crmacct fn_get_data_from_id:str_uid];
         db_crmacct=nil;
-        maintFormVC.flag_isDowload=2;
+        maintFormVC.flag_isDowload=1;
         maintFormVC.is_acct_id=str_uid;
         maintFormVC.idic_modified_value=[alist_crmaccts objectAtIndex:0];
         alist_crmaccts=nil;
@@ -137,6 +137,7 @@
         NSMutableArray *alist_crmtasks=[db_crmtask fn_get_crmtask_data_from_id:str_uid];
         db_crmtask=nil;
         maintTaskVC.idic_parameter_value=[alist_crmtasks objectAtIndex:0];
+        maintTaskVC.flag_can_edit=1;
         alist_crmtasks=nil;
         [self.navigationController pushViewController:maintTaskVC animated:YES];
        
@@ -145,6 +146,7 @@
         NSMutableArray *alist_crmcontact=[db_crmcontact fn_get_crmcontact_browse:str_uid];
         db_crmcontact=nil;
         editContactVC.idic_parameter_contact=[alist_crmcontact firstObject];
+        editContactVC.flag_can_edit=1;
         alist_crmcontact=nil;
         [self.navigationController pushViewController:editContactVC animated:YES];
         
@@ -153,6 +155,7 @@
         NSMutableArray *alist_crmopp=[db_crmopp fn_get_crmopp_with_id:str_uid];
         db_crmopp=nil;
         editOppVC.idic_parameter_opp=[alist_crmopp firstObject];
+        editOppVC.flag_can_edit=1;
         alist_crmopp=nil;
         [self.navigationController pushViewController:editOppVC animated:YES];
     }
