@@ -32,4 +32,8 @@ typedef NS_ENUM(NSInteger, kOperation_type){
 
 -(kOperation_type)fn_is_need_sync:(NSString*)max_upd_date acct_id:(NSString*)acct_id;
 
+-(BOOL)fn_createView_globalsearch;
+-(BOOL)fn_dropView_globalsearch;
+-(NSMutableArray*)fn_global_quick_search:(NSString*)name;
+
 @end

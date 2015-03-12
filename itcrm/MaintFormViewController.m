@@ -74,7 +74,7 @@
 {
     [super viewDidLoad];
     format=[[Format_conversion alloc]init];
-    if (_flag_isDowload==1) {
+    if (_flag_isDowload==1 || _flag_isDowload==2) {
         [self fn_init_arr_offline];
     }else{
         [self fn_init_arr_online];
@@ -102,7 +102,9 @@
     self.skstableView.showsVerticalScrollIndicator=NO;
     [expand_helper setExtraCellLineHidden:self.skstableView];
     
-    if (_flag_isDowload!=1) {
+    if (_flag_isDowload==1 || _flag_isDowload==2) {
+        _ibtn_add_operation.enabled=YES;
+    }else{
         _ibtn_add_operation.enabled=NO;
     }
     

@@ -15,15 +15,19 @@
 #import "DB_RespLogin.h"
 #import "DB_systemIcon.h"
 #import "DB_Login.h"
+#import "DB_crmacct_browse.h"
 #import "Custom_BtnGraphicMixed.h"
-
-@interface MainHomeViewController ()
+#import "QuickSearchListViewController.h"
+@interface MainHomeViewController ()<UISearchBarDelegate,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *ilb_version;
 
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
-
+@property (weak, nonatomic) IBOutlet UISearchBar *iSearchBar;
+@property (strong, nonatomic) QuickSearchListViewController *quickSearchVC;
 @property(strong,nonatomic)NSMutableArray *ilist_menu;
 @property(weak,nonatomic) Menu_home *menu_item;
 @property(assign,nonatomic)NSInteger flag_first_isLogin;
+@property(strong,nonatomic)DB_crmacct_browse *db_acct;
 @end
 
 @implementation MainHomeViewController
@@ -41,6 +45,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _quickSearchVC=[self.storyboard instantiateViewControllerWithIdentifier:@"QuickSearchListViewController"];
+    _iSearchBar.delegate=self;
+    _ilb_version.text=[NSString stringWithFormat:@"Version %@",ITCRM_VERSION];
+    _db_acct=[[DB_crmacct_browse alloc]init];
     //[self fn_show_userLogo];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
@@ -52,6 +60,15 @@
         [self fn_present_loginView];
     }
     [super viewDidAppear:animated];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    _quickSearchVC.view.frame=CGRectMake(self.view.bounds.origin.x, self.view.bounds.origin.y+108,self.view.bounds.size.width, self.view.bounds.size.height-108);
+    [_db_acct fn_createView_globalsearch];
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [_db_acct fn_dropView_globalsearch];
 }
 
 - (void)didReceiveMemoryWarning
@@ -180,4 +197,42 @@
     [user_isLogin synchronize];
 }
 
+#pragma mark -Quick globle search 
+- (void)fn_addChildViewController:(UIViewController *)controller {
+    [controller beginAppearanceTransition:YES animated:NO];
+    [controller willMoveToParentViewController:self];
+    [self addChildViewController:controller];
+    [self.view addSubview:controller.view];
+    [controller didMoveToParentViewController:controller];
+    [controller endAppearanceTransition];
+}
+
+- (void)fn_removeChildViewController:(UIViewController *)controller {
+    if ([self.childViewControllers containsObject:controller]) {
+        [controller beginAppearanceTransition:NO animated:NO];
+        [controller willMoveToParentViewController:nil];
+        [controller.view removeFromSuperview];
+        [controller removeFromParentViewController];
+        [controller didMoveToParentViewController:nil];
+        [controller endAppearanceTransition];
+    }
+}
+#pragma mark -UISearchBarDelegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    [self fn_addChildViewController:_quickSearchVC];
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    [self fn_removeChildViewController:_quickSearchVC];
+    [_iSearchBar resignFirstResponder];
+}
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    _quickSearchVC.alist_browse_data=[_db_acct fn_global_quick_search:searchBar.text];
+    [_quickSearchVC.tableView reloadData];
+    [_iSearchBar resignFirstResponder];
+}
+/*
+#pragma mark -UIScrollViewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [_iSearchBar resignFirstResponder];
+}*/
 @end

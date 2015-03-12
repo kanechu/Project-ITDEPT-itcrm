@@ -220,4 +220,40 @@
     }
     return flag_opration_type;
 }
+-(BOOL)fn_createView_globalsearch{
+    __block BOOL ib_created=NO;
+    NSString *ls_sql_globle = @"CREATE VIEW IF NOT EXISTS globalSearchView AS select acct_id as uid,'ACCT' as type,acct_name as title from crmacct UNION select task_id as uid,'TASK' as type,task_title as title from crmtask UNION select opp_id as uid,'OPP' as type,opp_name as title from crmopp_browse UNION select contact_id as uid,'CONTACT' as type,contact_name as title from crmcontact";
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_created= [db executeUpdate:ls_sql_globle];
+            [db close];
+        }
+    }];
+    return ib_created;
+}
+-(BOOL)fn_dropView_globalsearch{
+    __block BOOL ib_droped=NO;
+    NSString *ls_sql_drop = @"DROP VIEW globalSearchView";
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            ib_droped= [db executeUpdate:ls_sql_drop];
+            [db close];
+        }
+    }];
+    return ib_droped;
+}
+-(NSMutableArray*)fn_global_quick_search:(NSString*)name{
+    __block NSMutableArray *arr=[NSMutableArray array];
+    NSString *str_value=[NSString stringWithFormat:@"%%%@%%",name];
+    [queue inDataBase:^(FMDatabase *db){
+        if ([db open]) {
+            FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM globalSearchView where title like ?",str_value];
+            while ([lfmdb_result next]) {
+                [arr addObject:[lfmdb_result resultDictionary]];
+            }
+            [db close];
+        }
+    }];
+    return arr;
+}
 @end

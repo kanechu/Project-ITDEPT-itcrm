@@ -496,6 +496,9 @@ static NSInteger flag_complete_upload=0;
     if (flag_complete_upload==3) {
         flag_complete_upload=0;
         [self fn_crmacct_download_relate_data:[NSArray arrayWithObject:acct_id]];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"complete_upload_task" object:nil];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"complete_upload_contact" object:nil];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"complete_upload_opp" object:nil];
     }
     
 }
