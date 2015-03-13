@@ -15,5 +15,6 @@
 @property(nonatomic,copy)NSString *acct_name;
 @property(nonatomic,copy)NSString *op_type;
 @property(nonatomic,copy)NSString *desc;
+@property(nonatomic,copy)NSString *hbl_update_date;
 
 @end

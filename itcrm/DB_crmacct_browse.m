@@ -205,6 +205,13 @@
                 if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
                     rtn_datetime=sync_datetime;
                 }
+                
+                str_sync_datetime=[db stringForQuery:@"SELECT MAX(hbl_update_date) FROM crmhbl_browse where acct_id like ?",acct_id];
+                sync_datetime=[str_sync_datetime longLongValue];
+                if (sync_datetime!=0 && sync_datetime>rtn_datetime) {
+                    rtn_datetime=sync_datetime;
+                }
+                
                 str_sync_datetime=nil;
                 [db close];
             }

@@ -15,5 +15,6 @@
 @synthesize acct_name;
 @synthesize op_type;
 @synthesize desc;
+@synthesize hbl_update_date;
 
 @end
