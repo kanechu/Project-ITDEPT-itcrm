@@ -18,7 +18,7 @@
 #import "DB_crmacct_browse.h"
 #import "Custom_BtnGraphicMixed.h"
 #import "QuickSearchListViewController.h"
-@interface MainHomeViewController ()<UISearchBarDelegate,UITableViewDelegate>
+@interface MainHomeViewController ()<UISearchBarDelegate,UITableViewDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *ilb_version;
 
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
@@ -184,19 +184,50 @@
 }
 
 - (IBAction)fn_Logout_crm:(id)sender {
-    [self fn_present_loginView];
-    DB_RespLogin *db=[[DB_RespLogin alloc]init];
-    [db fn_delete_all_data];
-    db=nil;
-    DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
-    [dbSystemIcon fn_delete_systemIcon_data];
-    dbSystemIcon=nil;
-
-    NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
-    [user_isLogin setInteger:0 forKey:@"isLogin"];
-    [user_isLogin synchronize];
+    UIAlertView *alerView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_logout", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+    [alerView show];
+    alerView=nil;
+    
 }
-
+#pragma mark UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==[alertView firstOtherButtonIndex]) {
+        [self fn_present_loginView];
+        DB_RespLogin *db=[[DB_RespLogin alloc]init];
+        [db fn_delete_all_data];
+        db=nil;
+        DB_systemIcon *dbSystemIcon=[[DB_systemIcon alloc]init];
+        [dbSystemIcon fn_delete_systemIcon_data];
+        dbSystemIcon=nil;
+        DB_crmacct_browse *db_crmacct=[[DB_crmacct_browse alloc]init];
+        [db_crmacct fn_delete_all_data];
+        db_crmacct=nil;
+        
+        DB_crmcontact_browse *db_crmcontact=[[DB_crmcontact_browse alloc]init];
+        [db_crmcontact fn_delete_all_crmcontact_data];
+        db_crmacct=nil;
+        
+        DB_crmtask_browse *db_crmtask=[[DB_crmtask_browse alloc]init];
+        [db_crmtask fn_delete_all_data];
+        db_crmtask=nil;
+        
+        DB_crmquo_browse *db_crmquo=[[DB_crmquo_browse alloc]init];
+        [db_crmquo fn_delete_all_crmquo_data];
+        db_crmquo=nil;
+        
+        DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
+        [db_crmopp fn_delete_all_data];
+        db_crmopp=nil;
+        
+        DB_crmhbl_browse *db_crmhbl=[[DB_crmhbl_browse alloc]init];
+        [db_crmhbl fn_delete_all_data];
+        db_crmhbl=nil;
+        
+        NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
+        [user_isLogin setInteger:0 forKey:@"isLogin"];
+        [user_isLogin synchronize];
+    }
+}
 #pragma mark -Quick globle search 
 - (void)fn_addChildViewController:(UIViewController *)controller {
     [controller beginAppearanceTransition:YES animated:NO];
@@ -230,9 +261,5 @@
     [_quickSearchVC.tableView reloadData];
     [_iSearchBar resignFirstResponder];
 }
-/*
-#pragma mark -UIScrollViewDelegate
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    [_iSearchBar resignFirstResponder];
-}*/
+
 @end

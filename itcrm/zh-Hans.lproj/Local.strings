@@ -43,6 +43,8 @@
 "msg_save_title"="保存数据";
 "msg_save_locally"="您编辑的数据被保存在本地，您需要手动提交。";
 "msg_already_save"="数据已经存在本地，沒有任何修改。";
+"msg_logout"="如果退出登录，将删除存在的记录。您是否强行退出？";
+
 //button
 "lbl_advance"="进阶";
 "lbl_search"="搜索";

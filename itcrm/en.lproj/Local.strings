@@ -43,6 +43,8 @@
 "msg_save_title"="Save Data";
 "msg_save_locally"="Your edited data is being saved locally, You need to manually submit.";
 "msg_already_save"="Data already exists locally, without any modifications.";
+"msg_logout"="If you log out, will remove the existing record. Are you forced to quit?";
+
 //button
 "lbl_advance"="Advance";
 "lbl_search"="Search";
