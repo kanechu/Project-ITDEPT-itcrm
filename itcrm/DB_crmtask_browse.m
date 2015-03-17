@@ -73,7 +73,7 @@
 }
 
 -(NSMutableArray*)fn_get_search_crmtask_data:(NSString*)task_ref_name select_sql:(NSString *)select_sql{
-    NSString *is_sql=[NSString stringWithFormat:@"select * from crmtask where task_ref_name like ?"];
+    NSString *is_sql=[NSString stringWithFormat:@"select * from crmtask where task_title like ?"];
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
