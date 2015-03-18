@@ -83,6 +83,10 @@ static NSInteger flag_complete_upload=0;
 - (void)viewWillAppear:(BOOL)animated{
     [self.tableView_acct deselectRowAtIndexPath:[self.tableView_acct indexPathForSelectedRow] animated:NO];
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [SVProgressHUD dismiss];
+}
 
 - (void)didReceiveMemoryWarning
 {

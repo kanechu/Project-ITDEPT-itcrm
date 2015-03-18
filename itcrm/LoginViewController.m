@@ -218,7 +218,7 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
     alertView=nil;
 }
 -(void)fn_show_request_timeOut_alert{
-    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_request_timeout", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:MYLocalizedString(@"lbl_retry", nil), nil];
+    UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_request_timeout", nil) delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) otherButtonTitles:MYLocalizedString(@"lbl_retry", nil), nil];
     [alertView show];
     alertView=nil;
 }
@@ -237,6 +237,7 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
             sys_name=nil;
         }
     }
+    
 }
 
 #pragma mark NetWork Request
@@ -262,6 +263,7 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespLogin class]];
     web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
         if (isTimeOut) {
+            [SVProgressHUD dismiss];
             _timeOut_stage=kAppconfig_stage;
             [self fn_show_request_timeOut_alert];
             
@@ -279,7 +281,6 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
         }
     };
     [web_base fn_get_data:req_form];
-    
 }
 - (void) fn_get_RespusersLogin_data:(NSString*)base_url sys_name:(NSString*)sys_name{
     RequestContract *req_form = [[RequestContract alloc] init];
