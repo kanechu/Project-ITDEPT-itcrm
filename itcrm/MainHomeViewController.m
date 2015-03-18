@@ -258,7 +258,7 @@
 }
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     _quickSearchVC.alist_browse_data=[_db_acct fn_global_quick_search:searchBar.text];
-    [_quickSearchVC.tableView reloadData];
+    [_quickSearchVC fn_refresh_listView];
     [_iSearchBar resignFirstResponder];
 }
 

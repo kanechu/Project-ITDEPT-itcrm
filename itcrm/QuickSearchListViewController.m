@@ -25,7 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _format_obj=[[Format_conversion alloc]init];
-    
+    [self fn_refresh_listView];
+    self.tableView.backgroundColor=COLOR_LIGHT_GRAY;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -159,5 +160,21 @@
         alist_crmopp=nil;
         [self.navigationController pushViewController:editOppVC animated:YES];
     }
+}
+#pragma mark -refresh listview after search
+- (void)fn_refresh_listView{
+    if ([_alist_browse_data count]==0) {
+        View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableView.frame];
+        footView.str_msg=MYLocalizedString(@"no_task_prompt", nil);
+        [self.tableView setTableFooterView:footView];
+        [self.tableView setScrollEnabled:NO];
+    }else{
+        UIView *view=[[UIView alloc]init];
+        view.backgroundColor=[UIColor clearColor];
+        [self.tableView setTableFooterView:view];
+        [self.tableView setScrollEnabled:YES];
+        view=nil;
+    }
+    [self.tableView reloadData];
 }
 @end

@@ -10,4 +10,5 @@
 
 @interface QuickSearchListViewController : UITableViewController
 @property (nonatomic, strong) NSMutableArray *alist_browse_data;
+- (void)fn_refresh_listView;
 @end
