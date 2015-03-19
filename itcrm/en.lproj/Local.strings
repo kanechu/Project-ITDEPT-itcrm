@@ -88,7 +88,7 @@
 "no_task_prompt"="No Activity Data";
 "no_contact_prompt"="No Contact Data";
 "no_opp_prompt"="No Opportunity Data";
-
+"no_data_prompt"="No Data";
 //search Bar placeholder
 "lbl_account_search"="Please input the account name";
 "lbl_activity_search"="Please input the task name";

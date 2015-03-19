@@ -251,11 +251,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <searchBar contentMode="redraw" showsCancelButton="YES" id="4Wi-Yy-ux9">
-                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="version" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v7G-6r-raM">
                                 <rect key="frame" x="5" y="546" width="310" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -263,6 +258,23 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="UyI-ZZ-Idp">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="search" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" id="8If-vb-ThU">
+                                        <rect key="frame" x="15" y="7" width="280" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                        <connections>
+                                            <action selector="fn_textField_ValueChanged:" destination="SJP-5q-18v" eventType="editingChanged" id="d6Y-cE-wBj"/>
+                                            <outlet property="delegate" destination="SJP-5q-18v" id="cgo-kh-uNK"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -286,10 +298,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="iSearchBar" destination="4Wi-Yy-ux9" id="V3d-i1-bNz"/>
+                        <outlet property="ibtn_cancel" destination="pUj-Ga-zPg" id="88u-hZ-6Ty"/>
                         <outlet property="ibtn_logo" destination="1F1-0F-WBE" id="GYM-6W-GUf"/>
                         <outlet property="ibtn_logout" destination="33c-6H-lbV" id="ruZ-yh-qLz"/>
                         <outlet property="ilb_version" destination="v7G-6r-raM" id="WF8-W6-4Xz"/>
+                        <outlet property="itf_search" destination="8If-vb-ThU" id="dnK-IB-OBt"/>
                         <outlet property="iui_collectionview" destination="cNd-Q3-i3T" id="Irt-aO-mXs"/>
                         <outlet property="user_logo" destination="b9e-Be-sfT" id="RRr-vA-wj0"/>
                         <segue destination="sUH-eH-Mej" kind="push" identifier="segue_crmquo_browse" id="aBn-az-hQe"/>
@@ -301,6 +314,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VzC-RK-HZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pUj-Ga-zPg">
+                    <rect key="frame" x="-12" y="4" width="30" height="22"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="fn_cancel_quick_search:" destination="SJP-5q-18v" eventType="touchUpInside" id="xQn-MI-YV5"/>
+                    </connections>
+                </button>
             </objects>
             <point key="canvasLocation" x="-2618" y="-240"/>
         </scene>

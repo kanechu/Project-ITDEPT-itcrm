@@ -18,11 +18,12 @@
 #import "DB_crmacct_browse.h"
 #import "Custom_BtnGraphicMixed.h"
 #import "QuickSearchListViewController.h"
-@interface MainHomeViewController ()<UISearchBarDelegate,UITableViewDelegate,UIAlertViewDelegate>
+@interface MainHomeViewController ()<UITextFieldDelegate,UITableViewDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *ilb_version;
 
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
-@property (weak, nonatomic) IBOutlet UISearchBar *iSearchBar;
+@property (weak, nonatomic) IBOutlet UITextField *itf_search;
+@property (strong, nonatomic) IBOutlet UIButton *ibtn_cancel;
 @property (strong, nonatomic) QuickSearchListViewController *quickSearchVC;
 @property(strong,nonatomic)NSMutableArray *ilist_menu;
 @property(weak,nonatomic) Menu_home *menu_item;
@@ -45,14 +46,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _quickSearchVC=[self.storyboard instantiateViewControllerWithIdentifier:@"QuickSearchListViewController"];
-    _iSearchBar.delegate=self;
-    _ilb_version.text=[NSString stringWithFormat:@"Version %@",ITCRM_VERSION];
-    _db_acct=[[DB_crmacct_browse alloc]init];
     //[self fn_show_userLogo];
     [self fn_isLogin_crm];
     [self fn_refresh_menu];
-	// Do any additional setup after loading the view.
+    [self fn_set_required_pro];
+    // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -75,6 +73,17 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)fn_set_required_pro{
+    _quickSearchVC=[self.storyboard instantiateViewControllerWithIdentifier:@"QuickSearchListViewController"];
+    [_ibtn_cancel setImage:[UIImage imageNamed:@"closeBtn"] forState:UIControlStateNormal];
+    _itf_search.placeholder=MYLocalizedString(@"lbl_search", nil);
+    
+    _itf_search.rightView=_ibtn_cancel;
+    _itf_search.rightViewMode=UITextFieldViewModeAlways;
+    
+    _ilb_version.text=[NSString stringWithFormat:@"Version %@",ITCRM_VERSION];
+    _db_acct=[[DB_crmacct_browse alloc]init];
 }
 
 -(NSString*)fn_get_lang_code{
@@ -189,6 +198,11 @@
     alerView=nil;
     
 }
+- (IBAction)fn_cancel_quick_search:(id)sender {
+    [self fn_removeChildViewController:_quickSearchVC];
+    _itf_search.text=@"";
+    [_itf_search resignFirstResponder];
+}
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==[alertView firstOtherButtonIndex]) {
@@ -248,18 +262,28 @@
         [controller endAppearanceTransition];
     }
 }
-#pragma mark -UISearchBarDelegate
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+#pragma mark -UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    _quickSearchVC.alist_browse_data=nil;
+    [_quickSearchVC fn_refresh_listView];
     [self fn_addChildViewController:_quickSearchVC];
 }
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
-    [self fn_removeChildViewController:_quickSearchVC];
-    [_iSearchBar resignFirstResponder];
-}
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    _quickSearchVC.alist_browse_data=[_db_acct fn_global_quick_search:searchBar.text];
+- (IBAction)fn_textField_ValueChanged:(id)sender {
+    _quickSearchVC.alist_browse_data=[_db_acct fn_global_quick_search:_itf_search.text];
     [_quickSearchVC fn_refresh_listView];
-    [_iSearchBar resignFirstResponder];
+    __block MainHomeViewController *selfBlock=self;
+    _quickSearchVC.callback=^(){
+        [selfBlock fn_hiden_keyboard];
+    };
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [_itf_search resignFirstResponder];
+    return YES;
+}
+
+- (void)fn_hiden_keyboard{
+    [_itf_search resignFirstResponder];
 }
 
 @end

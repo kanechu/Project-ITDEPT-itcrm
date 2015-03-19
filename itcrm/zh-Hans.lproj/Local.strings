@@ -87,6 +87,7 @@
 "no_task_prompt"="没有活动数据";
 "no_contact_prompt"="无联系人数据";
 "no_opp_prompt"="没有商机数据";
+"no_data_prompt"="没有数据";
 
 //search Bar placeholder
 "lbl_account_search"="请输入客户名称";
