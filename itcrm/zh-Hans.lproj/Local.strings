@@ -44,6 +44,10 @@
 "msg_save_locally"="您编辑的数据被保存在本地，您需要手动提交。";
 "msg_already_save"="数据已经存在本地，沒有任何修改。";
 "msg_logout"="如果退出登录，将删除存在的记录。您是否强行退出？";
+"msg_load_maintForm"="ITCRM正在加载修改格式数据。";
+"msg_load_region"="ITCRM正在加载地区数据。";
+"msg_load_formatlist"="ITCRM正在加载显示格式数据。";
+"msg_load_permit"="ITCRM正在加载权限数据。";
 
 //button
 "lbl_advance"="进阶";

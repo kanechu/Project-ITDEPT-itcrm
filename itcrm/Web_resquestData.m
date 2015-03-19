@@ -20,6 +20,7 @@
 #pragma mark 请求permit的数据
 - (void) fn_get_permit_data:(NSString*)base_url
 {
+    [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_load_permit", nil)];
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
@@ -37,7 +38,7 @@
     web_base.iresp_class=[RespPermit class];
     web_base.ilist_resp_mapping=[NSArray arrayWithPropertiesOfObject:[RespPermit class]];
     web_base.callback=^(NSMutableArray *arr_resp_result,BOOL isTimeOut){
-        
+        [self fn_send_notification];
     };
     [web_base fn_get_data:req_form];
     
@@ -78,6 +79,7 @@
 
 #pragma mark 请求formatlist的数据
 - (void) fn_get_formatlist_data:(NSString*)base_url{
+    [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_load_formatlist", nil)];
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
@@ -99,6 +101,7 @@
             if ([arr_resp_result count]!=0) {
                 [db fn_delete_all_data];
                 [db fn_save_formatlist_data:arr_resp_result];
+                [self fn_send_notification];
             }
             db=nil;
         }
@@ -132,7 +135,7 @@
 #pragma mark 请求lookup的数据
 - (void) fn_get_mslookup_data:(NSString*)base_url
 {
-    
+     [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_load_region", nil)];
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
@@ -151,8 +154,10 @@
         if ([arr_resp_result count]!=0) {
             [db fn_delete_region_data];
             [db fn_save_region_data:arr_resp_result];
+            [self fn_send_notification];
         }
         db=nil;
+        
     };
 
     [web_base fn_get_data:req_form];
@@ -193,6 +198,7 @@
 #pragma mark 请求maintForm的数据
 - (void) fn_get_maintForm_data:(NSString*)base_url
 {
+    [SVProgressHUD showWithStatus:MYLocalizedString(@"msg_load_maintForm", nil)];
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
@@ -211,6 +217,7 @@
         if ([arr_resp_result count]!=0) {
             [db fn_delete_all_data];
             [db fn_save_MaintForm_data:arr_resp_result];
+            [self fn_send_notification];
         }
         db=nil;
     };
@@ -346,5 +353,8 @@
     req_form=nil;
     search=nil;
     web_base=nil;
+}
+- (void)fn_send_notification{
+   [[NSNotificationCenter defaultCenter]postNotificationName:@"success_resp" object:nil userInfo:nil];
 }
 @end

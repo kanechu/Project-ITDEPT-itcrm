@@ -44,6 +44,10 @@
 "msg_save_locally"="Your edited data is being saved locally, You need to manually submit.";
 "msg_already_save"="Data already exists locally, without any modifications.";
 "msg_logout"="If you log out, will remove the existing record. Are you forced to quit?";
+"msg_load_maintForm"="ITCRM being loaded to modify data format.";
+"msg_load_region"="ITCRM being loaded region data.";
+"msg_load_formatlist"="ITCRM being loaded display format data.";
+"msg_load_permit"="ITCRM being loaded permit data.";
 
 //button
 "lbl_advance"="Advance";

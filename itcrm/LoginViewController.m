@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
 @property (nonatomic, assign) CGRect keyboardRect;
 @property (nonatomic, strong) CheckUpdate *check_obj;
 @property (nonatomic, assign) kTimeOut_stage timeOut_stage;
+@property (nonatomic, assign) NSInteger flag_isCompleted;
 
 @end
 
@@ -55,6 +56,7 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
     _itf_usercode.delegate=self;
     
     _check_obj=[[CheckUpdate alloc]init];
+    _flag_isCompleted=0;
     
    	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -301,7 +303,7 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
             [self fn_show_request_timeOut_alert];
         }else{
             if ([[[arr_resp_result objectAtIndex:0]valueForKey:@"pass"]isEqualToString:@"true"]) {
-                [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_landing_success", nil)];
+               
                 NSUserDefaults *user_isLogin=[NSUserDefaults standardUserDefaults];
                 DB_Login *dbLogin=[[DB_Login alloc]init];
                 NSString *user_logo=[[arr_resp_result objectAtIndex:0]valueForKey:@"user_logo"];
@@ -310,13 +312,13 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
                 [db_sys_code fn_save_com_sys_code:_itf_system.text lang_code:is_language];
                 [user_isLogin setInteger:1 forKey:@"isLogin"];
                 [user_isLogin synchronize];
-                [self dismissViewControllerAnimated:YES completion:^{}];
                 Web_resquestData *web_rest=[[Web_resquestData alloc]init];
                 [web_rest fn_get_formatlist_data:base_url];
                 [web_rest fn_get_maintForm_data:base_url];
-                [web_rest fn_get_mslookup_data:base_url];
                 [web_rest fn_get_search_data:base_url];
                 [web_rest fn_get_permit_data:base_url];
+                [web_rest fn_get_mslookup_data:base_url];
+                [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_complete_request_data) name:@"success_resp" object:nil];
                 
                 if (_callback) {
                     _callback();
@@ -329,6 +331,16 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
     };
     [web_base fn_get_data:req_form];
 }
+-(void)fn_complete_request_data{
+    _flag_isCompleted++;
+    if (_flag_isCompleted==4) {
+        [SVProgressHUD dismissWithSuccess:MYLocalizedString(@"msg_landing_success", nil)];
+        [self dismissViewControllerAnimated:YES completion:^{}];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"success_resp" object:nil];
+        _flag_isCompleted=0;
+    }
+}
+
 #pragma mark -event action
 - (IBAction)fn_userName_textField_didEndOnExit:(id)sender {
     [self.itf_password becomeFirstResponder];
