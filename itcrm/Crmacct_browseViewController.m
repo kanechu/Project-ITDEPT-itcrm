@@ -310,9 +310,8 @@ static NSInteger flag_complete_upload=0;
 #pragma mark -event action
 - (IBAction)fn_download_multi_acct:(id)sender {
     [db_acct fn_save_crmacct_browse:alist_multi_acct];
-    //Exit download mode after download acct
-    [self.tableView_acct setEditing:NO animated:YES];
-    [self fn_updateButtonsToMatchState];
+     self.ibtn_download.enabled=NO;
+    
     NSMutableArray *alist_acct_id=[NSMutableArray array];
     for (NSDictionary *dic in alist_multi_acct) {
         NSString *acct_id=[dic valueForKey:@"acct_id"];
@@ -427,6 +426,10 @@ static NSInteger flag_complete_upload=0;
     Web_resquestData *web_obj=[[Web_resquestData alloc]init];
     [web_obj fn_get_crmacct_relate_data:_base_url alist_acc_id:alist_acct_id];
     web_obj.callBack=^(NSMutableArray *alist_resp_result,BOOL isTimeOut){
+        self.ibtn_download.enabled=YES;
+        //Exit download mode after download acct
+        [self.tableView_acct setEditing:NO animated:YES];
+        [self fn_updateButtonsToMatchState];
         if (isTimeOut) {
             
         }else{
