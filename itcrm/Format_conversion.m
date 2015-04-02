@@ -9,6 +9,7 @@
 #import "Format_conversion.h"
 #import "DB_systemIcon.h"
 #import "DB_Region.h"
+#import "DB_Login.h"
 #define ISIOS7      ([[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
 @implementation Format_conversion
 
@@ -228,4 +229,28 @@
     NSString *str_milliseconds=[NSString stringWithFormat:@"%0.0lf",milliseconds];
     return str_milliseconds;
 }
+/**
+ *  获取登录时候，选择的语言
+ *
+ *  @return 语言类型
+ */
++(NSString*)fn_get_lang_code{
+    DB_Login *db=[[DB_Login alloc]init];
+    NSMutableArray *arr=[db fn_get_allData];
+    NSString *lang_code=@"";
+    if ([arr count]!=0) {
+        lang_code=[[arr objectAtIndex:0]valueForKey:@"lang_code"];
+        if ([lang_code isEqualToString:@"EN"]) {
+            lang_code=@"en";
+        }
+        if ([lang_code isEqualToString:@"CN"]) {
+            lang_code=@"zh-Hans";
+        }
+        if ([lang_code isEqualToString:@"TCN"]) {
+            lang_code=@"zh-Hant";
+        }
+    }
+    return lang_code;
+}
+
 @end

@@ -17,7 +17,7 @@
 #import "EditContactViewController.h"
 #import "EditOppViewController.h"
 #import "MaintTaskViewController.h"
-
+#import "AddAttachmentViewController.h"
 @interface MaintFormViewController ()
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_add_operation;
 @property (nonatomic,strong)NSMutableArray *alist_maintForm;
@@ -35,6 +35,7 @@
 @property (nonatomic,strong)EditContactViewController *editContactVC;
 @property (nonatomic,strong)EditOppViewController *editOppVC;
 @property (nonatomic,strong)MaintTaskViewController *maintTaskVC;
+@property (nonatomic,strong)AddAttachmentViewController *addAttachVC;
 #pragma mark 根据相关id,取得的特定参数值
 @property (nonatomic,strong)NSMutableArray *alist_crmtask_value;
 @property (nonatomic,strong)NSMutableArray *alist_crmopp_value;
@@ -127,6 +128,7 @@
         maintTaskVC.flag_can_edit=1;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_browse) name:@"update" object:nil];
     }
+    /*
     if (buttonIndex==1) {
         [self performSegueWithIdentifier:@"segue_acct_contactEdit" sender:self];
         [idic_parameter setObject:ref_name forKey:@"contact_ref_name"];
@@ -146,6 +148,10 @@
         editOppVC.idic_parameter_opp=idic_parameter;
         editOppVC.add_opp_flag=1;
         editOppVC.flag_can_edit=1;
+    }*/
+    if (buttonIndex==1) {
+        [self performSegueWithIdentifier:@"segue_attachment" sender:self];
+        _addAttachVC.account_name=[idic_modified_value valueForKey:@"acct_name"];
     }
     idic_parameter=nil;
 }
@@ -527,13 +533,15 @@
     if ([[segue identifier]isEqualToString:@" segue_acct_oppEdit"]) {
         editOppVC=[segue destinationViewController];
     }
+    if ([[segue identifier]isEqualToString:@"segue_attachment"]) {
+        _addAttachVC=[segue destinationViewController];
+    }
 }
 
 - (IBAction)fn_show_actionSheet:(id)sender {
-    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil), nil];
+    UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil),MYLocalizedString(@"lbl_attachment_logo", nil), nil];
     [actionsheet showFromRect:self.view.bounds inView:self.view animated:YES];
     // UIActionSheet *actionsheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_cancel", nil) destructiveButtonTitle:nil otherButtonTitles:MYLocalizedString(@"sheet_task", nil),MYLocalizedString(@"sheet_contact", nil),MYLocalizedString(@"sheet_opp", nil), nil];
 
 }
-
 @end

@@ -119,6 +119,7 @@
 		B2B22FB51939B4E90083E0C4 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FB41939B4E90083E0C4 /* AccountViewController.m */; };
 		B2B22FC41939C0D50083E0C4 /* DB_Login.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B22FC31939C0D50083E0C4 /* DB_Login.m */; };
 		B2B308F71951648B00568256 /* KeyboardNoticeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B308F61951648B00568256 /* KeyboardNoticeManager.m */; };
+		B2B3CCA01ACA46CC001F8F0B /* AddAttachmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B3CC9F1ACA46CC001F8F0B /* AddAttachmentViewController.m */; };
 		B2B704F1194693840012A531 /* RespCrmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F0194693840012A531 /* RespCrmtask_browse.m */; };
 		B2B704F7194699CA0012A531 /* DB_crmtask_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704F6194699CA0012A531 /* DB_crmtask_browse.m */; };
 		B2B704FD1946E0250012A531 /* Format_conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = B2B704FC1946E0250012A531 /* Format_conversion.m */; };
@@ -391,6 +392,8 @@
 		B2B22FC31939C0D50083E0C4 /* DB_Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB_Login.m; sourceTree = "<group>"; };
 		B2B308F51951648B00568256 /* KeyboardNoticeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardNoticeManager.h; sourceTree = "<group>"; };
 		B2B308F61951648B00568256 /* KeyboardNoticeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardNoticeManager.m; sourceTree = "<group>"; };
+		B2B3CC9E1ACA46CC001F8F0B /* AddAttachmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAttachmentViewController.h; sourceTree = "<group>"; };
+		B2B3CC9F1ACA46CC001F8F0B /* AddAttachmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAttachmentViewController.m; sourceTree = "<group>"; };
 		B2B704EF194693840012A531 /* RespCrmtask_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespCrmtask_browse.h; sourceTree = "<group>"; };
 		B2B704F0194693840012A531 /* RespCrmtask_browse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespCrmtask_browse.m; sourceTree = "<group>"; };
 		B2B704F5194699CA0012A531 /* DB_crmtask_browse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB_crmtask_browse.h; sourceTree = "<group>"; };
@@ -838,10 +841,12 @@
 				B2B94BF41AAFEC7E00691F1D /* QuickSearchListViewController.m */,
 				B27EE0E319404F0C007F89A6 /* Crmacct_browseViewController.h */,
 				B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */,
-				B2B22FB31939B4E90083E0C4 /* AccountViewController.h */,
 				B2B22FB41939B4E90083E0C4 /* AccountViewController.m */,
+				B2B22FB31939B4E90083E0C4 /* AccountViewController.h */,
 				B260D992194591A90026A1E9 /* MaintFormViewController.h */,
 				B260D993194591A90026A1E9 /* MaintFormViewController.m */,
+				B2B3CC9E1ACA46CC001F8F0B /* AddAttachmentViewController.h */,
+				B2B3CC9F1ACA46CC001F8F0B /* AddAttachmentViewController.m */,
 				B2452E7319417B9500D02A45 /* RegionViewController.h */,
 				B2452E7419417B9500D02A45 /* RegionViewController.m */,
 				B2CA048D1962532B005A6F9A /* OptionViewController.h */,
@@ -1115,6 +1120,7 @@
 				B27EE0E519404F0C007F89A6 /* Crmacct_browseViewController.m in Sources */,
 				B258B2DF19597E6B00996C12 /* RespCrmhbl_browse.m in Sources */,
 				B2686208196EA0E000B14251 /* DB_crmquo_browse.m in Sources */,
+				B2B3CCA01ACA46CC001F8F0B /* AddAttachmentViewController.m in Sources */,
 				B22903DF1936C4A6004D1862 /* SVProgressHUD.m in Sources */,
 				B2452E79194195CA00D02A45 /* RespSystemIcon.m in Sources */,
 				B2B0932019346A52002FE190 /* SearchFormContract.m in Sources */,

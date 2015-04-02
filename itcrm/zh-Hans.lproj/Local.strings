@@ -63,6 +63,8 @@
 "lbl_lookup"="查找";
 "lbl_download"="下载";
 "lbl_retry"="重试";
+"lbl_upload"="上传";
+
 //title
 "lbl_home"="主页";
 "lbl_advance_title"="进阶搜索";
@@ -108,3 +110,12 @@
 "lbl_minute"="分";
 "lbl_second"="秒";
 "lbl_done"="确定";
+
+//upload Attachment
+"lbl_attachment_logo"="上传附件";
+"lbl_attachment"="附件";
+"lbl_file_name"="文件名";
+"lbl_doc_rec_date"="文档接收日期";
+"lbl_eff_date"="有效日期";
+"lbl_exp_date"="失效日期";
+"lbl_desc"="描述";

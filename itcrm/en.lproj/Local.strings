@@ -63,6 +63,7 @@
 "lbl_lookup"="Lookup";
 "lbl_download"="Download";
 "lbl_retry"="Retry";
+"lbl_upload"="Upload";
 
 //title
 "lbl_home"="Home";
@@ -107,3 +108,12 @@
 "lbl_minute"="Minute";
 "lbl_second"="Second";
 "lbl_done"="Done";
+
+//upload Attachment
+"lbl_attachment_logo"="Upload Attachment";
+"lbl_attachment"="Attachment";
+"lbl_file_name"="File Name";
+"lbl_doc_rec_date"="Doc.Receive Date";
+"lbl_eff_date"="Eff.Date";
+"lbl_exp_date"="Exp.Date";
+"lbl_desc"="Description";

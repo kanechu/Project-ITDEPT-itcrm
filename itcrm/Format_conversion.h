@@ -27,4 +27,5 @@
 -(BOOL)fn_isContain_a_character:(NSString*)_parentString substring:(NSString*)_substring;
 -(NSString*)fn_get_current_date_millisecond;
 
++(NSString*)fn_get_lang_code;
 @end
