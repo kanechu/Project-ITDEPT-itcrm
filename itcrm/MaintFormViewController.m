@@ -151,7 +151,7 @@
     }*/
     if (buttonIndex==1) {
         [self performSegueWithIdentifier:@"segue_attachment" sender:self];
-        _addAttachVC.account_name=[idic_modified_value valueForKey:@"acct_name"];
+        _addAttachVC.account_id=[idic_modified_value valueForKey:@"acct_id"];
     }
     idic_parameter=nil;
 }

@@ -13,6 +13,7 @@
 #import "SearchFormContract.h"
 #import "SVProgressHUD.h"
 #import "UploadingContract.h"
+#import "UpdateFormAttachment.h"
 #import "NSArray.h"
 #import "Resp_crmacct_dowload.h"
 #import "RespCrmcontact_browse.h"
@@ -257,6 +258,71 @@
                         }
                     }
 
+                }];
+}
+- (void) fn_upload_Attachment:(UploadingAttachmentContract*)ao_form Auth:(AuthContract*)auth{
+    //upload form
+    RKObjectMapping *lo_updateMapping = [RKObjectMapping requestMapping];
+    [lo_updateMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[UpdateFormAttachment class]]];
+    //Auth
+    RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
+    [lo_authMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:auth]];
+    
+    RKObjectMapping *lo_reqMapping = [RKObjectMapping requestMapping];
+    
+    RKRelationshipMapping *updateRelationship = [RKRelationshipMapping
+                                                 relationshipMappingFromKeyPath:@"UpdateForm"
+                                                 toKeyPath:@"UpdateForm"
+                                                 withMapping:lo_updateMapping];
+    
+    
+    RKRelationshipMapping *authRelationship = [RKRelationshipMapping
+                                               relationshipMappingFromKeyPath:@"Auth"
+                                               toKeyPath:@"Auth"
+                                               withMapping:lo_authMapping];
+    
+    [lo_reqMapping addPropertyMapping:authRelationship];
+    [lo_reqMapping addPropertyMapping:updateRelationship];
+    
+    NSString* path = il_url;
+    RKRequestDescriptor *requestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:lo_reqMapping
+                                                                                   objectClass:[UploadingAttachmentContract class]
+                                                                                   rootKeyPath:nil method:RKRequestMethodPOST];
+    
+    RKObjectMapping* lo_response_mapping = [RKObjectMapping mappingForClass:iresp_class];
+    
+    [lo_response_mapping addAttributeMappingsFromArray:ilist_resp_mapping];
+    
+    RKResponseDescriptor *responseDescriptor = [RKResponseDescriptor responseDescriptorWithMapping:lo_response_mapping
+                                                                                            method:RKRequestMethodPOST
+                                                                                       pathPattern:nil
+                                                                                           keyPath:nil
+                                                                                       statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)];
+    
+    RKObjectManager *manager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:base_url]];
+    [manager addRequestDescriptor:requestDescriptor];
+    [manager addResponseDescriptor:responseDescriptor];
+    manager.requestSerializationMIMEType = RKMIMETypeJSON;
+    [manager setAcceptHeaderWithMIMEType:RKMIMETypeJSON];
+    [manager postObject:ao_form path:path parameters:nil
+                success:^(RKObjectRequestOperation *operation, RKMappingResult *result) {
+                    ilist_resp_result = [NSMutableArray arrayWithArray:result.array];
+                    if (_callback) {
+                        _callback(ilist_resp_result,NO);
+                    }
+                    
+                } failure:^(RKObjectRequestOperation *operation, NSError *error) {
+                    RKLogError(@"Operation failed with error: %@", error);
+                    NSString *str_error=[NSString stringWithFormat:@"%@",error];
+                    if ([str_error rangeOfString:@"Code=-1001"].location!=NSNotFound) {
+                        if (_callback) {
+                            _callback(ilist_resp_result,YES);
+                        }
+                    }else{
+                        if (_callback) {
+                            _callback(ilist_resp_result,NO);
+                        }
+                    }
                 }];
 }
 

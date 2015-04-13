@@ -10,6 +10,6 @@
 
 @interface AddAttachmentViewController : UIViewController
 
-@property(nonatomic,strong) NSString *account_name;
+@property(nonatomic,strong) NSString *account_id;
 
 @end

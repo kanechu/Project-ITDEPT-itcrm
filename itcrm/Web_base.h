@@ -11,6 +11,7 @@
 #import "RequestContract.h"
 #import "SearchFormContract.h"
 #import "UploadingContract.h"
+#import "UploadingAttachmentContract.h"
 #import "NSArray.h"
 //定义回调函数
 typedef void (^CallBack_resp_result)(NSMutableArray* arr_resp_result,BOOL isTimeOut);
@@ -27,5 +28,7 @@ typedef void (^CallBack_resp_result)(NSMutableArray* arr_resp_result,BOOL isTime
 - (void) fn_get_data:(RequestContract*)ao_form ;
 - (void) fn_get_crmacct_download_data:(RequestContract*)ao_form auth:(AuthContract*)auth;
 - (void) fn_update_data:(UploadingContract*)ao_form updateform:(id)updateform;
+
+- (void) fn_upload_Attachment:(UploadingAttachmentContract*)ao_form Auth:(AuthContract*)auth;
 
 @end

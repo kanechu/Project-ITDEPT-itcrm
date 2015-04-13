@@ -252,5 +252,28 @@
     }
     return lang_code;
 }
-
++ (NSString*)fn_image_convert_base64Str:(UIImage*)image{
+    NSData *data=UIImagePNGRepresentation(image);
+    return [data base64EncodedStringWithOptions:0];
+}
++ (NSString*)fn_saveImage:(UIImage*)tempImg WithName:(NSString*)imageName{
+    NSData *data;
+    if (UIImagePNGRepresentation(tempImg)==nil) {
+        data=UIImageJPEGRepresentation(tempImg, 1);
+    }else{
+        data=UIImagePNGRepresentation(tempImg);
+    }
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString* documentsDirectory = [paths objectAtIndex:0];
+    
+    // Now we get the full path to the file
+    
+    NSString *_filePath = [documentsDirectory stringByAppendingPathComponent:imageName];
+    
+    // and then we write it out
+    
+    [data writeToFile:_filePath atomically:NO];
+    return _filePath;
+}
 @end

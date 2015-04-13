@@ -88,6 +88,9 @@
 		B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BB1970E20200CF7B36 /* Custom_Button.m */; };
 		B2A642BF1971089A00CF7B36 /* EditOppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642BE1971089A00CF7B36 /* EditOppViewController.m */; };
 		B2A642C2197124E900CF7B36 /* expand_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2A642C1197124E900CF7B36 /* expand_helper.m */; };
+		B2AA57AC1AD77AFE0076CC8E /* UpdateFormAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA57AB1AD77AFE0076CC8E /* UpdateFormAttachment.m */; };
+		B2AA57B21AD77E8B0076CC8E /* RespCrm_attachment_upload.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA57B11AD77E8B0076CC8E /* RespCrm_attachment_upload.m */; };
+		B2AA57B51AD77FF20076CC8E /* UploadingAttachmentContract.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AA57B41AD77FF20076CC8E /* UploadingAttachmentContract.m */; };
 		B2B092BC19345E74002FE190 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BB19345E74002FE190 /* Foundation.framework */; };
 		B2B092BE19345E74002FE190 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BD19345E74002FE190 /* CoreGraphics.framework */; };
 		B2B092C019345E74002FE190 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B092BF19345E74002FE190 /* UIKit.framework */; };
@@ -348,6 +351,12 @@
 		B2A642BE1971089A00CF7B36 /* EditOppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditOppViewController.m; sourceTree = "<group>"; };
 		B2A642C0197124E900CF7B36 /* expand_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expand_helper.h; sourceTree = "<group>"; };
 		B2A642C1197124E900CF7B36 /* expand_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = expand_helper.m; sourceTree = "<group>"; };
+		B2AA57AA1AD77AFE0076CC8E /* UpdateFormAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateFormAttachment.h; sourceTree = "<group>"; };
+		B2AA57AB1AD77AFE0076CC8E /* UpdateFormAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateFormAttachment.m; sourceTree = "<group>"; };
+		B2AA57B01AD77E8B0076CC8E /* RespCrm_attachment_upload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RespCrm_attachment_upload.h; sourceTree = "<group>"; };
+		B2AA57B11AD77E8B0076CC8E /* RespCrm_attachment_upload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RespCrm_attachment_upload.m; sourceTree = "<group>"; };
+		B2AA57B31AD77FF20076CC8E /* UploadingAttachmentContract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadingAttachmentContract.h; sourceTree = "<group>"; };
+		B2AA57B41AD77FF20076CC8E /* UploadingAttachmentContract.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadingAttachmentContract.m; sourceTree = "<group>"; };
 		B2B092B819345E74002FE190 /* itcrm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = itcrm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B092BB19345E74002FE190 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B2B092BD19345E74002FE190 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -788,8 +797,12 @@
 				B2B0931B19346A52002FE190 /* RequestContract.m */,
 				B2DA4612196A85FC001FD4F0 /* UploadingContract.h */,
 				B2DA4613196A85FC001FD4F0 /* UploadingContract.m */,
+				B2AA57B31AD77FF20076CC8E /* UploadingAttachmentContract.h */,
+				B2AA57B41AD77FF20076CC8E /* UploadingAttachmentContract.m */,
 				B2B0931C19346A52002FE190 /* SearchFormContract.h */,
 				B2B0931D19346A52002FE190 /* SearchFormContract.m */,
+				B2AA57AA1AD77AFE0076CC8E /* UpdateFormAttachment.h */,
+				B2AA57AB1AD77AFE0076CC8E /* UpdateFormAttachment.m */,
 				B298626E19385CCB0097B553 /* RespPermit.h */,
 				B298626F19385CCB0097B553 /* RespPermit.m */,
 				B26CBC9C19347CBA00C5287B /* RespLogin.h */,
@@ -822,6 +835,8 @@
 				B260D99C194596F10026A1E9 /* RespMaintForm.m */,
 				B2A18D72196A506000045E1C /* RespUpdateStatus.h */,
 				B2A18D73196A506000045E1C /* RespUpdateStatus.m */,
+				B2AA57B01AD77E8B0076CC8E /* RespCrm_attachment_upload.h */,
+				B2AA57B11AD77E8B0076CC8E /* RespCrm_attachment_upload.m */,
 				B257F2791935E0B600EC88F5 /* Menu_home.h */,
 				B257F27A1935E0B600EC88F5 /* Menu_home.m */,
 				B28F1E66194EDF7800B7C5D7 /* Advance_SearchData.h */,
@@ -1076,6 +1091,7 @@
 				B2A553031A83566D006ADA5A /* View_show_prompt.m in Sources */,
 				B2F1D39A1990E2190090C1EB /* RespUsersLogin.m in Sources */,
 				B298627F193874140097B553 /* DB_RespLogin.m in Sources */,
+				B2AA57B21AD77E8B0076CC8E /* RespCrm_attachment_upload.m in Sources */,
 				B22903FE1936C9CB004D1862 /* FMDatabaseQueue.m in Sources */,
 				B28F1E68194EDF7800B7C5D7 /* Advance_SearchData.m in Sources */,
 				B27EE0DD19404919007F89A6 /* NSInvocation+Copy.m in Sources */,
@@ -1103,6 +1119,7 @@
 				B2452E7C1941979200D02A45 /* DB_systemIcon.m in Sources */,
 				B2452E7519417B9500D02A45 /* RegionViewController.m in Sources */,
 				B27EE0DF19404919007F89A6 /* UIViewController+TargetViewController.m in Sources */,
+				B2AA57AC1AD77AFE0076CC8E /* UpdateFormAttachment.m in Sources */,
 				B26CBCA519347E5A00C5287B /* NSArray.m in Sources */,
 				B273F498194AE9A30007E055 /* MaintTaskViewController.m in Sources */,
 				B22903FF1936C9CB004D1862 /* FMResultSet.m in Sources */,
@@ -1134,6 +1151,7 @@
 				B2223C90196FB38C00FFE884 /* SearchCrmContactViewController.m in Sources */,
 				B22903FB1936C9CB004D1862 /* FMDatabase.m in Sources */,
 				B260D997194593580026A1E9 /* Cell_maintForm1.m in Sources */,
+				B2AA57B51AD77FF20076CC8E /* UploadingAttachmentContract.m in Sources */,
 				B26861F9196E65EA00B14251 /* RespCrmcontact_browse.m in Sources */,
 				B258B2E2195981C600996C12 /* DB_crmhbl_browse.m in Sources */,
 				B2A642BC1970E20200CF7B36 /* Custom_Button.m in Sources */,

@@ -28,4 +28,6 @@
 -(NSString*)fn_get_current_date_millisecond;
 
 +(NSString*)fn_get_lang_code;
++ (NSString*)fn_image_convert_base64Str:(UIImage*)image;
++ (NSString*)fn_saveImage:(UIImage*)tempImg WithName:(NSString*)imageName;
 @end

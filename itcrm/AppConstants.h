@@ -34,5 +34,5 @@ extern NSString* const STR_CRMCONTACT_UPDATE_URL;
 extern NSString* const STR_CRMOPP_UPDATE_URL;
 extern NSString* const STR_USERSLOGIN_URL;
 extern NSString* const STR_CRMACCT_DOWNLOAD_URL;
-
+extern NSString* const STR_UPLOAD_ATTACHMENT_URL;
 @end

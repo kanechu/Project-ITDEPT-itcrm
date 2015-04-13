@@ -32,6 +32,7 @@ NSString* const STR_CRMTASK_UPDATE_URL=@"api/crm/crmtask_update";
 NSString* const STR_CRMCONTACT_UPDATE_URL=@"api/crm/crmcontact_update";
 NSString* const STR_CRMOPP_UPDATE_URL=@"api/crm/crmopp_update";
 NSString* const STR_CRMACCT_DOWNLOAD_URL=@"api/Crm/crmacct_download";
+NSString* const STR_UPLOAD_ATTACHMENT_URL=@"api/Crm/crm_account_attachment_upload";
 
 #else
 
@@ -58,5 +59,6 @@ NSString* const STR_CRMTASK_UPDATE_URL=@"api/crm/crmtask_update";
 NSString* const STR_CRMCONTACT_UPDATE_URL=@"api/crm/crmcontact_update";
 NSString* const STR_CRMOPP_UPDATE_URL=@"api/crm/crmopp_update";
 NSString* const STR_CRMACCT_DOWNLOAD_URL=@"api/Crm/crmacct_download";
+NSString* const STR_UPLOAD_ATTACHMENT_URL=@"api/Crm/crm_account_attachment_upload";
 
 #endif

@@ -117,3 +117,8 @@
 "lbl_eff_date"="Eff.Date";
 "lbl_exp_date"="Exp.Date";
 "lbl_desc"="Description";
+"lbl_select_picture"="Photo";
+"lbl_take_a_picture"="Camera";
+"lbl_upload_prompt"="Uploading attachments,please wait!";
+"lbl_upload_success"="The attachment upload successfully!";
+"lbl_is_mandatory"="can not be empty, items marked with * are mandatory!";

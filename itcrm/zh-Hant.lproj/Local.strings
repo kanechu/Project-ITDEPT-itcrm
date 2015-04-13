@@ -118,3 +118,8 @@
 "lbl_eff_date"="有效日期";
 "lbl_exp_date"="失效日期";
 "lbl_desc"="描述";
+"lbl_select_picture"="照片";
+"lbl_take_a_picture"="相機";
+"lbl_upload_prompt"="正在上傳附件，請等候！";
+"lbl_upload_success"="附件上傳成功！";
+"lbl_is_mandatory"="不能為空，帶有＊的項是必填的！";
