@@ -1308,7 +1308,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: itdept itdept (46XP52NPKY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: itdept itdept (CW66C39WMG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "itcrm/itcrm-Prefix.pch";
@@ -1317,7 +1317,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5b095905-c8d3-48ac-a3a3-ff85867541de";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1336,7 +1336,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "43ae1863-010f-4674-8fc7-0b2f424432e6";
+				PROVISIONING_PROFILE = "9de69a48-5dd1-4fbf-ba49-fc97a460eec5";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
