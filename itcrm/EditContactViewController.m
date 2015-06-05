@@ -21,6 +21,9 @@
 #import "SVProgressHUD.h"
 #import "Format_conversion.h"
 #define TEXT_TAG 100
+#define FIXSPACE 15
+#define ITEM_LINE_WIDTH 1.5
+
 typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
@@ -36,6 +39,8 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 @property (nonatomic,strong)passValue_contact passValue;
 @property (nonatomic,strong)UITextView *checkText;
 @property (nonatomic,assign)NSInteger flag_click_cancel;
+
+@property (nonatomic) UIBarButtonItem *ibtn_save;
 @end
 
 @implementation EditContactViewController
@@ -61,6 +66,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 {
     [super viewDidLoad];
     [self fn_get_maint_crmcontact];
+    [self fn_add_right_items];
     [self fn_set_property];
     [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
@@ -74,13 +80,26 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 -(void)fn_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
+-(void)fn_add_right_items{
+    UIBarButtonItem *ibtn_cancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_cancel_edited_data:)];
+    UIBarButtonItem *ibtn_space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space.width=FIXSPACE;
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0,ITEM_LINE_WIDTH,FIXSPACE)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    UIBarButtonItem *ibtn_space1=[[UIBarButtonItem alloc]initWithCustomView:view];
+    ibtn_space1.width=ITEM_LINE_WIDTH;
+    UIBarButtonItem *ibtn_space2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space2.width=FIXSPACE;
+    self.ibtn_save=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_contact:)];
+    NSArray *array=@[ibtn_cancel,ibtn_space,ibtn_space1,ibtn_space2,self.ibtn_save];
+    self.navigationItem.rightBarButtonItems=array;
+}
+
 - (void)fn_set_property{
     //深拷贝一份要修改的contact,用于还原
     idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
     idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
-    
-    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
-    [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
+
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_contact", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
     if (_add_contact_flag==1) {
@@ -91,7 +110,6 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     }else{
         _ibtn_save.enabled=YES;
     }
-    [_ibtn_save setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
@@ -254,7 +272,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [idic_parameter_contact setObject:str_value forKey:col_code];
     [idic_edited_parameter setObject:str_value forKey:col_code];
 }
-- (IBAction)fn_save_modified_contact:(id)sender {
+- (void)fn_save_modified_contact:(id)sender {
     BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
     if (!isSame) {
         NSString *str_msg=nil;
@@ -282,7 +300,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [theTimer invalidate];
     theTimer=nil;
 }
-- (IBAction)fn_cancel_edited_data:(id)sender {
+- (void)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
     NSString *str_msg=nil;
     if (_add_contact_flag==1) {

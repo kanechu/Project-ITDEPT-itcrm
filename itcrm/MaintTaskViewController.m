@@ -22,6 +22,8 @@
 #import "CheckUpdate.h"
 #import "SVProgressHUD.h"
 #define TEXT_TAG 100
+#define FIXSPACE 15
+#define ITEM_LINE_WIDTH 1.5
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface MaintTaskViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
@@ -41,6 +43,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 //用于标识点击cancel
 @property (nonatomic,assign)NSInteger flag_click_cancel;
 @property (nonatomic,strong)NSDateFormatter *dateformatter;
+
+@property (nonatomic) UIBarButtonItem *ibtn_save;
 @end
 
 @implementation MaintTaskViewController
@@ -69,6 +73,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 {
     [super viewDidLoad];
     [self fn_init_arr];
+    [self fn_add_right_items];
     [self fn_set_property];
     [self fn_custom_gesture];
     [self fn_create_datepick];
@@ -83,9 +88,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     // Dispose of any resources that can be recreated.
 }
 -(void)fn_set_property{
-    
-    [_ibtn_cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
-    [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_task", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
     if (_add_flag==1) {
@@ -98,7 +100,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }else{
         _ibtn_save.enabled=YES;
     }
-    [_ibtn_save setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
     //深拷贝，备份一份要修改的crmtask
     idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
     idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
@@ -121,6 +122,21 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
      */
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
+-(void)fn_add_right_items{
+    UIBarButtonItem *ibtn_cancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_cancel_edited_data:)];
+    UIBarButtonItem *ibtn_space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space.width=FIXSPACE;
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0,ITEM_LINE_WIDTH,FIXSPACE)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    UIBarButtonItem *ibtn_space1=[[UIBarButtonItem alloc]initWithCustomView:view];
+    ibtn_space1.width=ITEM_LINE_WIDTH;
+    UIBarButtonItem *ibtn_space2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space2.width=FIXSPACE;
+    self.ibtn_save=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_edit_data:)];
+    NSArray *array=@[ibtn_cancel,ibtn_space,ibtn_space1,ibtn_space2,self.ibtn_save];
+    self.navigationItem.rightBarButtonItems=array;
+}
+
 #pragma mark 点击状态栏,Tableview回滚至top
 -(void)fn_tableView_scrollTop{
     [self.skstableview setContentOffset:CGPointZero animated:YES];
@@ -313,7 +329,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }
     return height;
 }
-- (IBAction)fn_save_edit_data:(id)sender {
+- (void)fn_save_edit_data:(id)sender {
     BOOL isSame=[idic_parameter_value isEqualToDictionary:idic_parameter_value_copy];
     if (!isSame) {
         NSString *str=nil;
@@ -442,7 +458,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }
 }
 
-- (IBAction)fn_goBack:(id)sender {
+- (void)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_value isEqualToDictionary:idic_parameter_value_copy];
     NSString *str=nil;
     if (_add_flag==1) {

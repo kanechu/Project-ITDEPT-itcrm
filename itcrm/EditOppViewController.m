@@ -18,6 +18,8 @@
 #import "Web_updateData.h"
 #import "Custom_BtnGraphicMixed.h"
 #define TEXT_TAG 100
+#define FIXSPACE 15
+#define ITEM_LINE_WIDTH 1.5
 typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @interface EditOppViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
@@ -31,6 +33,8 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @property (nonatomic,strong)passValue_opp pass_value;
 @property (nonatomic,strong)UITextView *textViewCheck;
 @property (nonatomic,assign)NSInteger flag_cancel;
+
+@property (nonatomic) UIBarButtonItem *ibtn_save;
 @end
 
 @implementation EditOppViewController
@@ -58,6 +62,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 {
     [super viewDidLoad];
     [self fn_get_maint_crmopp];
+    [self fn_add_right_items];
     [self fn_set_property];
     [self fn_custom_gesture];
     // Do any additional setup after loading the view.
@@ -68,12 +73,24 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)fn_add_right_items{
+    UIBarButtonItem *ibtn_cancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_cancel_edited_data:)];
+    UIBarButtonItem *ibtn_space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space.width=FIXSPACE;
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0,ITEM_LINE_WIDTH,FIXSPACE)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    UIBarButtonItem *ibtn_space1=[[UIBarButtonItem alloc]initWithCustomView:view];
+    ibtn_space1.width=ITEM_LINE_WIDTH;
+    UIBarButtonItem *ibtn_space2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space2.width=FIXSPACE;
+    self.ibtn_save=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_modified_data:)];
+    NSArray *array=@[ibtn_cancel,ibtn_space,ibtn_space1,ibtn_space2,self.ibtn_save];
+    self.navigationItem.rightBarButtonItems=array;
+}
 - (void)fn_set_property{
     idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
     idic_edited_opp=[[NSMutableDictionary alloc]initWithCapacity:1];
     
-    [_ibtn_save setTitle:MYLocalizedString(@"lbl_save", nil) forState:UIControlStateNormal];
-    [_ibtn_Cancel setTitle:MYLocalizedString(@"lbl_cancel", nil)];
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_opp", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
     if (_add_opp_flag==1) {
@@ -84,8 +101,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     }else{
         _ibtn_save.enabled=YES;
     }
-    [_ibtn_save setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-    
+
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
     self.skstableView.showsVerticalScrollIndicator=NO;
@@ -283,7 +299,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
         [idic_edited_opp setObject:str_value forKey:col_code];
     }
 }
-- (IBAction)fn_save_modified_data:(id)sender {
+- (void)fn_save_modified_data:(id)sender {
     BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
     if (!isSame) {
         NSString *str_msg=nil;
@@ -358,7 +374,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     updateform_contact.rec_upd_date=current_date;
     return updateform_contact;
 }
-- (IBAction)fn_cancel_edited_data:(id)sender {
+- (void)fn_cancel_edited_data:(id)sender {
     BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
     NSString *str_msg=nil;
     if (_add_opp_flag==1) {

@@ -17,10 +17,5 @@
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp;
 
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;
-@property (weak, nonatomic) IBOutlet UIButton *ibtn_save;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *ibtn_Cancel;
-
-- (IBAction)fn_save_modified_data:(id)sender;
-- (IBAction)fn_cancel_edited_data:(id)sender;
 
 @end
