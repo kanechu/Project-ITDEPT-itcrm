@@ -551,7 +551,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IwR-Om-nSN" customClass="SKSTableView">
-                                <rect key="frame" x="0.0" y="64" width="320" height="469"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="0.98431372549999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -618,42 +618,23 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dr0-0v-4Z0">
-                                <rect key="frame" x="0.0" y="533" width="320" height="35"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="0.45098039220000002" green="0.7843137255" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_save_edit_data:" destination="NEG-fv-6xJ" eventType="touchUpInside" id="1s3-q1-aQi"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="MG2-ij-y8L">
                         <barButtonItem key="leftBarButtonItem" id="Dtt-bY-rrB">
-                            <button key="customView" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kvg-KI-aXE" customClass="Custom_BtnGraphicMixed">
-                                <rect key="frame" x="16" y="11" width="140" height="30"/>
+                            <button key="customView" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kvg-KI-aXE" customClass="Custom_BtnGraphicMixed">
+                                <rect key="frame" x="16" y="7" width="160" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="aiD-Wh-Coo">
-                            <connections>
-                                <action selector="fn_goBack:" destination="NEG-fv-6xJ" id="Ijz-M7-HHd"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_cancel" destination="aiD-Wh-Coo" id="UnC-xA-E3u"/>
                         <outlet property="ibtn_logo" destination="kvg-KI-aXE" id="oyz-Mc-30B"/>
-                        <outlet property="ibtn_save" destination="Dr0-0v-4Z0" id="PAN-Oe-c9w"/>
                         <outlet property="skstableview" destination="IwR-Om-nSN" id="qf5-AA-Q8X"/>
                     </connections>
                 </viewController>
@@ -957,7 +938,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1hs-vD-ye5">
-                                                    <rect key="frame" x="74" y="2" width="236" height="21"/>
+                                                    <rect key="frame" x="73" y="2" width="236" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.095784356540000004" green="0.32188287110000002" blue="0.92099808670000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1003,7 +984,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="KDW-Tt-GPq" customClass="SKSTableView">
-                                <rect key="frame" x="0.0" y="64" width="320" height="469"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="0.98431372549999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -1038,18 +1019,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gwE-Ey-h3Q">
-                                <rect key="frame" x="0.0" y="533" width="320" height="35"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="0.45098039220000002" green="0.7843137255" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_save_modified_data:" destination="pdh-N5-vfb" eventType="touchUpInside" id="yzP-8P-Ejy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1065,16 +1034,9 @@
                                 </state>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="bOI-IF-TFa">
-                            <connections>
-                                <action selector="fn_cancel_edited_data:" destination="pdh-N5-vfb" id="hO6-64-byh"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_Cancel" destination="bOI-IF-TFa" id="qVn-eF-W8n"/>
                         <outlet property="ibtn_logo" destination="niZ-lk-RK7" id="3rf-74-jQg"/>
-                        <outlet property="ibtn_save" destination="gwE-Ey-h3Q" id="dTZ-0M-Jpx"/>
                         <outlet property="skstableView" destination="KDW-Tt-GPq" id="jWY-fh-Uw0"/>
                     </connections>
                 </viewController>
@@ -1122,7 +1084,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iY4-VE-lMD">
-                                                    <rect key="frame" x="74" y="2" width="203" height="21"/>
+                                                    <rect key="frame" x="74" y="2" width="170" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.095784356544682328" green="0.32188287110748615" blue="0.92099808670000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1544,7 +1506,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="TcH-SN-gnm" customClass="SKSTableView">
-                                <rect key="frame" x="0.0" y="64" width="320" height="469"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="0.98431372549999996" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -1578,18 +1540,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KsK-69-oGD">
-                                <rect key="frame" x="0.0" y="533" width="320" height="35"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" red="0.45098039220000002" green="0.7843137255" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="fn_save_modified_contact:" destination="DNb-w7-p0C" eventType="touchUpInside" id="OPA-D6-geA"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1605,16 +1555,9 @@
                                 </state>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="O6o-zR-1ay">
-                            <connections>
-                                <action selector="fn_cancel_edited_data:" destination="DNb-w7-p0C" id="m28-fI-WZK"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="ibtn_cancel" destination="O6o-zR-1ay" id="IHk-6M-193"/>
                         <outlet property="ibtn_logo" destination="NkS-OO-CvF" id="7xA-kS-oMx"/>
-                        <outlet property="ibtn_save" destination="KsK-69-oGD" id="9cp-gM-Pur"/>
                         <outlet property="skstableView" destination="TcH-SN-gnm" id="cvt-Tp-grw"/>
                     </connections>
                 </viewController>
@@ -1921,8 +1864,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="iu4-YE-TuG"/>
         <segue reference="Dfc-YT-f1N"/>
-        <segue reference="vTW-Ye-vvC"/>
         <segue reference="KeJ-f2-xSo"/>
     </inferredMetricsTieBreakers>
 </document>

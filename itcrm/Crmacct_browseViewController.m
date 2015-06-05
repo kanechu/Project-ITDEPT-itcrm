@@ -431,7 +431,7 @@ static NSInteger flag_complete_upload=0;
         [self.tableView_acct setEditing:NO animated:YES];
         [self fn_updateButtonsToMatchState];
         if (isTimeOut) {
-            
+            [SVProgressHUD dismiss];
         }else{
             DB_crmcontact_browse *db_contact=[[DB_crmcontact_browse alloc]init];
             DB_crmhbl_browse *db_hbl=[[DB_crmhbl_browse alloc]init];
