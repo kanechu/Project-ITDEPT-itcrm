@@ -143,7 +143,7 @@ static NSInteger flag_complete_upload=0;
             [self.tableView_acct setTableFooterView:nil];
         }else{
             View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableView_acct.frame];
-            footView.str_msg=MYLocalizedString(@"no_account_prompt", nil);
+            footView.str_msg=MYLocalizedString(@"no_record_prompt", nil);
             [self.tableView_acct setTableFooterView:footView];
             [self.tableView_acct setScrollEnabled:NO];
         }

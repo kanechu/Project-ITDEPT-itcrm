@@ -22,20 +22,20 @@
 "msg_online"="在線查詢";
 "msg_get_crmData"="正在下載，請等候！";
 "msg_update_crmData"="正在更新，請等候！";
-"msg_download_success"="條數據下載完成，并成功保存到本地。";
-"msg_upd_success"="成功更新本地數據！";
+"msg_download_success"="條数据被下载并保存在本地。";
+"msg_upd_success"="成功更新。";
 "dialog_prompt"="載入中，請稍候。";
 "msg_no_network"="無網絡連接";
-"msg_network_fail"="應用程序不能訪問服務器，因為它沒有連接到互聯網。";
-"msg_request_timeout"="網絡請求服務器超時，取消或者重試？";
+"msg_network_fail"="無法連接服務器，請檢查您的互聯網連接。";
+"msg_request_timeout"="連接超時，請檢查您的互聯網連接，或稍後重試。";
 "lbl_ok"="確定";
 "lbl_empty_username"="請輸入用戶名";
 "lbl_empty_password"="請輸入密碼";
 "lbl_empty_systemcode"="請輸入系統名稱";
 "lbl_prompt_history"="沒有您輸入的記錄";
 "msg_identity_auth"="驗證中,請耐心等候！";
-"msg_landing_success"="登入成功！";
-"msg_langding_failed"="登入失敗，請檢查密碼和用戶名是否匹配！";
+"msg_landing_success"="登錄成功。";
+"msg_langding_failed"="登錄失敗。無效的用戶名或密碼！";
 "msg_cancel_edit"="該記錄已被修改過，但沒有保存，請選擇丟棄或保存記錄。";
 "msg_cancel_add"="增加了壹個紀錄，但沒有保存，請選擇丟棄或保存記錄。";
 "msg_save_edit"="是否保存修改後的數據？";
@@ -43,11 +43,11 @@
 "msg_save_title"="保存數據";
 "msg_save_locally"="您編輯的數據被保存在本地，您需要手動提交。";
 "msg_already_save"="數據已經存在本地，沒有任何修改。";
-"msg_logout"="如果退出登錄，將刪除存在的記錄。您是否強行退出？";
-"msg_load_maintForm"="ITCRM正在加載修改格式數據。";
-"msg_load_region"="ITCRM正在加載地區數據。";
-"msg_load_formatlist"="ITCRM正在加載顯示格式數據。";
-"msg_load_permit"="ITCRM正在加載權限數據。";
+"msg_logout"="您的設備上的所有記錄將被刪除，一旦你退出。您確定要退出嗎？";
+"msg_load_maintForm"="加載數據（格式）。";
+"msg_load_region"="加載數據（地區）。";
+"msg_load_formatlist"="加載數據（佈局）。";
+"msg_load_permit"="加載數據（許可）。";
 
 //button
 "lbl_advance"="進階";
@@ -87,12 +87,7 @@
 "lbl_opp"="商機";
 
 //no data prompt
-"no_account_prompt"="沒有賬戶數據";
-"no_quo_prompt"="沒有報價數據";
-"no_task_prompt"="沒有活動數據";
-"no_contact_prompt"="無聯繫人數據";
-"no_opp_prompt"="沒有商機數據";
-"no_data_prompt"="没有數據";
+"no_record_prompt"="沒有找到記錄。";
 
 //search Bar placeholder
 "lbl_account_search"="請輸入客戶名稱";
@@ -122,4 +117,4 @@
 "lbl_take_a_picture"="相機";
 "lbl_upload_prompt"="正在上傳附件，請等候！";
 "lbl_upload_success"="附件上傳成功！";
-"lbl_is_mandatory"="不能為空，帶有＊的項是必填的！";
+"lbl_is_mandatory"="標有＊的項不能為空！";

@@ -91,7 +91,7 @@
         alist_crmcontact=[convert fn_format_conersion:arr_format browse:arr_crmcontact];
         if ([alist_contact_parameter count]==0) {
             View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableview.frame];
-            footView.str_msg=MYLocalizedString(@"no_contact_prompt", nil);
+            footView.str_msg=MYLocalizedString(@"no_record_prompt", nil);
             [self.tableview setTableFooterView:footView];
             [self.tableview setScrollEnabled:NO];
         }else{

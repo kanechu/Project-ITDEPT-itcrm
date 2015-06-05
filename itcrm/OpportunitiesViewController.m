@@ -95,7 +95,7 @@
         alist_crmopp_browse=[format fn_format_conersion:arr_format browse:arr_crmopp];
         if ([alist_crmopp_browse count]==0) {
             View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableview.frame];
-            footView.str_msg=MYLocalizedString(@"no_opp_prompt", nil);
+            footView.str_msg=MYLocalizedString(@"no_record_prompt", nil);
             [self.tableview setTableFooterView:footView];
             [self.tableview setScrollEnabled:NO];
         }else{

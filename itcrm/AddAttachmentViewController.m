@@ -149,10 +149,9 @@ typedef NSString* (^passValue)(NSInteger tag);
 #pragma mark -event action
 - (IBAction)fn_upload_attachment:(id)sender {
     UpdateFormAttachment *receive_obj=[self fn_get_DataModel_WithDict:self.idic_values];
-    if ([receive_obj.ls_filedata_base64 length]==0) {
-        [self fn_show_alertView:[NSString stringWithFormat:@"%@%@",MYLocalizedString(@"lbl_attachment", nil),MYLocalizedString(@"lbl_is_mandatory", nil)]];
-    }else if ([receive_obj.ls_att_name length]==0){
-          [self fn_show_alertView:[NSString stringWithFormat:@"%@%@",MYLocalizedString(@"lbl_file_name", nil),MYLocalizedString(@"lbl_is_mandatory", nil)]];
+    if ([receive_obj.ls_filedata_base64 length]==0 || [receive_obj.ls_att_name length]==0) {
+        
+        [self fn_show_alertView:MYLocalizedString(@"lbl_is_mandatory", nil)];
     }else{
         CheckUpdate *check_obj=[[CheckUpdate alloc]init];
         if ([check_obj fn_check_isNetworking]) {

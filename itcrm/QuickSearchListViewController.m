@@ -170,7 +170,7 @@
 - (void)fn_refresh_listView{
     if ([_alist_browse_data count]==0) {
         View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableView.frame];
-        footView.str_msg=MYLocalizedString(@"no_data_prompt", nil);
+        footView.str_msg=MYLocalizedString(@"no_record_prompt", nil);
         [self.tableView setTableFooterView:footView];
         [self.tableView setScrollEnabled:NO];
     }else{

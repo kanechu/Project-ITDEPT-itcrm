@@ -97,7 +97,7 @@
             [self.tableview setScrollEnabled:YES];
         }else{
             View_show_prompt *footView=[[View_show_prompt alloc]initWithFrame:self.tableview.frame];
-            footView.str_msg=MYLocalizedString(@"no_task_prompt", nil);
+            footView.str_msg=MYLocalizedString(@"no_record_prompt", nil);
             [self.tableview setTableFooterView:footView];
             [self.tableview setScrollEnabled:NO];
         }

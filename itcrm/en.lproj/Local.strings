@@ -12,7 +12,7 @@
 "lbl_company"="COMPANY";
 //login
 "lbl_login"="Login";
-"lbl_username"="UserName";
+"lbl_username"="User Name";
 "lbl_pwd"="Password";
 "lbl_system"="System";
 "lbl_history"="History";
@@ -20,34 +20,34 @@
 "lbl_logout"="Logout";
 //prompt
 "msg_online"="Online Query";
-"msg_get_crmData"="Downloading,Please wait!";
-"msg_update_crmData"="Updating,Please wait!";
-"msg_download_success"=" data download is complete, and successfully saved locally.";
-"msg_upd_success"="Successfully updated local data！";
-"dialog_prompt"="Loading, Please wait.";
+"msg_get_crmData"="Downloading, please wait!";
+"msg_update_crmData"="Updating, please wait!";
+"msg_download_success"=" Data is downloaded and saved locally.";
+"msg_upd_success"="Updated successfully.";
+"dialog_prompt"="Loading, please wait.";
 "msg_no_network"="No Internet connection";
-"msg_network_fail"="Application cannot access the server because it is not connected to the Internet.";
-"msg_request_timeout"="Network requests the server timeout, cancel or retry?";
+"msg_network_fail"="Cannot connect server, please verify your internet connection.";
+"msg_request_timeout"="Connection timed out, please verify your internet connection or try again later.";
 "lbl_ok"="OK";
-"lbl_empty_username"="Sorry,the user name can not be empty!";
-"lbl_empty_password"="Sorry,the password can not be empty!";
-"lbl_empty_systemcode"="Sorry,the system name can not be empty!";
+"lbl_empty_username"="Sorry, the user name cannot be empty!";
+"lbl_empty_password"="Sorry, the password cannot be empty!";
+"lbl_empty_systemcode"="Sorry, the system name cannot be empty!";
 "lbl_prompt_history"="No Historical Data!";
-"msg_identity_auth"="Verifying,please wait!";
-"msg_landing_success"="Successful landing!";
-"msg_langding_failed"="Login failed, please check the password and user name match!";
-"msg_cancel_edit"="the record has been edited but not saved,please select discard or save the record";
-"msg_cancel_add"="Added a record but not saved,please select discard or save the record";
+"msg_identity_auth"="Verifying…";
+"msg_landing_success"="Login successfully.";
+"msg_langding_failed"="Login failed. Invalid user name or password!";
+"msg_cancel_edit"="the record has been edited but not saved, please select discard or save the record";
+"msg_cancel_add"="Added a record but not saved, please select discard or save the record";
 "msg_save_edit"="whether save the modified data?";
 "msg_save_add"="Whether to save the added data?";
 "msg_save_title"="Save Data";
-"msg_save_locally"="Your edited data is being saved locally, You need to manually submit.";
+"msg_save_locally"="Your edited data is being saved locally, you need to manually submit.";
 "msg_already_save"="Data already exists locally, without any modifications.";
-"msg_logout"="If you log out, will remove the existing record. Are you forced to quit?";
-"msg_load_maintForm"="ITCRM being loaded to modify data format.";
-"msg_load_region"="ITCRM being loaded region data.";
-"msg_load_formatlist"="ITCRM being loaded display format data.";
-"msg_load_permit"="ITCRM being loaded permit data.";
+"msg_logout"="All the records on your device will be removed once you logout. Are you sure to quit?";
+"msg_load_maintForm"="Loading for data (format).";
+"msg_load_region"="Loading for data (region).";
+"msg_load_formatlist"="Loading for data (layout).";
+"msg_load_permit"="Loading for data (permission).";
 
 //button
 "lbl_advance"="Advance";
@@ -88,17 +88,14 @@
 "lbl_opp"="Opportunity";
 
 //no data prompt
-"no_account_prompt"="No Account Data";
-"no_quo_prompt"="No Quotation Data";
-"no_task_prompt"="No Activity Data";
-"no_contact_prompt"="No Contact Data";
-"no_opp_prompt"="No Opportunity Data";
+"no_record_prompt"="No record found.";
+
 "no_data_prompt"="No Data";
 //search Bar placeholder
-"lbl_account_search"="Please input the account name";
-"lbl_activity_search"="Please input the task name";
-"lbl_contact_search"="Please input the contact name";
-"lbl_Quotation_search"="Please input the quo no";
+"lbl_account_search"="Please input the account name.";
+"lbl_activity_search"="Please input the task name.";
+"lbl_contact_search"="Please input the contact name.";
+"lbl_Quotation_search"="Please input the quo no.";
 "lbl_opp_search"="Opportunity name";
 //datepicker
 "lbl_year"="Year";
@@ -119,6 +116,6 @@
 "lbl_desc"="Description";
 "lbl_select_picture"="Photo";
 "lbl_take_a_picture"="Camera";
-"lbl_upload_prompt"="Uploading attachments,please wait!";
+"lbl_upload_prompt"="Uploading attachments, please wait...";
 "lbl_upload_success"="The attachment upload successfully!";
-"lbl_is_mandatory"="can not be empty, items marked with * are mandatory!";
+"lbl_is_mandatory"="Items marked with * cannot be empty!";
