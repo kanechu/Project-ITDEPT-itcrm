@@ -38,9 +38,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @end
 
 @implementation EditOppViewController
-@synthesize alist_filtered_oppdata;
-@synthesize alist_groupNameAndNum;
-@synthesize alist_maintOpp;
 @synthesize idic_parameter_opp;
 @synthesize convert;
 @synthesize pass_value;
@@ -61,7 +58,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_get_maint_crmopp];
     [self fn_add_right_items];
     [self fn_set_property];
     [self fn_custom_gesture];
@@ -88,6 +84,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     self.navigationItem.rightBarButtonItems=array;
 }
 - (void)fn_set_property{
+    alist_option=[[NSMutableArray alloc]initWithCapacity:10];
     idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
     idic_edited_opp=[[NSMutableDictionary alloc]initWithCapacity:1];
     
@@ -112,9 +109,38 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
--(void)fn_tableView_scrollTop{
-    [self.skstableView setContentOffset:CGPointZero animated:YES];
+#pragma mark --获取定制opp maint版面的数据
+//lazy loading
+- (NSMutableArray*)alist_groupNameAndNum{
+    if (_alist_groupNameAndNum==nil) {
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        _alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
+        db=nil;
+    }
+    return _alist_groupNameAndNum;
 }
+- (NSMutableArray*)alist_maintOpp{
+    if (_alist_maintOpp==nil) {
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        _alist_maintOpp=[db fn_get_MaintForm_data:@"crmopp"];
+        db=nil;
+    }
+    return _alist_maintOpp;
+}
+- (NSMutableArray*)alist_filtered_oppdata{
+    if (_alist_filtered_oppdata==nil) {
+        _alist_filtered_oppdata=[[NSMutableArray alloc]initWithCapacity:10];
+        for (NSMutableDictionary *dic in self.alist_groupNameAndNum) {
+            NSString *str_name=[dic valueForKey:@"group_name"];
+            NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:self.alist_maintOpp];
+            if (arr!=nil) {
+                [_alist_filtered_oppdata addObject:arr];
+            }
+        }
+    }
+    return _alist_filtered_oppdata;
+}
+#pragma mark -点击空白的地方，隐藏键盘
 /**
  *  自定义一个手势，点击空白的地方，隐藏键盘
  */
@@ -128,32 +154,18 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [textViewCheck resignFirstResponder];
 }
-
-#pragma mark -获取定制opp maint版面的数据
--(void)fn_get_maint_crmopp{
-    DB_MaintForm *db=[[DB_MaintForm alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
-    alist_maintOpp=[db fn_get_MaintForm_data:@"crmopp"];
-    alist_filtered_oppdata=[[NSMutableArray alloc]initWithCapacity:10];
-    alist_option=[[NSMutableArray alloc]initWithCapacity:10];
-    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-        NSString *str_name=[dic valueForKey:@"group_name"];
-        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintOpp];
-        if (arr!=nil) {
-            [alist_filtered_oppdata addObject:arr];
-        }
-    }
+-(void)fn_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
-
 #pragma mark SKSTableViewDelegate 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [alist_groupNameAndNum count];
+    return [self.alist_groupNameAndNum count];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 -(NSInteger)tableView:(SKSTableView *)tableView numberOfSubRowsAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *numofrows=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"COUNT(group_name)"];
+    NSString *numofrows=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"COUNT(group_name)"];
     return [numofrows integerValue];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,7 +177,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     { cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    NSString *str_name=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -174,7 +186,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_oppdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_oppdata[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     NSString *col_code=[dic valueForKey:@"col_code"];
@@ -192,7 +204,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block EditOppViewController *blockSelf=self;
     pass_value=^NSMutableDictionary*(NSInteger tag){
-        return blockSelf-> alist_filtered_oppdata [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
+        return blockSelf-> _alist_filtered_oppdata [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
     };
     static NSString *cellIdentifier=@"Cell_maintForm1_opp";
     Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -227,7 +239,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 }
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_oppdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_oppdata[indexPath.section][indexPath.subRow-1];
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *col_option=[dic valueForKey:@"col_option"];
     NSString *text_value=[idic_parameter_opp valueForKey:col_code];

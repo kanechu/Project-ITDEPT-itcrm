@@ -44,9 +44,6 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 @end
 
 @implementation EditContactViewController
-@synthesize alist_filtered_contactdata;
-@synthesize alist_groupNameAndNum;
-@synthesize alist_maintContact;
 @synthesize checkTextView;
 @synthesize idic_parameter_contact;
 @synthesize passValue;
@@ -65,7 +62,6 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_get_maint_crmcontact];
     [self fn_add_right_items];
     [self fn_set_property];
     [self fn_custom_gesture];
@@ -77,9 +73,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_tableView_scrollTop{
-    [self.skstableView setContentOffset:CGPointZero animated:YES];
-}
+
 -(void)fn_add_right_items{
     UIBarButtonItem *ibtn_cancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_cancel_edited_data:)];
     UIBarButtonItem *ibtn_space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -124,22 +118,38 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 
 }
-
 #pragma mark -获取定制contact maint版面的数据
--(void)fn_get_maint_crmcontact{
-    DB_MaintForm *db=[[DB_MaintForm alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmcontact"];
-    alist_maintContact=[db fn_get_MaintForm_data:@"crmcontact"];
-    alist_filtered_contactdata=[[NSMutableArray alloc]initWithCapacity:10];
-    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-        NSString *str_name=[dic valueForKey:@"group_name"];
-        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_maintContact];
-        if (arr!=nil) {
-            [alist_filtered_contactdata addObject:arr];
+//Lazy loading
+- (NSMutableArray*)alist_groupNameAndNum{
+    if (_alist_groupNameAndNum==nil) {
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        _alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmcontact"];
+        db=nil;
+    }
+    return _alist_groupNameAndNum;
+}
+- (NSMutableArray*)alist_maintContact{
+    if (_alist_maintContact==nil) {
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        _alist_maintContact=[db fn_get_MaintForm_data:@"crmcontact"];
+        db=nil;
+    }
+    return _alist_maintContact;
+}
+- (NSMutableArray*)alist_filtered_contactdata{
+    if (_alist_filtered_contactdata==nil) {
+        _alist_filtered_contactdata=[[NSMutableArray alloc]initWithCapacity:10];
+        for (NSMutableDictionary *dic in self.alist_groupNameAndNum) {
+            NSString *str_name=[dic valueForKey:@"group_name"];
+            NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:self.alist_maintContact];
+            if (arr!=nil) {
+                [_alist_filtered_contactdata addObject:arr];
+            }
         }
     }
-    
+    return _alist_filtered_contactdata;
 }
+#pragma mark -点击空白的地方隐藏键盘
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -150,16 +160,19 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkTextView resignFirstResponder];
 }
+-(void)fn_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
+}
 #pragma mark SKSTableViewDelegate and datasourse
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [alist_groupNameAndNum count];
+    return [self.alist_groupNameAndNum count];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 -(NSInteger)tableView:(SKSTableView *)tableView numberOfSubRowsAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *numOfrows=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"COUNT(group_name)"];
+    NSString *numOfrows=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"COUNT(group_name)"];
     return [numOfrows integerValue];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,7 +184,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     { cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    NSString *str_name=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -180,7 +193,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     NSString *col_code=[dic valueForKey:@"col_code"];
@@ -195,7 +208,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block EditContactViewController *blockSelf=self;
     passValue=^NSDictionary*(NSInteger tag){
-        return blockSelf-> alist_filtered_contactdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
+        return blockSelf->_alist_filtered_contactdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
     };
     static NSString *cellIdentifier=@"Cell_maintForm1_contact";
     Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -223,7 +236,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     return 40;
 }
 -(CGFloat)tableView:(SKSTableView *)tableView heightForSubRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSMutableDictionary *idic=alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *idic=self.alist_filtered_contactdata[indexPath.section][indexPath.subRow-1];
     NSString *col_code=[idic valueForKey:@"col_code"];
     NSString *str_value=[idic_parameter_contact valueForKey:col_code];
     CGFloat height=0;
@@ -265,6 +278,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     checkTextView=textView;
 }
+
 -(void)textViewDidEndEditing:(UITextView *)textView{
     NSString *col_code=[passValue(textView.tag) valueForKey:@"col_code"];
     NSString *str_value=textView.text;
@@ -273,6 +287,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [idic_edited_parameter setObject:str_value forKey:col_code];
 }
 - (void)fn_save_modified_contact:(id)sender {
+    [checkTextView resignFirstResponder];
     BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
     if (!isSame) {
         NSString *str_msg=nil;

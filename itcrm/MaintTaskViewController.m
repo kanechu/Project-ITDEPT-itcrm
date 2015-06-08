@@ -48,9 +48,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @end
 
 @implementation MaintTaskViewController
-@synthesize alist_groupNameAndNum;
-@synthesize alist_filtered_taskdata;
-@synthesize alist_miantTask;
 @synthesize checkTextView;
 @synthesize idic_parameter_value;
 @synthesize format;
@@ -60,6 +57,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize flag_click_cancel;
 @synthesize datePicker;
 @synthesize dateformatter;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -72,7 +70,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_init_arr];
     [self fn_add_right_items];
     [self fn_set_property];
     [self fn_custom_gesture];
@@ -87,6 +84,21 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)fn_add_right_items{
+    UIBarButtonItem *ibtn_cancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_cancel_edited_data:)];
+    UIBarButtonItem *ibtn_space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space.width=FIXSPACE;
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0,ITEM_LINE_WIDTH,FIXSPACE)];
+    view.backgroundColor=[UIColor lightGrayColor];
+    UIBarButtonItem *ibtn_space1=[[UIBarButtonItem alloc]initWithCustomView:view];
+    ibtn_space1.width=ITEM_LINE_WIDTH;
+    UIBarButtonItem *ibtn_space2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ibtn_space2.width=FIXSPACE;
+    self.ibtn_save=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_edit_data:)];
+    NSArray *array=@[ibtn_cancel,ibtn_space,ibtn_space1,ibtn_space2,self.ibtn_save];
+    self.navigationItem.rightBarButtonItems=array;
+}
+
 -(void)fn_set_property{
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_task", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
@@ -122,19 +134,36 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
      */
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
--(void)fn_add_right_items{
-    UIBarButtonItem *ibtn_cancel=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_cancel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_cancel_edited_data:)];
-    UIBarButtonItem *ibtn_space=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    ibtn_space.width=FIXSPACE;
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0,ITEM_LINE_WIDTH,FIXSPACE)];
-    view.backgroundColor=[UIColor lightGrayColor];
-    UIBarButtonItem *ibtn_space1=[[UIBarButtonItem alloc]initWithCustomView:view];
-    ibtn_space1.width=ITEM_LINE_WIDTH;
-    UIBarButtonItem *ibtn_space2=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    ibtn_space2.width=FIXSPACE;
-    self.ibtn_save=[[UIBarButtonItem alloc]initWithTitle:MYLocalizedString(@"lbl_save", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(fn_save_edit_data:)];
-    NSArray *array=@[ibtn_cancel,ibtn_space,ibtn_space1,ibtn_space2,self.ibtn_save];
-    self.navigationItem.rightBarButtonItems=array;
+#pragma mark -获取定制maint版面的数据
+//Lazy loading
+- (NSMutableArray*)alist_groupNameAndNum{
+    if (_alist_groupNameAndNum==nil) {
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        _alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
+        db=nil;
+    }
+    return _alist_groupNameAndNum;
+}
+- (NSMutableArray*)alist_miantTask{
+    if (_alist_miantTask==nil) {
+        DB_MaintForm *db=[[DB_MaintForm alloc]init];
+        _alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
+        db=nil;
+    }
+    return _alist_miantTask;
+}
+- (NSMutableArray*)alist_filtered_taskdata{
+    if (_alist_filtered_taskdata==nil) {
+        _alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
+        for (NSMutableDictionary *dic in self.alist_groupNameAndNum) {
+            NSString *str_name=[dic valueForKey:@"group_name"];
+            NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:self.alist_miantTask];
+            if (arr!=nil) {
+                [_alist_filtered_taskdata addObject:arr];
+            }
+        }
+    }
+    return _alist_filtered_taskdata;
 }
 
 #pragma mark 点击状态栏,Tableview回滚至top
@@ -149,21 +178,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [dateformatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
     [dateformatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"]];
     [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-}
-
-#pragma mark -获取定制maint版面的数据
--(void)fn_init_arr{
-    DB_MaintForm *db=[[DB_MaintForm alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
-    alist_miantTask=[db fn_get_MaintForm_data:@"crmtask"];
-    alist_filtered_taskdata=[[NSMutableArray alloc]initWithCapacity:10];
-    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-        NSString *str_name=[dic valueForKey:@"group_name"];
-        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_miantTask];
-        if (arr!=nil) {
-            [alist_filtered_taskdata addObject:arr];
-        }
-    }
 }
 #pragma mark create datePick
 -(void)fn_create_datepick{
@@ -191,6 +205,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     [checkTextView resignFirstResponder];
     
 }
+#pragma mark -点击空白的地方，隐藏键盘
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -206,7 +221,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 #pragma mark SKSTableViewDelegate and datasourse
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [alist_groupNameAndNum count];
+    return [self.alist_groupNameAndNum count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -216,7 +231,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 
 - (NSInteger)tableView:(SKSTableView *)tableView numberOfSubRowsAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *numOfrow=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"COUNT(group_name)"];
+    NSString *numOfrow=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"COUNT(group_name)"];
     return [numOfrow integerValue];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -228,7 +243,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     { cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    NSString *str_name=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -237,7 +252,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     NSString *col_code=[dic valueForKey:@"col_code"];
@@ -257,7 +272,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block MaintTaskViewController *blockSelf=self;
     _pass_value=^NSMutableDictionary*(NSInteger tag){
-        return blockSelf-> alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
+        return blockSelf-> _alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
     };
     if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"] || [col_type isEqualToString:@"lookup"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
@@ -318,7 +333,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     static NSString *cellIdentifier=@"Cell_maintForm11";
     Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_taskdata[indexPath.section][indexPath.subRow-1];
     //col_code 类型名
     NSString *col_code=[dic valueForKey:@"col_code"];
     NSString *str=[idic_parameter_value valueForKey:col_code];
