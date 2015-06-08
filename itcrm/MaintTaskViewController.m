@@ -274,7 +274,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     _pass_value=^NSMutableDictionary*(NSInteger tag){
         return blockSelf-> _alist_filtered_taskdata [indexPath.section][tag-TEXT_TAG-indexPath.section*100];
     };
-    if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"] || [col_type isEqualToString:@"lookup"]) {
+    if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"] || [col_type isEqualToString:@"lookup"] ||[col_type isEqualToString:@"text"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
         Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell==nil) {

@@ -421,15 +421,19 @@
     if ([col_stye isEqualToString:@"checkbox"] ) {
         static NSString *cellIdentifier=@"Cell_maintForm2";
         Cell_maintForm2 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_maintForm2 alloc]init];
-        }
+        cell.is_enable=[is_enable integerValue];
         cell.il_remind_label.text=col_label;
-        if ([is_enable isEqualToString:@"0"]) {
-        
+        NSString *isSeleced=[idic_modified_value valueForKey:col_code];
+        if ([isSeleced length]==0 || [isSeleced isEqualToString:@" "]) {
+            isSeleced=@"0";
+        }
+        if ([isSeleced isEqualToString:@"0"]) {
+            [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateNormal];
+            [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateSelected];
+        }
+        if ([isSeleced isEqualToString:@"1"]) {
             [cell.ibt_select setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
-            cell.ibt_select.enabled=NO;
-            
+            [cell.ibt_select setImage:[UIImage imageNamed:@"uncheckbox"] forState:UIControlStateSelected];
         }
         return cell;
     }
