@@ -139,11 +139,14 @@
     range = [string rangeOfString:key];
     int i = 0;
     while (range.length>0&&i<[parameter count]) {
-        if ([dic valueForKey:[parameter objectAtIndex:i]]==nil || [dic valueForKey:[parameter objectAtIndex:i]]==[NSNull null]) {
+        NSString *str_replace_key=[parameter objectAtIndex:i];
+        str_replace_key=[str_replace_key stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([dic valueForKey:str_replace_key]==nil || [dic valueForKey:str_replace_key]==[NSNull null]) {
             [resultString replaceCharactersInRange:range withString:@""];
         }else{
-            [resultString replaceCharactersInRange:range withString:[dic valueForKey:[parameter objectAtIndex:i]]];
+            [resultString replaceCharactersInRange:range withString:[dic valueForKey:str_replace_key]];
         }
+        str_replace_key=nil;
         i++;
         range = [resultString rangeOfString:key];
     }

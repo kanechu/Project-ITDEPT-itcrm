@@ -120,7 +120,7 @@
 }
 -(NSMutableArray*)fn_get_relate_crmtask_data:(NSString *)task_ref_id select_sql:(NSString *)select_sql{
 
-    NSString *is_sql=[NSString stringWithFormat:@"select * from crmtask where task_ref_type='ACCT' and task_ref_id like ? ORDER BY rec_upd_date,rec_crt_date DESC limit 3"];
+    NSString *is_sql=[NSString stringWithFormat:@"select * from crmtask where task_ref_type='ACCT' and task_ref_id like ? ORDER BY task_start_date DESC,rec_crt_date DESC limit 3"];
     __block  NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
