@@ -27,20 +27,23 @@
 typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 @interface EditContactViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
+@property (nonatomic) UIBarButtonItem *ibtn_save;
+@property (nonatomic,strong)UITextView *checkTextView;
+
 @property(nonatomic,strong)NSMutableDictionary *idic_edited_parameter;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter_contact_copy;
+//以下三个数组存储定制页面的数据
 @property(nonatomic,strong)NSMutableArray *alist_maintContact;
 //过滤后的数组
 @property (nonatomic,strong)NSMutableArray *alist_filtered_contactdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
-@property (nonatomic,strong)UITextView *checkTextView;
+//用于存储必填项的col_code
+@property (nonatomic,strong)NSMutableDictionary *idic_col_code;
 @property (nonatomic,strong)Format_conversion *convert;
 @property (nonatomic,strong)CheckUpdate *check_obj;
 @property (nonatomic,strong)passValue_contact passValue;
-@property (nonatomic,strong)UITextView *checkText;
 @property (nonatomic,assign)NSInteger flag_click_cancel;
 
-@property (nonatomic) UIBarButtonItem *ibtn_save;
 @end
 
 @implementation EditContactViewController
@@ -100,6 +103,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     //深拷贝一份要修改的contact,用于还原
     idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
     idic_edited_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    _idic_col_code=[[NSMutableDictionary alloc]init];
 
     [_ibtn_logo setTitle:MYLocalizedString(@"lbl_edit_contact", nil) forState:UIControlStateNormal];
     [_ibtn_logo setImage:[UIImage imageNamed:@"ic_itcrm_logo"] forState:UIControlStateNormal];
@@ -209,6 +213,12 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     if (_flag_can_edit!=1) {
         is_enable_flag=0;
     }
+    //is_mandatory
+    NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
+    if ([is_mandatory isEqualToString:@"1"]) {
+        col_label=[col_label stringByAppendingString:@"*"];
+        [_idic_col_code setObject:col_code forKey:col_code];
+    }
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block EditContactViewController *blockSelf=self;
     passValue=^NSDictionary*(NSInteger tag){
@@ -292,24 +302,37 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 }
 - (void)fn_save_modified_contact:(id)sender {
     [checkTextView resignFirstResponder];
-    BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
-    if (!isSame) {
-        NSString *str_msg=nil;
-        if (_add_contact_flag==1) {
-            str_msg=MYLocalizedString(@"msg_save_add", nil);
-        }else{
-            str_msg=MYLocalizedString(@"msg_save_edit", nil);
+    BOOL isFilled=YES;
+    for (NSString *col_code in [_idic_col_code allKeys]) {
+        if ([[idic_parameter_contact valueForKey:col_code] length]==0) {
+            isFilled=NO;
         }
-        UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
-        [alertView show];
+    }
+    if (isFilled) {
+        
+        BOOL isSame=[idic_parameter_contact isEqualToDictionary:idic_parameter_contact_copy];
+        if (!isSame) {
+            NSString *str_msg=nil;
+            if (_add_contact_flag==1) {
+                str_msg=MYLocalizedString(@"msg_save_add", nil);
+            }else{
+                str_msg=MYLocalizedString(@"msg_save_edit", nil);
+            }
+            UIAlertView *alertView=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
+            [alertView show];
+        }else{
+            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                             target:self
+                                           selector:@selector(fn_hiden_alertView:)
+                                           userInfo:alertview
+                                            repeats:NO];
+            [alertview show];
+        }
+        
     }else{
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                         target:self
-                                       selector:@selector(fn_hiden_alertView:)
-                                       userInfo:alertview
-                                        repeats:NO];
-        [alertview show];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory",nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+        [alert show];
     }
 }
 -(void)fn_hiden_alertView:(NSTimer*)theTimer{

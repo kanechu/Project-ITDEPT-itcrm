@@ -26,8 +26,8 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 @property(nonatomic,strong)NSMutableArray *alist_searchData;
 @property(nonatomic,strong)NSMutableDictionary *idic_value;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
-#pragma mark 存储必填项的col_code
-@property(nonatomic,strong)NSMutableArray *alist_code;
+// 存储必填项的col_code
+@property(nonatomic,strong)NSMutableDictionary *idic_col_code;
 @property(nonatomic,copy) NSString *select_date;
 @property(nonatomic,strong) Custom_datePicker *datePicker;
 @property(nonatomic,strong)NSDateFormatter *dateformatter;
@@ -39,7 +39,6 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 @synthesize checkText;
 @synthesize pass_Value;
 @synthesize alist_searchData;
-@synthesize alist_code;
 @synthesize select_date;
 @synthesize datePicker;
 @synthesize dateformatter;
@@ -72,7 +71,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     idic_value=[[NSMutableDictionary alloc]initWithCapacity:1];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
-    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
+    _idic_col_code=[[NSMutableDictionary alloc]initWithCapacity:1];
     //设置表的代理
     self.skstableview.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
@@ -215,7 +214,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     NSString *col_code=[dic valueForKey:@"col_code"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
-        [self fn_isExist:col_code];
+        [_idic_col_code setObject:col_code forKey:col_code];
     }
     __block SearchTaskViewController *blockSelf=self;
     pass_Value=^NSMutableDictionary*(NSInteger tag){
@@ -252,31 +251,22 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
--(void)fn_isExist:(NSString*)col_code{
-    NSMutableArray *alist_code_copy=[NSMutableArray arrayWithArray:alist_code];
-    for (NSString *str in alist_code_copy) {
-        if ([str isEqualToString:col_code]) {
-            [alist_code removeObject:str];
-        }
-    }
-    [alist_code addObject:col_code];
-}
 
 #pragma mark advance search
 - (IBAction)fn_search_task:(id)sender {
-    BOOL isfill=YES;
-    for (NSString *col_code in alist_code) {
+    BOOL isfilled=YES;
+    for (NSString *col_code in [_idic_col_code allKeys]) {
         if ([[idic_value valueForKey:col_code]length]==0) {
-            isfill=NO;
+            isfilled=NO;
         }
     }
-    if (isfill) {
+    if (isfilled) {
         if (_callback_task) {
             _callback_task(alist_searchData);
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory", nil) delegate:self cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
         [alert show];
     }
     

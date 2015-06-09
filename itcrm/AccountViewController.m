@@ -28,7 +28,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @property(nonatomic,strong)NSMutableDictionary *idic_search_value;
 //存储搜索条件的参数
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
-@property(nonatomic,strong)NSMutableArray *alist_code;
+//存储必填项的col_code
+@property(nonatomic,strong)NSMutableDictionary *idic_col_code;
 @end
 
 #define TEXT_TAG 100
@@ -37,7 +38,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @synthesize idic_search_value;
 @synthesize idic_parameter;
 @synthesize alist_searchData;
-@synthesize alist_code;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,7 +67,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:1];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
-    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
+    _idic_col_code=[[NSMutableDictionary alloc]initWithCapacity:1];
     //设置表的代理
     self.skstableView.SKSTableViewDelegate=self;
     //loadview的时候，打开所有expandable
@@ -185,7 +185,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     NSString *col_code=[dic valueForKey:@"col_code"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
-        [self fn_isExist:col_code];
+        [_idic_col_code setObject:col_code forKey:col_code];
     }
     __block AccountViewController *blockSelf=self;
     _pass_value=^NSMutableDictionary*(NSInteger tag){
@@ -216,20 +216,10 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;
 }
-#pragma mark 是否已经存在必填项的col_code
--(void)fn_isExist:(NSString*)col_code{
-    NSMutableArray *alist_code_copy=[NSMutableArray arrayWithArray:alist_code];
-    for (NSString *str in alist_code_copy) {
-        if ([str isEqualToString:col_code]) {
-            [alist_code removeObject:str];
-        }
-    }
-    [alist_code addObject:col_code];
-}
 
 - (IBAction)fn_search_account:(id)sender {
     BOOL isfilled=YES;
-    for (NSString *col_code in alist_code) {
+    for (NSString *col_code in [_idic_col_code allKeys]) {
         if ([[idic_search_value valueForKey:col_code] length]==0) {
             isfilled=NO;
         }
@@ -240,7 +230,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         }
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Items with * is required" delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory",nil) delegate:self cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
         [alert show];
     }
     

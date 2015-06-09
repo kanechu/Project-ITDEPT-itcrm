@@ -23,18 +23,21 @@
 typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 @interface EditOppViewController ()
 @property (weak, nonatomic) IBOutlet Custom_BtnGraphicMixed *ibtn_logo;
+@property (nonatomic,strong)UITextView *textViewCheck;
+@property (nonatomic) UIBarButtonItem *ibtn_save;
+//以下三个数组，是存储定制页面数据
 @property (nonatomic,strong)NSMutableArray *alist_maintOpp;
 @property (nonatomic,strong)NSMutableArray *alist_filtered_oppdata;
 @property (nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSMutableArray *alist_option;
 @property (nonatomic,strong)NSMutableDictionary *idic_parameter_opp_copy;
 @property (nonatomic,strong)NSMutableDictionary *idic_edited_opp;
+//存储必填项的col_code;
+@property (nonatomic,strong)NSMutableDictionary *idic_col_code;
 @property (nonatomic,strong)Format_conversion *convert;
 @property (nonatomic,strong)passValue_opp pass_value;
-@property (nonatomic,strong)UITextView *textViewCheck;
 @property (nonatomic,assign)NSInteger flag_cancel;
 
-@property (nonatomic) UIBarButtonItem *ibtn_save;
 @end
 
 @implementation EditOppViewController
@@ -204,6 +207,12 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     if (_flag_can_edit!=1) {
         is_enable_flag=0;
     }
+    //is_mandatory
+    NSString *is_mandatory=[dic valueForKey:@"is_mandatory"];
+    if ([is_mandatory isEqualToString:@"1"]) {
+        col_label=[col_label stringByAppendingString:@"*"];
+        [_idic_col_code setObject:col_code forKey:col_code];
+    }
     //col_opption
     NSString *col_option=[dic valueForKey:@"col_option"];
     [self fn_get_choice_arr:col_option];
@@ -318,24 +327,37 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     }
 }
 - (void)fn_save_modified_data:(id)sender {
-    BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
-    if (!isSame) {
-        NSString *str_msg=nil;
-        if (_add_opp_flag==1) {
-            str_msg=MYLocalizedString(@"msg_save_add", nil);
-        }else{
-            str_msg=MYLocalizedString(@"msg_save_edit", nil);
+    [textViewCheck resignFirstResponder];
+    BOOL isFilled=YES;
+    for (NSString *col_code in [_idic_col_code allKeys]) {
+        if ([[idic_parameter_opp valueForKey:col_code] length]==0) {
+            isFilled=NO;
         }
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
-        [alert show];
+    }
+    if (isFilled) {
+        BOOL isSame=[idic_parameter_opp isEqualToDictionary:idic_parameter_opp_copy];
+        if (!isSame) {
+            NSString *str_msg=nil;
+            if (_add_opp_flag==1) {
+                str_msg=MYLocalizedString(@"msg_save_add", nil);
+            }else{
+                str_msg=MYLocalizedString(@"msg_save_edit", nil);
+            }
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:str_msg delegate:self cancelButtonTitle:MYLocalizedString(@"lbl_discard", nil)otherButtonTitles:MYLocalizedString(@"lbl_save", nil) , nil];
+            [alert show];
+        }else{
+            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
+            [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                             target:self
+                                           selector:@selector(fn_hiden_alertView:)
+                                           userInfo:alertview
+                                            repeats:NO];
+            [alertview show];
+        }
+        
     }else{
-        UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"msg_already_save", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:nil, nil];
-        [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                         target:self
-                                       selector:@selector(fn_hiden_alertView:)
-                                       userInfo:alertview
-                                        repeats:NO];
-        [alertview show];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory",nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+        [alert show];
     }
 }
 -(void)fn_hiden_alertView:(NSTimer*)theTimer{

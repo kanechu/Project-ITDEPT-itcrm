@@ -18,14 +18,16 @@ enum IBTN_TAG{
 };
 typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 @interface SearchCrmOppViewController ()<UITextViewDelegate>
-@property(nonatomic,strong)NSMutableArray *alist_filtered_data;
-@property(nonatomic,strong)NSMutableArray * alist_groupNameAndNum;
-@property(nonatomic,strong)NSMutableArray * alist_searchCriteria;
-@property(nonatomic,strong)NSMutableDictionary *idic_opp_parameter;
-@property(nonatomic,strong)NSMutableDictionary *idic_opp_value;
-@property(nonatomic,strong)opp_passValue pass_value;
-@property(nonatomic,strong)NSMutableArray *alist_searchData;
+@property (nonatomic,strong)NSMutableArray *alist_filtered_data;
+@property (nonatomic,strong)NSMutableArray * alist_groupNameAndNum;
+@property (nonatomic,strong)NSMutableArray * alist_searchCriteria;
+@property (nonatomic,strong)NSMutableDictionary *idic_opp_parameter;
+@property (nonatomic,strong)NSMutableDictionary *idic_opp_value;
+@property (nonatomic,strong)opp_passValue pass_value;
+@property (nonatomic,strong)NSMutableArray *alist_searchData;
 @property (nonatomic,strong)UITextView *textViewCheck;
+//存储必填项的col_code
+@property (nonatomic,strong)NSMutableDictionary *idic_col_code;
 @end
 
 @implementation SearchCrmOppViewController
@@ -69,6 +71,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 - (void)fn_set_property{
     idic_opp_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
     idic_opp_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    _idic_col_code=[[NSMutableDictionary alloc]initWithCapacity:10];
     alist_searchData=[[NSMutableArray alloc]init];
     self.skstableView.SKSTableViewDelegate=self;
     //将额外的cell的线隐藏
@@ -172,6 +175,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
+        [_idic_col_code setObject:col_code forKey:col_code];
     }
     static NSString *cellIndentifier=@"Cell_opp_search";
     Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIndentifier];
@@ -202,10 +206,21 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 }
 
 - (IBAction)fn_search_opp:(id)sender {
-    if (callBack) {
-        callBack(alist_searchData);
+    BOOL isfilled=YES;
+    for (NSString *col_code in [_idic_col_code allKeys]) {
+        if ([[idic_opp_value valueForKey:col_code]length]==0) {
+            isfilled=NO;
+        }
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (isfilled) {
+        if (callBack) {
+            callBack(alist_searchData);
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory", nil) delegate:self cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+        [alert show];
+    }
 }
 #pragma mark -UITextViewDelegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView{

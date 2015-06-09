@@ -25,6 +25,8 @@ enum TEXT_TAG {
 @property(nonatomic,strong)pass_value_block passvalue;
 @property(nonatomic,strong)NSMutableDictionary *idic_value;
 @property(nonatomic,strong)NSMutableDictionary *idic_parameter;
+//存储必填项的col_code
+@property(nonatomic,strong)NSMutableDictionary *idic_col_code;
 @end
 
 @implementation SearchCrmContactViewController
@@ -59,6 +61,7 @@ enum TEXT_TAG {
     idic_value=[[NSMutableDictionary alloc]initWithCapacity:10];
     idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
     alist_searchData=[[NSMutableArray alloc]initWithCapacity:10];
+    _idic_col_code=[[NSMutableDictionary alloc]initWithCapacity:10];
     self.skstableView.SKSTableViewDelegate=self;
     [self.skstableView fn_expandall];
     self.skstableView.showsVerticalScrollIndicator=NO;
@@ -155,6 +158,7 @@ enum TEXT_TAG {
     NSString *col_type=[dic valueForKey:@"col_type"];
     if ([is_mandatory isEqualToString:@"1"]) {
         col_label=[col_label stringByAppendingString:@"*"];
+        [_idic_col_code setObject:col_code forKey:col_code];
     }
     __block SearchCrmContactViewController *blockSelf=self;
     _passvalue=^NSString*(NSInteger tag){
@@ -207,9 +211,20 @@ enum TEXT_TAG {
 }
 
 - (IBAction)fn_search_crmContact:(id)sender {
-    if (_callback) {
-        _callback(alist_searchData);
+    BOOL isfilled=YES;
+    for (NSString *col_code in [_idic_col_code allKeys]) {
+        if ([[idic_value valueForKey:col_code]length] ==0) {
+            isfilled=NO;
+        }
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (isfilled) {
+        if (_callback) {
+            _callback(alist_searchData);
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory", nil) delegate:self cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+        [alert show];
+    }
 }
 @end
