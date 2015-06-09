@@ -20,7 +20,7 @@
 
 static NSInteger flag_complete_upload=0;
 
-@interface Crmacct_browseViewController ()
+@interface Crmacct_browseViewController ()<UIAlertViewDelegate>
 /*These outlets to the buttons use a 'strong' reference instead of 'weak' because we want to keep the buttons around even if they're not inside a view.*/
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *ibtn_download;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *ibtn_cancel;
@@ -49,6 +49,8 @@ static NSInteger flag_complete_upload=0;
 @property (nonatomic, assign) NSInteger flag_isDownload;
 //选取更新的行
 @property (nonatomic, assign) NSInteger flag_SelectRow;
+//存储搜索数据（用于重试的情况）
+@property (nonatomic, strong) NSSet *iset_searchForm;
 @end
 
 @implementation Crmacct_browseViewController
@@ -346,7 +348,8 @@ static NSInteger flag_complete_upload=0;
                 [alist_searchs addObject:searchForm];
                 searchForm=nil;
             }
-            [self fn_online_search_crmacct:[NSSet setWithArray:alist_searchs]];
+            _iset_searchForm=[NSSet setWithArray:alist_searchs];
+            [self fn_online_search_crmacct:_iset_searchForm];
             alist_searchs=nil;
             
         }else{
@@ -417,8 +420,8 @@ static NSInteger flag_complete_upload=0;
             alist_account_parameter=alist_acct;
             [self fn_init_account:alist_account_parameter];
             [self.tableView_acct reloadData];
-            [SVProgressHUD dismiss];
         }
+        [SVProgressHUD dismiss];
     };
     web_obj=nil;
 }
@@ -520,7 +523,8 @@ static NSInteger flag_complete_upload=0;
         SearchFormContract *searchForm=[[SearchFormContract alloc]init];
         searchForm.os_column=@"acct_name";
         searchForm.os_value=searchBar.text;
-        [self fn_online_search_crmacct:[NSSet setWithObject:searchForm]];
+        _iset_searchForm=[NSSet setWithObject:searchForm];
+        [self fn_online_search_crmacct:_iset_searchForm];
         searchForm=nil;
     }else{
         alist_account_parameter=[db_acct fn_get_data:_searchBar.text select_sql:select_sql];
@@ -550,6 +554,12 @@ static NSInteger flag_complete_upload=0;
         maintVC.idic_modified_value=[alist_account_parameter objectAtIndex:selectedRowIndex.row];
         maintVC.resp_download=[self fn_get_crmacct_download_data:acct_id];
         maintVC.flag_isDowload=_flag_isDownload;
+    }
+}
+#pragma mark -UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==[alertView firstOtherButtonIndex]) {
+         [self fn_online_search_crmacct:_iset_searchForm];
     }
 }
 #pragma mark -other handle
