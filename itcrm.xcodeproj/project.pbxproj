@@ -56,6 +56,7 @@
 		B2759998193EF955005CF480 /* DB_formatlist.m in Sources */ = {isa = PBXBuildFile; fileRef = B2759997193EF955005CF480 /* DB_formatlist.m */; };
 		B275999B193F0E19005CF480 /* RespCrmacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B275999A193F0E19005CF480 /* RespCrmacct_browse.m */; };
 		B275999E193F2205005CF480 /* DB_crmacct_browse.m in Sources */ = {isa = PBXBuildFile; fileRef = B275999D193F2205005CF480 /* DB_crmacct_browse.m */; };
+		B27AB3CA1B268E9F008B4D75 /* SearchTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B273F491194ADA620007E055 /* SearchTaskViewController.m */; };
 		B27EDFC81940173C007F89A6 /* RespRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFC71940173C007F89A6 /* RespRegion.m */; };
 		B27EDFCB1940185A007F89A6 /* DB_Region.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EDFCA1940185A007F89A6 /* DB_Region.m */; };
 		B27EE0BE19402495007F89A6 /* Cell_region.m in Sources */ = {isa = PBXBuildFile; fileRef = B27EE0BD19402495007F89A6 /* Cell_region.m */; };
@@ -856,8 +857,8 @@
 				B2B94BF41AAFEC7E00691F1D /* QuickSearchListViewController.m */,
 				B27EE0E319404F0C007F89A6 /* Crmacct_browseViewController.h */,
 				B27EE0E419404F0C007F89A6 /* Crmacct_browseViewController.m */,
-				B2B22FB41939B4E90083E0C4 /* AccountViewController.m */,
 				B2B22FB31939B4E90083E0C4 /* AccountViewController.h */,
+				B2B22FB41939B4E90083E0C4 /* AccountViewController.m */,
 				B260D992194591A90026A1E9 /* MaintFormViewController.h */,
 				B260D993194591A90026A1E9 /* MaintFormViewController.m */,
 				B2B3CC9E1ACA46CC001F8F0B /* AddAttachmentViewController.h */,
@@ -1173,6 +1174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2B092E719345E74002FE190 /* itcrmTests.m in Sources */,
+				B27AB3CA1B268E9F008B4D75 /* SearchTaskViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

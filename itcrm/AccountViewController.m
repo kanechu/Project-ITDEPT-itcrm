@@ -17,6 +17,12 @@
 typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 @interface AccountViewController ()
 @property (nonatomic,strong)pass_colCode pass_value;
+//获取搜索标准数据
+@property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
+//按组名过滤后的搜索标准数据
+@property(nonatomic,strong)NSMutableArray *alist_filtered_data;
+//存储搜索标准的组名和该组的行数
+@property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
 @property (nonatomic,strong)NSMutableArray *alist_searchData;
 //存储搜索条件的数据
 @property(nonatomic,strong)NSMutableDictionary *idic_search_value;
@@ -27,10 +33,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 
 #define TEXT_TAG 100
 @implementation AccountViewController
-
-@synthesize alist_groupNameAndNum;
-@synthesize alist_searchCriteria;
-@synthesize alist_filtered_data;
 @synthesize checkText;
 @synthesize idic_search_value;
 @synthesize idic_parameter;
@@ -49,33 +51,71 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_init_arr];
     [self fn_show_different_language];
-    //设置表的代理
-    self.skstableView.SKSTableViewDelegate=self;
-    //loadview的时候，打开所有expandable
-    [self.skstableView fn_expandall];
-    self.skstableView.showsVerticalScrollIndicator=NO;
+    [self fn_set_property];
     [self fn_custom_gesture];
-    [expand_helper setExtraCellLineHidden:self.skstableView];
-    //避免键盘挡住UItextfield
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    _ibtn_clear.layer.cornerRadius=3;
     // Do any additional setup after loading the view.
 }
+
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)fn_set_property{
+    idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:1];
+    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
+    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
+    //设置表的代理
+    self.skstableView.SKSTableViewDelegate=self;
+    //loadview的时候，打开所有expandable
+    [self.skstableView fn_expandall];
+    self.skstableView.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableView];
+    //避免键盘挡住UITextfield
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    _ibtn_clear.layer.cornerRadius=3;
+}
 - (void)fn_show_different_language{
     [_ibtn_clear setTitle:MYLocalizedString(@"lbl_clear", nil) forState:UIControlStateNormal];
     [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
     //设置UINavigationBar的标题
     _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
-
 }
+#pragma mark -获取定制页面的数据
+//lazy loading
+- (NSMutableArray*)alist_groupNameAndNum{
+    if (_alist_groupNameAndNum==nil) {
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        _alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
+        db=nil;
+    }
+    return _alist_groupNameAndNum;
+}
+- (NSMutableArray*)alist_searchCriteria{
+    if (_alist_searchCriteria==nil) {
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        _alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
+        db=nil;
+    }
+    return _alist_searchCriteria;
+}
+- (NSMutableArray*)alist_filtered_data{
+    if (_alist_filtered_data==nil) {
+        _alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+        for (NSMutableDictionary *dic in self.alist_groupNameAndNum) {
+            NSString *str_name=[dic valueForKey:@"group_name"];
+            NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:self.alist_searchCriteria];
+            if (arr!=nil) {
+                [_alist_filtered_data addObject:arr];
+            }
+        }
+    }
+    return _alist_filtered_data;
+}
+
 
 #pragma mark UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -100,30 +140,11 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     return YES;
 }
 
-#pragma mark -初始化数组
--(void)fn_init_arr{
-    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmacct"];
-    alist_searchCriteria=[db fn_get_srchType_data:@"crmacct"];
-    idic_search_value=[[NSMutableDictionary alloc]initWithCapacity:1];
-    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
-    alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
-    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
-    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
-    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-        NSString *str_name=[dic valueForKey:@"group_name"];
-        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
-        if (arr!=nil) {
-            [alist_filtered_data addObject:arr];
-        }
-    }
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [alist_groupNameAndNum count];
+    return [self.alist_groupNameAndNum count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -133,7 +154,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 
 - (NSInteger)tableView:(SKSTableView *)tableView numberOfSubRowsAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *numOfrow=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"COUNT(group_name)"];
+    NSString *numOfrow=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"COUNT(group_name)"];
     return [numOfrow integerValue];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -144,7 +165,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    NSString *str_name=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -153,7 +174,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_data[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     //col_stye 类型名
@@ -168,7 +189,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }
     __block AccountViewController *blockSelf=self;
     _pass_value=^NSMutableDictionary*(NSInteger tag){
-        return blockSelf-> alist_filtered_data [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
+        return blockSelf-> _alist_filtered_data [tag/100-1][tag-TEXT_TAG-(tag/100-1)*100];
     };
     
     static NSString *cellIdentifier=@"Cell_search1";

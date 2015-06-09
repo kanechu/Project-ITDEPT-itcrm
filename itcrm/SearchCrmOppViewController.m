@@ -29,9 +29,6 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 @end
 
 @implementation SearchCrmOppViewController
-@synthesize alist_filtered_data;
-@synthesize alist_groupNameAndNum;
-@synthesize alist_searchCriteria;
 @synthesize idic_opp_parameter;
 @synthesize idic_opp_value;
 @synthesize pass_value;
@@ -50,17 +47,8 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fn_init_arr];
-    self.skstableView.SKSTableViewDelegate=self;
-    //将额外的cell的线隐藏
-    [expand_helper setExtraCellLineHidden:self.skstableView];
-    [self.skstableView fn_expandall];
-    /**
-     *  隐藏表格的滚动条
-     */
-    self.skstableView.showsVerticalScrollIndicator=NO;
+    [self fn_set_property];
     [self fn_show_different_language];
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
     [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
 }
@@ -70,25 +58,53 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)fn_set_property{
+    idic_opp_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
+    idic_opp_value=[[NSMutableDictionary alloc]initWithCapacity:10];
+    alist_searchData=[[NSMutableArray alloc]init];
+    self.skstableView.SKSTableViewDelegate=self;
+    //将额外的cell的线隐藏
+    [expand_helper setExtraCellLineHidden:self.skstableView];
+    [self.skstableView fn_expandall];
+    /**
+     *  隐藏表格的滚动条
+     */
+    self.skstableView.showsVerticalScrollIndicator=NO;
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+}
 - (void)fn_show_different_language{
     [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
     _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
 }
--(void)fn_init_arr{
-    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
-    alist_searchCriteria=[db fn_get_srchType_data:@"crmopp"];
-    idic_opp_parameter=[[NSMutableDictionary alloc]initWithCapacity:10];
-    idic_opp_value=[[NSMutableDictionary alloc]initWithCapacity:10];
-    alist_searchData=[[NSMutableArray alloc]init];
-    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
-    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-        NSString *str_name=[dic valueForKey:@"group_name"];
-        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
-        if (arr!=nil) {
-            [alist_filtered_data addObject:arr];
+#pragma mark -获取定制页面的数据
+- (NSMutableArray*)alist_groupNameAndNum{
+    if (_alist_groupNameAndNum ==nil) {
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        _alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmopp"];
+        db=nil;
+    }
+    return _alist_groupNameAndNum;
+}
+- (NSMutableArray*)alist_searchCriteria{
+    if (_alist_searchCriteria ==nil) {
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        _alist_searchCriteria=[db fn_get_srchType_data:@"crmopp"];
+        db=nil;
+    }
+    return _alist_searchCriteria;
+}
+- (NSMutableArray*)alist_filtered_data{
+    if (_alist_filtered_data ==nil) {
+        _alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:10];
+        for (NSMutableDictionary *dic in self.alist_groupNameAndNum) {
+            NSString *str_name=[dic valueForKey:@"group_name"];
+            NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:self.alist_searchCriteria];
+            if (arr!=nil) {
+                [_alist_filtered_data addObject:arr];
+            }
         }
     }
+    return _alist_filtered_data;
 }
 /**
  *  自定义一个手势，点击空白的地方，隐藏键盘
@@ -106,13 +122,13 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 
 #pragma mark SKSTableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [alist_groupNameAndNum count];
+    return [self.alist_groupNameAndNum count];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
 -(NSInteger)tableView:(SKSTableView *)tableView numberOfSubRowsAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *numOfrows=[[alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"COUNT(group_name)"];
+    NSString *numOfrows=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section]valueForKey:@"COUNT(group_name)"];
     return [numOfrows integerValue];
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -122,7 +138,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    NSString *str_name=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -130,7 +146,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 }
 -(UITableViewCell*)tableView:(SKSTableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath{
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_data[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     //是否为必填项
@@ -141,7 +157,7 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     //blockSelf是本地变量，是弱引用，_block被retain的时候，并不会增加retain count
     __block SearchCrmOppViewController *blockSelf=self;
     pass_value=^NSMutableDictionary*(NSInteger tag){
-        return blockSelf-> alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100];
+        return blockSelf-> _alist_filtered_data [tag/100-1][tag-IBTN_TAG-(tag/100-1)*100];
     };
     
     if ([is_mandatory isEqualToString:@"1"]) {

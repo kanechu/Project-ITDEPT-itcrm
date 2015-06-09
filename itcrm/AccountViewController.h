@@ -13,13 +13,7 @@ typedef void (^CallBack_acct)(NSMutableArray * arr);
 @interface AccountViewController : UIViewController<SKSTableViewDelegate,UITextFieldDelegate>
 //设置一个属性
 @property (nonatomic,strong)CallBack_acct callback_acct;
-//获取搜索标准数据
-@property(nonatomic,strong)NSMutableArray *alist_searchCriteria;
-//按组名过滤后的搜索标准数据
-@property(nonatomic,strong)NSMutableArray *alist_filtered_data;
-//存储搜索标准的组名和该组的行数
-@property(nonatomic,strong)NSMutableArray *alist_groupNameAndNum;
-//用来标识点击哪个uitextfield
+//用来标识点击哪个textfield
 @property (nonatomic,weak)UITextField *checkText;
 @property (weak, nonatomic) IBOutlet UINavigationItem *i_navigationItem;
 @property (weak, nonatomic) IBOutlet SKSTableView *skstableView;

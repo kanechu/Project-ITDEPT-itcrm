@@ -34,9 +34,6 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 @end
 
 @implementation SearchTaskViewController
-@synthesize alist_filtered_data;
-@synthesize alist_groupNameAndNum;
-@synthesize alist_searchCriteria;
 @synthesize idic_value;
 @synthesize idic_parameter;
 @synthesize checkText;
@@ -59,17 +56,8 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 {
     [super viewDidLoad];
     [self fn_show_different_language];
-    //设置表的代理
-    self.skstableview.SKSTableViewDelegate=self;
-    [self fn_init_arr];
-    //loadview的时候，打开所有expandable
-    [self.skstableview fn_expandall];
-    self.skstableview.showsVerticalScrollIndicator=NO;
-    [expand_helper setExtraCellLineHidden:self.skstableview];
+    [self fn_set_property];
     [self fn_custom_gesture];
-    //避免键盘挡住UITextField
-    [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    _ibtn_clear.layer.cornerRadius=3;
     [self fn_create_datepickerview];
     [self fn_set_datetime_formatter];
 	// Do any additional setup after loading the view.
@@ -80,10 +68,56 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)fn_show_different_language{
+- (void)fn_set_property{
+    idic_value=[[NSMutableDictionary alloc]initWithCapacity:1];
+    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
+    alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
+    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
+    //设置表的代理
+    self.skstableview.SKSTableViewDelegate=self;
+    //loadview的时候，打开所有expandable
+    [self.skstableview fn_expandall];
+    self.skstableview.showsVerticalScrollIndicator=NO;
+    [expand_helper setExtraCellLineHidden:self.skstableview];
+    //避免键盘挡住UITextField
+    [KeyboardNoticeManager sharedKeyboardNoticeManager];
+    _ibtn_clear.layer.cornerRadius=3;
+}
+- (void)fn_show_different_language{
     _i_navigationItem.title=MYLocalizedString(@"lbl_advance_title", nil);
     [_ibtn_clear setTitle:MYLocalizedString(@"lbl_clear", nil) forState:UIControlStateNormal];
     [_ibtn_search setTitle:MYLocalizedString(@"lbl_search", nil) forState:UIControlStateNormal];
+}
+#pragma mark -获取定制页面的数据
+//lazy loading
+- (NSMutableArray*)alist_groupNameAndNum{
+    if (_alist_groupNameAndNum ==nil) {
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        _alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
+        db=nil;
+    }
+    return _alist_groupNameAndNum;
+}
+- (NSMutableArray*)alist_searchCriteria{
+    if (_alist_searchCriteria ==nil) {
+        DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
+        _alist_searchCriteria=[db fn_get_srchType_data:@"crmtask"];
+        db=nil;
+    }
+    return _alist_searchCriteria;
+}
+- (NSMutableArray*)alist_filtered_data{
+    if (_alist_filtered_data ==nil) {
+        _alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:1];
+        for (NSMutableDictionary *dic in self.alist_groupNameAndNum) {
+            NSString *str_name=[dic valueForKey:@"group_name"];
+            NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:self.alist_searchCriteria];
+            if (arr!=nil) {
+                [_alist_filtered_data addObject:arr];
+            }
+        }
+    }
+    return _alist_filtered_data;
 }
 -(void)fn_create_datepickerview{
     datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 250)];
@@ -126,24 +160,6 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     [checkText resignFirstResponder];
     return YES;
 }
--(void)fn_init_arr{
-    DB_searchCriteria *db=[[DB_searchCriteria alloc]init];
-    alist_groupNameAndNum=[db fn_get_groupNameAndNum:@"crmtask"];
-    alist_searchCriteria=[db fn_get_srchType_data:@"crmtask"];
-    alist_filtered_data=[[NSMutableArray alloc]initWithCapacity:1];
-    idic_value=[[NSMutableDictionary alloc]initWithCapacity:1];
-    idic_parameter=[[NSMutableDictionary alloc]initWithCapacity:1];
-    alist_searchData=[[NSMutableArray alloc]initWithCapacity:1];
-    alist_code=[[NSMutableArray alloc]initWithCapacity:1];
-    for (NSMutableDictionary *dic in alist_groupNameAndNum) {
-        NSString *str_name=[dic valueForKey:@"group_name"];
-        NSArray *arr=[expand_helper fn_filtered_criteriaData:str_name arr:alist_searchCriteria];
-        if (arr!=nil) {
-            [alist_filtered_data addObject:arr];
-        }
-    }
-}
-
 -(void)fn_custom_gesture{
     UITapGestureRecognizer *tapgesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fn_keyboardHide:)];
     //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
@@ -159,7 +175,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [alist_groupNameAndNum count];
+    return [self.alist_groupNameAndNum count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -169,7 +185,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 
 - (NSInteger)tableView:(SKSTableView *)tableView numberOfSubRowsAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *numOfrow=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"COUNT(group_name)"];
+    NSString *numOfrow=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"COUNT(group_name)"];
     return [numOfrow integerValue];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -179,7 +195,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     if (!cell)
         cell = [[SKSTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     cell.backgroundColor=COLOR_LIGTH_GREEN;
-    NSString *str_name=[[alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
+    NSString *str_name=[[self.alist_groupNameAndNum objectAtIndex:indexPath.section] valueForKey:@"group_name"];
     cell.textLabel.text=str_name;
     cell.textLabel.textColor=[UIColor whiteColor];
     cell.expandable=YES;
@@ -188,7 +204,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForSubRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //提取每行的数据
-    NSMutableDictionary *dic=alist_filtered_data[indexPath.section][indexPath.subRow-1];
+    NSMutableDictionary *dic=self.alist_filtered_data[indexPath.section][indexPath.subRow-1];
     //显示的提示名称
     NSString *col_label=[dic valueForKey:@"col_label"];
     //col_stye 类型名
@@ -203,7 +219,7 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
     }
     __block SearchTaskViewController *blockSelf=self;
     pass_Value=^NSMutableDictionary*(NSInteger tag){
-        return blockSelf->alist_filtered_data[indexPath.section][tag-TEXTFIELD_TAG-indexPath.section*100];
+        return blockSelf->_alist_filtered_data[indexPath.section][tag-TEXTFIELD_TAG-indexPath.section*100];
     };
     if ([col_stye isEqualToString:@"string"]||[col_stye isEqualToString:@"date"]) {
         static NSString *cellIdentifier=@"Cell_search";
