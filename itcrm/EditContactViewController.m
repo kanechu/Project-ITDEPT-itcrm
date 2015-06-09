@@ -67,7 +67,14 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_make_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"touchStatusBar" object:nil];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -114,9 +121,6 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     _check_obj=[[CheckUpdate alloc]init];
     
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    //注册通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
-
 }
 #pragma mark -获取定制contact maint版面的数据
 //Lazy loading
@@ -160,7 +164,7 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkTextView resignFirstResponder];
 }
--(void)fn_tableView_scrollTop{
+-(void)fn_make_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
 #pragma mark SKSTableViewDelegate and datasourse

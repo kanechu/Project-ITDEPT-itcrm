@@ -52,6 +52,14 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
     [self fn_custom_gesture];
 	// Do any additional setup after loading the view.
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_make_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"touchStatusBar" object:nil];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -119,7 +127,9 @@ typedef NSMutableDictionary* (^opp_passValue)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [_textViewCheck resignFirstResponder];
 }
-
+-(void)fn_make_tableView_scrollTop{
+    [self.skstableView setContentOffset:CGPointZero animated:YES];
+}
 #pragma mark SKSTableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return [self.alist_groupNameAndNum count];

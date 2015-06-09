@@ -78,7 +78,21 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     
 	// Do any additional setup after loading the view.
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    /**
+     *  给点击状态栏的操作添加观察者
+     *
+     *  @param fn_tableView_scrollTop 点击状态栏触发的方法
+     *
+     *  @return nil
+     */
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_make_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"touchStatusBar" object:nil];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -125,14 +139,6 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
    
     //避免键盘挡住UITextView
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    /**
-     *  给点击状态栏的操作添加观察者
-     *
-     *  @param fn_tableView_scrollTop 点击状态栏触发的方法
-     *
-     *  @return nil
-     */
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
 #pragma mark -获取定制maint版面的数据
 //Lazy loading
@@ -167,7 +173,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
 }
 
 #pragma mark 点击状态栏,Tableview回滚至top
--(void)fn_tableView_scrollTop{
+-(void)fn_make_tableView_scrollTop{
     [self.skstableview setContentOffset:CGPointZero animated:YES];
 }
 

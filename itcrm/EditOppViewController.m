@@ -63,7 +63,14 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     [self fn_custom_gesture];
     // Do any additional setup after loading the view.
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_make_tableView_scrollTop) name:@"touchStatusBar" object:nil];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"touchStatusBar" object:nil];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -107,7 +114,6 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     convert=[[Format_conversion alloc]init];
     
     [KeyboardNoticeManager sharedKeyboardNoticeManager];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_tableView_scrollTop) name:@"touchStatusBar" object:nil];
 }
 #pragma mark --获取定制opp maint版面的数据
 //lazy loading
@@ -154,7 +160,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [textViewCheck resignFirstResponder];
 }
--(void)fn_tableView_scrollTop{
+-(void)fn_make_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
 #pragma mark SKSTableViewDelegate 
