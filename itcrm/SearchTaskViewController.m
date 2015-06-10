@@ -226,8 +226,8 @@ typedef NSMutableDictionary* (^passValue_task)(NSInteger tag);
         if (cell==nil) {
             cell=[self.skstableview dequeueReusableCellWithIdentifier:@"Cell_search" forIndexPath:indexPath];
         }
-        cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
+        cell.il_prompt_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         cell.itf_searchData.delegate=self;
         cell.itf_searchData.tag=TEXTFIELD_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *str_value=[idic_value valueForKey:col_code];

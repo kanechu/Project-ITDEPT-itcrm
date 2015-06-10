@@ -28,6 +28,23 @@
 -(NSString*)fn_get_current_date_millisecond;
 
 +(NSString*)fn_get_lang_code;
+/**
+ *  图片转换为base64
+ *
+ *  @param image 图片
+ *
+ *  @return 转换后的base64
+ */
 + (NSString*)fn_image_convert_base64Str:(UIImage*)image;
 + (NSString*)fn_saveImage:(UIImage*)tempImg WithName:(NSString*)imageName;
+/**
+ *  给一个label显示两种不同颜色
+ *
+ *  @param parentString    父字符串
+ *  @param subString 需要改变颜色的子字符串
+ *  @param color     颜色
+ *
+ *  @return 处理后带属性的字符串
+ */
++ (NSMutableAttributedString*)fn_get_different_color_inLabel:(NSString*)parentString colorString:(NSString*)subString color:(UIColor*)color;
 @end

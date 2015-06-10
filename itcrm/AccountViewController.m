@@ -194,8 +194,9 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     
     static NSString *cellIdentifier=@"Cell_search1";
     Cell_search *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.il_prompt_label.text=col_label;
     cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
+    cell.il_prompt_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
+    
     cell.itf_searchData.delegate=self;
     cell.backgroundColor=COLOR_LIGHT_GRAY;
     cell.itf_searchData.tag=TEXT_TAG+indexPath.section*100+ indexPath.subRow-1;
@@ -208,6 +209,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         NSString *textValue=[idic_search_value valueForKey:col_code];
         NSString *col_option=[dic valueForKey:@"col_option"];
         cell.itf_searchData.text=[convert fn_convert_display_status:textValue col_option:col_option];
+        convert=nil;
     }
     // Configure the cell...
     return cell;

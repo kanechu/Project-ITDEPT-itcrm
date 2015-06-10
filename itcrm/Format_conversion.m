@@ -279,4 +279,13 @@
     [data writeToFile:_filePath atomically:NO];
     return _filePath;
 }
+
++ (NSMutableAttributedString*)fn_get_different_color_inLabel:(NSString*)parentString colorString:(NSString*)subString color:(UIColor*)color{
+    NSMutableAttributedString *_parentString=[[NSMutableAttributedString alloc]initWithString:parentString];
+    NSRange subStr_range=[parentString rangeOfString:subString];
+    NSMutableDictionary *idic_strProperty=[NSMutableDictionary dictionary];
+    [idic_strProperty setObject:color forKey:NSForegroundColorAttributeName];
+    [_parentString setAttributes:idic_strProperty range:subStr_range];
+    return _parentString;
+}
 @end

@@ -224,7 +224,7 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
     static NSString *cellIdentifier=@"Cell_maintForm1_opp";
     Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
     cell.is_enable=is_enable_flag;
-    cell.il_remind_label.text=col_label;
+    cell.il_remind_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
     cell.itv_data_textview.delegate=self;
     cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
     NSString *text_value=[idic_parameter_opp valueForKey:col_code];

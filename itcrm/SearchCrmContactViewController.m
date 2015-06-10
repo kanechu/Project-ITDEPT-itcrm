@@ -172,8 +172,8 @@ enum TEXT_TAG {
         if (cell==nil) {
             cell=[[Cell_search alloc]init];
         }
-        cell.il_prompt_label.text=col_label;
         cell.il_prompt_label.textColor=COLOR_DARK_JUNGLE_GREEN;
+        cell.il_prompt_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         cell.itf_searchData.delegate=self;
         cell.itf_searchData.tag=TEXT_TAG1+indexPath.section*100+indexPath.subRow-1;
         cell.itf_searchData.text=[idic_value valueForKey:col_code];

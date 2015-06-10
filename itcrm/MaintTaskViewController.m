@@ -289,11 +289,8 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     if ([col_type isEqualToString:@"string"] || [col_type isEqualToString:@"datetime"] || [col_type isEqualToString:@"lookup"] ||[col_type isEqualToString:@"text"]) {
         static NSString *cellIdentifier=@"Cell_maintForm11";
         Cell_maintForm1 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell==nil) {
-            cell=[[Cell_maintForm1 alloc]init];
-        }
         cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
+        cell.il_remind_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
@@ -317,7 +314,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         static NSString *cellIndetifier=@"Cell_maintForm2_task";
         Cell_maintForm2 *cell=[self.skstableview dequeueReusableCellWithIdentifier:cellIndetifier];
         cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
+        cell.il_remind_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         NSString *is_submit=[idic_parameter_value valueForKey:col_code];
         if ([is_submit length]==0 || [is_submit isEqualToString:@" "]) {
             is_submit=@"0";

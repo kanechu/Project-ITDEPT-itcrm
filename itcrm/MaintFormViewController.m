@@ -404,7 +404,7 @@
         static NSString *cellIdentifier=@"Cell_maintForm1";
         Cell_maintForm1 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         cell.is_enable=is_enable_flag;
-        cell.il_remind_label.text=col_label;
+        cell.il_remind_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         cell.itv_data_textview.delegate=self;
         NSString *str_status=[idic_modified_value valueForKey:col_code];
         cell.itv_data_textview.text=str_status;
@@ -422,7 +422,7 @@
         static NSString *cellIdentifier=@"Cell_maintForm2";
         Cell_maintForm2 *cell=[self.skstableView dequeueReusableCellWithIdentifier:cellIdentifier];
         cell.is_enable=[is_enable integerValue];
-        cell.il_remind_label.text=col_label;
+        cell.il_remind_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         NSString *isSeleced=[idic_modified_value valueForKey:col_code];
         if ([isSeleced length]==0 || [isSeleced isEqualToString:@" "]) {
             isSeleced=@"0";
