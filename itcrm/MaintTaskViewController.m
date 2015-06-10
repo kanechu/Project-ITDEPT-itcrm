@@ -409,26 +409,38 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     }
     if (buttonIndex==[alertView firstOtherButtonIndex]) {
         BOOL isSuccess=NO;
-        DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
-        if (_add_flag==1) {
-            NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
-            isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
-            [db fn_update_crmtask_ismodified:@"1" task_id:[idic_parameter_value valueForKey:@"task_id"]];
-        }else{
-            NSString *current_date=[format fn_get_current_date_millisecond];
-            [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];
-            current_date=nil;
-            [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
-            isSuccess=[db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
-        }
-        if (isSuccess) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"update" object:nil];
-            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
-            [alertview show];
-            idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
-            if (flag_click_cancel==1 || _add_flag==1) {
-                [self.navigationController popViewControllerAnimated:YES];
+        BOOL isFilled=YES;
+        for (NSString *col_code in [_idic_col_code allKeys]) {
+            if ([[idic_parameter_value valueForKey:col_code] length]==0) {
+                isFilled=NO;
             }
+        }
+        if (isFilled) {
+            DB_crmtask_browse *db=[[DB_crmtask_browse alloc]init];
+            if (_add_flag==1) {
+                NSMutableArray *alist_crmtask=[[NSMutableArray alloc]initWithObjects:[self fn_init_updateform], nil];
+                isSuccess=[db fn_save_crmtask_browse:alist_crmtask];
+                [db fn_update_crmtask_ismodified:@"1" task_id:[idic_parameter_value valueForKey:@"task_id"]];
+            }else{
+                NSString *current_date=[format fn_get_current_date_millisecond];
+                [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];
+                current_date=nil;
+                [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
+                isSuccess=[db fn_update_crmtask_browse:idic_edited_parameter unique_id:[idic_parameter_value valueForKey:@"unique_id"]];
+            }
+            if (isSuccess) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"task_update" object:nil];
+                UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+                [alertview show];
+                idic_parameter_value_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_value];
+                if (flag_click_cancel==1 || _add_flag==1) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
+            
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory",nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+            [alert show];
         }
     }
 }

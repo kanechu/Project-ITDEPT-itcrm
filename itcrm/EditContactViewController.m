@@ -363,32 +363,42 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex==[alertView firstOtherButtonIndex]) {
         BOOL isSuccess=NO;
-        DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
-        if (_add_contact_flag==1) {
-            NSMutableArray *alist_crmcontact=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
-            isSuccess=[db fn_save_crmcontact_browse:alist_crmcontact];
-            [db fn_update_crmcontact_ismodified:@"1" contact_id:[idic_parameter_contact valueForKey:@"contact_id"]];
-            alist_crmcontact=nil;
-        }else{
-            Format_conversion *format_obj=[[Format_conversion alloc]init];
-            NSString *current_date=[format_obj fn_get_current_date_millisecond];
-            [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];
-            format_obj=nil;
-            current_date=nil;
-            [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
-            isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
-        }
-        
-        if (isSuccess) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
-            idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
-            if (flag_click_cancel==1 || _add_contact_flag==1) {
-                [self.navigationController popViewControllerAnimated:YES];
+        BOOL isFilled=YES;
+        for (NSString *col_code in [_idic_col_code allKeys]) {
+            if ([[idic_parameter_contact valueForKey:col_code] length]==0) {
+                isFilled=NO;
             }
-            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
-            [alertview show];
         }
-       
+        if (isFilled) {
+            DB_crmcontact_browse *db=[[DB_crmcontact_browse alloc]init];
+            if (_add_contact_flag==1) {
+                NSMutableArray *alist_crmcontact=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
+                isSuccess=[db fn_save_crmcontact_browse:alist_crmcontact];
+                [db fn_update_crmcontact_ismodified:@"1" contact_id:[idic_parameter_contact valueForKey:@"contact_id"]];
+                alist_crmcontact=nil;
+            }else{
+                Format_conversion *format_obj=[[Format_conversion alloc]init];
+                NSString *current_date=[format_obj fn_get_current_date_millisecond];
+                [idic_edited_parameter setObject:current_date forKey:@"rec_upd_date"];
+                format_obj=nil;
+                current_date=nil;
+                [idic_edited_parameter setObject:@"1" forKey:@"is_modified"];
+                isSuccess=[db fn_update_crmcontact_browse:idic_edited_parameter unique_id:[idic_parameter_contact valueForKey:@"unique_id"]];
+            }
+            
+            if (isSuccess) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"contact_update" object:nil];
+                idic_parameter_contact_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact];
+                if (flag_click_cancel==1 || _add_contact_flag==1) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+                [alertview show];
+            }
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory",nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+            [alert show];
+        }
     }
     if (buttonIndex==[alertView cancelButtonIndex]) {
         idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_contact_copy];

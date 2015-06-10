@@ -43,7 +43,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
     [self fn_get_formatlist];
     [self fn_set_property];
 	// Do any additional setup after loading the view.
@@ -68,6 +67,8 @@
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     _is_searchBar.placeholder=MYLocalizedString(@"lbl_contact_search", nil);
     self.title=MYLocalizedString(@"lbl_contact", nil);
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"contact_update" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmcontact_browse) name:@"contact_update" object:nil];
 }
 -(void)fn_get_formatlist{
     convert=[[Format_conversion alloc]init];
@@ -139,7 +140,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"Segue_editContact" sender:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmcontact_browse) name:@"contact_update" object:nil];
 }
 -(void)fn_update_crmcontact_browse{
     alist_contact_parameter=[db_crmcontact fn_get_crmcontact_browse_data:_is_searchBar.text select_sql:select_sql];
@@ -150,7 +150,7 @@
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
     if([[segue identifier] isEqualToString:@"Segue_editContact"]){
         EditContactViewController *VC=[segue destinationViewController];
-        VC.idic_parameter_contact=[alist_contact_parameter objectAtIndex:selectedRowIndex.row];
+        VC.idic_parameter_contact=[NSMutableDictionary dictionaryWithDictionary:[alist_contact_parameter objectAtIndex:selectedRowIndex.row]];
         VC.flag_can_edit=1;
     }
 }

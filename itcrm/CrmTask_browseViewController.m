@@ -72,6 +72,8 @@
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     self.title=MYLocalizedString(@"lbl_task", nil);
     _is_searchbar.placeholder=MYLocalizedString(@"lbl_activity_search", nil);
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"task_update" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmtask_browse) name:@"task_update" object:nil];
 }
 -(void)fn_get_formatlist{
     format=[[Format_conversion alloc]init];
@@ -145,7 +147,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"segue_maintTask" sender:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmtask_browse) name:@"update" object:nil];
 }
 -(void)fn_update_crmtask_browse{
     alist_crmtask_parameter=[db_crmtask fn_get_search_crmtask_data:@"" select_sql:select_sql];
@@ -173,7 +174,7 @@
     NSIndexPath *selectedRowIndex=[self.tableview indexPathForSelectedRow];
     if([[segue identifier] isEqualToString:@"segue_maintTask"]){
         MaintTaskViewController *taskVC=[segue destinationViewController];
-        taskVC.idic_parameter_value=[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row];
+        taskVC.idic_parameter_value=[NSMutableDictionary dictionaryWithDictionary:[alist_crmtask_parameter objectAtIndex:selectedRowIndex.row]];
         taskVC.flag_can_edit=1;
     }
 }

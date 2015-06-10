@@ -73,6 +73,8 @@
     [_ibtn_advance setTitle:MYLocalizedString(@"lbl_advance", nil)];
     
     self.navigationItem.backBarButtonItem.title=MYLocalizedString(@"lbl_back", nil);
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"crmopp_update" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmopp_browse) name:@"crmopp_update" object:nil];
 }
 -(void)fn_get_formatlist{
     format=[[Format_conversion alloc]init];
@@ -141,7 +143,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"segue_editopp" sender:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(fn_update_crmopp_browse) name:@"crmopp_update" object:nil];
 }
 -(void)fn_update_crmopp_browse{
     alist_opp_parameter=[db_crmopp fn_get_crmopp_data:_is_searchBar.text select_sql:select_sql];
@@ -152,7 +153,7 @@
     NSIndexPath *indexpath=[self.tableview indexPathForSelectedRow];
     if ([[segue identifier]isEqualToString:@"segue_editopp"]) {
         EditOppViewController *VC=[segue destinationViewController];
-        VC.idic_parameter_opp=[alist_opp_parameter objectAtIndex:indexpath.row ];
+        VC.idic_parameter_opp=[NSMutableDictionary dictionaryWithDictionary:[alist_opp_parameter objectAtIndex:indexpath.row ]];
         VC.flag_can_edit=1;
     }
 }

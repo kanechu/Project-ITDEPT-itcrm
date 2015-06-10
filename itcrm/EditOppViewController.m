@@ -369,29 +369,42 @@ typedef NSMutableDictionary* (^passValue_opp)(NSInteger tag);
 }
 #pragma mark UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-   
+    
     if (buttonIndex==[alertView firstOtherButtonIndex]) {
         BOOL isSuccess=NO;
-        DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
-        if (_add_opp_flag==1) {
-            NSMutableArray *alist_crmopp=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
-            isSuccess=[db_crmopp fn_save_crmopp_browse:alist_crmopp];
-            [db_crmopp fn_update_crmopp_ismodified:@"1" opp_id:[idic_parameter_opp valueForKey:@"opp_id"]];
-        }else{
-            NSString *current_date=[convert fn_get_current_date_millisecond];
-            [idic_edited_opp setObject:current_date forKey:@"rec_upd_date"];
-            current_date=nil;
-            [idic_edited_opp setObject:@"1" forKey:@"is_modified"];
-            isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
-        }
-        if (isSuccess) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"crmopp_update" object:nil];
-            UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
-            [alertview show];
-            idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
-            if (flag_cancel==1 ||_add_opp_flag) {
-                [self.navigationController popViewControllerAnimated:YES];
+        BOOL isFilled=YES;
+        for (NSString *col_code in [_idic_col_code allKeys]) {
+            if ([[idic_parameter_opp valueForKey:col_code] length]==0) {
+                isFilled=NO;
             }
+        }
+        if (isFilled) {
+            
+            DB_crmopp_browse *db_crmopp=[[DB_crmopp_browse alloc]init];
+            if (_add_opp_flag==1) {
+                NSMutableArray *alist_crmopp=[[NSMutableArray alloc]initWithObjects:[self fn_get_updateform], nil];
+                isSuccess=[db_crmopp fn_save_crmopp_browse:alist_crmopp];
+                [db_crmopp fn_update_crmopp_ismodified:@"1" opp_id:[idic_parameter_opp valueForKey:@"opp_id"]];
+            }else{
+                NSString *current_date=[convert fn_get_current_date_millisecond];
+                [idic_edited_opp setObject:current_date forKey:@"rec_upd_date"];
+                current_date=nil;
+                [idic_edited_opp setObject:@"1" forKey:@"is_modified"];
+                isSuccess= [db_crmopp fn_update_crmopp_data:idic_edited_opp unique_id:[idic_parameter_opp valueForKey:@"unique_id"]];
+            }
+            if (isSuccess) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"crmopp_update" object:nil];
+                UIAlertView *alertview=[[UIAlertView alloc]initWithTitle:MYLocalizedString(@"msg_save_title", nil) message:MYLocalizedString(@"msg_save_locally", nil) delegate:nil cancelButtonTitle:MYLocalizedString(@"lbl_ok", nil) otherButtonTitles:nil, nil];
+                [alertview show];
+                idic_parameter_opp_copy=[NSMutableDictionary dictionaryWithDictionary:idic_parameter_opp];
+                if (flag_cancel==1 ||_add_opp_flag) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
+            
+        }else{
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:MYLocalizedString(@"lbl_is_mandatory",nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:MYLocalizedString(@"lbl_ok", nil), nil];
+            [alert show];
         }
         
     }
