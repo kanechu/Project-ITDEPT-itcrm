@@ -40,7 +40,7 @@
     [queue inDataBase:^(FMDatabase *db){
         
         if ([db open]) {
-            FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM maintForm where form_id like ?",[NSString stringWithFormat:@"%@",form_id]];
+            FMResultSet *lfmdb_result=[db executeQuery:@"SELECT * FROM maintForm where form_id like ? ",[NSString stringWithFormat:@"%@",form_id]];
             while ([lfmdb_result next]) {
                 [arr addObject:[lfmdb_result resultDictionary]];
             }
@@ -65,7 +65,7 @@
     __block NSMutableArray *arr=[NSMutableArray array];
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            FMResultSet *lfmdb_result= [db executeQuery:@"SELECT group_name,COUNT(group_name) FROM maintForm where form_id like ? group by group_name",form_id];
+            FMResultSet *lfmdb_result= [db executeQuery:@"SELECT group_name,COUNT(group_name),seq FROM maintForm where form_id like ? group by group_name order by seq",form_id];
             while ([lfmdb_result next]) {
                 
                 [arr addObject:[lfmdb_result resultDictionary]];
