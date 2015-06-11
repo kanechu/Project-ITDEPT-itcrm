@@ -195,6 +195,24 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
     datePicker=[[Custom_datePicker alloc]initWithFrame:CGRectMake(0, 0, 320, 230)];
     datePicker.delegate=self;
 }
+
+-(UIToolbar*)fn_create_toolbar{
+    UIToolbar *toolbar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    [toolbar setBarStyle:UIBarStyleDefault];
+    [toolbar setTranslucent:YES];
+    [toolbar setTintColor:[UIColor darkGrayColor]];
+    UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(fn_Click_toolbar_done:)];
+    
+    [toolbar setItems:[NSArray arrayWithObjects:buttonflexible,buttonDone, nil]];
+    buttonflexible=nil;
+    buttonDone=nil;
+    return toolbar;
+}
+- (void)fn_Click_toolbar_done:(id)sender{
+    [checkTextView resignFirstResponder];
+}
+
 #pragma mark DatepickerDelegate
 -(void)fn_Clicked_done:(NSString*)str{
     NSDate *date=[dateformatter dateFromString:str];
@@ -293,6 +311,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
         cell.il_remind_label.attributedText=[Format_conversion fn_get_different_color_inLabel:col_label colorString:@"*" color:[UIColor redColor]];
         cell.itv_data_textview.delegate=self;
         cell.itv_data_textview.tag=TEXT_TAG+indexPath.section*100+indexPath.subRow-1;
+        cell.itv_data_textview.inputAccessoryView=[self fn_create_toolbar];
         NSString *text_value=[idic_parameter_value valueForKey:col_code];
         cell.itv_data_textview.inputView=nil;
         if ([col_type isEqualToString:@"datetime"]) {
@@ -300,7 +319,7 @@ typedef NSMutableDictionary* (^pass_colCode)(NSInteger);
                 text_value=[dateformatter stringFromDate:[format dateFromUnixTimestamp:text_value]];
             }
             cell.itv_data_textview.inputView=datePicker;
-            
+            cell.itv_data_textview.inputAccessoryView=nil;
         }else if([col_type isEqualToString:@"lookup"]){
             text_value=[format fn_convert_display_status:text_value col_option:[dic valueForKey:@"col_option"]];
         }

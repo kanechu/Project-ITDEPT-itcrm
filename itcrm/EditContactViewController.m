@@ -168,6 +168,23 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
 -(void)fn_keyboardHide:(UITapGestureRecognizer*)tap{
     [checkTextView resignFirstResponder];
 }
+
+-(UIToolbar*)fn_create_toolbar{
+    UIToolbar *toolbar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+    [toolbar setBarStyle:UIBarStyleDefault];
+    [toolbar setTranslucent:YES];
+    [toolbar setTintColor:[UIColor darkGrayColor]];
+    UIBarButtonItem *buttonflexible = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *buttonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(fn_Click_toolbar_done:)];
+    
+    [toolbar setItems:[NSArray arrayWithObjects:buttonflexible,buttonDone, nil]];
+    buttonflexible=nil;
+    buttonDone=nil;
+    return toolbar;
+}
+- (void)fn_Click_toolbar_done:(id)sender{
+    [checkTextView resignFirstResponder];
+}
 -(void)fn_make_tableView_scrollTop{
     [self.skstableView setContentOffset:CGPointZero animated:YES];
 }
@@ -236,6 +253,11 @@ typedef NSDictionary* (^passValue_contact)(NSInteger tag);
     if ([col_stye isEqualToString:@"local_lookup"]) {
         
         cell.itv_data_textview.text=[_convert fn_convert_display_status:text_value col_option:[dic valueForKey:@"col_option"]];
+    }
+    if ([col_stye isEqualToString:@"string"]) {
+        cell.itv_data_textview.inputAccessoryView=[self fn_create_toolbar];
+    }else{
+        cell.itv_data_textview.inputAccessoryView=nil;
     }
     //UITextView 上下左右有8px
     CGFloat height=[_convert fn_heightWithString:text_value font:cell.itv_data_textview.font constrainedToWidth:cell.itv_data_textview.contentSize.width-16];
