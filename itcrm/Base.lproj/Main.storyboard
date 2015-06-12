@@ -279,7 +279,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="3Jj-h2-AhD">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="JDO-0c-nqV"/>
                         <barButtonItem key="leftBarButtonItem" id="sEG-Ca-QvX">
                             <button key="customView" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1F1-0F-WBE" customClass="Custom_BtnGraphicMixed">
                                 <rect key="frame" x="16" y="7" width="140" height="30"/>

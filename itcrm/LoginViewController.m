@@ -279,7 +279,9 @@ typedef NS_ENUM(NSInteger, kTimeOut_stage){
                 base_url=[[arr_resp_result objectAtIndex:0] valueForKey:@"web_addr"];
                 sys_name=[[arr_resp_result objectAtIndex:0]valueForKey:@"sys_name"];
             }
-            [self fn_get_RespusersLogin_data:base_url sys_name:sys_name];
+            if (base_url!=nil) {
+                [self fn_get_RespusersLogin_data:base_url sys_name:sys_name];
+            }
         }
     };
     [web_base fn_get_data:req_form];

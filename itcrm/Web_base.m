@@ -34,13 +34,9 @@
     RKObjectMapping *lo_updateMapping = [RKObjectMapping requestMapping];
     [lo_updateMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[updateform class]]];
     RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
-    [lo_authMapping addAttributeMappingsFromDictionary:@{ @"user_code": @"user_code",
-                                                          @"password": @"password",
-                                                          @"system": @"system" ,
-                                                          @"version": @"version",
-                                                          @"com_sys_code":@"com_sys_code",
-                                                          @"app_code":@"app_code"}];
-    
+    AuthContract *auth=ao_form.Auth;
+    [lo_authMapping addAttributeMappingsFromDictionary:[NSDictionary dictionaryWithPropertiesOfObject_withoutNil:auth]];
+    auth=nil;
     RKObjectMapping *lo_reqMapping = [RKObjectMapping requestMapping];
     
     RKRelationshipMapping *updateRelationship = [RKRelationshipMapping
@@ -104,12 +100,9 @@
     RKObjectMapping *lo_searchMapping = [RKObjectMapping requestMapping];
     [lo_searchMapping addAttributeMappingsFromArray:@[@"os_column",@"os_value"]];
     RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
-    [lo_authMapping addAttributeMappingsFromDictionary:@{ @"user_code": @"user_code",
-                                                          @"password": @"password",
-                                                          @"system": @"system" ,
-                                                          @"version": @"version",
-                                                          @"com_sys_code":@"com_sys_code",
-                                                          @"app_code":@"app_code",@"lang_code":@"lang_code"}];
+    AuthContract *auth=ao_form.Auth;
+    [lo_authMapping addAttributeMappingsFromDictionary:[NSDictionary dictionaryWithPropertiesOfObject_withoutNil:auth]];
+    auth=nil;
     
     RKObjectMapping *lo_reqMapping = [RKObjectMapping requestMapping];
     
@@ -176,7 +169,7 @@
     [lo_searchMapping addAttributeMappingsFromArray:@[@"os_column",@"os_dyn_6"]];
    
     RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
-    [lo_authMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:auth]];
+    [lo_authMapping addAttributeMappingsFromDictionary:[NSDictionary dictionaryWithPropertiesOfObject_withoutNil:auth]];
     RKObjectMapping *lo_reqMapping = [RKObjectMapping requestMapping];
     
     RKRelationshipMapping *searchRelationship = [RKRelationshipMapping
@@ -266,7 +259,7 @@
     [lo_updateMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:[UpdateFormAttachment class]]];
     //Auth
     RKObjectMapping *lo_authMapping = [RKObjectMapping requestMapping];
-    [lo_authMapping addAttributeMappingsFromArray:[NSArray arrayWithPropertiesOfObject:auth]];
+    [lo_authMapping addAttributeMappingsFromDictionary:[NSDictionary dictionaryWithPropertiesOfObject_withoutNil:auth]];
     
     RKObjectMapping *lo_reqMapping = [RKObjectMapping requestMapping];
     

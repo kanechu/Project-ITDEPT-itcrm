@@ -24,4 +24,6 @@
 
 @synthesize lang_code;
 
+@synthesize device_type;
+
 @end

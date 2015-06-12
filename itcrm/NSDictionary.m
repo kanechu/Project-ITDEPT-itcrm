@@ -29,5 +29,20 @@
     free(properties);
     return [NSDictionary dictionaryWithDictionary:dict];
 }
-
++ (NSDictionary *)dictionaryWithPropertiesOfObject_withoutNil:(id) obj;{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    unsigned count;
+    objc_property_t *properties = class_copyPropertyList([obj class], &count);
+    
+    for (int i = 0; i < count; i++) {
+        NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
+        if ([obj valueForKey:key]!=nil) {
+            [dict setObject:key forKey:key];
+        }
+    }
+    
+    free(properties);
+    return [NSDictionary dictionaryWithDictionary:dict];
+}
 @end

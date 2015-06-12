@@ -15,6 +15,9 @@
 #import "RespSystemIcon.h"
 #import "RespMaintForm.h"
 #import "SVProgressHUD.h"
+
+#define DEVICE_TYPE 2
+
 @implementation Web_resquestData
 
 #pragma mark 请求permit的数据
@@ -83,6 +86,7 @@
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
+    auth.device_type=[NSNumber numberWithInteger:DEVICE_TYPE];
     req_form.Auth =auth;
     SearchFormContract *search = [[SearchFormContract alloc]init];
     search.os_column = @"list_id";
