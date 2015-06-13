@@ -50,7 +50,6 @@
 #pragma mark 请求searchCriteria的数据
 - (void) fn_get_search_data:(NSString*)base_url
 {
-    
     RequestContract *req_form = [[RequestContract alloc] init];
     DB_Login *dbLogin=[[DB_Login alloc]init];
     AuthContract *auth=[dbLogin fn_request_auth];
@@ -105,10 +104,10 @@
             if ([arr_resp_result count]!=0) {
                 [db fn_delete_all_data];
                 [db fn_save_formatlist_data:arr_resp_result];
-                [self fn_send_notification];
             }
             db=nil;
         }
+        [self fn_send_notification];
     };
     [web_base fn_get_data:req_form];
 }
@@ -158,10 +157,9 @@
         if ([arr_resp_result count]!=0) {
             [db fn_delete_region_data];
             [db fn_save_region_data:arr_resp_result];
-            [self fn_send_notification];
         }
         db=nil;
-        
+        [self fn_send_notification];
     };
 
     [web_base fn_get_data:req_form];
@@ -221,9 +219,9 @@
         if ([arr_resp_result count]!=0) {
             [db fn_delete_all_data];
             [db fn_save_MaintForm_data:arr_resp_result];
-            [self fn_send_notification];
         }
         db=nil;
+        [self fn_send_notification];
     };
 
     [web_base fn_get_data:req_form];
