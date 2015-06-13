@@ -24,11 +24,24 @@
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            for (RespSearchCriteria *lmap_data in ilist_result) {
-                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-                ib_updated=[db executeUpdate:@"delete from searchCriteria where srch_type = :srch_type and seq = :seq and col_code = :col_code and col_label = :col_label and col_type =:col_type and col_option=:col_option and col_def=:col_def and group_name=:group_name and is_mandatory=:is_mandatory and icon_name=:icon_name" withParameterDictionary:ldict_row];
-                
-                ib_updated =[db executeUpdate:@"insert into searchCriteria (srch_type,seq, col_code, col_label, col_type, col_option, col_def, group_name, is_mandatory, icon_name) values (:srch_type,:seq, :col_code, :col_label, :col_type, :col_option, :col_def, :group_name, :is_mandatory, :icon_name)" withParameterDictionary:ldict_row];
+            [db beginTransaction];
+            BOOL isRollBack=NO;
+            @try {
+                for (RespSearchCriteria *lmap_data in ilist_result) {
+                    NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                    ib_updated=[db executeUpdate:@"delete from searchCriteria where srch_type = :srch_type and seq = :seq and col_code = :col_code and col_label = :col_label and col_type =:col_type and col_option=:col_option and col_def=:col_def and group_name=:group_name and is_mandatory=:is_mandatory and icon_name=:icon_name" withParameterDictionary:ldict_row];
+                    
+                    ib_updated =[db executeUpdate:@"insert into searchCriteria (srch_type,seq, col_code, col_label, col_type, col_option, col_def, group_name, is_mandatory, icon_name) values (:srch_type,:seq, :col_code, :col_label, :col_type, :col_option, :col_def, :group_name, :is_mandatory, :icon_name)" withParameterDictionary:ldict_row];
+                }
+            }
+            @catch (NSException *exception) {
+                isRollBack=YES;
+                [db rollback];
+            }
+            @finally {
+                if (!isRollBack) {
+                    [db commit];
+                }
             }
             [db close];
         }

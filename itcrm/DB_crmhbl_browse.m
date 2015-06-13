@@ -24,10 +24,24 @@
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            for (RespCrmhbl_browse *lmap_data in alist_result) {
-                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-                ib_updated =[db executeUpdate:@"delete from crmhbl_browse where acct_id = :acct_id and hbl_uid = :hbl_uid and acct_name = :acct_name and op_type = :op_type and desc = :desc and hbl_update_date = :hbl_update_date" withParameterDictionary:ldict_row];
-                ib_updated =[db executeUpdate:@"insert into crmhbl_browse (acct_id, hbl_uid, acct_name,op_type,desc,hbl_update_date) values (:acct_id, :hbl_uid, :acct_name,:op_type,:desc,:hbl_update_date)" withParameterDictionary:ldict_row];
+            [db beginTransaction];
+            BOOL isRollBack=NO;
+            @try {
+                for (RespCrmhbl_browse *lmap_data in alist_result) {
+                    NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                    ib_updated =[db executeUpdate:@"delete from crmhbl_browse where acct_id = :acct_id and hbl_uid = :hbl_uid and acct_name = :acct_name and op_type = :op_type and desc = :desc and hbl_update_date = :hbl_update_date" withParameterDictionary:ldict_row];
+                    ib_updated =[db executeUpdate:@"insert into crmhbl_browse (acct_id, hbl_uid, acct_name,op_type,desc,hbl_update_date) values (:acct_id, :hbl_uid, :acct_name,:op_type,:desc,:hbl_update_date)" withParameterDictionary:ldict_row];
+                }
+                
+            }
+            @catch (NSException *exception) {
+                isRollBack=YES;
+                [db rollback];
+            }
+            @finally {
+                if (!isRollBack) {
+                    [db commit];
+                }
             }
             [db close];
         }

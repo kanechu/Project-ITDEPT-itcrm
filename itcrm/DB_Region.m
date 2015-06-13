@@ -23,15 +23,27 @@
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            for (RespRegion *lmap_data in ilist_result) {
-                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-                ib_updated=[db executeUpdate:@"delete from crmms where type =:type and display = :display and data = :data and desc = :desc and image =:image" withParameterDictionary:ldict_row];
-                
-                ib_updated =[db executeUpdate:@"insert into crmms (type,display, data, desc, image) values (:type,:display, :data, :desc, :image)" withParameterDictionary:ldict_row];
+            [db beginTransaction];
+            BOOL isRollBack=NO;
+            @try {
+                for (RespRegion *lmap_data in ilist_result) {
+                    NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                    ib_updated=[db executeUpdate:@"delete from crmms where type =:type and display = :display and data = :data and desc = :desc and image =:image" withParameterDictionary:ldict_row];
+                    
+                    ib_updated =[db executeUpdate:@"insert into crmms (type,display, data, desc, image) values (:type,:display, :data, :desc, :image)" withParameterDictionary:ldict_row];
+                }
+            }
+            @catch (NSException *exception) {
+                isRollBack=YES;
+                [db rollback];
+            }
+            @finally {
+                if(!isRollBack){
+                    [db commit];
+                }
             }
             [db close];
         }
-        
     }];
     return ib_updated;
 }

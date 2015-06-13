@@ -25,12 +25,26 @@
     __block BOOL ib_updated=NO;
     [queue inDataBase:^(FMDatabase *db){
         if ([db open]) {
-            for (Respcrmtask_browse *lmap_data in alist_result) {
-                NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
-                [ldict_row setObject:@"0" forKey:@"is_modified"];
+            [db beginTransaction];
+            BOOL isRollBack=NO;
+            @try {
+                for (Respcrmtask_browse *lmap_data in alist_result) {
+                    NSMutableDictionary *ldict_row=[[NSDictionary dictionaryWithPropertiesOfObject:lmap_data]mutableCopy];
+                    [ldict_row setObject:@"0" forKey:@"is_modified"];
+                    
+                    ib_updated =[db executeUpdate:@"insert into crmtask (uid, task_id, task_ref_id, task_ref_type, task_ref_code,task_ref_name, contact_id, contact_code, contact_name, contact_email, contact_mobile, contact_tel, task_ref_addr, task_ref_addr_01, task_ref_addr_02, task_ref_addr_03, task_ref_addr_04, task_title,task_desc, task_start_date, task_end_date, task_report, task_sm_report, duration_ttl, duration_hr, duration_min, duration_str, assign_to, assign_to_name, voided, rec_crt_user, rec_upd_user,rec_crt_date, rec_upd_date, rec_upd_type, rec_savable, rec_deletable, task_type, task_type_desc,task_type_lang, task_status, task_status_desc,task_status_lang,quo_uid,quo_no, task_date_period,report_mail, report_submit,is_modified) values (:uid, :task_id, :task_ref_id, :task_ref_type, :task_ref_code,:task_ref_name, :contact_id, :contact_code, :contact_name, :contact_email, :contact_mobile, :contact_tel, :task_ref_addr, :task_ref_addr_01, :task_ref_addr_02, :task_ref_addr_03, :task_ref_addr_04, :task_title,:task_desc, :task_start_date, :task_end_date, :task_report, :task_sm_report, :duration_ttl, :duration_hr, :duration_min, :duration_str, :assign_to, :assign_to_name, :voided, :rec_crt_user, :rec_upd_user,:rec_crt_date, :rec_upd_date, :rec_upd_type, :rec_savable, :rec_deletable, :task_type, :task_type_desc,:task_type_lang, :task_status, :task_status_desc,:task_status_lang,:quo_uid,:quo_no,:task_date_period,:report_mail, :report_submit,:is_modified)" withParameterDictionary:ldict_row];
+                    
+                }
                 
-                ib_updated =[db executeUpdate:@"insert into crmtask (uid, task_id, task_ref_id, task_ref_type, task_ref_code,task_ref_name, contact_id, contact_code, contact_name, contact_email, contact_mobile, contact_tel, task_ref_addr, task_ref_addr_01, task_ref_addr_02, task_ref_addr_03, task_ref_addr_04, task_title,task_desc, task_start_date, task_end_date, task_report, task_sm_report, duration_ttl, duration_hr, duration_min, duration_str, assign_to, assign_to_name, voided, rec_crt_user, rec_upd_user,rec_crt_date, rec_upd_date, rec_upd_type, rec_savable, rec_deletable, task_type, task_type_desc,task_type_lang, task_status, task_status_desc,task_status_lang,quo_uid,quo_no, task_date_period,report_mail, report_submit,is_modified) values (:uid, :task_id, :task_ref_id, :task_ref_type, :task_ref_code,:task_ref_name, :contact_id, :contact_code, :contact_name, :contact_email, :contact_mobile, :contact_tel, :task_ref_addr, :task_ref_addr_01, :task_ref_addr_02, :task_ref_addr_03, :task_ref_addr_04, :task_title,:task_desc, :task_start_date, :task_end_date, :task_report, :task_sm_report, :duration_ttl, :duration_hr, :duration_min, :duration_str, :assign_to, :assign_to_name, :voided, :rec_crt_user, :rec_upd_user,:rec_crt_date, :rec_upd_date, :rec_upd_type, :rec_savable, :rec_deletable, :task_type, :task_type_desc,:task_type_lang, :task_status, :task_status_desc,:task_status_lang,:quo_uid,:quo_no,:task_date_period,:report_mail, :report_submit,:is_modified)" withParameterDictionary:ldict_row];
-                
+            }
+            @catch (NSException *exception) {
+                isRollBack=YES;
+                [db rollback];
+            }
+            @finally {
+                if (!isRollBack) {
+                    [db commit];
+                }
             }
             [db close];
         }
